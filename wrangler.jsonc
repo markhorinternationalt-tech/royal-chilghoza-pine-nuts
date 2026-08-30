@@ -3,8 +3,10 @@
   "name": "royal-chilghoza-pine-nuts",
   "main": "src/worker.js",
   "compatibility_date": "2026-08-28",
-  "assets": { "directory": "./public", "binding": "ASSETS", "not_found_handling": "single-page-application" },
-  "ai": { "binding": "AI" },
-  "d1_databases": [{ "binding": "DB", "database_name": "royal-chilghoza-db", "database_id": "REPLACE_WITH_D1_DATABASE_ID" }],
-  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "royal-chilghoza-media" }]
+
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  }
 }
