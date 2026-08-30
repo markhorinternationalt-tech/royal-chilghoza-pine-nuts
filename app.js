@@ -882,3 +882,25 @@ if(saveContentBtn){
 $$('[data-ai]').forEach(
   b=>{
     b.addEvent
+b.addEventListener(
+  'click',
+  ()=>{
+    runAI(b.dataset.ai);
+  }
+);
+
+
+/* INITIALIZE */
+
+renderLangs();
+applyLanguage();
+
+showPage(
+  location.hash.slice(1)||'home',
+  false
+);
+
+checkSession();
+loadTheme();
+loadMedia();
+loadContent();
