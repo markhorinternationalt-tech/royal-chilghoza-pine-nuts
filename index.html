@@ -1,32 +1,94 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08251b">
-<meta name="description" content="Royal Chilghoza Pine Nuts — origin, global trade, research, forests and responsible supply chains.">
-<title>Royal Chilghoza Pine Nuts</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <meta name="theme-color" content="#08251b">
+  <meta
+    name="description"
+    content="Royal Chilghoza Pine Nuts — authentic Pakistani origin, global trade, research, forests, quality and responsible supply."
+  >
+
+  <meta name="author" content="Royal Chilghoza Pine Nuts">
+
+  <title>Royal Chilghoza Pine Nuts</title>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<a class="skip" href="#main" data-i18n="skip">Skip to main content</a>
+<a class="skip" href="#main" data-i18n="skip">
+  Skip to main content
+</a>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
 
 <header class="site-header">
 
-  <a class="brand" href="#home" data-route="home" aria-label="Royal Chilghoza Pine Nuts">
+  <a
+    class="brand"
+    href="#home"
+    data-route="home"
+    aria-label="Royal Chilghoza Pine Nuts"
+  >
     <span>ROYAL CHILGHOZA</span>
     <small>PINE NUTS</small>
   </a>
 
-  <nav class="nav" aria-label="Primary navigation">
-    <a href="#home" data-route="home" data-i18n="home">Home</a>
-    <a href="#trade" data-route="trade" data-i18n="trade">Trade &amp; Business</a>
-    <a href="#research" data-route="research" data-i18n="research">Research &amp; Knowledge</a>
-    <a href="#whatsapp" data-route="whatsapp" data-i18n="whatsapp">WhatsApp</a>
-    <a href="#admin" data-route="admin" data-i18n="adminDemo">Admin Demo</a>
+  <nav
+    class="nav"
+    aria-label="Primary navigation"
+  >
+
+    <a
+      href="#home"
+      data-route="home"
+      data-i18n="home"
+    >
+      Home
+    </a>
+
+    <a
+      href="#trade"
+      data-route="trade"
+      data-i18n="trade"
+    >
+      Trade &amp; Business
+    </a>
+
+    <a
+      href="#research"
+      data-route="research"
+      data-i18n="research"
+    >
+      Research &amp; Knowledge
+    </a>
+
+    <a
+      href="#whatsapp"
+      data-route="whatsapp"
+      data-i18n="whatsapp"
+    >
+      WhatsApp
+    </a>
+
+    <a
+      href="#admin"
+      data-route="admin"
+      data-i18n="adminDemo"
+    >
+      Admin
+    </a>
+
   </nav>
+
+  <!-- LANGUAGE SYSTEM
+       app.js supplies all 9 languages.
+  -->
 
   <div class="lang-wrap">
 
@@ -38,7 +100,9 @@
       aria-expanded="false"
       aria-label="Select language"
     >
-      🌐 <span id="langLabel">English</span>⌄
+      🌐
+      <span id="langLabel">English</span>
+      ⌄
     </button>
 
     <div
@@ -53,21 +117,28 @@
 </header>
 
 
-<main id="main">
+<!-- =========================================================
+     MAIN
+========================================================= -->
 
+<main id="main">
 
 <!-- =========================================================
      HOME
 ========================================================= -->
 
-<section id="home" class="page active">
+<section
+  id="home"
+  class="page active"
+  aria-labelledby="home-title"
+>
 
   <div class="hero">
 
     <img
       class="hero-photo"
       src="001.jpg"
-      alt="Chilghoza forest and pine nuts"
+      alt="Royal Chilghoza pine forest and product origin"
       loading="eager"
     >
 
@@ -75,20 +146,30 @@
 
     <div class="hero-content">
 
-      <div class="eyebrow" data-i18n="eyebrow">
+      <div
+        class="eyebrow"
+        data-i18n="eyebrow"
+      >
         PAKISTAN • ORIGIN • GLOBAL
       </div>
 
-      <h1>
+      <h1 id="home-title">
         Royal<br>
         Chilghoza<br>
         <em>Pine Nuts</em>
       </h1>
 
-      <p class="hero-copy" data-i18n="heroCopy">
-        From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.
+      <p
+        class="hero-copy"
+        data-i18n="heroCopy"
+      >
+        From the Chilghoza forests of Pakistan to the world —
+        connecting premium quality, authentic origin,
+        responsible supply chains and deep knowledge.
       </p>
 
+
+      <!-- MAIN ENTRY CARDS -->
 
       <div class="home-cards">
 
@@ -97,7 +178,13 @@
           href="#trade"
           data-route="trade"
         >
-          <span class="icon">🌰</span>
+
+          <span
+            class="icon"
+            aria-hidden="true"
+          >
+            🌰
+          </span>
 
           <small data-i18n="tradeKicker">
             CHILGHOZA PINE NUTS
@@ -110,6 +197,7 @@
           <p data-i18n="tradeSub">
             Premium quality • Worldwide export →
           </p>
+
         </a>
 
 
@@ -118,7 +206,13 @@
           href="#research"
           data-route="research"
         >
-          <span class="icon">🔬</span>
+
+          <span
+            class="icon"
+            aria-hidden="true"
+          >
+            🔬
+          </span>
 
           <small data-i18n="researchKicker">
             CHILGHOZA
@@ -131,6 +225,7 @@
           <p data-i18n="researchSub">
             Science • Origin • Forests • Quality →
           </p>
+
         </a>
 
       </div>
@@ -140,7 +235,9 @@
   </div>
 
 
-  <!-- PROFILE -->
+  <!-- =======================================================
+       PROFILE
+  ======================================================== -->
 
   <section class="profile-intro">
 
@@ -165,7 +262,8 @@
       </h2>
 
       <p data-i18n="profileCopy">
-        Knowledge, trade, forests and environmental stewardship in one platform.
+        Knowledge, trade, forests and environmental stewardship
+        in one platform.
       </p>
 
     </div>
@@ -173,7 +271,9 @@
   </section>
 
 
-  <!-- AI TEASER -->
+  <!-- =======================================================
+       AI TEASER
+  ======================================================== -->
 
   <section class="ai-teaser">
 
@@ -189,7 +289,10 @@
     </h2>
 
     <p data-i18n="aiCopy">
-      Human knowledge first. AI assistance second. Use AI to improve writing, summarize research, support buyers and translate content — with human review before publishing.
+      Human knowledge first. AI assistance second.
+      Use AI to improve writing, summarize research,
+      support buyers and translate content —
+      with human review before publishing.
     </p>
 
     <a
@@ -204,7 +307,9 @@
   </section>
 
 
-  <!-- ORIGINAL PHOTO COLLECTION -->
+  <!-- =======================================================
+       ORIGINAL PROJECT COLLECTION
+  ======================================================== -->
 
   <section class="originals">
 
@@ -226,10 +331,19 @@
       </div>
 
       <p data-i18n="mediaCopy">
-        Only the supplied original project photographs are used. Each image can later receive an editable title, description, caption and category from Admin.
+        Original project photographs, organized according to
+        their subject and purpose. Titles, descriptions,
+        captions and categories can be managed through Admin.
       </p>
 
     </div>
+
+
+    <!--
+      app.js loads the project photographs here.
+      This prevents the homepage from becoming a
+      static mobile-gallery dump.
+    -->
 
     <div
       id="homeGallery"
@@ -242,12 +356,15 @@
 </section>
 
 
-
 <!-- =========================================================
      TRADE & BUSINESS
 ========================================================= -->
 
-<section id="trade" class="page">
+<section
+  id="trade"
+  class="page"
+  aria-labelledby="trade-title"
+>
 
   <div class="page-head">
 
@@ -256,7 +373,10 @@
       data-back
       type="button"
     >
-      ← <span data-i18n="back">Back</span>
+      ←
+      <span data-i18n="back">
+        Back
+      </span>
     </button>
 
     <div
@@ -266,20 +386,31 @@
       GLOBAL TRADE • QUALITY • MARKETS • SUPPLY
     </div>
 
-    <h1 data-i18n="trade">
+    <h1
+      id="trade-title"
+      data-i18n="trade"
+    >
       Trade &amp; Business
     </h1>
 
     <p data-i18n="tradeIntro">
-      A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.
+      A structured international trade centre for product
+      quality, export readiness, buyers, logistics and
+      responsible supply-chain information.
     </p>
 
   </div>
+
+
+  <!-- Dynamic folders -->
 
   <div
     id="tradeFolders"
     class="folder-grid"
   ></div>
+
+
+  <!-- Dynamic folder detail -->
 
   <div
     id="tradeContent"
@@ -290,12 +421,15 @@
 </section>
 
 
-
 <!-- =========================================================
      RESEARCH & KNOWLEDGE
 ========================================================= -->
 
-<section id="research" class="page">
+<section
+  id="research"
+  class="page"
+  aria-labelledby="research-title"
+>
 
   <div class="page-head">
 
@@ -304,7 +438,10 @@
       data-back
       type="button"
     >
-      ← <span data-i18n="back">Back</span>
+      ←
+      <span data-i18n="back">
+        Back
+      </span>
     </button>
 
     <div
@@ -314,20 +451,32 @@
       SCIENCE • ORIGIN • FORESTS • QUALITY
     </div>
 
-    <h1 data-i18n="research">
+    <h1
+      id="research-title"
+      data-i18n="research"
+    >
       Research &amp; Knowledge
     </h1>
 
     <p data-i18n="researchIntro">
-      A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.
+      A knowledge centre for Chilghoza origin,
+      geographical indication, forests, biodiversity,
+      climate, organic claims, nutrition, processing
+      and traceability.
     </p>
 
   </div>
+
+
+  <!-- Dynamic research folders -->
 
   <div
     id="researchFolders"
     class="folder-grid"
   ></div>
+
+
+  <!-- Dynamic research detail -->
 
   <div
     id="researchContent"
@@ -338,14 +487,14 @@
 </section>
 
 
-
 <!-- =========================================================
-     WHATSAPP
+     WHATSAPP / CONTACT
 ========================================================= -->
 
 <section
   id="whatsapp"
   class="page simple-page"
+  aria-labelledby="whatsapp-title"
 >
 
   <div class="page-head">
@@ -355,7 +504,10 @@
       data-back
       type="button"
     >
-      ← <span data-i18n="back">Back</span>
+      ←
+      <span data-i18n="back">
+        Back
+      </span>
     </button>
 
     <div
@@ -365,12 +517,16 @@
       DIRECT CONTACT
     </div>
 
-    <h1 data-i18n="whatsapp">
+    <h1
+      id="whatsapp-title"
+      data-i18n="whatsapp"
+    >
       WhatsApp
     </h1>
 
     <p data-i18n="waCopy">
-      Direct business, purchasing, research collaboration and general contact.
+      Direct business, purchasing, research collaboration
+      and general contact.
     </p>
 
     <a
@@ -389,12 +545,15 @@
 </section>
 
 
-
 <!-- =========================================================
-     ADMIN
+     ADMIN CONTROL CENTER
 ========================================================= -->
 
-<section id="admin" class="page">
+<section
+  id="admin"
+  class="page"
+  aria-labelledby="admin-title"
+>
 
   <div class="page-head">
 
@@ -403,28 +562,39 @@
       data-back
       type="button"
     >
-      ← <span data-i18n="back">Back</span>
+      ←
+      <span data-i18n="back">
+        Back
+      </span>
     </button>
 
     <div
       class="eyebrow"
-      data-i18n="adminKicker"
+      data-i18n="ownerControl"
     >
       OWNER CONTROL
     </div>
 
-    <h1 data-i18n="adminTitle">
+    <h1
+      id="admin-title"
+      data-i18n="adminTitle"
+    >
       Admin Control Center
     </h1>
 
     <p data-i18n="adminIntro">
-      Secure content control, media, users, permissions, versions, themes and AI assistance. The browser UI is designed so ordinary content and theme changes do not require redeployment.
+      Secure content control, media, users, permissions,
+      versions, themes and AI assistance. Ordinary website
+      content and visual changes are designed to be managed
+      without redeployment.
     </p>
 
   </div>
 
 
-  <!-- LOGIN -->
+  <!-- =======================================================
+       LOGIN
+  ======================================================== -->
 
   <div
     id="loginPanel"
@@ -436,27 +606,35 @@
     </h2>
 
     <p data-i18n="loginCopy">
-      Sign in to manage content and website settings.
+      Sign in to manage website content and settings.
     </p>
 
 
-    <label data-i18n="username">
-      Username
+    <label for="username">
+
+      <span data-i18n="username">
+        Username
+      </span>
 
       <input
         id="username"
-        type="text"
+        name="username"
         autocomplete="username"
+        inputmode="text"
       >
 
     </label>
 
 
-    <label data-i18n="password">
-      Password
+    <label for="password">
+
+      <span data-i18n="password">
+        Password
+      </span>
 
       <input
         id="password"
+        name="password"
         type="password"
         autocomplete="current-password"
       >
@@ -473,6 +651,7 @@
       Login
     </button>
 
+
     <div
       id="loginStatus"
       class="notice"
@@ -482,8 +661,9 @@
   </div>
 
 
-
-  <!-- ADMIN PANEL -->
+  <!-- =======================================================
+       ADMIN PANEL
+  ======================================================== -->
 
   <div
     id="adminPanel"
@@ -506,7 +686,8 @@
         </h3>
 
         <p data-i18n="cmsCopy">
-          Add, edit, delete, restore, draft, preview and publish folder content.
+          Add, edit, delete, restore, draft, preview
+          and publish website content.
         </p>
 
       </article>
@@ -519,11 +700,12 @@
         </span>
 
         <h3 data-i18n="mediaAdminTitle">
-          Media
+          Media Library
         </h3>
 
         <p data-i18n="mediaAdminCopy">
-          Store images, videos and PDFs in Cloudflare R2 with editable metadata.
+          Store images, videos and PDFs with editable
+          titles, descriptions, captions and categories.
         </p>
 
       </article>
@@ -557,13 +739,13 @@
         </h3>
 
         <p data-i18n="aiAdminCopy">
-          Workers AI endpoint for folder-aware assistance with human review.
+          AI assistance for writing, summaries, buyers,
+          translation and website knowledge.
         </p>
 
       </article>
 
     </div>
-
 
 
     <!-- =====================================================
@@ -579,13 +761,16 @@
         </h2>
 
         <p data-i18n="themeCopy">
-          Change the visual system without redeployment. Changes are saved in D1 when the Worker backend is connected.
+          Change the website visual system without
+          redeployment. Theme settings can be stored
+          in D1 when the Worker backend is connected.
         </p>
 
 
         <div class="colors">
 
           <label>
+
             <span data-i18n="background">
               Background
             </span>
@@ -596,10 +781,12 @@
               value="#08251b"
               aria-label="Background color"
             >
+
           </label>
 
 
           <label>
+
             <span data-i18n="textColor">
               Text
             </span>
@@ -610,10 +797,12 @@
               value="#f5f1e6"
               aria-label="Text color"
             >
+
           </label>
 
 
           <label>
+
             <span data-i18n="accentColor">
               Accent
             </span>
@@ -624,10 +813,12 @@
               value="#d8b96e"
               aria-label="Accent color"
             >
+
           </label>
 
 
           <label>
+
             <span data-i18n="surfaceColor">
               Surface
             </span>
@@ -638,6 +829,7 @@
               value="#103326"
               aria-label="Surface color"
             >
+
           </label>
 
         </div>
@@ -662,11 +854,19 @@
           Reset
         </button>
 
+
+        <div
+          id="themeStatus"
+          class="notice"
+          aria-live="polite"
+        ></div>
+
       </div>
 
 
-
-      <!-- CONTENT EDITOR -->
+      <!-- ===================================================
+           CONTENT EDITOR
+      ==================================================== -->
 
       <div>
 
@@ -675,7 +875,7 @@
         </h2>
 
 
-        <label>
+        <label for="editFolder">
 
           <span data-i18n="folder">
             Folder
@@ -702,9 +902,9 @@
         </label>
 
 
-        <label>
+        <label for="editTitle">
 
-          <span data-i18n="titleLabel">
+          <span data-i18n="title">
             Title
           </span>
 
@@ -716,9 +916,9 @@
         </label>
 
 
-        <label>
+        <label for="editDescription">
 
-          <span data-i18n="descriptionLabel">
+          <span data-i18n="description">
             Description
           </span>
 
@@ -751,9 +951,8 @@
     </div>
 
 
-
     <!-- =====================================================
-         MEDIA LIBRARY
+         MEDIA LIBRARY / UPLOAD
     ====================================================== -->
 
     <div class="admin-tools">
@@ -764,12 +963,13 @@
           Media Library
         </h2>
 
-        <p data-i18n="mediaUploadCopy">
-          Upload future photos, videos or PDFs to R2 and keep editable metadata in D1.
+        <p data-i18n="mediaLibraryCopy">
+          Upload future photographs, videos or PDFs to
+          Cloudflare R2 and keep their metadata editable.
         </p>
 
 
-        <label>
+        <label for="mediaFile">
 
           <span data-i18n="file">
             File
@@ -784,9 +984,9 @@
         </label>
 
 
-        <label>
+        <label for="mediaTitle">
 
-          <span data-i18n="titleLabel">
+          <span data-i18n="title">
             Title
           </span>
 
@@ -798,9 +998,9 @@
         </label>
 
 
-        <label>
+        <label for="mediaDescription">
 
-          <span data-i18n="descriptionLabel">
+          <span data-i18n="description">
             Description
           </span>
 
@@ -812,9 +1012,9 @@
         </label>
 
 
-        <label>
+        <label for="mediaCaption">
 
-          <span data-i18n="captionLabel">
+          <span data-i18n="caption">
             Caption
           </span>
 
@@ -826,9 +1026,9 @@
         </label>
 
 
-        <label>
+        <label for="mediaSection">
 
-          <span data-i18n="sectionLabel">
+          <span data-i18n="section">
             Section
           </span>
 
@@ -857,7 +1057,7 @@
           class="btn"
           id="uploadMedia"
           type="button"
-          data-i18n="uploadR2"
+          data-i18n="uploadMedia"
         >
           Upload to R2
         </button>
@@ -872,6 +1072,7 @@
       </div>
 
 
+      <!-- MEDIA RESULTS -->
 
       <div>
 
@@ -890,9 +1091,8 @@
     </div>
 
 
-
     <!-- =====================================================
-         CONTENT VERSIONS + AI
+         CONTENT + AI
     ====================================================== -->
 
     <div class="admin-tools">
@@ -912,6 +1112,7 @@
       </div>
 
 
+      <!-- ROYAL AI -->
 
       <div>
 
@@ -976,14 +1177,60 @@
           id="aiResult"
           rows="8"
           readonly
-          data-i18n-placeholder="aiResultPlaceholder"
-          placeholder="AI result will appear here..."
+          aria-label="AI result"
         ></textarea>
 
       </div>
 
     </div>
 
+
+    <!-- =====================================================
+         FUTURE WEBSITE CONTROL
+    ====================================================== -->
+
+    <div class="admin-tools">
+
+      <div>
+
+        <h2 data-i18n="websiteControl">
+          Website Control
+        </h2>
+
+        <p data-i18n="websiteControlCopy">
+          Future versions can add folders, pages,
+          navigation items, contact information and
+          media categories directly from this control center.
+        </p>
+
+        <div
+          id="websiteControls"
+          class="content-list"
+        ></div>
+
+      </div>
+
+
+      <div>
+
+        <h2 data-i18n="languageControl">
+          Language System
+        </h2>
+
+        <p data-i18n="languageControlCopy">
+          Royal Chilghoza supports a worldwide multilingual
+          interface. Language selection applies to the
+          complete website interface.
+        </p>
+
+        <div
+          id="languageStatus"
+          class="notice"
+        ></div>
+
+      </div>
+
+    </div>
 
 
     <!-- =====================================================
@@ -1001,7 +1248,8 @@
         <ul class="checklist">
 
           <li data-i18n="security1">
-            Authentication is handled server-side; no production password is stored in HTML.
+            Authentication is handled server-side;
+            production passwords are not stored in HTML.
           </li>
 
           <li data-i18n="security2">
@@ -1009,18 +1257,37 @@
           </li>
 
           <li data-i18n="security3">
-            R2 stores media; signed/session-checked API routes protect writes.
+            R2 stores media while protected API routes
+            control uploads and deletions.
           </li>
 
           <li data-i18n="security4">
-            Workers AI is accessed through a binding, so provider credentials are not exposed to the browser.
+            Workers AI is accessed through a secure binding
+            so provider credentials remain outside the browser.
           </li>
 
           <li data-i18n="security5">
-            Draft → Preview → Publish remains the content workflow.
+            Draft, preview and publish remain the preferred
+            content workflow.
           </li>
 
         </ul>
+
+      </div>
+
+
+      <div>
+
+        <h2 data-i18n="adminVision">
+          Royal Website Vision
+        </h2>
+
+        <p data-i18n="adminVisionCopy">
+          The goal is to make ordinary website management
+          possible from inside the website itself, while
+          keeping programming-level changes protected
+          behind the deployment layer.
+        </p>
 
       </div>
 
@@ -1031,9 +1298,8 @@
 </section>
 
 
-
 <!-- =========================================================
-     ADDRESS
+     CONTACT / ADDRESS
 ========================================================= -->
 
 <section class="address-section">
@@ -1045,17 +1311,16 @@
     CONTACT • OFFICE • PARTNERSHIP
   </div>
 
-
   <h2 data-i18n="addressTitle">
     Office Address
   </h2>
-
 
   <p
     id="addressText"
     data-i18n="addressText"
   >
-    Pakistan • Address, phone, email and WhatsApp details are editable from Admin.
+    Pakistan • Address, phone, email and WhatsApp details
+    can be managed from Admin.
   </p>
 
 
@@ -1069,7 +1334,6 @@
       WhatsApp
     </a>
 
-
     <a
       href="mailto:info@example.com"
       data-i18n="email"
@@ -1082,7 +1346,6 @@
 </section>
 
 </main>
-
 
 
 <!-- =========================================================
@@ -1100,11 +1363,16 @@
   </span>
 
   <span>
-    © <span id="year"></span>
+    ©
+    <span id="year"></span>
   </span>
 
 </footer>
 
+
+<!-- =========================================================
+     APP
+========================================================= -->
 
 <script src="app.js"></script>
 
