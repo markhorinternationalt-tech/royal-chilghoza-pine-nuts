@@ -21,12 +21,13 @@
 <header class="site-header">
   <a class="brand" href="#home" data-route="home">
     <span class="brand-mark">🌲</span>
-    <span><strong>Royal Chilghoza Pine Nuts</strong><small>PAKISTAN • ORIGIN • GLOBAL</small></span>
+    <span><strong>ROYAL CHILGHOZA</strong><small>PINE NUTS</small></span>
   </a>
   <nav class="main-nav">
     <a href="#home" data-route="home" data-i18n="home">Home</a>
     <a href="#trade" data-route="trade" data-i18n="trade">Trade & Business</a>
     <a href="#research" data-route="research" data-i18n="research">Research & Knowledge</a>
+    <a href="#royalAI" data-route="royalAI" data-i18n="royalAI">Royal AI</a>
     <a href="#admin" data-route="admin" data-i18n="admin">Admin</a>
   </nav>
   <div class="header-tools">
@@ -41,7 +42,7 @@
     <div class="hero-overlay">
       <div class="eyebrow">PAKISTAN • ORIGIN • GLOBAL</div>
       <h1>Royal Chilghoza Pine Nuts</h1>
-      <p>From the Chilghoza forests of Pakistan to the world — premium quality, authentic origin, responsible supply and deep knowledge.</p>
+      <p>From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
       <div class="hero-actions">
         <a href="#trade" data-route="trade" class="btn primary" data-i18n="trade">Trade & Business</a>
         <a href="#research" data-route="research" class="btn ghost" data-i18n="research">Research & Knowledge</a>
@@ -51,7 +52,7 @@
 
   <section class="section">
     <div class="section-head">
-      <div><div class="eyebrow">ORIGINAL COLLECTION</div><h2>From Forest to Market</h2><p>Eight new original project photographs. Click any image for full-size exploration.</p></div>
+      <div><div class="eyebrow">ORIGINAL COLLECTION</div><h2>Gallery & Field Evidence</h2><p>Explore original project photos, forest mapping, and supply-chain evidence.</p></div>
     </div>
     <div id="homeGallery" class="home-gallery"></div>
   </section>
@@ -60,44 +61,56 @@
     <div><div class="eyebrow">CHILGHOZA • PEOPLE • PARTNERSHIP</div><h2>Knowledge, trade, forests and stewardship</h2><p>A structured platform for international trade, research, forest knowledge, responsible supply and future institutional collaboration.</p></div>
     <img src="/profile.jpg" alt="Royal Chilghoza profile" loading="lazy">
   </section>
-
-  <section class="section legacy">
-    <div class="section-head"><div><div class="eyebrow">PROJECT ARCHIVE</div><h2>Original Photo Collection</h2><p>The existing project collection remains available; Admin controls can manage website media without giving public users write access.</p></div></div>
-    <div class="legacy-grid">
-      <script>
-        for(let i=1;i<=43;i++){
-          const n=String(i).padStart(3,'0');
-          document.write(`<button class="legacy-photo" type="button" onclick="window.open('/${n}.jpg','_blank')"><img src="/${n}.jpg" alt="Chilghoza project image ${n}" loading="lazy"><span>${n}</span></button>`);
-        }
-      </script>
-    </div>
-  </section>
 </section>
 
 <section id="trade" class="page">
-  <div class="page-hero"><div class="eyebrow">GLOBAL TRADE • QUALITY • MARKETS • SUPPLY</div><h1>Trade & Business</h1><p>A structured international trade centre for quality, export readiness, buyers, logistics and responsible supply-chain information.</p></div>
+  <div class="page-hero">
+    <div class="eyebrow">GLOBAL TRADE • QUALITY • MARKETS • SUPPLY</div>
+    <h1>Trade & Business</h1>
+    <p>A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.</p>
+  </div>
   <div id="tradeFolders" class="folder-grid"></div>
   <div id="tradeContent" class="detail-area"></div>
 </section>
 
 <section id="research" class="page">
-  <div class="page-hero"><div class="eyebrow">SCIENCE • ORIGIN • FORESTS • QUALITY</div><h1>Research & Knowledge</h1><p>A knowledge centre for origin, GI, forests, biodiversity, climate, processing, nutrition, traceability and conservation.</p></div>
+  <div class="page-hero">
+    <div class="eyebrow">SCIENCE • ORIGIN • FORESTS • QUALITY</div>
+    <h1>Research & Knowledge</h1>
+    <p>A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.</p>
+  </div>
   <div id="researchFolders" class="folder-grid"></div>
   <div id="researchContent" class="detail-area"></div>
 </section>
 
 <section id="royalAI" class="page rcpn-ai">
-  <div class="page-hero"><div class="eyebrow">THE NEXT GENERATION</div><h1>Royal AI Assistant</h1><p>Improve, summarize, translate, research and prepare buyer-facing text. Human review remains required before publication.</p></div>
+  <div class="page-hero">
+    <div class="eyebrow">THE NEXT GENERATION</div>
+    <h1>Royal AI Assistant</h1>
+    <p>Improve, summarize, translate, research and prepare buyer-facing text. Human review remains required before publication.</p>
+  </div>
   <textarea id="rcpnAiText" placeholder="Ask Royal AI..."></textarea>
   <div class="ai-controls">
-    <select id="rcpnAiMode"><option value="improve">Improve</option><option value="summary">Summary</option><option value="buyer">Buyer</option><option value="translate">Translate</option><option value="research">Research</option><option value="website">Website</option></select>
+    <select id="rcpnAiMode">
+      <option value="improve">Improve</option>
+      <option value="summary">Summary</option>
+      <option value="buyer">Buyer</option>
+      <option value="translate">Translate</option>
+      <option value="research">Research</option>
+      <option value="website">Website</option>
+    </select>
     <button id="rcpnAiSend" class="btn primary" type="button">Send</button>
   </div>
   <pre id="rcpnAiResult"></pre>
 </section>
 
 <section id="admin" class="page">
-  <div class="page-hero"><div class="eyebrow">ADMIN ONLY</div><h1>Admin Control Center</h1><p>Only the authenticated administrator can upload, edit, manage or delete website media and content.</p></div>
+  <div class="page-hero">
+    <div class="eyebrow">OWNER CONTROL</div>
+    <h1>Admin Control Center</h1>
+    <p>Secure content control, media, users, permissions, versions, themes and AI assistance.</p>
+  </div>
+  <div id="adminContainer" class="admin-wrap"></div>
 </section>
 </main>
 
