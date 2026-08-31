@@ -1,1 +1,12 @@
-{"name":"royal-chilghoza-pine-nuts","private":true,"version":"1.0.0","scripts":{"dev":"wrangler dev","deploy":"wrangler deploy"},"devDependencies":{"wrangler":"latest"}}
+{
+  "name": "royal-chilghoza-pine-nuts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Royal Chilghoza Pine Nuts — Origin, Trade & Research Platform",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
