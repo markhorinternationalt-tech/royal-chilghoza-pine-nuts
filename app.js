@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* =========================================================
      ROYAL CHILGHOZA PINE NUTS
-     APP.JS — Multilingual + CMS + AI + Media Foundation
+     FINAL APP.JS
+     9-LANGUAGE + AI + ADMIN + HISTORY + MEDIA
      ========================================================= */
 
-  const $ = (id) => document.getElementById(id);
+  const $ = id => document.getElementById(id);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   /* =========================================================
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { code: 'zh', name: '中文', dir: 'ltr' },
     { code: 'ur', name: 'اردو', dir: 'rtl' },
     { code: 'ps', name: 'پښتو', dir: 'rtl' },
-    { code: 'fa', name: 'دری / فارسی', dir: 'rtl' },
+    { code: 'fa', name: 'فارسی / دری', dir: 'rtl' },
     { code: 'ru', name: 'Русский', dir: 'ltr' },
     { code: 'id', name: 'Bahasa Indonesia', dir: 'ltr' },
     { code: 'ms', name: 'Bahasa Melayu', dir: 'ltr' },
@@ -33,68 +34,47 @@ document.addEventListener('DOMContentLoaded', () => {
       research: 'Research & Knowledge',
       whatsapp: 'WhatsApp',
       adminDemo: 'Admin',
-      back: 'Back',
-
       eyebrow: 'PAKISTAN • ORIGIN • GLOBAL',
-      heroCopy:
-        'From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.',
+      heroCopy: 'From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.',
       tradeKicker: 'CHILGHOZA PINE NUTS',
       globalTrade: 'GLOBAL TRADE',
       tradeSub: 'Premium quality • Worldwide export →',
       researchKicker: 'CHILGHOZA',
       researchTitle: 'RESEARCH & KNOWLEDGE',
       researchSub: 'Science • Origin • Forests • Quality →',
-
       profileKicker: 'CHILGHOZA • PEOPLE • PARTNERSHIP',
       profileTitle: 'Chilghoza Pine Nuts',
-      profileCopy:
-        'Knowledge, trade, forests and environmental stewardship in one platform.',
-
+      profileCopy: 'Knowledge, trade, forests and environmental stewardship in one platform.',
       aiKicker: 'THE NEXT GENERATION',
-      aiCopy:
-        'Human knowledge first. AI assistance second. Use AI to improve writing, summarize research, support buyers and translate content — with human review before publishing.',
+      aiCopy: 'Human knowledge first. AI assistance second. Use AI to improve writing, summarize research, support buyers and translate content — with human review before publishing.',
       openAI: 'Open AI & Admin →',
-
       mediaKicker: 'ORIGINAL COLLECTION',
       mediaTitle: 'From Forest to Market',
-      mediaCopy:
-        'Only supplied original project photographs are used. Each image can receive an editable title, description, caption and category from Admin.',
-
+      mediaCopy: 'Only the supplied original project photographs are used. Each image can later receive an editable title, description, caption and category from Admin.',
+      back: 'Back',
       tradeKickerLong: 'GLOBAL TRADE • QUALITY • MARKETS • SUPPLY',
-      tradeIntro:
-        'A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.',
-
+      tradeIntro: 'A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.',
       researchKickerLong: 'SCIENCE • ORIGIN • FORESTS • QUALITY',
-      researchIntro:
-        'A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, natural claims, nutrition, processing and traceability.',
-
-      waCopy:
-        'Direct business, purchasing, research collaboration and general contact.',
-
+      researchIntro: 'A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.',
+      waCopy: 'Direct business, purchasing, research collaboration and general contact.',
       adminTitle: 'Admin Control Center',
-      adminIntro:
-        'Secure content control, media, users, permissions, versions, themes and AI assistance. Ordinary content and theme changes are designed to work without redeployment.',
-
+      adminIntro: 'Secure content control, media, users, permissions, versions, themes and AI assistance.',
       loginTitle: 'Admin Login',
       loginCopy: 'Sign in to manage content and website settings.',
       username: 'Username',
       password: 'Password',
       login: 'Login',
-
       cmsTitle: 'Content',
-      cmsCopy: 'Add, edit, delete, draft, preview and publish website content.',
+      cmsCopy: 'Add, edit, delete, restore, draft, preview and publish folder content.',
       mediaAdminTitle: 'Media',
-      mediaAdminCopy: 'Store images, videos and PDFs with editable metadata.',
+      mediaAdminCopy: 'Store images, videos and PDFs in Cloudflare R2 with editable metadata.',
       usersTitle: 'Users & Permissions',
       usersCopy: 'Roles, permissions, sessions and audit records.',
-      aiAdminCopy: 'Royal AI assistance with human review.',
-
+      aiAdminCopy: 'Workers AI endpoint for folder-aware assistance with human review.',
       themeTitle: 'Theme Studio',
-      themeCopy:
-        'Change the visual system without redeployment. Theme values can be saved in D1 when the backend is connected.',
+      themeCopy: 'Change the visual system without redeployment. Changes are saved in D1 when connected.',
       saveTheme: 'Save Theme',
       resetTheme: 'Reset',
-
       contentEditor: 'Content Editor',
       saveContent: 'Save Draft',
       aiTools: 'Royal AI Assistant',
@@ -103,122 +83,120 @@ document.addEventListener('DOMContentLoaded', () => {
       summary: 'Summarize',
       buyer: 'Buyer Presentation',
       translate: 'Translate',
-
       securityTitle: 'Security & Operations',
       addressKicker: 'CONTACT • OFFICE • PARTNERSHIP',
       addressTitle: 'Office Address',
-      addressText:
-        'Pakistan • Address, phone, email and WhatsApp details are editable from Admin.'
+      addressText: 'Pakistan • Address, phone, email and WhatsApp details are editable from Admin.'
     },
 
     zh: {
-      skip: '跳转到主要内容',
+      skip: '跳到主要内容',
       home: '首页',
       trade: '贸易与商业',
       research: '研究与知识',
       whatsapp: 'WhatsApp',
       adminDemo: '管理',
-      back: '返回',
       eyebrow: '巴基斯坦 • 原产地 • 全球',
-      heroCopy: '从巴基斯坦的松子森林走向世界，连接卓越品质、真实产地、负责任的供应链与专业知识。',
-      tradeKicker: '智利松子',
+      heroCopy: '从巴基斯坦的松子森林走向世界，连接卓越品质、真实产地、负责任供应链与专业知识。',
+      tradeKicker: '吉尔吉特松子',
       globalTrade: '全球贸易',
       tradeSub: '优质产品 • 全球出口 →',
-      researchKicker: '松子',
+      researchKicker: 'CHILGHOZA',
       researchTitle: '研究与知识',
       researchSub: '科学 • 原产地 • 森林 • 品质 →',
       profileKicker: '松子 • 人民 • 合作',
-      profileTitle: '智利松子',
-      profileCopy: '在一个平台连接知识、贸易、森林与环境保护。',
+      profileTitle: 'Chilghoza 松子',
+      profileCopy: '知识、贸易、森林与环境保护的一体化平台。',
       aiKicker: '下一代',
-      aiCopy: '以人类知识为先，以人工智能辅助为后。用于文字优化、研究总结、买家支持和翻译，并在发布前进行人工审核。',
+      aiCopy: '以人类知识为先，AI辅助为后。AI可帮助改善写作、总结研究、支持买家和翻译内容，并在发布前进行人工审核。',
       openAI: '打开 AI 与管理 →',
-      mediaKicker: '原始收藏',
+      mediaKicker: '原创收藏',
       mediaTitle: '从森林到市场',
-      mediaCopy: '仅使用项目提供的原始照片，并可通过管理后台编辑标题、描述、说明和分类。',
+      mediaCopy: '仅使用提供的原创项目照片。',
+      back: '返回',
       tradeKickerLong: '全球贸易 • 品质 • 市场 • 供应',
-      tradeIntro: '为产品质量、出口准备、买家、物流和负责任供应链提供结构化国际贸易中心。',
+      tradeIntro: '面向国际贸易的产品品质、出口准备、买家、物流和负责任供应链中心。',
       researchKickerLong: '科学 • 原产地 • 森林 • 品质',
-      researchIntro: '关于松子原产地、地理标志、森林、生物多样性、气候、天然产品、营养、加工和追溯的知识中心。',
-      waCopy: '商务、采购、研究合作及一般联系。',
+      researchIntro: '关于松子原产地、地理标志、森林、生物多样性、气候、营养、加工和可追溯性的知识中心。',
+      waCopy: '直接商业、采购、研究合作及一般联系。',
       adminTitle: '管理控制中心',
-      adminIntro: '安全管理内容、媒体、用户、权限、版本、主题和 AI。',
+      adminIntro: '安全的内容、媒体、用户、权限、版本、主题和 AI 管理。',
       loginTitle: '管理员登录',
       loginCopy: '登录以管理内容和网站设置。',
       username: '用户名',
       password: '密码',
       login: '登录',
       cmsTitle: '内容',
-      cmsCopy: '添加、编辑、删除、保存草稿、预览和发布内容。',
+      cmsCopy: '添加、编辑、删除、恢复、草稿、预览和发布内容。',
       mediaAdminTitle: '媒体',
-      mediaAdminCopy: '保存图片、视频和 PDF，并编辑其信息。',
+      mediaAdminCopy: '使用 Cloudflare R2 存储图片、视频和 PDF。',
       usersTitle: '用户与权限',
       usersCopy: '角色、权限、会话和审计记录。',
-      aiAdminCopy: 'Royal AI 智能助手，发布前人工审核。',
+      aiAdminCopy: '具有人工审核机制的 Workers AI。',
       themeTitle: '主题工作室',
-      themeCopy: '无需重新部署即可调整视觉系统。',
+      themeCopy: '无需重新部署即可更改视觉系统。',
       saveTheme: '保存主题',
       resetTheme: '重置',
       contentEditor: '内容编辑器',
       saveContent: '保存草稿',
       aiTools: 'Royal AI 助手',
-      aiPlaceholder: '请输入 AI 助手请求……',
-      improve: '优化文字',
+      aiPlaceholder: '请输入 AI 请求...',
+      improve: '改进文字',
       summary: '总结',
       buyer: '买家介绍',
       translate: '翻译',
       securityTitle: '安全与运营',
       addressKicker: '联系 • 办公室 • 合作',
-      addressTitle: '办公地址',
-      addressText: '巴基斯坦 • 地址、电话、邮箱和 WhatsApp 信息可通过管理后台编辑。'
+      addressTitle: '办公室地址',
+      addressText: '巴基斯坦 • 地址、电话、电子邮件和 WhatsApp 信息可从管理后台编辑。'
     },
 
     ur: {
       skip: 'مرکزی مواد پر جائیں',
       home: 'ہوم',
       trade: 'تجارت و کاروبار',
-      research: 'تحقیق و معلومات',
+      research: 'تحقیق و علم',
       whatsapp: 'واٹس ایپ',
       adminDemo: 'ایڈمن',
-      back: 'واپس',
       eyebrow: 'پاکستان • اصل • عالمی',
-      heroCopy: 'پاکستان کے چلغوزہ جنگلات سے دنیا تک — اعلیٰ معیار، مستند اصل، ذمہ دار سپلائی چین اور علم کو ایک پلیٹ فارم پر جوڑتے ہوئے۔',
+      heroCopy: 'پاکستان کے چلغوزہ جنگلات سے دنیا تک — اعلیٰ معیار، حقیقی اصل، ذمہ دار سپلائی چین اور گہرا علم ایک پلیٹ فارم پر۔',
       tradeKicker: 'چلغوزہ پائن نٹس',
       globalTrade: 'عالمی تجارت',
       tradeSub: 'اعلیٰ معیار • دنیا بھر میں برآمد →',
       researchKicker: 'چلغوزہ',
-      researchTitle: 'تحقیق و معلومات',
+      researchTitle: 'تحقیق و علم',
       researchSub: 'سائنس • اصل • جنگلات • معیار →',
       profileKicker: 'چلغوزہ • لوگ • شراکت',
       profileTitle: 'چلغوزہ پائن نٹس',
       profileCopy: 'علم، تجارت، جنگلات اور ماحولیاتی ذمہ داری ایک پلیٹ فارم پر۔',
       aiKicker: 'اگلی نسل',
-      aiCopy: 'انسانی علم پہلے، AI معاونت بعد میں۔ تحریر بہتر کرنے، تحقیق کا خلاصہ، خریداروں کی معاونت اور ترجمہ کے لیے AI استعمال کریں — اشاعت سے پہلے انسانی جائزہ ضروری ہے۔',
+      aiCopy: 'پہلے انسانی علم، پھر AI معاونت۔ AI تحریر بہتر بنانے، تحقیق کا خلاصہ، خریداروں کی مدد اور ترجمہ کر سکتا ہے، مگر اشاعت سے پہلے انسانی جائزہ ضروری ہے۔',
       openAI: 'AI اور ایڈمن کھولیں →',
       mediaKicker: 'اصل مجموعہ',
       mediaTitle: 'جنگل سے مارکیٹ تک',
-      mediaCopy: 'صرف فراہم کردہ اصل تصاویر استعمال کی جاتی ہیں۔ ایڈمن سے ہر تصویر کا عنوان، تفصیل، کیپشن اور زمرہ تبدیل کیا جا سکتا ہے۔',
+      mediaCopy: 'صرف فراہم کردہ اصل پراجیکٹ تصاویر استعمال کی جاتی ہیں۔',
+      back: 'واپس',
       tradeKickerLong: 'عالمی تجارت • معیار • مارکیٹس • سپلائی',
-      tradeIntro: 'مصنوعات کے معیار، برآمدی تیاری، خریداروں، لاجسٹکس اور ذمہ دار سپلائی چین کے لیے عالمی تجارتی مرکز۔',
+      tradeIntro: 'مصنوعات کے معیار، برآمدی تیاری، خریداروں، لاجسٹکس اور ذمہ دار سپلائی چین کے لیے بین الاقوامی تجارتی مرکز۔',
       researchKickerLong: 'سائنس • اصل • جنگلات • معیار',
-      researchIntro: 'چلغوزہ اصل، جغرافیائی نشان، جنگلات، حیاتیاتی تنوع، موسمیاتی تبدیلی، قدرتی مصنوعات، غذائیت، پروسیسنگ اور ٹریس ایبلٹی کا معلوماتی مرکز۔',
-      waCopy: 'براہ راست کاروباری، خریداری، تحقیقی تعاون اور عمومی رابطہ۔',
+      researchIntro: 'چلغوزہ کی اصل، جغرافیائی شناخت، جنگلات، حیاتیاتی تنوع، موسمیاتی تبدیلی، غذائیت، پروسیسنگ اور ٹریس ایبلٹی کا علمی مرکز۔',
+      waCopy: 'براہ راست کاروبار، خریداری، تحقیقی تعاون اور عمومی رابطہ۔',
       adminTitle: 'ایڈمن کنٹرول سینٹر',
-      adminIntro: 'مواد، میڈیا، صارفین، اجازتوں، ورژنز، تھیم اور AI کی محفوظ مینجمنٹ۔ عام مواد اور تھیم کی تبدیلی کے لیے دوبارہ ویب سائٹ deploy کرنے کی ضرورت نہیں ہونی چاہیے۔',
+      adminIntro: 'مواد، میڈیا، صارفین، اجازتوں، ورژنز، تھیم اور AI کا محفوظ کنٹرول۔',
       loginTitle: 'ایڈمن لاگ اِن',
-      loginCopy: 'مواد اور ویب سائٹ سیٹنگز مینج کرنے کے لیے لاگ اِن کریں۔',
+      loginCopy: 'مواد اور ویب سائٹ کی ترتیبات کے لیے لاگ اِن کریں۔',
       username: 'صارف نام',
       password: 'پاس ورڈ',
       login: 'لاگ اِن',
       cmsTitle: 'مواد',
-      cmsCopy: 'ویب سائٹ کے مواد کو شامل، تبدیل، حذف، ڈرافٹ، پری ویو اور شائع کریں۔',
+      cmsCopy: 'فولڈر مواد شامل، ترمیم، حذف، ڈرافٹ، پری ویو اور پبلش کریں۔',
       mediaAdminTitle: 'میڈیا',
-      mediaAdminCopy: 'تصاویر، ویڈیوز اور PDF فائلیں محفوظ کریں اور ان کی معلومات تبدیل کریں۔',
-      usersTitle: 'صارفین اور اجازتیں',
-      usersCopy: 'رولز، اجازتیں، سیشن اور آڈٹ ریکارڈ۔',
-      aiAdminCopy: 'Royal AI معاون، انسانی جائزے کے ساتھ۔',
+      mediaAdminCopy: 'Cloudflare R2 میں تصاویر، ویڈیوز اور PDF محفوظ کریں۔',
+      usersTitle: 'صارفین و اجازتیں',
+      usersCopy: 'رولز، اجازتیں، سیشنز اور آڈٹ ریکارڈز۔',
+      aiAdminCopy: 'انسانی جائزے کے ساتھ Workers AI معاونت۔',
       themeTitle: 'تھیم اسٹوڈیو',
-      themeCopy: 'بغیر دوبارہ deploy کیے ویب سائٹ کے رنگ اور ظاہری انداز تبدیل کریں۔',
+      themeCopy: 'دوبارہ deploy کیے بغیر ویب سائٹ کا بصری نظام تبدیل کریں۔',
       saveTheme: 'تھیم محفوظ کریں',
       resetTheme: 'ری سیٹ',
       contentEditor: 'مواد ایڈیٹر',
@@ -227,74 +205,62 @@ document.addEventListener('DOMContentLoaded', () => {
       aiPlaceholder: 'AI معاون کے لیے درخواست لکھیں...',
       improve: 'تحریر بہتر کریں',
       summary: 'خلاصہ',
-      buyer: 'خریدار پریزنٹیشن',
+      buyer: 'خریدار کے لیے پیشکش',
       translate: 'ترجمہ',
-      securityTitle: 'سیکیورٹی اور آپریشنز',
+      securityTitle: 'سیکیورٹی و آپریشنز',
       addressKicker: 'رابطہ • دفتر • شراکت',
       addressTitle: 'دفتری پتہ',
-      addressText: 'پاکستان • پتہ، فون، ای میل اور واٹس ایپ کی معلومات ایڈمن سے تبدیل کی جا سکتی ہیں۔'
+      addressText: 'پاکستان • پتہ، فون، ای میل اور WhatsApp کی معلومات ایڈمن سے تبدیل کی جا سکتی ہیں۔'
     },
 
     ps: {
-      skip: 'اصلي محتوا ته لاړ شئ',
+      skip: 'اصلي منځپانګې ته لاړ شئ',
       home: 'کور',
       trade: 'سوداګري او تجارت',
       research: 'څېړنه او پوهه',
-      whatsapp: 'واټس اپ',
-      adminDemo: 'اډمین',
-      back: 'بېرته',
-      eyebrow: 'پاکستان • اصليت • نړۍ',
-      heroCopy: 'د پاکستان د چلغوزو له ځنګلونو څخه تر نړۍ پورې — لوړ کیفیت، اصليت، مسؤل اکمالاتي ځنځیر او پوهه سره نښلوي.',
-      tradeKicker: 'چلغوزه',
+      whatsapp: 'واټس‌اپ',
+      adminDemo: 'اداره',
+      eyebrow: 'پاکستان • اصل • نړیوال',
+      heroCopy: 'د پاکستان د چلغوزو له ځنګلونو څخه نړۍ ته — لوړ کیفیت، اصلي سرچینه، مسؤل اکمالاتي ځنځیر او پوهه.',
+      tradeKicker: 'چلغوزي مغز',
       globalTrade: 'نړیوال تجارت',
       tradeSub: 'لوړ کیفیت • نړیوال صادرات →',
-      researchKicker: 'چلغوزه',
+      researchKicker: 'چلغوزی',
       researchTitle: 'څېړنه او پوهه',
-      researchSub: 'ساینس • اصليت • ځنګلونه • کیفیت →',
-      profileKicker: 'چلغوزه • خلک • ملګرتیا',
-      profileTitle: 'چلغوزه مغز',
-      profileCopy: 'پوهه، تجارت، ځنګلونه او چاپېریالي مسؤلیت په یوه پلاتفورم کې.',
+      researchSub: 'ساینس • اصل • ځنګلونه • کیفیت →',
+      profileKicker: 'چلغوزی • خلک • ملګرتیا',
+      profileTitle: 'چلغوزي مغز',
+      profileCopy: 'پوهه، تجارت، ځنګلونه او د چاپېریال ساتنه په یوه پلیټ فارم کې.',
       aiKicker: 'راتلونکی نسل',
-      aiCopy: 'انساني پوهه لومړی، د AI مرسته دوهمه. د لیکنې، څېړنې، پېرېدونکو او ژباړې لپاره AI وکاروئ؛ له خپرېدو مخکې انساني کتنه ضروري ده.',
-      openAI: 'AI او اډمین →',
+      aiCopy: 'لومړی انساني پوهه، بیا AI مرسته. AI د لیکلو، څېړنې، پېرودونکو او ژباړې لپاره مرسته کوي، خو د خپرولو مخکې انساني کتنه اړینه ده.',
+      openAI: 'AI او اداره →',
       mediaKicker: 'اصلي ټولګه',
       mediaTitle: 'له ځنګله تر بازار',
-      mediaCopy: 'یوازې اصلي پروژې انځورونه کارول کېږي او د اډمین له لارې یې عنوان، تشریح، کیپشن او کټګوري بدلول کېدای شي.',
+      mediaCopy: 'یوازې د پروژې اصلي ورکړل شوي عکسونه کارول کېږي.',
+      back: 'بېرته',
       tradeKickerLong: 'نړیوال تجارت • کیفیت • بازارونه • عرضه',
-      tradeIntro: 'د کیفیت، صادراتو، پېرېدونکو، لوژستیک او مسؤل اکمالاتي ځنځیر لپاره نړیوال سوداګریز مرکز.',
-      researchKickerLong: 'ساینس • اصليت • ځنګلونه • کیفیت',
-      researchIntro: 'د چلغوزو اصليت، جغرافیایي نښه، ځنګلونو، تنوع، اقلیم، طبیعي محصولاتو، تغذیې، پروسس او تعقیب مرکز.',
-      waCopy: 'مستقیم کاروباري، پېرود، څېړنیز همکاری او عمومي اړیکه.',
-      adminTitle: 'د اډمین کنټرول مرکز',
-      adminIntro: 'د محتوا، رسنیو، کاروونکو، اجازو، نسخو، موضوع او AI خوندي مدیریت.',
-      loginTitle: 'اډمین ننوتل',
-      loginCopy: 'د محتوا او ویبپاڼې تنظیماتو لپاره ننوتل.',
+      tradeIntro: 'د کیفیت، صادراتو، پېرودونکو، لوژستیک او مسؤل اکمالاتي ځنځیر لپاره نړیوال مرکز.',
+      researchKickerLong: 'ساینس • اصل • ځنګلونه • کیفیت',
+      researchIntro: 'د چلغوزي د اصل، جغرافیایي نښې، ځنګلونو، ژوو، اقلیم، تغذیې او تعقیب مرکز.',
+      waCopy: 'مستقیم تجارت، پېرودنه، څېړنیزه همکاري او عمومي اړیکه.',
+      adminTitle: 'د ادارې کنټرول مرکز',
+      adminIntro: 'د منځپانګې، رسنیو، کاروونکو، اجازو، نسخو، موضوع او AI خوندي کنټرول.',
+      loginTitle: 'د ادارې ننوتل',
+      loginCopy: 'د منځپانګې او ویب‌سایټ تنظیماتو لپاره ننوتل وکړئ.',
       username: 'کارن نوم',
       password: 'پټ نوم',
       login: 'ننوتل',
-      cmsTitle: 'محتوا',
-      cmsCopy: 'محتوا اضافه، بدله، حذف، مسوده، کتنه او خپرول.',
-      mediaAdminTitle: 'رسنۍ',
-      mediaAdminCopy: 'انځورونه، ویډیوګانې او PDF فایلونه خوندي کړئ.',
-      usersTitle: 'کاروونکي او اجازې',
-      usersCopy: 'رولونه، اجازې، ناستې او د پلټنې ریکارډونه.',
-      aiAdminCopy: 'Royal AI مرسته، د انسان له کتنې سره.',
       themeTitle: 'Theme Studio',
-      themeCopy: 'د بیا deploy پرته د ویبپاڼې ظاهري رنګونه بدل کړئ.',
       saveTheme: 'موضوع خوندي کړئ',
       resetTheme: 'بیا تنظیم',
-      contentEditor: 'د محتوا ایډیټر',
-      saveContent: 'مسوده خوندي کړئ',
-      aiTools: 'Royal AI مرسته',
-      aiPlaceholder: 'د AI لپاره خپله غوښتنه ولیکئ...',
+      contentEditor: 'د منځپانګې ایډیټر',
+      saveContent: 'Draft خوندي کړئ',
+      aiTools: 'Royal AI',
       improve: 'لیکنه ښه کړئ',
       summary: 'لنډیز',
-      buyer: 'پېرېدونکي ته وړاندې کول',
+      buyer: 'پېرودونکي ته وړاندې کول',
       translate: 'ژباړه',
-      securityTitle: 'امنیت او عملیات',
-      addressKicker: 'اړیکه • دفتر • ملګرتیا',
-      addressTitle: 'د دفتر پته',
-      addressText: 'پاکستان • پته، ټیلیفون، ایمیل او واټس اپ د اډمین له لارې بدلیدای شي.'
+      addressTitle: 'د دفتر پته'
     },
 
     fa: {
@@ -304,59 +270,44 @@ document.addEventListener('DOMContentLoaded', () => {
       research: 'پژوهش و دانش',
       whatsapp: 'واتساپ',
       adminDemo: 'مدیریت',
-      back: 'بازگشت',
-      eyebrow: 'پاکستان • خاستگاه • جهانی',
-      heroCopy: 'از جنگل‌های چلغوزه پاکستان تا جهان — پیوند کیفیت ممتاز، خاستگاه اصیل، زنجیره تأمین مسئولانه و دانش.',
-      tradeKicker: 'چلغوزه',
+      eyebrow: 'پاکستان • مبدأ • جهانی',
+      heroCopy: 'از جنگل‌های چلغوزای پاکستان به جهان — کیفیت ممتاز، مبدأ واقعی، زنجیره تأمین مسئولانه و دانش تخصصی.',
+      tradeKicker: 'چلغوزا',
       globalTrade: 'تجارت جهانی',
       tradeSub: 'کیفیت ممتاز • صادرات جهانی →',
-      researchKicker: 'چلغوزه',
+      researchKicker: 'چلغوزا',
       researchTitle: 'پژوهش و دانش',
-      researchSub: 'علم • خاستگاه • جنگل‌ها • کیفیت →',
-      profileKicker: 'چلغوزه • مردم • همکاری',
-      profileTitle: 'چلغوزه',
+      researchSub: 'علم • مبدأ • جنگل‌ها • کیفیت →',
+      profileKicker: 'چلغوزا • مردم • مشارکت',
+      profileTitle: 'چلغوزا',
       profileCopy: 'دانش، تجارت، جنگل‌ها و حفاظت محیط زیست در یک پلتفرم.',
       aiKicker: 'نسل آینده',
-      aiCopy: 'دانش انسانی در اولویت، کمک هوش مصنوعی در مرحله دوم. برای بهبود نوشتار، خلاصه‌سازی پژوهش، پشتیبانی خریداران و ترجمه؛ با بررسی انسانی پیش از انتشار.',
+      aiCopy: 'ابتدا دانش انسانی، سپس کمک هوش مصنوعی. استفاده برای بهبود متن، خلاصه پژوهش، پشتیبانی خریداران و ترجمه با بررسی انسانی قبل از انتشار.',
       openAI: 'AI و مدیریت →',
       mediaKicker: 'مجموعه اصلی',
       mediaTitle: 'از جنگل تا بازار',
-      mediaCopy: 'فقط تصاویر اصلی پروژه استفاده می‌شود و اطلاعات آن‌ها از بخش مدیریت قابل ویرایش است.',
-      tradeKickerLong: 'تجارت جهانی • کیفیت • بازار • تأمین',
-      tradeIntro: 'مرکز تجارت بین‌المللی برای کیفیت محصول، آمادگی صادرات، خریداران، لجستیک و زنجیره تأمین مسئولانه.',
-      researchKickerLong: 'علم • خاستگاه • جنگل‌ها • کیفیت',
-      researchIntro: 'مرکز دانش درباره خاستگاه چلغوزه، نشانه جغرافیایی، جنگل‌ها، تنوع زیستی، اقلیم، محصولات طبیعی، تغذیه، فرآوری و رهگیری.',
-      waCopy: 'ارتباط مستقیم تجاری، خرید، همکاری پژوهشی و تماس عمومی.',
+      mediaCopy: 'فقط تصاویر اصلی پروژه استفاده می‌شوند.',
+      back: 'بازگشت',
+      tradeKickerLong: 'تجارت جهانی • کیفیت • بازار • عرضه',
+      researchKickerLong: 'علم • مبدأ • جنگل‌ها • کیفیت',
+      waCopy: 'ارتباط مستقیم تجاری، خرید، همکاری پژوهشی و عمومی.',
       adminTitle: 'مرکز کنترل مدیریت',
-      adminIntro: 'مدیریت امن محتوا، رسانه، کاربران، دسترسی‌ها، نسخه‌ها، تم و هوش مصنوعی.',
       loginTitle: 'ورود مدیر',
       loginCopy: 'برای مدیریت محتوا و تنظیمات وارد شوید.',
       username: 'نام کاربری',
       password: 'رمز عبور',
       login: 'ورود',
-      cmsTitle: 'محتوا',
-      cmsCopy: 'افزودن، ویرایش، حذف، پیش‌نویس، پیش‌نمایش و انتشار.',
-      mediaAdminTitle: 'رسانه',
-      mediaAdminCopy: 'ذخیره تصاویر، ویدیوها و PDF با اطلاعات قابل ویرایش.',
-      usersTitle: 'کاربران و دسترسی‌ها',
-      usersCopy: 'نقش‌ها، دسترسی‌ها، نشست‌ها و سوابق.',
-      aiAdminCopy: 'دستیار Royal AI با بررسی انسانی.',
-      themeTitle: 'استودیو تم',
-      themeCopy: 'تغییر ظاهر بدون استقرار مجدد.',
-      saveTheme: 'ذخیره تم',
+      themeTitle: 'استودیو پوسته',
+      saveTheme: 'ذخیره پوسته',
       resetTheme: 'بازنشانی',
       contentEditor: 'ویرایشگر محتوا',
       saveContent: 'ذخیره پیش‌نویس',
       aiTools: 'دستیار Royal AI',
-      aiPlaceholder: 'درخواست خود را برای دستیار بنویسید...',
-      improve: 'بهبود نوشتار',
+      improve: 'بهبود متن',
       summary: 'خلاصه',
       buyer: 'ارائه به خریدار',
       translate: 'ترجمه',
-      securityTitle: 'امنیت و عملیات',
-      addressKicker: 'تماس • دفتر • همکاری',
-      addressTitle: 'آدرس دفتر',
-      addressText: 'پاکستان • آدرس، تلفن، ایمیل و واتساپ از مدیریت قابل ویرایش است.'
+      addressTitle: 'آدرس دفتر'
     },
 
     ru: {
@@ -366,59 +317,44 @@ document.addEventListener('DOMContentLoaded', () => {
       research: 'Исследования и знания',
       whatsapp: 'WhatsApp',
       adminDemo: 'Админ',
-      back: 'Назад',
       eyebrow: 'ПАКИСТАН • ПРОИСХОЖДЕНИЕ • МИР',
-      heroCopy: 'От лесов чильгозы Пакистана к миру — премиальное качество, подлинное происхождение, ответственная цепочка поставок и знания.',
-      tradeKicker: 'ЧИЛЬГОЗА',
+      heroCopy: 'От лесов чилгозы Пакистана к мировому рынку — качество, подлинное происхождение, ответственная цепочка поставок и знания.',
+      tradeKicker: 'КЕДРОВЫЕ ОРЕХИ ЧИЛГОЗА',
       globalTrade: 'МИРОВАЯ ТОРГОВЛЯ',
-      tradeSub: 'Премиальное качество • Экспорт →',
-      researchKicker: 'ЧИЛЬГОЗА',
+      tradeSub: 'Премиальное качество • Экспорт по всему миру →',
+      researchKicker: 'ЧИЛГОЗА',
       researchTitle: 'ИССЛЕДОВАНИЯ И ЗНАНИЯ',
       researchSub: 'Наука • Происхождение • Леса • Качество →',
-      profileKicker: 'ЧИЛЬГОЗА • ЛЮДИ • ПАРТНЁРСТВО',
-      profileTitle: 'Чильгоза',
-      profileCopy: 'Знания, торговля, леса и забота об окружающей среде на одной платформе.',
+      profileKicker: 'ЧИЛГОЗА • ЛЮДИ • ПАРТНЁРСТВО',
+      profileTitle: 'Орехи чилгоза',
+      profileCopy: 'Знания, торговля, леса и экологическая ответственность на одной платформе.',
       aiKicker: 'НОВОЕ ПОКОЛЕНИЕ',
-      aiCopy: 'Сначала человеческие знания, затем помощь ИИ. Улучшение текста, исследования, поддержка покупателей и перевод — с проверкой человеком перед публикацией.',
+      aiCopy: 'Сначала знания человека, затем помощь AI. Улучшение текста, исследования, поддержка покупателей и перевод с обязательной проверкой человеком.',
       openAI: 'AI и Админ →',
       mediaKicker: 'ОРИГИНАЛЬНАЯ КОЛЛЕКЦИЯ',
       mediaTitle: 'От леса до рынка',
-      mediaCopy: 'Используются только оригинальные фотографии проекта. Метаданные можно редактировать через Админ.',
+      mediaCopy: 'Используются только предоставленные оригинальные фотографии проекта.',
+      back: 'Назад',
       tradeKickerLong: 'МИРОВАЯ ТОРГОВЛЯ • КАЧЕСТВО • РЫНКИ • ПОСТАВКИ',
-      tradeIntro: 'Международный торговый центр для качества продукции, экспорта, покупателей, логистики и ответственной цепочки поставок.',
       researchKickerLong: 'НАУКА • ПРОИСХОЖДЕНИЕ • ЛЕСА • КАЧЕСТВО',
-      researchIntro: 'Центр знаний о происхождении чильгозы, географическом указании, лесах, биоразнообразии, климате, натуральных продуктах, питании, переработке и отслеживании.',
-      waCopy: 'Прямые деловые, закупочные, исследовательские и общие контакты.',
+      waCopy: 'Прямые деловые контакты, закупки, исследовательское сотрудничество.',
       adminTitle: 'Центр управления',
-      adminIntro: 'Безопасное управление контентом, медиа, пользователями, правами, версиями, темами и AI.',
       loginTitle: 'Вход администратора',
-      loginCopy: 'Войдите для управления контентом и настройками.',
+      loginCopy: 'Войдите для управления содержанием и настройками.',
       username: 'Имя пользователя',
       password: 'Пароль',
       login: 'Войти',
-      cmsTitle: 'Контент',
-      cmsCopy: 'Добавление, редактирование, удаление, черновики, просмотр и публикация.',
-      mediaAdminTitle: 'Медиа',
-      mediaAdminCopy: 'Изображения, видео и PDF с редактируемыми данными.',
-      usersTitle: 'Пользователи и права',
-      usersCopy: 'Роли, права, сессии и аудит.',
-      aiAdminCopy: 'Royal AI с проверкой человеком.',
-      themeTitle: 'Студия тем',
-      themeCopy: 'Изменяйте визуальную систему без повторного развёртывания.',
+      themeTitle: 'Студия темы',
       saveTheme: 'Сохранить тему',
       resetTheme: 'Сбросить',
       contentEditor: 'Редактор контента',
       saveContent: 'Сохранить черновик',
-      aiTools: 'Royal AI Assistant',
-      aiPlaceholder: 'Введите запрос для AI...',
+      aiTools: 'Royal AI',
       improve: 'Улучшить текст',
-      summary: 'Сводка',
-      buyer: 'Презентация покупателю',
+      summary: 'Суммировать',
+      buyer: 'Для покупателя',
       translate: 'Перевести',
-      securityTitle: 'Безопасность и операции',
-      addressKicker: 'КОНТАКТ • ОФИС • ПАРТНЁРСТВО',
-      addressTitle: 'Адрес офиса',
-      addressText: 'Пакистан • Адрес, телефон, email и WhatsApp можно изменить через Админ.'
+      addressTitle: 'Адрес офиса'
     },
 
     id: {
@@ -428,12 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
       research: 'Riset & Pengetahuan',
       whatsapp: 'WhatsApp',
       adminDemo: 'Admin',
-      back: 'Kembali',
       eyebrow: 'PAKISTAN • ASAL • GLOBAL',
-      heroCopy: 'Dari hutan chilghoza Pakistan ke dunia — menghubungkan kualitas premium, asal autentik, rantai pasok bertanggung jawab dan pengetahuan.',
+      heroCopy: 'Dari hutan Chilghoza Pakistan ke dunia — menghubungkan kualitas premium, asal autentik, rantai pasok bertanggung jawab, dan pengetahuan.',
       tradeKicker: 'KACANG PINUS CHILGHOZA',
       globalTrade: 'PERDAGANGAN GLOBAL',
-      tradeSub: 'Kualitas premium • Ekspor dunia →',
+      tradeSub: 'Kualitas premium • Ekspor seluruh dunia →',
       researchKicker: 'CHILGHOZA',
       researchTitle: 'RISET & PENGETAHUAN',
       researchSub: 'Sains • Asal • Hutan • Kualitas →',
@@ -441,293 +376,242 @@ document.addEventListener('DOMContentLoaded', () => {
       profileTitle: 'Kacang Pinus Chilghoza',
       profileCopy: 'Pengetahuan, perdagangan, hutan dan kepedulian lingkungan dalam satu platform.',
       aiKicker: 'GENERASI BERIKUTNYA',
-      aiCopy: 'Pengetahuan manusia terlebih dahulu, bantuan AI kemudian. Untuk tulisan, riset, pembeli dan terjemahan — dengan tinjauan manusia sebelum publikasi.',
+      aiCopy: 'Pengetahuan manusia terlebih dahulu. Bantuan AI kedua. Gunakan AI untuk menulis, merangkum riset, membantu pembeli dan menerjemahkan dengan tinjauan manusia.',
       openAI: 'Buka AI & Admin →',
       mediaKicker: 'KOLEKSI ASLI',
       mediaTitle: 'Dari Hutan ke Pasar',
-      mediaCopy: 'Hanya foto proyek asli yang digunakan. Metadata dapat diedit melalui Admin.',
+      mediaCopy: 'Hanya foto proyek asli yang disediakan yang digunakan.',
+      back: 'Kembali',
       tradeKickerLong: 'PERDAGANGAN GLOBAL • KUALITAS • PASAR • PASOKAN',
-      tradeIntro: 'Pusat perdagangan internasional untuk kualitas produk, ekspor, pembeli, logistik dan rantai pasok bertanggung jawab.',
       researchKickerLong: 'SAINS • ASAL • HUTAN • KUALITAS',
-      researchIntro: 'Pusat pengetahuan tentang asal chilghoza, indikasi geografis, hutan, biodiversitas, iklim, produk alami, nutrisi, pengolahan dan keterlacakan.',
       waCopy: 'Kontak bisnis, pembelian, kolaborasi riset dan umum.',
       adminTitle: 'Pusat Kontrol Admin',
-      adminIntro: 'Kelola konten, media, pengguna, izin, versi, tema dan AI dengan aman.',
       loginTitle: 'Login Admin',
       loginCopy: 'Masuk untuk mengelola konten dan pengaturan.',
       username: 'Nama pengguna',
       password: 'Kata sandi',
-      login: 'Masuk',
-      cmsTitle: 'Konten',
-      cmsCopy: 'Tambah, edit, hapus, draf, pratinjau dan publikasi.',
-      mediaAdminTitle: 'Media',
-      mediaAdminCopy: 'Simpan gambar, video dan PDF dengan metadata yang dapat diedit.',
-      usersTitle: 'Pengguna & Izin',
-      usersCopy: 'Peran, izin, sesi dan audit.',
-      aiAdminCopy: 'Royal AI dengan tinjauan manusia.',
-      themeTitle: 'Theme Studio',
-      themeCopy: 'Ubah tampilan tanpa deployment ulang.',
+      login: 'Login',
+      themeTitle: 'Studio Tema',
       saveTheme: 'Simpan Tema',
       resetTheme: 'Reset',
       contentEditor: 'Editor Konten',
-      saveContent: 'Simpan Draf',
-      aiTools: 'Royal AI Assistant',
-      aiPlaceholder: 'Tulis permintaan untuk AI...',
+      saveContent: 'Simpan Draft',
+      aiTools: 'Asisten Royal AI',
       improve: 'Perbaiki Tulisan',
       summary: 'Ringkas',
       buyer: 'Presentasi Pembeli',
       translate: 'Terjemahkan',
-      securityTitle: 'Keamanan & Operasi',
-      addressKicker: 'KONTAK • KANTOR • KEMITRAAN',
-      addressTitle: 'Alamat Kantor',
-      addressText: 'Pakistan • Alamat, telepon, email dan WhatsApp dapat diedit dari Admin.'
+      addressTitle: 'Alamat Kantor'
     },
 
     ms: {
       skip: 'Langkau ke kandungan utama',
-      home: 'Utama',
+      home: 'Laman Utama',
       trade: 'Perdagangan & Perniagaan',
       research: 'Penyelidikan & Pengetahuan',
       whatsapp: 'WhatsApp',
       adminDemo: 'Admin',
-      back: 'Kembali',
       eyebrow: 'PAKISTAN • ASAL • GLOBAL',
-      heroCopy: 'Dari hutan chilghoza Pakistan ke dunia — menghubungkan kualiti premium, asal tulen, rantaian bekalan bertanggungjawab dan pengetahuan.',
-      tradeKicker: 'KACANG PINE CHILGHOZA',
+      heroCopy: 'Dari hutan Chilghoza Pakistan ke dunia — menghubungkan kualiti premium, asal sebenar, rantaian bekalan bertanggungjawab dan pengetahuan.',
+      tradeKicker: 'KACANG PAIN CHILGHOZA',
       globalTrade: 'PERDAGANGAN GLOBAL',
       tradeSub: 'Kualiti premium • Eksport seluruh dunia →',
       researchKicker: 'CHILGHOZA',
       researchTitle: 'PENYELIDIKAN & PENGETAHUAN',
       researchSub: 'Sains • Asal • Hutan • Kualiti →',
       profileKicker: 'CHILGHOZA • MASYARAKAT • KERJASAMA',
-      profileTitle: 'Kacang Pine Chilghoza',
+      profileTitle: 'Kacang Pain Chilghoza',
       profileCopy: 'Pengetahuan, perdagangan, hutan dan penjagaan alam sekitar dalam satu platform.',
       aiKicker: 'GENERASI SETERUSNYA',
-      aiCopy: 'Pengetahuan manusia dahulu, bantuan AI kemudian. Untuk penulisan, penyelidikan, pembeli dan terjemahan — dengan semakan manusia sebelum penerbitan.',
+      aiCopy: 'Pengetahuan manusia dahulu, bantuan AI kemudian. AI membantu penulisan, ringkasan penyelidikan, pembeli dan terjemahan dengan semakan manusia.',
       openAI: 'Buka AI & Admin →',
       mediaKicker: 'KOLEKSI ASAL',
       mediaTitle: 'Dari Hutan ke Pasaran',
-      mediaCopy: 'Hanya foto projek asal digunakan. Maklumat boleh diedit melalui Admin.',
+      mediaCopy: 'Hanya foto projek asal yang diberikan digunakan.',
+      back: 'Kembali',
       tradeKickerLong: 'PERDAGANGAN GLOBAL • KUALITI • PASARAN • BEKALAN',
-      tradeIntro: 'Pusat perdagangan antarabangsa untuk kualiti produk, eksport, pembeli, logistik dan rantaian bekalan bertanggungjawab.',
       researchKickerLong: 'SAINS • ASAL • HUTAN • KUALITI',
-      researchIntro: 'Pusat pengetahuan mengenai asal chilghoza, petunjuk geografi, hutan, biodiversiti, iklim, produk semula jadi, pemakanan, pemprosesan dan kebolehkesanan.',
       waCopy: 'Hubungan perniagaan, pembelian, kerjasama penyelidikan dan umum.',
       adminTitle: 'Pusat Kawalan Admin',
-      adminIntro: 'Urus kandungan, media, pengguna, kebenaran, versi, tema dan AI dengan selamat.',
       loginTitle: 'Log Masuk Admin',
       loginCopy: 'Log masuk untuk mengurus kandungan dan tetapan.',
       username: 'Nama pengguna',
       password: 'Kata laluan',
-      login: 'Log Masuk',
-      cmsTitle: 'Kandungan',
-      cmsCopy: 'Tambah, edit, padam, draf, pratonton dan terbitkan.',
-      mediaAdminTitle: 'Media',
-      mediaAdminCopy: 'Simpan gambar, video dan PDF dengan metadata boleh edit.',
-      usersTitle: 'Pengguna & Kebenaran',
-      usersCopy: 'Peranan, kebenaran, sesi dan audit.',
-      aiAdminCopy: 'Royal AI dengan semakan manusia.',
-      themeTitle: 'Theme Studio',
-      themeCopy: 'Ubah rupa tanpa deployment semula.',
+      login: 'Log masuk',
+      themeTitle: 'Studio Tema',
       saveTheme: 'Simpan Tema',
       resetTheme: 'Tetapkan Semula',
       contentEditor: 'Editor Kandungan',
       saveContent: 'Simpan Draf',
-      aiTools: 'Royal AI Assistant',
-      aiPlaceholder: 'Tulis permintaan untuk AI...',
+      aiTools: 'Pembantu Royal AI',
       improve: 'Baiki Penulisan',
       summary: 'Ringkaskan',
-      buyer: 'Persembahan Pembeli',
+      buyer: 'Pembentangan Pembeli',
       translate: 'Terjemah',
-      securityTitle: 'Keselamatan & Operasi',
-      addressKicker: 'HUBUNGI • PEJABAT • KERJASAMA',
-      addressTitle: 'Alamat Pejabat',
-      addressText: 'Pakistan • Alamat, telefon, email dan WhatsApp boleh diedit melalui Admin.'
+      addressTitle: 'Alamat Pejabat'
     },
 
     ar: {
-      skip: 'الانتقال إلى المحتوى الرئيسي',
+      skip: 'انتقل إلى المحتوى الرئيسي',
       home: 'الرئيسية',
       trade: 'التجارة والأعمال',
       research: 'البحث والمعرفة',
       whatsapp: 'واتساب',
       adminDemo: 'الإدارة',
-      back: 'رجوع',
-      eyebrow: 'باكستان • المنشأ • عالمي',
-      heroCopy: 'من غابات تشلغوزا في باكستان إلى العالم — نربط الجودة الممتازة والأصل الحقيقي وسلاسل التوريد المسؤولة والمعرفة.',
-      tradeKicker: 'صنوبر تشلغوزا',
+      eyebrow: 'باكستان • الأصل • عالمي',
+      heroCopy: 'من غابات تشلغوزا في باكستان إلى العالم — جودة ممتازة، أصل حقيقي، سلاسل توريد مسؤولة ومعرفة عميقة.',
+      tradeKicker: 'مكسرات تشلغوزا',
       globalTrade: 'التجارة العالمية',
       tradeSub: 'جودة ممتازة • تصدير عالمي →',
       researchKicker: 'تشلغوزا',
       researchTitle: 'البحث والمعرفة',
       researchSub: 'العلم • الأصل • الغابات • الجودة →',
       profileKicker: 'تشلغوزا • الناس • الشراكة',
-      profileTitle: 'صنوبر تشلغوزا',
-      profileCopy: 'المعرفة والتجارة والغابات وحماية البيئة في منصة واحدة.',
+      profileTitle: 'مكسرات تشلغوزا',
+      profileCopy: 'المعرفة والتجارة والغابات والمسؤولية البيئية في منصة واحدة.',
       aiKicker: 'الجيل القادم',
-      aiCopy: 'المعرفة البشرية أولاً، ومساعدة الذكاء الاصطناعي ثانياً. لتحسين الكتابة وتلخيص الأبحاث ودعم المشترين والترجمة، مع مراجعة بشرية قبل النشر.',
+      aiCopy: 'المعرفة البشرية أولاً، ثم مساعدة الذكاء الاصطناعي. تحسين الكتابة وتلخيص الأبحاث ودعم المشترين والترجمة مع مراجعة بشرية قبل النشر.',
       openAI: 'فتح AI والإدارة →',
       mediaKicker: 'المجموعة الأصلية',
       mediaTitle: 'من الغابة إلى السوق',
-      mediaCopy: 'تُستخدم فقط الصور الأصلية للمشروع، ويمكن تعديل بياناتها من الإدارة.',
+      mediaCopy: 'يتم استخدام صور المشروع الأصلية المقدمة فقط.',
+      back: 'رجوع',
       tradeKickerLong: 'التجارة العالمية • الجودة • الأسواق • التوريد',
-      tradeIntro: 'مركز تجارة دولي منظم لجودة المنتج والاستعداد للتصدير والمشترين والخدمات اللوجستية وسلسلة التوريد المسؤولة.',
       researchKickerLong: 'العلم • الأصل • الغابات • الجودة',
-      researchIntro: 'مركز معرفة حول أصل تشلغوزا والمؤشر الجغرافي والغابات والتنوع البيولوجي والمناخ والمنتجات الطبيعية والتغذية والمعالجة والتتبع.',
-      waCopy: 'للتواصل التجاري والشراء والتعاون البحثي والتواصل العام.',
-      adminTitle: 'مركز تحكم الإدارة',
-      adminIntro: 'إدارة آمنة للمحتوى والوسائط والمستخدمين والصلاحيات والإصدارات والسمات والذكاء الاصطناعي.',
-      loginTitle: 'تسجيل دخول الإدارة',
-      loginCopy: 'سجل الدخول لإدارة المحتوى وإعدادات الموقع.',
+      waCopy: 'الاتصال التجاري والشراء والتعاون البحثي والاتصال العام.',
+      adminTitle: 'مركز التحكم الإداري',
+      loginTitle: 'تسجيل دخول المدير',
+      loginCopy: 'سجّل الدخول لإدارة المحتوى والإعدادات.',
       username: 'اسم المستخدم',
       password: 'كلمة المرور',
-      login: 'دخول',
-      cmsTitle: 'المحتوى',
-      cmsCopy: 'إضافة وتعديل وحذف وحفظ كمسودة ومعاينة ونشر المحتوى.',
-      mediaAdminTitle: 'الوسائط',
-      mediaAdminCopy: 'حفظ الصور والفيديو وملفات PDF مع بيانات قابلة للتعديل.',
-      usersTitle: 'المستخدمون والصلاحيات',
-      usersCopy: 'الأدوار والصلاحيات والجلسات وسجلات التدقيق.',
-      aiAdminCopy: 'مساعد Royal AI مع مراجعة بشرية.',
-      themeTitle: 'استوديو السمات',
-      themeCopy: 'تغيير المظهر دون إعادة النشر.',
-      saveTheme: 'حفظ السمة',
+      login: 'تسجيل الدخول',
+      themeTitle: 'استوديو المظهر',
+      saveTheme: 'حفظ المظهر',
       resetTheme: 'إعادة ضبط',
       contentEditor: 'محرر المحتوى',
-      saveContent: 'حفظ كمسودة',
+      saveContent: 'حفظ المسودة',
       aiTools: 'مساعد Royal AI',
-      aiPlaceholder: 'اكتب طلبك للمساعد...',
       improve: 'تحسين الكتابة',
       summary: 'تلخيص',
       buyer: 'عرض للمشتري',
       translate: 'ترجمة',
-      securityTitle: 'الأمان والتشغيل',
-      addressKicker: 'اتصال • مكتب • شراكة',
-      addressTitle: 'عنوان المكتب',
-      addressText: 'باكستان • يمكن تعديل العنوان والهاتف والبريد الإلكتروني وواتساب من الإدارة.'
+      addressTitle: 'عنوان المكتب'
     }
   };
 
-  // Dari/Persian, Russian, Indonesian, Malay, Arabic are defined above.
-  // Ensure every language falls back safely to English for any missing key.
-  function t(key) {
-    const lang = localStorage.getItem('rcpn_language') || 'en';
-    return (translations[lang] && translations[lang][key]) ||
-           translations.en[key] ||
-           key;
+  function getStoredLanguage() {
+    return localStorage.getItem('rcpn_language') || 'en';
   }
 
   function applyLanguage(code) {
     const lang = languages.find(x => x.code === code) || languages[0];
+    const dict = translations[lang.code] || translations.en;
 
     document.documentElement.lang = lang.code;
     document.documentElement.dir = lang.dir;
-
     localStorage.setItem('rcpn_language', lang.code);
 
     $$('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (t(key)) el.textContent = t(key);
+      if (dict[key]) el.textContent = dict[key];
     });
 
     $$('[data-i18n-placeholder]').forEach(el => {
       const key = el.getAttribute('data-i18n-placeholder');
-      el.placeholder = t(key);
+      if (dict[key]) el.placeholder = dict[key];
     });
 
-    const label = $('langLabel');
-    if (label) label.textContent = lang.name;
+    if ($('langLabel')) $('langLabel').textContent = lang.name;
 
-    // Keep editable input direction natural.
-    $$('input, textarea, select').forEach(el => {
-      if (lang.dir === 'rtl') {
-        el.style.direction = 'rtl';
-      } else {
-        el.style.direction = '';
-      }
-    });
-
-    renderFolders('researchFolders', 'researchContent', researchData);
-    renderFolders('tradeFolders', 'tradeContent', tradeData);
+    if ($('langMenu')) {
+      $$('.lang-option', $('langMenu')).forEach(option => {
+        option.setAttribute('aria-selected', option.dataset.lang === code);
+      });
+    }
   }
 
-  const langBtn = $('langBtn');
-  const langMenu = $('langMenu');
-  const langLabel = $('langLabel');
+  function buildLanguageMenu() {
+    const menu = $('langMenu');
+    if (!menu) return;
 
-  if (langMenu) {
-    langMenu.innerHTML = languages.map(lang => `
+    menu.innerHTML = languages.map(lang => `
       <button
         type="button"
         class="lang-option"
         data-lang="${lang.code}"
         role="option"
-        aria-label="${lang.name}">
+        aria-selected="false">
         ${lang.name}
       </button>
     `).join('');
-  }
 
-  if (langBtn && langMenu) {
-    langBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      const open = langMenu.classList.toggle('open');
-      langBtn.setAttribute('aria-expanded', String(open));
-    });
-
-    document.addEventListener('click', () => {
-      langMenu.classList.remove('open');
-      langBtn.setAttribute('aria-expanded', 'false');
-    });
-
-    $$('.lang-option', langMenu).forEach(option => {
+    $$('.lang-option', menu).forEach(option => {
       option.addEventListener('click', e => {
         e.stopPropagation();
         applyLanguage(option.dataset.lang);
-        langMenu.classList.remove('open');
-        langBtn.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('open');
+        $('langBtn')?.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
+  buildLanguageMenu();
+
+  $('langBtn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    const menu = $('langMenu');
+    menu?.classList.toggle('open');
+    $('langBtn').setAttribute(
+      'aria-expanded',
+      menu?.classList.contains('open') ? 'true' : 'false'
+    );
+  });
+
+  document.addEventListener('click', () => {
+    $('langMenu')?.classList.remove('open');
+    $('langBtn')?.setAttribute('aria-expanded', 'false');
+  });
+
+  applyLanguage(getStoredLanguage());
+
+
   /* =========================================================
-     2. PAGE NAVIGATION + HISTORY
+     2. PAGE ROUTING + REAL BROWSER HISTORY
      ========================================================= */
 
   const pages = $$('.page');
 
   function showPage(pageId, push = true) {
-    pages.forEach(page => page.classList.remove('active'));
+    if (!$(pageId)) pageId = 'home';
 
-    const target = $(pageId);
-    if (!target) return;
+    pages.forEach(page => {
+      page.classList.toggle('active', page.id === pageId);
+    });
 
-    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     if (push) {
-      history.pushState(
-        { page: pageId },
-        '',
-        `#${pageId}`
-      );
+      history.pushState({ page: pageId }, '', `#${pageId}`);
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (pageId === 'admin') checkAuth();
+  }
+
+  function currentPage() {
+    const hash = location.hash.replace('#', '');
+    return $(hash) ? hash : 'home';
   }
 
   $$('[data-route]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       const route = link.dataset.route;
-      if (route) showPage(route);
+      if (route) showPage(route, true);
     });
   });
 
-  $$('[data-back]').forEach(button => {
-    button.addEventListener('click', () => {
+  $$('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => {
       if (history.length > 1 && location.hash) {
         history.back();
       } else {
@@ -737,15 +621,87 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.addEventListener('popstate', () => {
-    const id = location.hash.replace('#', '') || 'home';
-    showPage(id, false);
+    showPage(currentPage(), false);
   });
 
-  const initialPage = location.hash.replace('#', '') || 'home';
-  showPage(initialPage, false);
+  showPage(currentPage(), false);
+
 
   /* =========================================================
-     3. CORRECT IMAGE / FOLDER ORGANIZATION
+     3. ORIGINAL 43-PHOTO COLLECTION
+     ========================================================= */
+
+  const photoCaptions = [
+    'Chilghoza Forest Landscape',
+    'Origin Traceability',
+    'Regional Forest Mapping',
+    'Chilghoza Identity',
+    'Supply Chain Evidence',
+    'High-Altitude Forest Canopy',
+    'Pinus gerardiana Trees',
+    'Natural Regeneration Area',
+    'Mountain Forest Habitat',
+    'Conservation Zone',
+    'Community Forestry',
+    'Highland Biodiversity',
+    'Ecosystem Monitoring',
+    'Climate Resilience',
+    'Alpine Forest Weather',
+    'Soil & Moisture Analysis',
+    'Laboratory Analysis',
+    'Natural Harvest Sample',
+    'Purity Testing',
+    'Natural Processing',
+    'Nutritional Profile',
+    'Grade-A Chilghoza Kernels',
+    'Size & Shell Grading',
+    'Moisture Testing',
+    'Kernel Color Inspection',
+    'Jumbo Pine Nuts',
+    'Vacuum Packaging',
+    'Cold Storage',
+    'Export Freight Cartons',
+    'Customs Documentation',
+    'Bulk Shipment Dispatch',
+    'Harvest Season Cone Yield',
+    'Pine Cone Extraction',
+    'Wholesale Trade Stock',
+    'Regional Market Supply',
+    'International Freight Batch',
+    'Local Community Collection',
+    'Traditional Harvesting',
+    'Cone Drying Yard',
+    'Manual De-shelling',
+    'Fair Trade Procurement',
+    'Sourcing Quality Check',
+    'Final Export Inspection'
+  ];
+
+  function buildHomeGallery() {
+    const gallery = $('homeGallery');
+    if (!gallery) return;
+
+    gallery.innerHTML = photoCaptions.map((caption, index) => {
+      const number = String(index + 1).padStart(3, '0');
+
+      return `
+        <figure>
+          <img
+            src="${number}.jpg"
+            alt="${caption}"
+            loading="lazy"
+            onerror="this.closest('figure').remove()">
+          <figcaption>${caption}</figcaption>
+        </figure>
+      `;
+    }).join('');
+  }
+
+  buildHomeGallery();
+
+
+  /* =========================================================
+     4. RESEARCH + TRADE FOLDERS
      ========================================================= */
 
   const researchData = [
@@ -753,61 +709,33 @@ document.addEventListener('DOMContentLoaded', () => {
       id: 'r1',
       num: '01',
       title: 'Geographical Indication (GI)',
-      desc: 'Origin protection, product identity, traceability and GI evidence.',
-      detail: 'Geographical origin, product identity, traceability and documentation related to the Chilghoza value chain.',
-      images: [
-        { file: '001.jpg', caption: 'GI / Origin Evidence' },
-        { file: '002.jpg', caption: 'Origin & Traceability' },
-        { file: '003.jpg', caption: 'Regional Forest Mapping' },
-        { file: '004.jpg', caption: 'Product Identity & Certification' },
-        { file: '005.jpg', caption: 'Supply Chain Evidence' }
-      ]
+      desc: 'Origin protection, product identity and supply-chain evidence.',
+      detail: 'Legal protection, region-specific origin mapping, GI evidence and origin traceability mechanisms.',
+      images: ['001.jpg','002.jpg','003.jpg','004.jpg','005.jpg']
     },
-
     {
       id: 'r2',
       num: '02',
       title: 'Chilghoza Forests',
-      desc: 'Forest ecology, habitats, regeneration and conservation.',
-      detail: 'Research and field evidence concerning Pinus gerardiana forests, habitats, regeneration and conservation.',
-      images: [
-        { file: '006.jpg', caption: 'Chilghoza Forest Landscape' },
-        { file: '007.jpg', caption: 'Chilghoza Trees' },
-        { file: '008.jpg', caption: 'Natural Regeneration' },
-        { file: '009.jpg', caption: 'Mountain Forest Habitat' },
-        { file: '010.jpg', caption: 'Forest Conservation' },
-        { file: '011.jpg', caption: 'Community Forestry' }
-      ]
+      desc: 'Forest ecology, regeneration, harvesting and conservation.',
+      detail: 'Ecological knowledge of Pinus gerardiana habitats, cone cycles, community forestry and conservation.',
+      images: ['006.jpg','007.jpg','008.jpg','009.jpg','010.jpg','011.jpg']
     },
-
     {
       id: 'r3',
       num: '03',
       title: 'Global Environment & Climate',
-      desc: 'Biodiversity, ecosystem services, climate and resilience.',
-      detail: 'Environmental information concerning biodiversity, ecosystem services, climate pressures and resilience of Chilghoza landscapes.',
-      images: [
-        { file: '012.jpg', caption: 'Highland Biodiversity' },
-        { file: '013.jpg', caption: 'Ecosystem Observation' },
-        { file: '014.jpg', caption: 'Environmental Monitoring' },
-        { file: '015.jpg', caption: 'Climate & Forest Landscape' },
-        { file: '016.jpg', caption: 'Soil & Moisture Environment' }
-      ]
+      desc: 'Biodiversity, carbon, ecosystem services and climate resilience.',
+      detail: 'Climate variability, cone yields, ecosystem preservation and environmental sustainability.',
+      images: ['012.jpg','013.jpg','014.jpg','015.jpg','016.jpg']
     },
-
     {
       id: 'r4',
       num: '04',
-      title: 'Natural Product & Quality Evidence',
-      desc: 'Natural origin, testing, nutrition and product evidence.',
-      detail: 'Evidence relating to natural origin, laboratory testing, nutritional information and product quality.',
-      images: [
-        { file: '017.jpg', caption: 'Laboratory / Quality Evidence' },
-        { file: '018.jpg', caption: 'Natural Chilghoza Product' },
-        { file: '019.jpg', caption: 'Product Purity Evidence' },
-        { file: '020.jpg', caption: 'Natural Product Verification' },
-        { file: '021.jpg', caption: 'Nutritional Information' }
-      ]
+      title: 'Organic & Natural Product Claims',
+      desc: 'Evidence, standards, chain of custody and declarations.',
+      detail: 'Natural processing, forest origin verification, nutrition and laboratory evidence.',
+      images: ['017.jpg','018.jpg','019.jpg','020.jpg','021.jpg']
     }
   ];
 
@@ -815,86 +743,67 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: 't1',
       num: '01',
-      title: 'Chilghoza Varieties & Quality',
-      desc: 'Product varieties, kernels, grading, size, moisture and quality.',
-      detail: 'The product-focused area for Chilghoza varieties, kernels, shell characteristics, grading and quality specifications.',
-      images: [
-        { file: '022.jpg', caption: 'Chilghoza Kernel / مغز' },
-        { file: '023.jpg', caption: 'Size & Grading' },
-        { file: '024.jpg', caption: 'Moisture / Quality Check' },
-        { file: '025.jpg', caption: 'Kernel Quality Inspection' },
-        { file: '026.jpg', caption: 'Premium / Jumbo Chilghoza' }
-      ]
+      title: 'Quality & Grading',
+      desc: 'Standards for size, moisture, purity and grading.',
+      detail: 'Specifications for kernel size, moisture, shell integrity and export quality.',
+      images: ['022.jpg','023.jpg','024.jpg','025.jpg','026.jpg']
     },
-
     {
       id: 't2',
       num: '02',
       title: 'Export & Logistics',
-      desc: 'Packaging, storage, freight and export documentation.',
-      detail: 'International export preparation, packaging, storage, freight, customs and logistics.',
-      images: [
-        { file: '027.jpg', caption: 'Export Packaging' },
-        { file: '028.jpg', caption: 'Storage & Handling' },
-        { file: '029.jpg', caption: 'Export Cartons' },
-        { file: '030.jpg', caption: 'Customs / Export Documents' },
-        { file: '031.jpg', caption: 'Shipment Dispatch' }
-      ]
+      desc: 'Global shipping, packaging and supply-chain compliance.',
+      detail: 'Packaging, storage, customs documentation and international freight.',
+      images: ['027.jpg','028.jpg','029.jpg','030.jpg','031.jpg']
     },
-
     {
       id: 't3',
       num: '03',
-      title: 'Markets & Pricing',
-      desc: 'Markets, demand, commercial supply and price information.',
-      detail: 'Commercial market information, seasonal supply, demand, trade activity and pricing intelligence.',
-      images: [
-        { file: '032.jpg', caption: 'Harvest / Market Supply' },
-        { file: '033.jpg', caption: 'Chilghoza Cone Processing' },
-        { file: '034.jpg', caption: 'Wholesale Product Stock' },
-        { file: '035.jpg', caption: 'Regional Market Supply' },
-        { file: '036.jpg', caption: 'International Trade Batch' }
-      ]
+      title: 'Market Trends & Pricing',
+      desc: 'Commercial insights, demand and price dynamics.',
+      detail: 'Harvesting insights, wholesale markets, regional trade and demand.',
+      images: ['032.jpg','033.jpg','034.jpg','035.jpg','036.jpg']
     },
-
     {
       id: 't4',
       num: '04',
       title: 'Responsible Supply Chain',
-      desc: 'Communities, harvesting, sourcing and responsible trade.',
-      detail: 'Local communities, traditional harvesting, processing, procurement and responsible supply-chain practices.',
-      images: [
-        { file: '037.jpg', caption: 'Local Community Collection' },
-        { file: '038.jpg', caption: 'Traditional Harvesting' },
-        { file: '039.jpg', caption: 'Cone Drying' },
-        { file: '040.jpg', caption: 'Manual De-shelling' },
-        { file: '041.jpg', caption: 'Responsible Procurement' },
-        { file: '042.jpg', caption: 'Sourcing Quality Check' },
-        { file: '043.jpg', caption: 'Final Export Inspection' }
-      ]
+      desc: 'Ethical sourcing, fair trade and local partnerships.',
+      detail: 'Community procurement, sustainable harvesting and equitable trade.',
+      images: ['037.jpg','038.jpg','039.jpg','040.jpg','041.jpg','042.jpg','043.jpg']
     }
   ];
 
-  function escapeHTML(value) {
-    return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function createFolderImages(imagesList) {
+  function createGallery(images) {
     return `
-      <div class="folder-gallery">
-        ${imagesList.map(img => `
-          <figure class="folder-media">
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+        gap:14px;
+        margin-top:20px;">
+        ${images.map(file => `
+          <figure style="
+            margin:0;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(255,255,255,.12);
+            padding:8px;
+            border-radius:10px;">
             <img
-              src="${escapeHTML(img.file)}"
-              alt="${escapeHTML(img.caption)}"
+              src="${file}"
+              alt="Royal Chilghoza project photograph"
               loading="lazy"
-            >
-            <figcaption>${escapeHTML(img.caption)}</figcaption>
+              style="
+                width:100%;
+                height:120px;
+                object-fit:cover;
+                border-radius:7px;
+                display:block;">
+            <figcaption style="
+              margin-top:7px;
+              font-size:.78rem;
+              color:#d1d5db;">
+              ${file}
+            </figcaption>
           </figure>
         `).join('')}
       </div>
@@ -910,80 +819,54 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.innerHTML = data.map(item => `
       <article class="folder" data-id="${item.id}" tabindex="0">
         <span class="num">${item.num}</span>
-        <h3>${escapeHTML(item.title)}</h3>
-        <p>${escapeHTML(item.desc)}</p>
+        <h3>${item.title}</h3>
+        <p>${item.desc}</p>
       </article>
     `).join('');
 
     $$('.folder', grid).forEach(folder => {
-      const open = () => {
+      const openFolder = () => {
         $$('.folder', grid).forEach(x => x.classList.remove('active'));
         folder.classList.add('active');
 
-        const selected = data.find(
-          x => x.id === folder.dataset.id
-        );
-
-        if (!selected) return;
+        const item = data.find(x => x.id === folder.dataset.id);
+        if (!item) return;
 
         detail.innerHTML = `
           <div class="detail-box">
-            <div class="eyebrow">${escapeHTML(selected.num)}</div>
-            <h2>${escapeHTML(selected.title)}</h2>
-            <p>${escapeHTML(selected.detail)}</p>
-            <div class="detail-gallery-title">
-              ${t('mediaKicker')}
-            </div>
-            ${createFolderImages(selected.images)}
+            <div class="eyebrow">ROYAL CHILGHOZA</div>
+            <h2>${item.title}</h2>
+            <p>${item.detail}</p>
+            <h4 style="margin-top:25px;color:var(--accent);">
+              Gallery & Field Evidence
+            </h4>
+            ${createGallery(item.images)}
           </div>
         `;
 
         detail.scrollIntoView({
           behavior: 'smooth',
-          block: 'nearest'
+          block: 'start'
         });
       };
 
-      folder.addEventListener('click', open);
+      folder.addEventListener('click', openFolder);
 
       folder.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          open();
+          openFolder();
         }
       });
     });
   }
 
-  /* =========================================================
-     4. HOME ORIGINAL PHOTO COLLECTION
-     ========================================================= */
+  renderFolders('researchFolders', 'researchContent', researchData);
+  renderFolders('tradeFolders', 'tradeContent', tradeData);
 
-  const allImages = [
-    ...researchData.flatMap(folder => folder.images),
-    ...tradeData.flatMap(folder => folder.images)
-  ];
-
-  function renderHomeGallery() {
-    const gallery = $('homeGallery');
-    if (!gallery) return;
-
-    gallery.innerHTML = allImages.map(img => `
-      <figure>
-        <img
-          src="${escapeHTML(img.file)}"
-          alt="${escapeHTML(img.caption)}"
-          loading="lazy"
-        >
-        <figcaption>${escapeHTML(img.caption)}</figcaption>
-      </figure>
-    `).join('');
-  }
-
-  renderHomeGallery();
 
   /* =========================================================
-     5. ADMIN API
+     5. API HELPER
      ========================================================= */
 
   async function api(url, options = {}) {
@@ -992,87 +875,82 @@ document.addEventListener('DOMContentLoaded', () => {
       ...options
     });
 
-    let data = {};
+    let data = null;
+
     try {
       data = await response.json();
-    } catch (_) {}
+    } catch {
+      data = {};
+    }
 
     if (!response.ok) {
-      throw new Error(data.error || `Request failed: ${response.status}`);
+      throw new Error(data.error || `Request failed (${response.status})`);
     }
 
     return data;
   }
 
+
   /* =========================================================
-     6. ADMIN LOGIN
+     6. AUTHENTICATION
      ========================================================= */
 
-  const loginBtn = $('loginBtn');
-  const loginPanel = $('loginPanel');
-  const adminPanel = $('adminPanel');
-  const loginStatus = $('loginStatus');
-
   async function checkAuth() {
-    if (!loginPanel || !adminPanel) return;
-
     try {
       const result = await api('/api/me');
 
       if (result.auth) {
-        loginPanel.classList.add('hidden');
-        adminPanel.classList.remove('hidden');
+        $('loginPanel')?.classList.add('hidden');
+        $('adminPanel')?.classList.remove('hidden');
         loadAdminData();
+      } else {
+        $('loginPanel')?.classList.remove('hidden');
+        $('adminPanel')?.classList.add('hidden');
       }
-    } catch (_) {
-      // Backend may not be connected yet.
+    } catch {
+      $('loginPanel')?.classList.remove('hidden');
+      $('adminPanel')?.classList.add('hidden');
     }
   }
 
-  if (loginBtn) {
-    loginBtn.addEventListener('click', async () => {
-      const username = $('username')?.value.trim();
-      const password = $('password')?.value || '';
+  async function login() {
+    const username = $('username')?.value.trim();
+    const password = $('password')?.value || '';
+    const status = $('loginStatus');
 
-      if (!username || !password) {
-        if (loginStatus) {
-          loginStatus.textContent = 'Please enter username and password.';
-        }
-        return;
-      }
+    if (!username || !password) {
+      if (status) status.textContent = 'Please enter username and password.';
+      return;
+    }
 
-      loginBtn.disabled = true;
+    if (status) status.textContent = 'Signing in...';
 
-      try {
-        const result = await api('/api/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username,
-            password
-          })
-        });
+    try {
+      const result = await api('/api/login', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
 
-        if (loginStatus) {
-          loginStatus.textContent = result.message || 'Signed in.';
-        }
+      if (status) status.textContent = result.message || 'Signed in.';
 
-        loginPanel?.classList.add('hidden');
-        adminPanel?.classList.remove('hidden');
+      $('loginPanel')?.classList.add('hidden');
+      $('adminPanel')?.classList.remove('hidden');
 
-        await loadAdminData();
-
-      } catch (error) {
-        if (loginStatus) {
-          loginStatus.textContent = error.message || 'Login failed.';
-        }
-      } finally {
-        loginBtn.disabled = false;
-      }
-    });
+      loadAdminData();
+    } catch (error) {
+      if (status) status.textContent = error.message;
+    }
   }
+
+  $('loginBtn')?.addEventListener('click', login);
+
+  $('password')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+  });
+
 
   /* =========================================================
      7. THEME STUDIO
@@ -1086,34 +964,36 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function applyTheme(theme) {
-    const value = {
-      ...defaultTheme,
-      ...(theme || {})
-    };
+    const root = document.documentElement;
 
-    document.documentElement.style.setProperty('--bg', value.bg);
-    document.documentElement.style.setProperty('--text', value.text);
-    document.documentElement.style.setProperty('--accent', value.accent);
-    document.documentElement.style.setProperty('--surface', value.surface);
+    if (theme.bg) root.style.setProperty('--bg', theme.bg);
+    if (theme.text) root.style.setProperty('--text', theme.text);
+    if (theme.accent) root.style.setProperty('--accent', theme.accent);
+    if (theme.surface) root.style.setProperty('--surface', theme.surface);
 
-    if ($('bgColor')) $('bgColor').value = value.bg;
-    if ($('textColor')) $('textColor').value = value.text;
-    if ($('accentColor')) $('accentColor').value = value.accent;
-    if ($('surfaceColor')) $('surfaceColor').value = value.surface;
+    if ($('bgColor')) $('bgColor').value = theme.bg || defaultTheme.bg;
+    if ($('textColor')) $('textColor').value = theme.text || defaultTheme.text;
+    if ($('accentColor')) $('accentColor').value = theme.accent || defaultTheme.accent;
+    if ($('surfaceColor')) $('surfaceColor').value = theme.surface || defaultTheme.surface;
   }
 
   async function loadTheme() {
     try {
       const result = await api('/api/settings/theme');
+
       if (result.theme) {
         applyTheme(result.theme);
+      } else {
+        applyTheme(defaultTheme);
       }
-    } catch (_) {
+    } catch {
       applyTheme(defaultTheme);
     }
   }
 
-  $('saveTheme')?.addEventListener('click', async () => {
+  async function saveTheme() {
+    const status = $('contentStatus');
+
     const theme = {
       bg: $('bgColor')?.value || defaultTheme.bg,
       text: $('textColor')?.value || defaultTheme.text,
@@ -1127,36 +1007,38 @@ document.addEventListener('DOMContentLoaded', () => {
       await api('/api/settings/theme', {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(theme)
       });
 
-      const status = $('contentStatus');
       if (status) status.textContent = 'Theme saved successfully.';
     } catch (error) {
-      const status = $('contentStatus');
       if (status) status.textContent = error.message;
     }
-  });
+  }
 
-  $('resetTheme')?.addEventListener('click', () => {
+  function resetTheme() {
     applyTheme(defaultTheme);
-  });
+  }
+
+  $('saveTheme')?.addEventListener('click', saveTheme);
+  $('resetTheme')?.addEventListener('click', resetTheme);
+
 
   /* =========================================================
-     8. CONTENT EDITOR
+     8. CONTENT CMS
      ========================================================= */
 
-  $('saveContent')?.addEventListener('click', async () => {
+  async function saveContent() {
+    const status = $('contentStatus');
+
     const section = $('editFolder')?.value || 'trade';
     const title = $('editTitle')?.value.trim();
     const description = $('editDescription')?.value.trim();
 
-    if (!title) {
-      if ($('contentStatus')) {
-        $('contentStatus').textContent = 'Please enter a title.';
-      }
+    if (!title || !description) {
+      if (status) status.textContent = 'Title and description are required.';
       return;
     }
 
@@ -1164,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', () => {
       await api('/api/content', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify({
           section,
@@ -1174,20 +1056,16 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       });
 
-      if ($('contentStatus')) {
-        $('contentStatus').textContent = 'Draft saved successfully.';
-      }
+      if (status) status.textContent = 'Draft saved successfully.';
 
       $('editTitle').value = '';
       $('editDescription').value = '';
 
       loadContent();
     } catch (error) {
-      if ($('contentStatus')) {
-        $('contentStatus').textContent = error.message;
-      }
+      if (status) status.textContent = error.message;
     }
-  });
+  }
 
   async function loadContent() {
     const list = $('contentList');
@@ -1196,85 +1074,69 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const result = await api('/api/content');
 
-      list.innerHTML = (result.items || []).map(item => `
-        <div class="content-item" data-content-id="${item.id}">
-          <strong>${escapeHTML(item.title)}</strong>
-          <div class="mini">
-            ${escapeHTML(item.section)} •
-            ${escapeHTML(item.status)}
+      const items = result.items || [];
+
+      list.innerHTML = items.length
+        ? items.map(item => `
+          <div class="content-item">
+            <strong>${escapeHtml(item.title)}</strong>
+            <div class="mini">
+              ${escapeHtml(item.section)} •
+              ${escapeHtml(item.status)}
+            </div>
+            <p>${escapeHtml(item.description)}</p>
           </div>
-          <p>${escapeHTML(item.description)}</p>
-          <button class="btn ghost delete-content" data-id="${item.id}">
-            Delete
-          </button>
-        </div>
-      `).join('');
-
-      $$('.delete-content', list).forEach(button => {
-        button.addEventListener('click', async () => {
-          if (!confirm('Delete this content item?')) return;
-
-          try {
-            await api(`/api/content/${button.dataset.id}`, {
-              method: 'DELETE'
-            });
-            loadContent();
-          } catch (error) {
-            alert(error.message);
-          }
-        });
-      });
-
-    } catch (_) {
-      list.innerHTML = '';
+        `).join('')
+        : '<div class="notice">No content records yet.</div>';
+    } catch (error) {
+      list.innerHTML = `<div class="notice">${escapeHtml(error.message)}</div>`;
     }
   }
 
+  $('saveContent')?.addEventListener('click', saveContent);
+
+
   /* =========================================================
-     9. MEDIA LIBRARY
+     9. MEDIA LIBRARY / R2
      ========================================================= */
 
-  $('uploadMedia')?.addEventListener('click', async () => {
+  async function uploadMedia() {
     const file = $('mediaFile')?.files?.[0];
+    const status = $('mediaStatus');
 
     if (!file) {
-      if ($('mediaStatus')) {
-        $('mediaStatus').textContent = 'Please select a file.';
-      }
+      if (status) status.textContent = 'Please select a file.';
       return;
     }
 
-    const fd = new FormData();
+    if (status) status.textContent = 'Uploading...';
 
-    fd.append('file', file);
-    fd.append('title', $('mediaTitle')?.value || file.name);
-    fd.append('description', $('mediaDescription')?.value || '');
-    fd.append('caption', $('mediaCaption')?.value || '');
-    fd.append('section', $('mediaSection')?.value || 'research');
+    const form = new FormData();
+
+    form.append('file', file);
+    form.append('title', $('mediaTitle')?.value || file.name);
+    form.append('description', $('mediaDescription')?.value || '');
+    form.append('caption', $('mediaCaption')?.value || '');
+    form.append('section', $('mediaSection')?.value || 'research');
 
     try {
       await api('/api/media', {
         method: 'POST',
-        body: fd
+        body: form
       });
 
-      if ($('mediaStatus')) {
-        $('mediaStatus').textContent = 'Media uploaded successfully.';
-      }
+      if (status) status.textContent = 'Media uploaded successfully.';
 
-      $('mediaFile').value = '';
-      $('mediaTitle').value = '';
-      $('mediaDescription').value = '';
-      $('mediaCaption').value = '';
+      if ($('mediaFile')) $('mediaFile').value = '';
+      if ($('mediaTitle')) $('mediaTitle').value = '';
+      if ($('mediaDescription')) $('mediaDescription').value = '';
+      if ($('mediaCaption')) $('mediaCaption').value = '';
 
       loadMedia();
-
     } catch (error) {
-      if ($('mediaStatus')) {
-        $('mediaStatus').textContent = error.message;
-      }
+      if (status) status.textContent = error.message;
     }
-  });
+  }
 
   async function loadMedia() {
     const list = $('mediaList');
@@ -1282,157 +1144,152 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const result = await api('/api/media');
+      const items = result.items || [];
 
-      list.innerHTML = (result.items || []).map(item => {
-        const mediaURL =
-          `/api/media/${encodeURIComponent(item.r2_key)}`;
-
-        let preview = '';
-
-        if (item.kind === 'image') {
-          preview = `
-            <img
-              src="${mediaURL}"
-              alt="${escapeHTML(item.title)}"
-              loading="lazy"
-            >
-          `;
-        } else if (item.kind === 'video') {
-          preview = `
-            <video
-              src="${mediaURL}"
-              controls
-              preload="metadata">
-            </video>
-          `;
-        } else {
-          preview = `
-            <a
-              class="btn"
-              href="${mediaURL}"
-              target="_blank"
-              rel="noopener">
-              Open PDF
-            </a>
-          `;
-        }
-
-        return `
+      list.innerHTML = items.length
+        ? items.map(item => `
           <div class="media-item">
-            ${preview}
-            <strong>${escapeHTML(item.title)}</strong>
+            ${item.kind === 'image'
+              ? `<img src="/api/media/${encodeURIComponent(item.r2_key)}" alt="${escapeHtml(item.title)}" loading="lazy">`
+              : item.kind === 'video'
+                ? `<video src="/api/media/${encodeURIComponent(item.r2_key)}" controls></video>`
+                : `<a href="/api/media/${encodeURIComponent(item.r2_key)}" target="_blank" rel="noopener">Open PDF</a>`
+            }
+
+            <strong>${escapeHtml(item.title)}</strong>
             <div class="mini">
-              ${escapeHTML(item.section)}
+              ${escapeHtml(item.section)} • ${escapeHtml(item.kind)}
             </div>
-            <p>${escapeHTML(item.description)}</p>
-            <small>${escapeHTML(item.caption)}</small>
-            <br><br>
-            <button
-              class="btn ghost delete-media"
-              data-id="${item.id}">
-              Delete
-            </button>
+
+            <p>${escapeHtml(item.description || '')}</p>
+            <small>${escapeHtml(item.caption || '')}</small>
           </div>
-        `;
-      }).join('');
+        `).join('')
+        : '<div class="notice">Media library is empty.</div>';
 
-      $$('.delete-media', list).forEach(button => {
-        button.addEventListener('click', async () => {
-          if (!confirm('Delete this media item?')) return;
-
-          try {
-            await api(`/api/media/${button.dataset.id}`, {
-              method: 'DELETE'
-            });
-            loadMedia();
-          } catch (error) {
-            alert(error.message);
-          }
-        });
-      });
-
-    } catch (_) {
-      list.innerHTML = '';
+    } catch (error) {
+      list.innerHTML = `<div class="notice">${escapeHtml(error.message)}</div>`;
     }
   }
+
+  $('uploadMedia')?.addEventListener('click', uploadMedia);
+
 
   /* =========================================================
      10. ROYAL AI ASSISTANT
      ========================================================= */
 
+  async function runAI(mode) {
+    const prompt = $('aiPrompt')?.value.trim();
+    const resultBox = $('aiResult');
+
+    if (!prompt) {
+      if (resultBox) resultBox.value = 'Please write a request first.';
+      return;
+    }
+
+    if (resultBox) resultBox.value = 'Royal AI is working...';
+
+    try {
+      const result = await api('/api/ai', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          mode,
+          language: document.documentElement.lang || 'en',
+          text: prompt
+        })
+      });
+
+      if (resultBox) {
+        resultBox.value = result.result || 'No result returned.';
+      }
+
+    } catch (error) {
+      if (resultBox) resultBox.value = error.message;
+    }
+  }
+
   $$('[data-ai]').forEach(button => {
-    button.addEventListener('click', async () => {
-      const text = $('aiPrompt')?.value.trim();
-
-      if (!text) {
-        if ($('aiResult')) {
-          $('aiResult').value = 'Please write a request first.';
-        }
-        return;
-      }
-
-      const mode = button.dataset.ai;
-      const currentLanguage =
-        localStorage.getItem('rcpn_language') || 'en';
-
-      button.disabled = true;
-
-      try {
-        const result = await api('/api/ai', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            mode,
-            language: currentLanguage,
-            text
-          })
-        });
-
-        if ($('aiResult')) {
-          $('aiResult').value = result.result || '';
-        }
-
-      } catch (error) {
-        if ($('aiResult')) {
-          $('aiResult').value = error.message;
-        }
-      } finally {
-        button.disabled = false;
-      }
+    button.addEventListener('click', () => {
+      runAI(button.dataset.ai);
     });
   });
 
+
   /* =========================================================
-     11. ADMIN DATA LOADER
+     11. LOAD ADMIN DATA
      ========================================================= */
 
   async function loadAdminData() {
-    await Promise.allSettled([
-      loadTheme(),
-      loadContent(),
-      loadMedia()
-    ]);
+    await loadTheme();
+    await loadContent();
+    await loadMedia();
   }
 
+
   /* =========================================================
-     12. FOOTER YEAR
+     12. SAFE HTML OUTPUT
+     ========================================================= */
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+
+  /* =========================================================
+     13. FOOTER YEAR
      ========================================================= */
 
   if ($('year')) {
     $('year').textContent = new Date().getFullYear();
   }
 
+
   /* =========================================================
-     13. INITIALIZE
+     14. WHATSAPP
      ========================================================= */
 
-  const savedLanguage =
-    localStorage.getItem('rcpn_language') || 'en';
+  const waLink = $('waLink');
 
-  applyLanguage(savedLanguage);
-  applyTheme(defaultTheme);
-  checkAuth();
+  if (waLink) {
+    waLink.addEventListener('click', () => {
+      // The actual production WhatsApp number can be changed in index.html.
+    });
+  }
+
+
+  /* =========================================================
+     15. LOCAL THEME FALLBACK
+     ========================================================= */
+
+  try {
+    const localTheme = localStorage.getItem('rcpn_theme');
+
+    if (localTheme) {
+      applyTheme(JSON.parse(localTheme));
+    }
+  } catch {
+    // Ignore invalid local theme.
+  }
+
+
+  /* =========================================================
+     16. ACCESSIBILITY
+     ========================================================= */
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      $('langMenu')?.classList.remove('open');
+      $('langBtn')?.setAttribute('aria-expanded', 'false');
+    }
+  });
 
 });
