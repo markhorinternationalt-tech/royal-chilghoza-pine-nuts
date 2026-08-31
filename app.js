@@ -185,12 +185,53 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFolders('researchFolders', 'researchContent', researchData);
   renderFolders('tradeFolders', 'tradeContent', tradeData);
 
-  // 4. Language Menu Toggle
+  // 4. Language Menu Toggle & Options
   const langBtn = document.getElementById('langBtn');
   const langMenu = document.getElementById('langMenu');
+  const langLabel = document.getElementById('langLabel');
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'ur', name: 'اردو' }
+  ];
+
+  if (langMenu) {
+    langMenu.innerHTML = languages.map(l => `
+      <div class="lang-option" data-lang="${l.code}" style="padding: 10px 15px; cursor: pointer; color: #fff; background: #08251b; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        ${l.name}
+      </div>
+    `).join('');
+  }
+
   if (langBtn && langMenu) {
-    langBtn.addEventListener('click', () => {
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       langMenu.classList.toggle('open');
+      const isExpanded = langMenu.classList.contains('open');
+      langBtn.setAttribute('aria-expanded', isExpanded);
+    });
+
+    document.addEventListener('click', () => {
+      langMenu.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    });
+
+    langMenu.querySelectorAll('.lang-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const selectedLang = opt.getAttribute('data-lang');
+        langLabel.textContent = opt.textContent.trim();
+        langMenu.classList.remove('open');
+        langBtn.setAttribute('aria-expanded', 'false');
+        
+        if (selectedLang === 'ur') {
+          document.documentElement.setAttribute('dir', 'rtl');
+          document.documentElement.setAttribute('lang', 'ur');
+        } else {
+          document.documentElement.setAttribute('dir', 'ltr');
+          document.documentElement.setAttribute('lang', 'en');
+        }
+      });
     });
   }
 
