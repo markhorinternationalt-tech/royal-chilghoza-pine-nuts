@@ -1,6 +1,0 @@
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "royal-chilghoza-pine-nuts",
-  "main": "app.js",
-  "compatibility_date": "2026-09-01"
-}
