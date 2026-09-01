@@ -9,8 +9,8 @@
 <body>
     <header class="site-header">
         <div class="brand-container">
-            <h1>ROYAL CHILGHOZA</h1>
-            <span class="sub-brand">PINE NUTS</span>
+            <h1 data-i18n="brandTitle">ROYAL CHILGHOZA</h1>
+            <span class="sub-brand" data-i18n="subBrand">PINE NUTS</span>
         </div>
         <div class="controls-container">
             <select id="languageSwitcher" onchange="changeLanguage(this.value)">
@@ -18,82 +18,82 @@
                 <option value="ur">اردو</option>
                 <option value="zh">中文</option>
             </select>
-            <button onclick="toggleTheme()" class="theme-btn">🎨 Theme</button>
+            
+            <select id="themeSwitcher" onchange="changeTheme(this.value)" class="theme-select">
+                <option value="forest">🌲 Forest Green</option>
+                <option value="maroon">🍷 Royal Maroon</option>
+                <option value="navy">🌊 Midnight Navy</option>
+                <option value="charcoal">🪙 Charcoal Gold</option>
+            </select>
         </div>
     </header>
 
     <main class="main-content">
         <section class="hero-section">
-            <h2>PAKISTAN • ORIGIN • GLOBAL</h2>
-            <h3>Royal Chilghoza Pine Nuts</h3>
-            <p>From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
+            <h2 data-i18n="heroTop">PAKISTAN • ORIGIN • GLOBAL</h2>
+            <h3 data-i18n="heroMain">Royal Chilghoza Pine Nuts</h3>
+            <p data-i18n="heroDesc">From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
         </section>
 
-        <!-- Two Main Folders -->
         <section class="main-folders-grid">
             <div class="folder-card" onclick="openFolderModal('trade')">
                 <span class="icon">🌰</span>
-                <span class="category-tag">CHILGHOZA PINE NUTS</span>
-                <h2>GLOBAL TRADE</h2>
-                <p>Premium quality • Worldwide export →</p>
+                <span class="category-tag" data-i18n="tagTrade">CHILGHOZA PINE NUTS</span>
+                <h2 data-i18n="folderTrade">GLOBAL TRADE</h2>
+                <p data-i18n="descTrade">Premium quality • Worldwide export →</p>
             </div>
             <div class="folder-card" onclick="openFolderModal('research')">
                 <span class="icon">🔬</span>
-                <span class="category-tag">CHILGHOZA</span>
-                <h2>RESEARCH & KNOWLEDGE</h2>
-                <p>Science • Origin • Forests • Quality →</p>
+                <span class="category-tag" data-i18n="tagResearch">CHILGHOZA</span>
+                <h2 data-i18n="folderResearch">RESEARCH & KNOWLEDGE</h2>
+                <p data-i18n="descResearch">Science • Origin • Forests • Quality →</p>
             </div>
         </section>
 
-        <!-- Profile Section -->
         <section class="profile-section">
             <img src="profile.jpg" alt="Profile Picture" class="profile-img">
         </section>
 
-        <!-- 8 Full-Size Images Grid with Editable Captions -->
         <section class="gallery-section">
-            <h3>Exhibition Gallery & Field Logs</h3>
+            <h3 data-i18n="galleryTitle">Exhibition Gallery & Field Logs</h3>
             <div class="image-grid" id="imageGallery"></div>
         </section>
 
-        <!-- Royal AI Assistant -->
         <section class="ai-assistant-section">
             <div class="ai-box">
-                <h3>🤖 Royal AI Assistant</h3>
-                <p>Ask anything about our harvests, B2B trade terms, or forest origins.</p>
+                <h3 data-i18n="aiTitle">🤖 Royal AI Assistant</h3>
+                <p data-i18n="aiDesc">Ask anything about our harvests, B2B trade terms, or forest origins.</p>
                 <div class="chat-interface">
                     <input type="text" id="aiQuery" placeholder="Type your inquiry here...">
-                    <button onclick="askRoyalAI()">Send</button>
+                    <button onclick="askRoyalAI()" data-i18n="aiSend">Send</button>
                 </div>
                 <div id="aiResponse" class="ai-response"></div>
             </div>
         </section>
     </main>
 
-    <!-- Footer Office Addresses -->
     <footer class="site-footer">
-        <h3>Office Address & Contact</h3>
+        <h3 data-i18n="footerTitle">Office Address & Contact</h3>
         <div class="addresses-grid">
             <div class="office-card">
-                <h4>🇨🇳 China Office</h4>
+                <h4 data-i18n="chinaOffice">🇨🇳 China Office</h4>
                 <p>Urumqi / Beijing Wholesale Hub</p>
             </div>
             <div class="office-card">
-                <h4>🇵🇰 Islamabad Office</h4>
+                <h4 data-i18n="islamabadOffice">🇵🇰 Islamabad Office</h4>
                 <p>Blue Area, Islamabad, Pakistan</p>
             </div>
             <div class="office-card">
-                <h4>🏔️ Chilas Office</h4>
+                <h4 data-i18n="chilasOffice">🏔️ Chilas Office</h4>
                 <p>Diamer District, Gilgit-Baltistan</p>
             </div>
             <div class="office-card">
-                <h4>🇦🇫 Afghanistan Office</h4>
+                <h4 data-i18n="afghanOffice">🇦🇫 Afghanistan Office</h4>
                 <p>Kabul Trade Center Hub</p>
             </div>
         </div>
     </footer>
 
-    <!-- Dynamic Folder Modal -->
     <div id="folderModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeFolderModal()">&times;</span>
