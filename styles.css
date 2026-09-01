@@ -6,12 +6,31 @@
     --text-muted: #b0b0b0;
 }
 
+body.theme-maroon {
+    --bg-primary: #1c0b0b;
+    --card-bg: #2a1313;
+    --accent-gold: #e2c044;
+}
+
+body.theme-navy {
+    --bg-primary: #0b111c;
+    --card-bg: #131c2a;
+    --accent-gold: #d4af37;
+}
+
+body.theme-charcoal {
+    --bg-primary: #141414;
+    --card-bg: #1f1f1f;
+    --accent-gold: #e5c158;
+}
+
 body {
     background-color: var(--bg-primary);
     color: var(--text-main);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    transition: background 0.3s ease;
 }
 
 .site-header {
@@ -35,7 +54,12 @@ body {
     color: var(--text-muted);
 }
 
-.controls-container select, .theme-btn {
+.controls-container {
+    display: flex;
+    gap: 10px;
+}
+
+.controls-container select, .theme-select {
     background: var(--card-bg);
     color: var(--accent-gold);
     border: 1px solid var(--accent-gold);
@@ -97,7 +121,7 @@ body {
     height: 120px;
     border-radius: 50%;
     border: 2px solid var(--accent-gold);
-    object-fit: cover;
+    object-file: cover;
 }
 
 .gallery-section {
@@ -159,7 +183,7 @@ body {
 .chat-interface input {
     flex: 1;
     padding: 10px;
-    background: #0b1c14;
+    background: var(--bg-primary);
     border: 1px solid var(--text-muted);
     color: white;
     border-radius: 4px;
@@ -176,7 +200,7 @@ body {
 }
 
 .site-footer {
-    background: #07120c;
+    background: var(--card-bg);
     padding: 40px 5%;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
     margin-top: 50px;
@@ -190,7 +214,7 @@ body {
 }
 
 .office-card {
-    background: var(--card-bg);
+    background: var(--bg-primary);
     padding: 15px;
     border-radius: 6px;
     border-left: 3px solid var(--accent-gold);
