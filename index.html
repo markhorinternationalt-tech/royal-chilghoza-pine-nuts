@@ -3,164 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Chilgoza Pine Nuts - Official Platform</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>Royal Chilgoza Pine Nuts - Global Trade & Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b1f15;
+            --bg-card: rgba(18, 42, 30, 0.9);
+            --card-border: rgba(212, 175, 55, 0.3);
+            --text-main: #f5f2eb;
+            --text-gold: #d4af37;
+            --shadow-3d: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            background: rgba(11, 31, 21, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo-area { display: flex; flex-direction: column; }
+        .logo-title { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--text-gold); }
+        .logo-sub { font-size: 0.65rem; letter-spacing: 2px; color: #a3b899; text-transform: uppercase; }
+
+        .lang-selector {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px 16px; }
+
+        /* Hero Section with Background & Profile */
+        .hero { 
+            padding: 40px 20px; 
+            text-align: center; 
+            background-size: cover; 
+            background-position: center; 
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-container { margin-bottom: 20px; }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--text-gold);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 15px; color: var(--text-main); }
+        .hero h1 span { color: var(--text-gold); display: block; }
+        .hero p { font-size: 0.95rem; line-height: 1.6; color: #d1d5db; max-width: 600px; margin: 0 auto; }
+        .badge { font-size: 0.7rem; letter-spacing: 2px; color: var(--text-gold); font-weight: 700; display: block; margin-bottom: 10px; }
+
+        /* Main Folders Grid */
+        .card-grid { display: grid; gap: 20px; margin-bottom: 30px; }
+        .card {
+            background: var(--bg-card);
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-3d);
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--text-gold); }
+        .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
+        .card-tag { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-gold); margin-bottom: 6px; font-weight: 600; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+        .card-desc { font-size: 0.9rem; color: #9ca3af; line-height: 1.5; }
+
+        /* Big Stacked Gallery */
+        .big-gallery-container { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
+        .gallery-item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: var(--shadow-3d);
+        }
+        .gallery-img-large {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid var(--card-border);
+        }
+        .gallery-item-card input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .gallery-actions { display: flex; gap: 10px; }
+        .action-btn { flex: 1; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; border: none; }
+        .edit-btn { background: var(--text-gold); color: var(--bg-primary); }
+        .remove-btn { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+        /* AI Assistant Section */
+        .ai-section {
+            background: linear-gradient(135deg, rgba(18, 42, 30, 0.95), rgba(11, 31, 21, 0.95));
+            border: 1px solid var(--text-gold);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: var(--bg-card);
+            border: 1px dashed var(--text-gold);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .admin-panel input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            outline: none;
+        }
+        .admin-btn {
+            background: var(--text-gold);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Theme Panel */
+        .theme-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .color-options { display: flex; gap: 10px; }
+        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
+
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+        .back-btn { background: none; border: none; color: var(--text-gold); font-size: 1rem; cursor: pointer; margin-bottom: 20px; font-weight: 600; }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            border-top: 1px solid var(--card-border);
+            margin-top: 40px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header / Navbar -->
-    <header class="site-header">
+    <header>
         <div class="logo-area">
-            <h1>ROYAL CHILGOZA</h1>
-            <span class="sub-logo">PINE NUTS</span>
+            <span class="logo-title">ROYAL CHILGOZA</span>
+            <span class="logo-sub">PINE NUTS</span>
         </div>
-        <div class="lang-selector">
-            <button class="lang-btn">🌐 English ⌄</button>
-        </div>
+        <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="ur">اردو</option>
+            <option value="zh">中文</option>
+            <option value="ar">العربية</option>
+            <option value="fa">فارسی</option>
+            <option value="ru">Русский</option>
+            <option value="tr">Türkçe</option>
+            <option value="de">Deutsch</option>
+            <option value="fr">Français</option>
+        </select>
     </header>
 
-    <!-- Hero Section with Background Image -->
-    <section class="hero-section" style="background-image: linear-gradient(rgba(10, 25, 15, 0.85), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
-        
-        <!-- Profile Section inside Hero -->
-        <div class="profile-container">
-            <img src="profile.jpg" alt="Syed Azeem Shah" class="profile-img">
-        </div>
-
-        <div class="hero-content">
-            <span class="badge">PAKISTAN • ORIGIN • GLOBAL</span>
-            <h2>Royal Chilgoza Pine Nuts</h2>
-            <p>From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
-        </div>
-    </section>
-
-    <!-- Interactive Navigation Cards (Research & Global Trade with Background Watermarks) -->
-    <section class="nav-cards-container">
-        
-        <!-- Research Card -->
-        <div class="card research-card" style="background-image: linear-gradient(rgba(15, 30, 20, 0.93), rgba(15, 30, 20, 0.93)), url('06-chilghoza-cone-closeup.jpg');">
-            <div class="card-icon">🔬</div>
-            <span class="card-category">CHILGOZA</span>
-            <h3>RESEARCH & KNOWLEDGE</h3>
-            <p>Science • Origin • Forests • Quality →</p>
-        </div>
-
-        <!-- Global Trade Card -->
-        <div class="card trade-card" style="background-image: linear-gradient(rgba(15, 30, 20, 0.93), rgba(15, 30, 20, 0.93)), url('01-chilghoza-lot.jpg');">
-            <div class="card-icon">🌰</div>
-            <span class="card-category">CHILGOZA PINE NUTS</span>
-            <h3>GLOBAL TRADE</h3>
-            <p>Premium quality • Worldwide export →</p>
-        </div>
-
-    </section>
-
-    <!-- 8 Core Images Gallery & Manageable Descriptions Section -->
-    <section class="gallery-section">
-        <div class="section-title">
-            <h2>Chilgoza Gallery & Documentation</h2>
-            <p>Explore the complete journey from high-altitude forests to premium packed kernels.</p>
-        </div>
-
-        <div class="gallery-grid">
+    <div class="container">
+        <!-- HOME VIEW -->
+        <div id="home-view" class="view-section active">
             
-            <!-- Image 1 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="01-chilghoza-lot.jpg" alt="Chilgoza Lot">
+            <!-- Hero with Background and Profile Picture -->
+            <div class="hero" style="background-image: linear-gradient(rgba(10, 25, 15, 0.88), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
+                <div class="profile-container">
+                    <img src="profile.jpg" alt="Profile" class="profile-img">
                 </div>
-                <div class="gallery-info">
-                    <h4>01. Bulk Lot Inspection</h4>
-                    <p>Verified batches ready for wholesale and international distribution.</p>
+                <span class="badge">PAKISTAN • ORIGIN • GLOBAL</span>
+                <h1 id="hero-heading">Royal Chilgoza <span>Pine Nuts</span></h1>
+                <p id="hero-desc">From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
+            </div>
+
+            <!-- Main Folders Grid (Clickable) -->
+            <div class="card-grid" id="main-folders-container">
+                <div class="card" style="background-image: linear-gradient(rgba(15, 30, 20, 0.92), rgba(15, 30, 20, 0.92)), url('01-chilghoza-lot.jpg');" onclick="switchView('trade-view')">
+                    <div class="card-icon">🌰</div>
+                    <div class="card-tag">Chilgoza Pine Nuts</div>
+                    <div class="card-title">Global Trade</div>
+                    <div class="card-desc">Premium quality • Worldwide export →</div>
+                </div>
+
+                <div class="card" style="background-image: linear-gradient(rgba(15, 30, 20, 0.92), rgba(15, 30, 20, 0.92)), url('06-chilghoza-cone-closeup.jpg');" onclick="switchView('research-view')">
+                    <div class="card-icon">🔬</div>
+                    <div class="card-tag">Chilgoza Science</div>
+                    <div class="card-title">Research & Knowledge</div>
+                    <div class="card-desc">Science • Origin • Forests • Quality →</div>
                 </div>
             </div>
 
-            <!-- Image 2 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="02-chilghoza-cones.jpg" alt="Chilgoza Cones">
-                </div>
-                <div class="gallery-info">
-                    <h4>02. Natural Pine Cones</h4>
-                    <p>Freshly harvested wild pine cones from high-altitude mountain forests.</p>
+            <!-- Royal AI Assistant Section -->
+            <div class="ai-section">
+                <div style="font-family:'Cinzel',serif; font-size:1.4rem; color:var(--text-gold); margin-bottom:8px;">🤖 Royal AI Assistant</div>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Ask about export guidelines, pine nut harvesting seasons, or mountain mineral geology.</p>
+            </div>
+
+            <!-- Theme Color Adjuster -->
+            <div class="theme-panel">
+                <span style="font-weight: 600;">Multi-Color Theme</span>
+                <div class="color-options">
+                    <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15', 'rgba(18, 42, 30, 0.9)')"></div>
+                    <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e', 'rgba(30, 30, 50, 0.9)')"></div>
+                    <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d', 'rgba(50, 30, 35, 0.9)')"></div>
+                    <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233', 'rgba(25, 45, 65, 0.9)')"></div>
                 </div>
             </div>
 
-            <!-- Image 3 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="03-chilghoza-kernel.jpg" alt="Chilgoza Kernel">
-                </div>
-                <div class="gallery-info">
-                    <h4>03. Premium Kernel</h4>
-                    <p>Cleaned, sorted, and graded organic pine nut kernels.</p>
-                </div>
-            </div>
+            <!-- 8 Big Editable Gallery Section -->
+            <div class="card-tag" style="margin-bottom: 12px; font-size: 0.9rem;">Origin & Landscapes Gallery (8 Photos)</div>
+            <div class="big-gallery-container" id="galleryContainer"></div>
 
-            <!-- Image 4 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="04-chilghoza-harvest.jpg" alt="Chilgoza Harvest">
-                </div>
-                <div class="gallery-info">
-                    <h4>04. Traditional Harvest</h4>
-                    <p>Sustainable gathering practices by local experts in northern valleys.</p>
-                </div>
-            </div>
-
-            <!-- Image 5 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="05-chilghoza-raw-kernels.jpg" alt="Chilgoza Raw Kernels">
-                </div>
-                <div class="gallery-info">
-                    <h4>05. Raw Stock Kernels</h4>
-                    <p>Natural raw produce sorted for optimum freshness and natural taste.</p>
-                </div>
-            </div>
-
-            <!-- Image 6 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="06-chilghoza-cone-closeup.jpg" alt="Cone Closeup">
-                </div>
-                <div class="gallery-info">
-                    <h4>06. Cone Close-up View</h4>
-                    <p>Detailed macro perspective of wild pine fruit structure.</p>
-                </div>
-            </div>
-
-            <!-- Image 7 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="07-chilghoza-products-display.jpg" alt="Products Display">
-                </div>
-                <div class="gallery-info">
-                    <h4>07. Commercial Display</h4>
-                    <p>Packaged presentation samples prepared for global buyers.</p>
-                </div>
-            </div>
-
-            <!-- Image 8 -->
-            <div class="gallery-item">
-                <div class="img-wrapper">
-                    <img src="08-chilghoza-forest.jpg" alt="Chilgoza Forest">
-                </div>
-                <div class="gallery-info">
-                    <h4>08. Native Forest Habitat</h4>
-                    <p>Natural ecological landscape where pure Chilgoza trees thrive.</p>
-                </div>
+            <!-- Admin Panel to Add Custom Folders -->
+            <div class="admin-panel">
+                <div class="card-tag" style="margin-bottom: 8px;">Edit & Create Folder</div>
+                <input type="text" id="newFolderName" placeholder="Enter new folder title...">
+                <input type="text" id="newFolderDesc" placeholder="Enter folder description...">
+                <button class="admin-btn" onclick="addNewFolder()">+ Add New Folder to Home</button>
             </div>
 
         </div>
-    </section>
 
-    <!-- Footer -->
+        <!-- TRADE SUB-FOLDERS VIEW -->
+        <div id="trade-view" class="view-section">
+            <button class="back-btn" onclick="switchView('home-view')">← Back to Home</button>
+            <div class="hero">
+                <h1 style="font-size: 2rem;">Trade & Business</h1>
+                <p>A structured international trade centre for product quality, export readiness, buyers, logistics and supply-chain information.</p>
+            </div>
+            <div class="card-grid">
+                <div class="card"><div class="card-tag">01</div><div class="card-title">Global Markets</div><div class="card-desc">USA • China • Central Asia • Middle East</div></div>
+                <div class="card"><div class="card-tag">02</div><div class="card-title">Export & Logistics</div><div class="card-desc">Packaging • documentation • shipping • customs</div></div>
+                <div class="card"><div class="card-tag">03</div><div class="card-title">Product & Quality</div><div class="card-desc">Kernels • in-shell • roasting • grades • specifications</div></div>
+                <div class="card"><div class="card-tag">04</div><div class="card-title">Supply Chain & Traceability</div><div class="card-desc">Forest → collector → processing → packing → export</div></div>
+            </div>
+        </div>
+
+        <!-- RESEARCH SUB-FOLDERS VIEW -->
+        <div id="research-view" class="view-section">
+            <button class="back-btn" onclick="switchView('home-view')">← Back to Home</button>
+            <div class="hero">
+                <h1 style="font-size: 2rem;">Research & Knowledge</h1>
+                <p>A knowledge centre for Chilgoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, and traceability.</p>
+            </div>
+            <div class="card-grid">
+                <div class="card"><div class="card-tag">01</div><div class="card-title">Geographical Indication (GI)</div><div class="card-desc">Origin protection • product identity • traceability</div></div>
+                <div class="card"><div class="card-tag">02</div><div class="card-title">Chilgoza Forests</div><div class="card-desc">Forest ecology • regeneration • harvesting • conservation</div></div>
+                <div class="card"><div class="card-tag">03</div><div class="card-title">Nutrition & Quality</div><div class="card-desc">Natural oils • protein • organic properties • purity testing</div></div>
+                <div class="card"><div class="card-tag">04</div><div class="card-title">Mineral & Valley Surveys</div><div class="card-desc">Geological mapping • quartz veins • survey coordination</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer with Office Address -->
     <footer>
-        <p>© 2026 Royal Chilgoza Pine Nuts. All Rights Reserved.</p>
+        <p>© 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.</p>
     </footer>
 
+    <script>
+        let galleryData = [
+            { url: "01-chilghoza-lot.jpg", desc: "01. Bulk Lot Inspection - Verified batches ready for wholesale and international distribution." },
+            { url: "02-chilghoza-cones.jpg", desc: "02. Natural Pine Cones - Freshly harvested wild pine cones from high-altitude mountain forests." },
+            { url: "03-chilghoza-kernel.jpg", desc: "03. Premium Kernel - Cleaned, sorted, and graded organic pine nut kernels." },
+            { url: "04-chilghoza-harvest.jpg", desc: "04. Traditional Harvest - Sustainable gathering practices by local experts in northern valleys." },
+            { url: "05-chilghoza-raw-kernels.jpg", desc: "05. Raw Stock Kernels - Natural raw produce sorted for optimum freshness and natural taste." },
+            { url: "06-chilghoza-cone-closeup.jpg", desc: "06. Cone Close-up View - Detailed macro perspective of wild pine fruit structure." },
+            { url: "07-chilghoza-products-display.jpg", desc: "07. Commercial Display - Packaged presentation samples prepared for global buyers." },
+            { url: "08-chilghoza-forest.jpg", desc: "08. Native Forest Habitat - Natural ecological landscape where pure Chilgoza trees thrive." }
+        ];
+
+        function renderGallery() {
+            const container = document.getElementById('galleryContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            galleryData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item-card';
+                div.innerHTML = `
+                    <img src="${item.url}" class="gallery-img-large" alt="Gallery Photo">
+                    <input type="text" id="desc-${index}" value="${item.desc}" placeholder="Enter description...">
+                    <input type="text" id="url-${index}" value="${item.url}" placeholder="Enter image filename or URL...">
+                    <div class="gallery-actions">
+                        <button class="action-btn edit-btn" onclick="updatePhoto(${index})">Save / Update</button>
+                        <button class="action-btn remove-btn" onclick="removePhoto(${index})">Remove</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updatePhoto(index) {
+            galleryData[index].url = document.getElementById(`url-${index}`).value;
+            galleryData[index].desc = document.getElementById(`desc-${index}`).value;
+            renderGallery();
+            alert('Photo updated successfully!');
+        }
+
+        function removePhoto(index) {
+            galleryData.splice(index, 1);
+            renderGallery();
+        }
+
+        window.onload = function() {
+            renderGallery();
+        };
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setTheme(primary, cardBg) {
+            document.documentElement.style.setProperty('--bg-primary', primary);
+            document.documentElement.style.setProperty('--bg-card', cardBg);
+        }
+
+        function addNewFolder() {
+            const title = document.getElementById('newFolderName').value;
+            const desc = document.getElementById('newFolderDesc').value;
+            if(!title) return alert('Please enter folder title');
+            const container = document.getElementById('main-folders-container');
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `<div class="card-icon">📁</div><div class="card-tag">Custom Folder</div><div class="card-title">${title}</div><div class="card-desc">${desc || 'Custom user created category →'}</div>`;
+            container.appendChild(newCard);
+            document.getElementById('newFolderName').value = '';
+            document.getElementById('newFolderDesc').value = '';
+        }
+
+        const translations = {
+            en: { heroHead: "Royal Chilgoza <span>Pine Nuts</span>", heroDesc: "From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge." },
+            ur: { heroHead: "رائل چلغوزہ <span>پائن نٹس</span>", heroDesc: "پاکستان کے چلغوزہ جنگلات سے دنیا تک - پریمیم کوالٹی، اصلیت، ذمہ دار سپلائی چین اور گہرے علم کا امتزاج۔" },
+            zh: { heroHead: "皇家奇尔加扎 <span>松子</span>", heroDesc: "从巴基斯坦的奇尔加扎森林走向世界——连接卓越品质、真实产地、负责任的供应链和深厚的知识。" },
+            ar: { heroHead: "رويال شلغوزة <span>صنوبر</span>", heroDesc: "من غابات الشلغوزة في باكستان إلى العالم - ربط الجودة الممتازة والأصل الأصيل وسلاسل الإمداد المسؤولة." },
+            fa: { heroHead: "چلغوزه سلطنتی <span>دانه کاج</span>", heroDesc: "از جنگل‌های چلغوزه پاکستان به جهان - اتصال کیفیت برتر، اصالت واقعی، زنجیره تامین مسئولانه و دانش عمیق." },
+            ru: { heroHead: "Королевский Чильгоза <span>Кедровые орехи</span>", heroDesc: "Из лесов Чильгоза в Пакистане всему миру — связь премиального качества, подлинного происхождения и ответственных цепочек поставок." },
+            tr: { heroHead: "Kraliyet Çam Fıstığı <span>Chilgoza</span>", heroDesc: "Pakistan'ın Chilgoza ormanlarından dünyaya — premium kalibre, otantik köken ve sorumlu tedarik zincirleri." },
+            de: { heroHead: "Königliche Chilgoza <span>Pinienkerne</span>", heroDesc: "Von den Chilgoza-Wäldern Pakistans in die Welt – Verbindung von Premiumqualität, authentischer Herkunft und tiefem Wissen." },
+            fr: { heroHead: "Chilgoza Royal <span>Pignons de Pin</span>", heroDesc: "Des forêts de Chilgoza du Pakistan au monde — connectant qualité supérieure, origine authentique et connaissances approfondies." }
+        };
+
+        function changeLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.getElementById('hero-heading').innerHTML = t.heroHead;
+            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.body.dir = (lang === 'ar' || lang === 'fa' || lang === 'ur') ? 'rtl' : 'ltr';
+        }
+    </script>
 </body>
 </html>
