@@ -84,13 +84,13 @@
 
         .hero {
             text-align: left;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             padding: 10px 0;
         }
 
         .hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: 2.6rem;
             line-height: 1.15;
             font-weight: 700;
             margin-bottom: 15px;
@@ -103,10 +103,10 @@
         }
 
         .hero p {
-            font-size: 1.05rem;
+            font-size: 1rem;
             line-height: 1.6;
             color: #d1d5db;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         /* 3D Glass Cards */
@@ -162,13 +162,91 @@
             line-height: 1.5;
         }
 
+        /* AI Assistant Section */
+        .ai-section {
+            background: linear-gradient(135deg, rgba(18, 42, 30, 0.95), rgba(11, 31, 21, 0.95));
+            border: 1px solid var(--text-gold);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-3d);
+        }
+
+        .ai-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-chat-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow-3d);
+        }
+
+        /* Dynamic Folder Adder Panel */
+        .admin-panel {
+            background: var(--bg-card);
+            border: 1px dashed var(--text-gold);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .admin-panel input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .admin-btn {
+            background: var(--text-gold);
+            color: var(--bg-primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
         /* Theme & Customization Bar */
         .theme-panel {
             background: var(--bg-card);
             border: 1px solid var(--card-border);
             padding: 15px 20px;
             border-radius: 15px;
-            margin-top: 30px;
+            margin-top: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -200,15 +278,8 @@
             transform: scale(1.2);
         }
 
-        /* Sub-sections / Views */
-        .view-section {
-            display: none;
-        }
-
-        .view-section.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.4s ease; }
 
         .back-btn {
             background: none;
@@ -266,7 +337,8 @@
                 <p id="hero-desc">From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
             </div>
 
-            <div class="card-grid">
+            <!-- Main Folders Grid -->
+            <div class="card-grid" id="main-folders-container">
                 <div class="card" onclick="switchView('trade-view')">
                     <div class="card-icon">🌰</div>
                     <div class="card-tag" id="tag-trade">Chilgoza Pine Nuts</div>
@@ -280,6 +352,28 @@
                     <div class="card-title" id="title-research">Research & Knowledge</div>
                     <div class="card-desc" id="desc-research">Science • Origin • Forests • Quality →</div>
                 </div>
+            </div>
+
+            <!-- Royal AI Assistant Section -->
+            <div class="ai-section">
+                <div class="ai-title">🤖 Royal AI Assistant</div>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">Ask about export guidelines, pine nut harvesting seasons, or mountain mineral geology.</p>
+                <div class="ai-chat-box" id="ai-status">Ready to assist with trade & research queries.</div>
+            </div>
+
+            <!-- Photos / Gallery Section -->
+            <div class="card-tag" style="margin-bottom: 10px;">Origin & Landscapes Gallery</div>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?auto=format&fit=crop&w=400&q=80" alt="Chilgoza Forest" class="gallery-img">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80" alt="Pine Nuts" class="gallery-img">
+            </div>
+
+            <!-- Admin Panel to Add New Custom Folders -->
+            <div class="admin-panel">
+                <div class="card-tag" style="margin-bottom: 8px;">Edit & Create Folder</div>
+                <input type="text" id="newFolderName" placeholder="Enter new folder title...">
+                <input type="text" id="newFolderDesc" placeholder="Enter folder description...">
+                <button class="admin-btn" onclick="addNewFolder()">+ Add New Folder to Home</button>
             </div>
 
             <!-- Theme Color Adjuster -->
@@ -348,6 +442,11 @@
                     <div class="card-title">Nutrition & Quality</div>
                     <div class="card-desc">Natural oils • protein • organic properties • purity testing</div>
                 </div>
+                <div class="card">
+                    <div class="card-tag">04</div>
+                    <div class="card-title">Mineral & Valley Surveys</div>
+                    <div class="card-desc">Geological mapping • quartz veins • survey coordination</div>
+                </div>
             </div>
         </div>
     </div>
@@ -366,6 +465,25 @@
         function setTheme(primary, cardBg) {
             document.documentElement.style.setProperty('--bg-primary', primary);
             document.documentElement.style.setProperty('--bg-card', cardBg);
+        }
+
+        function addNewFolder() {
+            const title = document.getElementById('newFolderName').value;
+            const desc = document.getElementById('newFolderDesc').value;
+            if(!title) return alert('Please enter folder title');
+
+            const container = document.getElementById('main-folders-container');
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `
+                <div class="card-icon">📁</div>
+                <div class="card-tag">Custom Folder</div>
+                <div class="card-title">${title}</div>
+                <div class="card-desc">${desc || 'Custom user created category →'}</div>
+            `;
+            container.appendChild(newCard);
+            document.getElementById('newFolderName').value = '';
+            document.getElementById('newFolderDesc').value = '';
         }
 
         const translations = {
@@ -462,7 +580,6 @@
             document.getElementById('desc-research').innerText = t.descRes;
             document.getElementById('theme-label').innerText = t.themeLabel;
             
-            // Text alignment adjustments for Arabic and Persian
             if(lang === 'ar' || lang === 'fa') {
                 document.body.dir = 'rtl';
             } else {
