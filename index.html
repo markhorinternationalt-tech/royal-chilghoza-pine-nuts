@@ -231,8 +231,8 @@
                     <img src="profile.jpg" alt="Profile" class="profile-img">
                 </div>
                 <span class="badge" data-i18n="heroBadge">PAKISTAN • ORIGIN • GLOBAL</span>
-                <h1 id="hero-heading">Royal Chilgoza <span>Pine Nuts</span></h1>
-                <p id="hero-desc">From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
+                <h1 data-i18n="heroHead">Royal Chilgoza <span>Pine Nuts</span></h1>
+                <p data-i18n="heroDesc">From the Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
             </div>
 
             <div class="card-grid" id="main-folders-container">
@@ -276,8 +276,8 @@
 
             <div class="admin-panel">
                 <div class="card-tag" style="margin-bottom: 8px;" data-i18n="adminTitle">Edit & Create Folder</div>
-                <input type="text" id="newFolderName" placeholder="Enter new folder title...">
-                <input type="text" id="newFolderDesc" placeholder="Enter folder description...">
+                <input type="text" id="newFolderName" placeholder="Enter new folder title..." data-i18n-ph="newFolderPh">
+                <input type="text" id="newFolderDesc" placeholder="Enter folder description..." data-i18n-ph="newDescPh">
                 <button class="admin-btn" onclick="addNewFolder()" data-i18n="adminBtn">+ Add New Folder to Home</button>
             </div>
 
@@ -374,7 +374,6 @@
 
         function setTheme(colorHex) {
             document.documentElement.style.setProperty('--bg-primary', colorHex);
-            // Automatically derive a matching card background from the chosen primary color
             document.documentElement.style.setProperty('--bg-card', colorHex + 'ee');
         }
 
@@ -428,15 +427,168 @@
                 tradeViewHead: "تجارت اور بزنس", tradeViewDesc: "مصنوعات کے معیار، برآمدی تیاری، خریداروں اور سپلائی چین کی معلومات کا بین الاقوامی مرکز۔",
                 t1Title: "عالمی مارکیٹس", t1Desc: "امریکہ • چین • وسطی ایشیا • مشرق وسطیٰ",
                 t2Title: "برآمد اور لاجسٹکس", t2Desc: "پیکنگ • دستاویزات • شپنگ • کسٹم",
-                t3Title: "پروڈکٹ اور کوالٹی", t3Desc: "گিরیاں • باقاعدہ گریڈنگ • روسٹنگ",
+                t3Title: "پروڈکٹ اور کوالٹی", t3Desc: "گریاں • باقاعدہ گریڈنگ • روسٹنگ",
                 t4Title: "سپلائی چین اور ٹریس ایبلٹی", t4Desc: "جنگل سے لے کر کسٹمر تک کا سفر",
                 resViewHead: "ریسرچ اور ریسرچ سینٹر", resViewDesc: "چلغوزہ کی اصلیت، جنگلات، جیوگرافیکل انڈیکیشن اور غذائیت کا مرکز۔",
                 r1Title: "جیوگرافیکل انڈیکیشن (GI)", r1Desc: "اصلیت کا تحفظ اور شناخت",
                 r2Title: "چلغوزہ جنگلات", r2Desc: "جنگلات کی ماحول اور افزائش",
                 r3Title: "غذائیت اور معیار", r3Desc: "قدرتی تیل • پروٹین • خالصیت",
                 r4Title: "معدنی اور وادی سروے", r4Desc: "ارضیاتی نقشہ سازی اور سروے"
+            },
+            zh: {
+                heroHead: "皇家奇尔加扎 <span>松子</span>",
+                heroDesc: "从巴基斯坦的奇尔加扎森林走向世界——连接卓越品质、真实产地、负责任的供应链和深厚的知识。",
+                heroBadge: "巴基斯坦 • 原产地 • 全球",
+                tradeTag: "奇尔加扎松子", tradeTitle: "全球贸易", tradeDesc: "优质品质 • 全球出口 →",
+                sciTag: "奇尔加扎科学", sciTitle: "研究与知识", sciDesc: "科学 • 原产地 • 森林 • 品质 →",
+                aiTitle: "🤖 皇家人工智能助手", aiDesc: "咨询有关出口准则、松子收获季节或山区矿产地质的信息。",
+                themeTitle: "多色与自定义主题", customColorLabel: "自定义:",
+                galleryTitle: "原产地与风景画廊 (8张照片)",
+                adminTitle: "编辑与创建文件夹", adminBtn: "+ 添加新文件夹到首页",
+                backBtn: "← 返回首页",
+                tradeViewHead: "贸易与商业", tradeViewDesc: "关于产品质量、出口准备、买家、物流和供应链信息的国际贸易中心。",
+                t1Title: "全球市场", t1Desc: "美国 • 中国 • 中亚 • 中东",
+                t2Title: "出口与物流", t2Desc: "包装 • 单证 • 运输 • 海关",
+                t3Title: "产品与品质", t3Desc: "果仁 • 带壳 • 烘焙 • 等级 • 规格",
+                t4Title: "供应链与可追溯性", t4Desc: "森林 → 采集者 → 加工 → 包装 → 出口",
+                resViewHead: "研究与知识", resViewDesc: "关于奇尔加扎起源、地理标志、森林、生物多样性和营养的知识中心。",
+                r1Title: "地理标志 (GI)", r1Desc: "原产地保护 • 产品身份 • 可追溯性",
+                r2Title: "奇尔加扎森林", r2Desc: "森林生态 • 更新 • 收获 • 保护",
+                r3Title: "营养与品质", r3Desc: "天然油脂 • 蛋白质 • 有机特性 • 纯度测试",
+                r4Title: "矿产与山谷调查", r4Desc: "地质填图 • 石英脉 • 调查协调"
+            },
+            ar: {
+                heroHead: "رويال شلغوزة <span>صنوبر</span>",
+                heroDesc: "من غابات الشلغوزة في باكستان إلى العالم - ربط الجودة الممتازة والأصل الأصيل وسلاسل الإمداد المسؤولة.",
+                heroBadge: "باكستان • الأصل • عالمي",
+                tradeTag: "صنوبر شلغوزة", tradeTitle: "التجارة العالمية", tradeDesc: "جودة ممتازة • تصدير عالمي →",
+                sciTag: "علوم شلغوزة", sciTitle: "البحث والمعرفة", sciDesc: "العلوم • الأصل • الغابات • الجودة →",
+                aiTitle: "🤖 مساعد الذكاء الاصطناعي", aiDesc: "اسأل عن إرشادات التصدير، مواسم حصاد الصنوبر، أو جيولوجيا المعادن الجبلية.",
+                themeTitle: "ثيم متعدد الألوان والمخصص", customColorLabel: "مخصص:",
+                galleryTitle: "معرض المناظر الطبيعية (8 صور)",
+                adminTitle: "تعديل وإنشاء مجلد", adminBtn: "+ إضافة مجلد جديد",
+                backBtn: "← العودة للرئيسية",
+                tradeViewHead: "التجارة والأعمال", tradeViewDesc: "مركز تجاري دولي لمعايير الجودة والاستعداد للتصدير.",
+                t1Title: "الأسواق العالمية", t1Desc: "أمريكا • الصين • آسيا الوسطى • الشرق الأوسط",
+                t2Title: "التصدير والخدمات اللوجستية", t2Desc: "التعبئة • المستندات • الشحن • الجمارك",
+                t3Title: "المنتج والجودة", t3Desc: "الحبات • المقرمشات • المواصفات",
+                t4Title: "سلسلة الإمداد", t4Desc: "من الغابة إلى العميل",
+                resViewHead: "البحوث والمعرفة", resViewDesc: "مركز معرفي لأصل الشلغوزة والغابات.",
+                r1Title: "المؤشر الجغرافي (GI)", r1Desc: "حماية الأصل",
+                r2Title: "غابات الشلغوزة", r2Desc: "بيئة الغابات والحصاد",
+                r3Title: "التغذية والجودة", r3Desc: "الزيوت الطبيعية • البروتين",
+                r4Title: "مسوحات المعادن والوديان", r4Desc: "الخرائط الجيولوجية"
+            },
+            fa: {
+                heroHead: "چلغوزه سلطنتی <span>دانه کاج</span>",
+                heroDesc: "از جنگل‌های چلغوزه پاکستان به جهان - اتصال کیفیت برتر، اصالت واقعی، زنجیره تامین مسئولانه و دانش عمیق.",
+                heroBadge: "پاکستان • مبدا • جهانی",
+                tradeTag: "دانه کاج چلغوزه", tradeTitle: "تجارت جهانی", tradeDesc: "کیفیت برتر • صادرات جهانی →",
+                sciTag: "علم چلغوزه", sciTitle: "پژوهش و دانش", sciDesc: "علم • مبدا • جنگل‌ها • کیفیت →",
+                aiTitle: "🤖 دستیار هوش مصنوعی", aiDesc: "درباره دستورالعمل‌های صادرات، فصل برداشت یا زمین‌شناسی معدنی سوال کنید.",
+                themeTitle: "رنگ‌بندی و تم سفارشی", customColorLabel: "سفارشی:",
+                galleryTitle: "گالری مناظر و مبدا (۸ عکس)",
+                adminTitle: "ویرایش و ایجاد پوشه", adminBtn: "+ افزودن پوشه جدید",
+                backBtn: "← بازگشت به خانه",
+                tradeViewHead: "تجارت و کسب و کار", tradeViewDesc: "مرکز تجارت بین‌المللی برای کیفیت محصول و صادرات.",
+                t1Title: "بازارهای جهانی", t1Desc: "آمریکا • چین • آسیای مرکزی • خاورمیانه",
+                t2Title: "صادرات و لجستیک", t2Desc: "بسته‌بندی • اسناد • حمل و نقل",
+                t3Title: "محصول و کیفیت", t3Desc: "مغزها • پوسته‌دار • درجه‌بندی",
+                t4Title: "زنجیره تامین", t4Desc: "از جنگل تا مشتری",
+                resViewHead: "پژوهش و دانش", resViewDesc: "مرکز دانش برای اصالت چلغوزه و جنگل‌ها.",
+                r1Title: "نشان جغرافیایی (GI)", r1Desc: "حفاظت از مبدا",
+                r2Title: "جنگل‌های چلغوزه", r2Desc: "بوم‌شناسی و برداشت",
+                r3Title: "تغذیه و کیفیت", r3Desc: "روغن‌های طبیعی • پروتئین",
+                r4Title: "بررسی‌های معدنی", r4Desc: "نقشه‌برداری زمین‌شناسی"
+            },
+            ru: {
+                heroHead: "Королевский Чильгоза <span>Кедровые орехи</span>",
+                heroDesc: "Из лесов Чильгоза в Пакистане всему миру — связь премиального качества, подлинного происхождения и ответственных цепочек поставок.",
+                heroBadge: "ПАКИСТАН • ПРОИСХОЖДЕНИЕ • МИР",
+                tradeTag: "Кедровые орехи Чильгоза", tradeTitle: "Мировая торговля", tradeDesc: "Премиум качество • Экспорт по всему миру →",
+                sciTag: "Наука Чильгоза", sciTitle: "Исследования и знания", sciDesc: "Наука • Происхождение • Леса • Качество →",
+                aiTitle: "🤖 Королевский ИИ-ассистент", aiDesc: "Спрашивайте об условиях экспорта, сезонах сбора или горной геологии.",
+                themeTitle: "Цветовая тема", customColorLabel: "Свой цвет:",
+                galleryTitle: "Галерея происхождения (8 фото)",
+                adminTitle: "Создать папку", adminBtn: "+ Добавить папку",
+                backBtn: "← На главную",
+                tradeViewHead: "Торговля и бизнес", tradeViewDesc: "Международный торговый центр качества и логистики.",
+                t1Title: "Мировые рынки", t1Desc: "США • Китай • Центральная Азия • Ближний Восток",
+                t2Title: "Экспорт и логистика", t2Desc: "Упаковка • документация • доставка",
+                t3Title: "Продукт и качество", t3Desc: "Ядра • в скорлупе • обжарка",
+                t4Title: "Цепочка поставок", t4Desc: "Из леса до покупателя",
+                resViewHead: "Исследования", resViewDesc: "Центр знаний о лесах и происхождении.",
+                r1Title: "Географическое указание (GI)", r1Desc: "Защита происхождения",
+                r2Title: "Леса Чильгоза", r2Desc: "Экология и сохранение",
+                r3Title: "Питание и качество", r3Desc: "Масла • белок • чистота",
+                r4Title: "Минеральные обзоры", r4Desc: "Геологическое картирование"
+            },
+            tr: {
+                heroHead: "Kraliyet Çam Fıstığı <span>Chilgoza</span>",
+                heroDesc: "Pakistan'ın Chilgoza ormanlarından dünyaya — premium kalibre, otantik köken ve sorumlu tedarik zincirleri.",
+                heroBadge: "PAKİSTAN • KÖKEN • KÜRESEL",
+                tradeTag: "Chilgoza Çam Fıstığı", tradeTitle: "Küresel Ticaret", tradeDesc: "Üstün kalite • Dünya çapında ihracat →",
+                sciTag: "Chilgoza Bilimi", sciTitle: "Araştırma ve Bilgi", sciDesc: "Bilim • Köken • Ormanlar • Kalite →",
+                aiTitle: "🤖 Kraliyet Yapay Zeka Asistanı", aiDesc: "İhracat yönergeleri veya hasat mevsimleri hakkında bilgi alabilirsiniz.",
+                themeTitle: "Özel Renk Teması", customColorLabel: "Özel:",
+                galleryTitle: "Köken ve Manzara Galerisi (8 Fotoğraf)",
+                adminTitle: "Klasör Düzenle ve Oluştur", adminBtn: "+ Yeni Klasör Ekle",
+                backBtn: "← Ana Sayفyaya Dön",
+                tradeViewHead: "Ticaret ve İş", tradeViewDesc: "Ürün kalitesi ve ihracat için uluslararası ticaret merkezi.",
+                t1Title: "Küresel Piyasalar", t1Desc: "ABD • Çin • Orta Asya • Orta Doğu",
+                t2Title: "İhracat ve Lojistik", t2Desc: "Paketleme • belgeler • sevkiyat",
+                t3Title: "Ürün ve Kalite", t3Desc: "İç fıstık • kabuklu • kavurma",
+                t4Title: "Tedarik Zinciri", t4Desc: "Ormandan tüketiciye",
+                resViewHead: "Araştırma ve Bilgi", resViewDesc: "Chilgoza kökeni ve orman ekolojisi merkezi.",
+                r1Title: "Coğrafi İşaret (GI)", r1Desc: "Köken koruması",
+                r2Title: "Chilgoza Ormanları", r2Desc: "Orman ekolojisi",
+                r3Title: "Beslenme ve Kalite", r3Desc: "Doğal yağlar • protein",
+                r4Title: "Mühendislik ve Vadiler", r4Desc: "Jeolojik haritalama"
+            },
+            de: {
+                heroHead: "Königliche Chilgoza <span>Pinienkerne</span>",
+                heroDesc: "Von den Chilgoza-Wäldern Pakistans in die Welt – Verbindung von Premiumqualität, authentischer Herkunft und tiefem Wissen.",
+                heroBadge: "PAKISTAN • URSPRUNG • GLOBAL",
+                tradeTag: "Chilgoza Pinienkerne", tradeTitle: "Globaler Handel", tradeDesc: "Premium-Qualität • Weltweiter Export →",
+                sciTag: "Chilgoza Wissenschaft", sciTitle: "Forschung & Wissen", sciDesc: "Wissenschaft • Ursprung • Wälder • Qualität →",
+                aiTitle: "🤖 Königlicher KI-Assistent", aiDesc: "Fragen Sie nach Exportrichtlinien oder Erntezeiten.",
+                themeTitle: "Farb- & Custom-Theme", customColorLabel: "Benutzerdefiniert:",
+                galleryTitle: "Galerie (8 Fotos)",
+                adminTitle: "Ordner erstellen", adminBtn: "+ Neuen Ordner hinzufügen",
+                backBtn: "← Zurück zur Startseite",
+                tradeViewHead: "Handel & Wirtschaft", tradeViewDesc: "Internationales Handelszentrum.",
+                t1Title: "Globale Märkte", t1Desc: "USA • China • Zentralasien",
+                t2Title: "Export & Logistik", t2Desc: "Verpackung • Dokumentation",
+                t3Title: "Produkt & Qualität", t3Desc: "Kerne • Sortierung",
+                t4Title: "Lieferkette", t4Desc: "Vom Wald zum Export",
+                resViewHead: "Forschung & Wissen", resViewDesc: "Wissenszentrum für Chilgoza.",
+                r1Title: "Geografische Angabe (GI)", r1Desc: "Ursprungsschutz",
+                r2Title: "Chilgoza Wälder", r2Desc: "Waldökologie",
+                r3Title: "Ernährung & Qualität", r3Desc: "Natürliche Öle",
+                r4Title: "Mineral- und Talumfragen", r4Desc: "Geologische Kartierung"
+            },
+            fr: {
+                heroHead: "Chilgoza Royal <span>Pignons de Pin</span>",
+                heroDesc: "Des forêts de Chilgoza du Pakistan au monde — connectant qualité supérieure, origine authentique et connaissances approfondies.",
+                heroBadge: "PAKISTAN • ORIGINE • MONDIAL",
+                tradeTag: "Pignons Chilgoza", tradeTitle: "Commerce Global", tradeDesc: "Qualité premium • Exportation mondiale →",
+                sciTag: "Science Chilgoza", sciTitle: "Recherche & Savoir", sciDesc: "Science • Origine • Forêts • Qualité →",
+                aiTitle: "🤖 Assistant IA Royal", aiDesc: "Posez des questions sur les directives d'exportation.",
+                themeTitle: "Thème Personnalisé", customColorLabel: "Personnalisé :",
+                galleryTitle: "Galerie (8 Photos)",
+                adminTitle: "Créer un Dossier", adminBtn: "+ Ajouter un dossier",
+                backBtn: "← Retour à l'accueil",
+                tradeViewHead: "Commerce & Affaires", tradeViewDesc: "Centre de commerce international.",
+                t1Title: "Marchés Mondiaux", t1Desc: "USA • Chine • Asie Centrale",
+                t2Title: "Export & Logistique", t2Desc: "Emballage • expédition",
+                t3Title: "Produit & Qualité", t3Desc: "Graines • calibrage",
+                t4Title: "Chaîne d'approvisionnement", t4Desc: "De la forêt à l'export",
+                resViewHead: "Recherche & Savoir", resViewDesc: "Centre de connaissances.",
+                r1Title: "Indication Géographique", r1Desc: "Protection d'origine",
+                r2Title: "Forêts de Chilgoza", r2Desc: "Écologie forestière",
+                r3Title: "Nutrition & Qualité", r3Desc: "Huiles naturelles",
+                r4Title: "Enquêtes Minérales", r4Desc: "Cartographie géologique"
             }
-            // دیگر زبانیں ڈیفالٹ انگلھش پر سیٹ رہیں گی تاکہ کوڈ صاف اور جامع رہے
         };
 
         function changeLanguage(lang) {
