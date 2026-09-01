@@ -1,4 +1,3 @@
-// Cloudflare Worker fetch event listener for zero-cost routing
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
 });
@@ -9,7 +8,76 @@ async function handleRequest(request) {
   });
 }
 
-// Frontend Dynamic Code Logic
+const translations = {
+    en: {
+        brandTitle: "ROYAL CHILGHOZA",
+        subBrand: "PINE NUTS",
+        heroTop: "PAKISTAN • ORIGIN • GLOBAL",
+        heroMain: "Royal Chilghoza Pine Nuts",
+        heroDesc: "From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.",
+        tagTrade: "CHILGHOZA PINE NUTS",
+        folderTrade: "GLOBAL TRADE",
+        descTrade: "Premium quality • Worldwide export →",
+        tagResearch: "CHILGHOZA",
+        folderResearch: "RESEARCH & KNOWLEDGE",
+        descResearch: "Science • Origin • Forests • Quality →",
+        galleryTitle: "Exhibition Gallery & Field Logs",
+        aiTitle: "🤖 Royal AI Assistant",
+        aiDesc: "Ask anything about our harvests, B2B trade terms, or forest origins.",
+        aiSend: "Send",
+        footerTitle: "Office Address & Contact",
+        chinaOffice: "🇨🇳 China Office",
+        islamabadOffice: "🇵🇰 Islamabad Office",
+        chilasOffice: "🏔️ Chilas Office",
+        afghanOffice: "🇦🇫 Afghanistan Office"
+    },
+    ur: {
+        brandTitle: "رائل چلغوزہ",
+        subBrand: "پائن نٹس",
+        heroTop: "پاکستان • اوریجن • گلوبل",
+        heroMain: "رائل چلغوزہ پائن نٹس",
+        heroDesc: "پاکستان کے چلغوزے کے جنگلات سے پوری دنیا تک — اعلیٰ ترین معیار، اصل اور ذمہ دارانہ سپلائی چین کا امتزاج۔",
+        tagTrade: "چلغوزہ پائن نٹس",
+        folderTrade: "گلوبل ٹریڈ (عالمی تجارت)",
+        descTrade: "اعلیٰ معیار • دنیا بھر میں برآمدات →",
+        tagResearch: "چلغوزہ ریسرچ",
+        folderResearch: "ریسرچ اور نالج (تحقیق)",
+        descResearch: "سائنس • اوریجن • جنگلات • معیار →",
+        galleryTitle: "نمائش گیلری اور فیلڈ لاگز (تمام 8 تصاویر)",
+        aiTitle: "🤖 رائل اے آئی اسسٹنٹ",
+        aiDesc: "ہمارے ہارویسٹ، تجارتی شرائط اور جنگلات کے بارے میں کچھ بھی پوچھیں۔",
+        aiSend: "ارسال کریں",
+        footerTitle: "دفتری پتہ اور رابطے",
+        chinaOffice: "🇨🇳 چین آفس",
+        islamabadOffice: "🇵🇰 اسلام آباد آفس",
+        chilasOffice: "🏔️ چلاس آفس",
+        afghanOffice: "🇦🇫 افغانستان آفس"
+    },
+    zh: {
+        brandTitle: "皇家松子",
+        subBrand: "松子仁",
+        heroTop: "巴基斯坦 • 原产地 • 全球",
+        heroMain: "皇家松子仁",
+        heroDesc: "从巴基斯坦的松子林走向世界——连接优质品质、真实产源和可靠供应链。",
+        tagTrade: "松子仁",
+        folderTrade: "全球贸易",
+        descTrade: "优质品质 • 全球出口 →",
+        tagResearch: "松子研究",
+        folderResearch: "研究与知识",
+        descResearch: "科学 • 产地 • 森林 • 质量 →",
+        galleryTitle: "展会画廊与实地日志",
+        aiTitle: "🤖 皇家人工智能助手",
+        aiDesc: "随时咨询我们的收成、B2B贸易条款或森林产地。",
+        aiSend: "发送",
+        footerTitle: "办公地址与联系方式",
+        chinaOffice: "🇨🇳 中国办事处",
+        islamabadOffice: "🇵🇰 伊斯兰堡办事处",
+        chilasOffice: "🏔️ 奇拉斯办事处",
+        afghanOffice: "🇦🇫 阿富汗办事处"
+    }
+};
+
+// Complete 8 Gallery Images Array
 const galleryImages = [
     { file: "01-chilghoza-lot.jpg", caption: "01. Chilghoza Bulk Lot Selection & Grading" },
     { file: "02-chilghoza-cones.jpg", caption: "02. Freshly Harvested Wild Pine Cones" },
@@ -81,7 +149,7 @@ function openFolderModal(type) {
     folders.forEach((folder, index) => {
         container.innerHTML += `
             <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <input type="text" value="${folder}" onchange="renameFolder('${type}', ${index}, this.value)" style="flex:1; background:#0b1c14; color:#fff; border:1px solid #d4af37; padding:6px; border-radius:4px;">
+                <input type="text" value="${folder}" onchange="renameFolder('${type}', ${index}, this.value)" style="flex:1; background:var(--bg-primary); color:#fff; border:1px solid var(--accent-gold); padding:6px; border-radius:4px;">
                 <button onclick="deleteFolder('${type}', ${index})" style="background:#800; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer;">Del</button>
             </div>
         `;
@@ -133,10 +201,27 @@ function askRoyalAI() {
     }, 800);
 }
 
-function toggleTheme() {
-    alert("Multi-color theme switcher configuration active.");
+function changeTheme(themeName) {
+    document.body.className = ""; 
+    if(themeName !== 'forest') {
+        document.body.classList.add(`theme-${themeName}`);
+    }
 }
 
 function changeLanguage(lang) {
-    console.log("Language switched to: " + lang);
+    const t = translations[lang];
+    if (!t) return;
+    
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key]) {
+            el.innerText = t[key];
+        }
+    });
+
+    if (lang === 'ur') {
+        document.documentElement.dir = 'rtl';
+    } else {
+        document.documentElement.dir = 'ltr';
+    }
 }
