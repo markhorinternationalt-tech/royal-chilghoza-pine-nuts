@@ -119,7 +119,6 @@
         .card-title { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
         .card-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; }
 
-        /* Sub-Website / Folder View Styling */
         .sub-website-container {
             background: var(--bg-card);
             border: 1px solid var(--card-border);
@@ -250,16 +249,16 @@
         <div class="header-actions">
             <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" id="wa-btn">💬 WhatsApp</a>
             <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
-                <option value="en">English</option>
-                <option value="zh">中文 (Chinese)</option>
-                <option value="ar">العربية (Arabic)</option>
-                <option value="ps">پښتو (Pashto)</option>
-                <option value="ur">اردو (Urdu)</option>
-                <option value="fa">فارسی (Persian)</option>
-                <option value="id">Bahasa Indonesia</option>
-                <option value="ms">Bahasa Melayu</option>
-                <option value="tr">Türkçe (Turkish)</option>
-                <option value="ru">Русский (Russian)</option>
+                <option value="en">English (انگریزی)</option>
+                <option value="zh">中文 (چائنہ)</option>
+                <option value="ru">Русский (روسی)</option>
+                <option value="ar">العربية (عربی)</option>
+                <option value="ps">پښتو (پشتو)</option>
+                <option value="fa">فارسی (فارسی)</option>
+                <option value="id">Bahasa Indonesia (انڈونیشیا)</option>
+                <option value="ms">Bahasa Melayu (ملائشیا)</option>
+                <option value="tr">Türkçe (ترکی)</option>
+                <option value="ur">اردو (اُردو)</option>
             </select>
         </div>
     </header>
@@ -389,78 +388,496 @@
     </footer>
 
     <script>
-        // 10 Trade Folders Data
-        const tradeFolders = [
-            { id: 't1', tag: '01', title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
-            { id: 't2', tag: '02', title: 'USA Market & Buyers', desc: 'U.S. buyers, importers, market opportunities and business connections.' },
-            { id: 't3', tag: '03', title: 'China Market & Buyers', desc: 'Chinese buyers, traders, importers and commercial opportunities.' },
-            { id: 't4', tag: '04', title: 'Export & Logistics', desc: 'Export documentation, customs, shipping, delivery and international logistics.' },
-            { id: 't5', tag: '05', title: 'Product & Quality', desc: 'Kernels, in-shell nuts, roasting, grades, specifications and quality standards.' },
-            { id: 't6', tag: '06', title: 'Supply Chain & Traceability', desc: 'Forest → collector → processing → packing → export, with transparent traceability.' },
-            { id: 't7', tag: '07', title: 'Geographical Indication (GI)', desc: 'Origin, identity, authenticity, geographical reputation and product traceability.' },
-            { id: 't8', tag: '08', title: 'Organic Chemistry & Natural Quality', desc: 'Natural oils, chemical composition, purity, nutritional properties and quality characteristics.' },
-            { id: 't9', tag: '09', title: 'Processing, Packaging & Value Addition', desc: 'Processing, grading, roasting, packaging, branding and premium product development.' },
-            { id: 't10', tag: '10', title: 'Sustainable & Ethical Trade', desc: 'Responsible sourcing, fair value, community benefits and conservation-linked trade.' }
-        ];
-
-        // 10 Research Folders Data
-        const researchFolders = [
-            { id: 'r1', tag: '01', title: 'Geographical Origin & GI Research', desc: 'Chilgoza origin, geographical identity, traditional knowledge and GI research.' },
-            { id: 'r2', tag: '02', title: 'Chilgoza Biology & Botany', desc: 'Tree biology, growth, reproduction, seed development and natural regeneration.' },
-            { id: 'r3', tag: '03', title: 'Nutrition Value & Natural Composition', desc: 'Protein, natural oils, minerals, nutrients and scientific composition.' },
-            { id: 'r4', tag: '04', title: 'Chilgoza Forests & Ecology', desc: 'Forest ecosystems, ecological functions, regeneration and sustainable forest management.' },
-            { id: 'r5', tag: '05', title: 'Biodiversity & Wildlife', desc: 'Wildlife habitats, biodiversity, ecosystem services and conservation values.' },
-            { id: 'r6', tag: '06', title: 'Climate & Global Green Environment', desc: 'Climate resilience, carbon, water, soil protection and global environmental benefits.' },
-            { id: 'r7', tag: '07', title: 'Forest Conservation & Restoration', desc: 'Forest protection, restoration, natural regeneration, plantation and sustainable management.' },
-            { id: 'r8', tag: '08', title: 'Supply Chain & Community Livelihoods', desc: 'Local collectors, rural livelihoods, value chains, income generation and poverty reduction.' },
-            { id: 'r9', tag: '09', title: 'Sustainable Harvesting & Community Awareness', desc: 'Safe harvesting, forest protection, community training and conservation awareness.' },
-            { id: 'r10', tag: '10', title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
-        ];
+        // Multi-language Master Translation Dictionary (10 Languages with complete folder support)
+        const translations = {
+            en: {
+                title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
+                badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
+                hHead: "Royal Chilgoza <span>Ecosystem</span>",
+                hDesc: "Explore professional trade markets and deep scientific research folders. Each folder operates as an independent hub with media, PDFs, Royal AI, and direct WhatsApp support.",
+                tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
+                rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
+                theme: "Theme Customizer", createHub: "Create Custom Top-Level Hub", createBtn: "+ Create Hub",
+                thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
+                rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
+                backHome: "← Back to Home", backCat: "← Back to Categories",
+                upTitle: "Upload Media / Document to this Folder", upBtn: "+ Add to this Folder",
+                galTitle: "Folder Content Gallery (Images, Videos & PDFs)",
+                aiTitle: "🤖 Royal AI Assistant (Folder Expert)", aiDesc: "Ask anything specific about this folder topic:", aiBtn: "Ask AI Assistant",
+                waTag: "Instant Buyer & Researcher Support", waDesc: "Have a question regarding this specific section? Connect instantly via WhatsApp.", waBtnText: "💬 Chat on WhatsApp Now",
+                footer: "© 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.",
+                openFolder: "Open Folder Website →",
+                tradeFolders: [
+                    { title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
+                    { title: 'USA Market & Buyers', desc: 'U.S. buyers, importers, market opportunities and business connections.' },
+                    { title: 'China Market & Buyers', desc: 'Chinese buyers, traders, importers and commercial opportunities.' },
+                    { title: 'Export & Logistics', desc: 'Export documentation, customs, shipping, delivery and international logistics.' },
+                    { title: 'Product & Quality', desc: 'Kernels, in-shell nuts, roasting, grades, specifications and quality standards.' },
+                    { title: 'Supply Chain & Traceability', desc: 'Forest → collector → processing → packing → export, with transparent traceability.' },
+                    { title: 'Geographical Indication (GI)', desc: 'Origin, identity, authenticity, geographical reputation and product traceability.' },
+                    { title: 'Organic Chemistry & Natural Quality', desc: 'Natural oils, chemical composition, purity, nutritional properties and quality characteristics.' },
+                    { title: 'Processing, Packaging & Value Addition', desc: 'Processing, grading, roasting, packaging, branding and premium product development.' },
+                    { title: 'Sustainable & Ethical Trade', desc: 'Responsible sourcing, fair value, community benefits and conservation-linked trade.' }
+                ],
+                researchFolders: [
+                    { title: 'Geographical Origin & GI Research', desc: 'Chilgoza origin, geographical identity, traditional knowledge and GI research.' },
+                    { title: 'Chilgoza Biology & Botany', desc: 'Tree biology, growth, reproduction, seed development and natural regeneration.' },
+                    { title: 'Nutrition Value & Natural Composition', desc: 'Protein, natural oils, minerals, nutrients and scientific composition.' },
+                    { title: 'Chilgoza Forests & Ecology', desc: 'Forest ecosystems, ecological functions, regeneration and sustainable forest management.' },
+                    { title: 'Biodiversity & Wildlife', desc: 'Wildlife habitats, biodiversity, ecosystem services and conservation values.' },
+                    { title: 'Climate & Global Green Environment', desc: 'Climate resilience, carbon, water, soil protection and global environmental benefits.' },
+                    { title: 'Forest Conservation & Restoration', desc: 'Forest protection, restoration, natural regeneration, plantation and sustainable management.' },
+                    { title: 'Supply Chain & Community Livelihoods', desc: 'Local collectors, rural livelihoods, value chains, income generation and poverty reduction.' },
+                    { title: 'Sustainable Harvesting & Community Awareness', desc: 'Safe harvesting, forest protection, community training and conservation awareness.' },
+                    { title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
+                ]
+            },
+            zh: {
+                title: "皇家松子", sub: "全球生态系统", wa: "💬 WhatsApp",
+                badge: "巴基斯坦 • 国际贸易与研究",
+                hHead: "皇家松子 <span>全球生态系统</span>",
+                hDesc: "探索专业的贸易市场和深入的科学研究文件夹。每个文件夹都是一个独立中心，配有媒体、PDF、皇家AI和直接WhatsApp支持。",
+                tLabel: "商业与贸易", tTitle: "全球贸易", tDesc: "10个全面的国际贸易目录，具有独立的媒体、AI和WhatsApp连接 →",
+                rLabel: "科学与生态", tTitle: "研究与知识", tDesc: "关于产地、林业、植物学、营养学和可持续性的10个详细研究文件夹 →",
+                theme: "主题颜色定制", createHub: "创建自定义主中心", createHubBtn: "+ 创建中心",
+                thTitle: "🌍 全球贸易中心", thDesc: "选择下方任意类别，打开包含媒体库、视频资源、PDF文档和皇家AI助手的专属微型网站。",
+                rhTitle: "🌲 研究与知识中心", thDesc: "选择下方任意科学类别，探索专属文档、研究报告、AI助手和直接贸易咨询。",
+                backHome: "← 返回首页", backCat: "← 返回分类",
+                upTitle: "向此文件夹上传媒体/文档", upBtn: "+ 添加到此文件夹",
+                galTitle: "文件夹内容库（图片、视频和PDF）",
+                aiTitle: "🤖 皇家AI助手（文件夹专家）", aiDesc: "询问有关此文件夹主题的具体问题：", aiBtn: "询问AI助手",
+                waTag: "即时买家与研究人员支持", waDesc: "对本部分有任何疑问？通过WhatsApp立即联系。", waBtnText: "💬 立即通过WhatsApp聊天",
+                footer: "© 2026 皇家松子。版权所有。<br>巴基斯坦吉尔吉特-巴尔蒂斯坦迪亚米尔地区奇拉斯。",
+                openFolder: "打开文件夹网站 →",
+                tradeFolders: [
+                    { title: '全球市场', desc: '全球需求、市场机会和国际贸易目的地。' },
+                    { title: '美国市场与买家', desc: '美国买家、进口商、市场机会和商业联系。' },
+                    { title: '中国市场与买家', desc: '中国买家、贸易商、进口商和商业机会。' },
+                    { title: '出口与物流', desc: '出口文件、海关、航运、交付和国际物流。' },
+                    { title: '产品与质量', desc: '果仁、带壳坚果、烘烤、等级、规格和质量标准。' },
+                    { title: '供应链与可追溯性', desc: '森林 → 采集者 → 加工 → 包装 → 出口，具有透明的可追溯性。' },
+                    { title: '地理标志 (GI)', desc: '产地、身份、真实性、地理声誉和产品可追溯性。' },
+                    { title: '有机化学与天然品质', desc: '天然油脂、化学成分、纯度、营养特性和质量特征。' },
+                    { title: '加工、包装与增值', desc: '加工、分级、烘烤、包装、品牌建设和优质产品开发。' },
+                    { title: '可持续与道德贸易', desc: '负责任的采购、公平价值、社区效益和与保护挂钩的贸易。' }
+                ],
+                researchFolders: [
+                    { title: '地理起源与GI研究', desc: '松子产地、地理特征、传统知识与地理标志研究。' },
+                    { title: '松子生物学与植物学', desc: '树木生物学、生长、繁殖、种子发育与自然更新。' },
+                    { title: '营养价值与天然成分', desc: '蛋白质、天然油脂、矿物质、营养成分与科学配比。' },
+                    { title: '松子森林与生态学', desc: '森林生态系统、生态功能、更新与可持续森林管理。' },
+                    { title: '生物多样性与野生动物', desc: '野生动物栖息地、生物多样性、生态系统服务与保护价值。' },
+                    { title: '气候与全球绿色环境', desc: '气候韧性、碳、水、土壤保护与全球环境效益。' },
+                    { title: '森林保护与恢复', desc: '森林保护、恢复、天然更新、人工林与可持续管理。' },
+                    { title: '供应链与社区生计', desc: '当地采集者、乡村生计、价值链、增收与减贫。' },
+                    { title: '可持续采收与社区意识', desc: '安全采收、森林保护、社区培训与保护意识。' },
+                    { title: '研究、政策与伙伴关系', desc: '研究知识、政府政策、粮农组织、全球环境基金、非政府组织、机构与未来伙伴关系。' }
+                ]
+            },
+            ru: {
+                title: "ROYAL CHILGOZA", sub: "ГЛОБАЛЬНАЯ ЭКОСИСТЕМА", wa: "💬 WhatsApp",
+                badge: "ПАКИСТАН • МЕЖДУНАРОДНАЯ ТОРГОВЛЯ И ИССЛЕДОВАНИЯ",
+                hHead: "Экосистема <span>Royal Chilgoza</span>",
+                hDesc: "Изучайте профессиональные торговые рынки и научные папки. Каждая папка работает как независимый хаб с медиа, PDF, Royal AI и поддержкой WhatsApp.",
+                tLabel: "Бизнес и Торговля", tTitle: "Мировая Торговля", tDesc: "10 комплексных каталогов международной торговли с медиа, AI и связью через WhatsApp →",
+                rLabel: "Наука и Экология", tTitle: "Исследования и Знания", tDesc: "10 подробных папок об источниках, лесном хозяйстве, ботанике, питании и устойчивости →",
+                theme: "Настройка Темы", createHub: "Создать Пользовательский Хаб", createHubBtn: "+ Создать Хаб",
+                thTitle: "🌍 ЦЕНТРЫ МИРОВОЙ ТОРГОВЛИ", thDesc: "Выберите любую категорию ниже, чтобы открыть её мини-сайт с медиагалереей, видео, PDF и AI-ассистентом.",
+                rhTitle: "🌲 ЦЕНТРЫ ИССЛЕДОВАНИЙ И ЗНАНИЙ", thDesc: "Выберите научную категорию для изучения документов, отчетов и прямого обращения.",
+                backHome: "← На главную", backCat: "← Назад к категориям",
+                upTitle: "Загрузить медиа / документ в эту папку", upBtn: "+ Добавить в папку",
+                galTitle: "Галерея содержимого папки (Фото, Видео и PDF)",
+                aiTitle: "🤖 AI-Ассистент Royal (Эксперт папки)", aiDesc: "Задайте вопрос по теме этой папки:", aiBtn: "Спросить AI-ассистента",
+                waTag: "Поддержка покупателей и исследователей", waDesc: "Есть вопросы по этому разделу? Свяжитесь через WhatsApp.", waBtnText: "💬 Чат в WhatsApp",
+                footer: "© 2026 Royal Chilgoza Pine Nuts. Все права защищены.<br>Чилас, округ Диамер, Гилгит-Балтистан, Пакистан.",
+                openFolder: "Открыть папку →",
+                tradeFolders: [
+                    { title: 'Мировые рынки', desc: 'Мировой спрос, рыночные возможности и направления международной торговли.' },
+                    { title: 'Рынок США и покупатели', desc: 'Покупатели из США, импортеры, рыночные возможности и деловые связи.' },
+                    { title: 'Рынок Китая и покупатели', desc: 'Китайские покупатели, трейдеры, импортеры и коммерческие возможности.' },
+                    { title: 'Экспорт и логистика', desc: 'Экспортная документация, таможня, доставка и международная логистика.' },
+                    { title: 'Продукт и качество', desc: 'Ядра, орехи в скорлупе, обжарка, сорта, спецификации и стандарты качества.' },
+                    { title: 'Цепочка поставок и прослеживаемость', desc: 'Лес → заготовитель → переработка → упаковка → экспорт с прозрачной прослеживаемостью.' },
+                    { title: 'Географическое указание (GI)', desc: 'Происхождение, идентичность, подлинность и репутация продукта.' },
+                    { title: 'Органическая химия и качество', desc: 'Природные масла, химический состав, чистота и питательные свойства.' },
+                    { title: 'Переработка, упаковка и добавленная стоимость', desc: 'Переработка, сортировка, обжарка, упаковка, брендинг и развитие премиум-продуктов.' },
+                    { title: 'Устойчивая и этичная торговля', desc: 'Ответственное снабжение, справедливая стоимость и польза для общества.' }
+                ],
+                researchFolders: [
+                    { title: 'Географическое происхождение и GI', desc: 'Происхождение чилгозы, традиционные знания и исследования GI.' },
+                    { title: 'Биология и ботаника чилгозы', desc: 'Биология дерева, рост, размножение, развитие семян и естественное возобновление.' },
+                    { title: 'Пищевая ценность и состав', desc: 'Белок, природные масла, минералы, питательные вещества и научный состав.' },
+                    { title: 'Леса и экология чилгозы', desc: 'Лесные экосистемы, экологические функции и устойчивое управление лесами.' },
+                    { title: 'Биоразнообразие и дикая природа', desc: 'Среты обитания диких животных, биоразнообразие и экосистемные услуги.' },
+                    { title: 'Климат и глобальная среда', desc: 'Климатическая устойчивость, углерод, вода, защита почв и экологические выгоды.' },
+                    { title: 'Сохранение и восстановление лесов', desc: 'Защита лесов, восстановление, естественное возобновление и устойчивое управление.' },
+                    { title: 'Цепочка поставок и жизнь общин', desc: 'Местные заготовители, сельские доходы, цепочки создания стоимости и снижение бедности.' },
+                    { title: 'Устойчивый сбор и осведомленность', desc: 'Безопасный сбор, защита лесов, обучение общин и экологическая осведомленность.' },
+                    { title: 'Исследования, политика и партнерство', desc: 'Научные знания, госполитика, ФАО, ГЭФ, НПО и институты.' }
+                ]
+            },
+            ar: {
+                title: "رويال تشيلغوزا", sub: "النظام البيئي العالمي", wa: "💬 واتساب",
+                badge: "باكستان • التجارة الدولية والأبحاث",
+                hHead: "رويال تشيلغوزا <span>النظام البيئي</span>",
+                hDesc: "استكشف أسواق التجارة المهنية ومجلدات البحوث العلمية العميقة. يعمل كل مجلد كمركز مستقل مع الوسائط، ملفات PDF، الذكاء الاصطناعي، ودعم واتساب.",
+                tLabel: "الأعمال والتجارة", tTitle: "التجارة العالمية", tDesc: "10 أدلة تجارية دولية شاملة مع وسائط فردية وتواصل عبر الذكاء الاصطناعي وواتساب →",
+                rLabel: "العلوم والبيئة", tTitle: "البحث والمعرفة", tDesc: "10 مجلدات بحثية مفصلة حول المنشأ، الغابات، علم النبات، التغذية والاستدامة →",
+                theme: "مخصص الألوان", createHub: "إنشاء مركز رئيسي مخصص", createHubBtn: "+ إنشاء مركز",
+                thTitle: "🌍 مراكز التجارة العالمية", thDesc: "اختر أي فئة أدناه لفتح موقعها المصغر المخصص الذي يضم معرض الوسائط، مقاطع الفيديو، مستندات PDF، ومساعد الذكاء الاصطناعي.",
+                rhTitle: "🌲 مراكز البحث والمعرفة", thDesc: "اختر أي فئة علمية أدناه لاستكشاف المستندات المخصصة، التقارير البحثية، مساعد الذكاء الاصطناعي، والاستفسارات التجارية المباشرة.",
+                backHome: "← العودة للرئيسية", backCat: "← العودة للفئات",
+                upTitle: "رفع وسائط / مستند إلى هذا المجلد", upBtn: "+ إضافة إلى هذا المجلد",
+                galTitle: "معرض محتوى المجلد (صور، فيديوهات و PDF)",
+                aiTitle: "🤖 مساعد رويال الذكي (خبير المجلد)", aiDesc: "اسأل أي شيء محدد حول موضوع هذا المجلد:", aiBtn: "اسأل المساعد الذكي",
+                waTag: "دعم فوري للمشترين والباحثين", waDesc: "هل لديك استفسار بخصوص هذا القسم المحدد؟ تواصل فوراً عبر واتساب.", waBtnText: "💬 تواصل عبر واتساب الآن",
+                footer: "© 2026 رائل تشيلغوزا. جميع الحقوق محفوظة.<br>شيلاس، منطقة ديامر، غلغت-بلتستان، باكستان.",
+                openFolder: "فتح موقع المجلد ←",
+                tradeFolders: [
+                    { title: 'الأسواق العالمية', desc: 'الطلب العالمي، فرص السوق وجهات التجارة الدولية.' },
+                    { title: 'سوق الولايات المتحدة والمشترون', desc: 'المشترون الأمريكيون، المستوردون، الفرص التجارية والاتصالات.' },
+                    { title: 'السوق الصيني والمشترون', desc: 'المشترون الصينيون، التجار، المستوردون والفرص التجارية.' },
+                    { title: 'التصدير والخدمات اللوجستية', desc: 'وثائق التصدير، الجمارك، الشحن، التوصيل واللوجستيات الدولية.' },
+                    { title: 'المنتج والجودة', desc: 'الحبوب، المكسرات بالقشر، التحميص، الدرجات والمواصفات.' },
+                    { title: 'سلسلة التوريد وإمكانية التتبع', desc: 'الغابة ← الجامع ← المعالجة ← التعبئة ← التصدير بشفافية تامة.' },
+                    { title: 'المؤشر الجغرافي (GI)', desc: 'المنشأ، الهوية، الأصالة، السمعة الجغرافية وإمكانية تتبع المنتج.' },
+                    { title: 'الكيمياء العضوية والجودة الطبيعية', desc: 'الزيوت الطبيعية، التركيب الكيميائي، النقاء والخصائص الغذائية.' },
+                    { title: 'المعالجة والتعبئة وإضافة القيمة', desc: 'المعالجة، التدرج، التحميص، التعبئة، العلامات التجارية وتطوير المنتجات المميزة.' },
+                    { title: 'التجارة المستدامة والأخلاقية', desc: 'المصادر المسؤولة، القيمة العادلة، منافع المجتمع والتجارة المرتبطة بالحفظ.' }
+                ],
+                researchFolders: [
+                    { title: 'المنشأ الجغرافي وبحوث المؤشر الجغرافي', desc: 'منشأ التشيلغوزا، الهوية الجغرافية، المعارف التقليدية وبحوث المؤشر الجغرافي.' },
+                    { title: 'بيولوجيا وعلم نبات التشيلغوزا', desc: 'بيولوجيا الأشجار، النمو، التكاثر، تطوير البذور والتجدد الطبيعي.' },
+                    { title: 'القيمة الغذائية والتركيب الطبيعي', desc: 'البروتين، الزيوت الطبيعية، المعادن، المغذيات والتركيب العلمي.' },
+                    { title: 'غابات وبيئة التشيلغوزا', desc: 'النظم الإيكولوجية للغابات، الوظائف البيئية والإدارة المستدامة للغابات.' },
+                    { title: 'التنوع البيولوجي والحياة البرية', desc: 'مواطن الحياة البرية، التنوع البيولوجي، خدمات النظام الإيكولوجي وقيم الحفظ.' },
+                    { title: 'المناخ والبيئة الخضراء العالمية', desc: 'المرونة المناخية، الكربون، المياه، حماية التربة والفوائد البيئية العالمية.' },
+                    { title: 'حفظ الغابات واستعادتها', desc: 'حماية الغابات، الاستعادة، التجدد الطبيعي، الزراعة والإدارة المستدامة.' },
+                    { title: 'سلسلة التوريد وسبل عيش المجتمعات', desc: 'الجامعون المحليون، سبل العيش الريفية، سلاسل القيمة وخفض الفقر.' },
+                    { title: 'الحصاد المستدام ووعي المجتمع', desc: 'الحصاد الآمن، حماية الغابات، تدريب المجتمع والوعي بالحفظ.' },
+                    { title: 'البحوث والسياسات والشراكات', desc: 'معارف البحوث، سياسات الحكومة، الفاو، مرفق البيئة العالمية والمنظمات غير الحكومية.' }
+                ]
+            },
+            ps: {
+                title: "رویال چلغوزه", sub: "نړیوال سیستم", wa: "💬 واټس اپ",
+                badge: "پاکستان • نړیوال تجارت او څیړنه",
+                hHead: "رویال چلغوزه <span>نړیوال سیسټم</span>",
+                hDesc: "مسلکي سوداګریز بازارونه او ژورې ساینسي څیړنیزې فولډرې وپلټئ. هر فولډر د رسنیو، PDF، رویال AI او واټس اپ ملاتړ سره یو خپلواک مرکز دی.",
+                tLabel: "سوداګري او تجارت", tTitle: "نړیوال تجارت", tDesc: "10 جامع نړیوال سوداګریز لارښودونه د رسنیو، AI او واټس اپ اړیکو سره →",
+                rLabel: "ساینس او چاپېریال", tTitle: "څیړنه او پوهه", tDesc: "د اصل، ځنګلونو، بوټو پوهنې، تغذیې او پایښت په اړه 10 تفصیلي څیړنیز فولډرونه →",
+                theme: "د موضوع رنګ تنظیم", createHub: "نوی اصلي مرکز جوړ کړئ", createHubBtn: "+ مرکز جوړ کړئ",
+                thTitle: "🌍 نړیوال سوداګریز مرکزونه", thDesc: "لاندې هره کټه ګوري وټاکئ ترڅو د هغې ځانګړی منی ویب پاڼه د رسنیو، ویډیوګانو، PDF سندونو او رویال AI مرستیال سره پرانیزئ.",
+                rhTitle: "🌲 د څیړنې او پوهې مرکزونه", thDesc: "لاندې هر ساینسي کټګوري وټاکئ ترڅو وقف شوي سندونه، څیړنیز راپورونه او د AI مرستیال وپلټئ.",
+                backHome: "← کور پاڼې ته تلل", backCat: "← کټګوریو ته تلل",
+                upTitle: "پدې فولډر کې رسنۍ یا سند اپلوډ کړئ", upBtn: "+ پدې فولډر کې اضافه کړئ",
+                galTitle: "د فولډر مینځپانګې ګالري (انځورونه، ویډیوګانې او PDF)",
+                aiTitle: "🤖 رویال AI مرستیال (د فولډر ماهر)", aiDesc: "د دې فولډر موضوع په اړه کومه ځانګړې پوښتنه وپوښتئ:", aiBtn: "AI ته پوښتنه وکړئ",
+                waTag: "د پیرودونکو او څیړونکو لپاره عاجل ملاتړ", waDesc: "د دې ځانګړې برخې په اړه پوښتنه لرئ؟ د واټس اپ له لارې په بېړه اړیکه ونیسئ.", waBtnText: "💬 همدا اوس په واټس اپ خبرې وکړئ",
+                footer: "© 2026 رویال چلغوزه پائن نټس. ټول حقوق خوندي دي.<br>چلاس، دیامر ضلع، گلگت بلتستان، پاکستان.",
+                openFolder: "د فولډر ویب پاڼه پرانیزئ ←",
+                tradeFolders: [
+                    { title: 'نړیوال بازارونه', desc: 'نړیواله غوښتنه، د بازار فرصتونه او نړیوال سوداګریز منزلونه.' },
+                    { title: 'د امریکا بازار او پیرودونکي', desc: 'د امریکا پیرودونکي، وارد کونکي، د بازار فرصتونه او سوداګریزې اړیکې.' },
+                    { title: 'د چین بازار او پیرودونکي', desc: 'چینایي پیرودونکي، سوداګر، وارد کونکي او سوداګریز فرصتونه.' },
+                    { title: 'صادرات او لوژستیک', desc: 'د صادراتو اسناد، ګمرک، بار وړل، تحویلي او نړیوال لوژستیک.' },
+                    { title: 'محصول او کیفیت', desc: 'زړي، په پوټکي کې مغز، پخول، درجې، مشخصات او د کیفیت معیارونه.' },
+                    { title: 'د اکمالاتو ځنځیر او د پام وړتیا', desc: 'ځنګل ← راټولوونکی ← پروسس ← بسته بندي ← صادرات، د روڼتیا سره.' },
+                    { title: 'جغرافیاوي نښه (GI)', desc: 'اصل، هویت، اصالت، جغرافیایي شهرت او د محصول د پام وړتیا.' },
+                    { title: 'عضوي کیمیا او طبیعي کیفیت', desc: 'طبیعي غوړي، کیمیاوي ترکیب، پاکوالی، د تغذیې ځانګړتیاوې او کیفیت.' },
+                    { title: 'پروسس، بسته بندي او د ارزښت لوړول', desc: 'پروسس، درجه بندي، پخول، بسته بندي، برانډینګ او د پریمیم محصولاتو پراختیا.' },
+                    { title: 'دوامداره او اخلاقي تجارت', desc: 'مسؤلانه سرچینې، عادلانه ارزښت، د ټولنې ګټې او د ساتنې سره تړلی تجارت.' }
+                ],
+                researchFolders: [
+                    { title: 'جغرافیاوي اصل او GI څیړنه', desc: 'د چلغوزې اصل، جغرافیایي هویت، دودیزه پوهه او د GI څیړنه.' },
+                    { title: 'د چلغوزې بیولوژي او نبات پوهنه', desc: 'د ونې بیولوژي، وده، بیا تولید، د تخم پراختیا او طبیعي بیا رغونه.' },
+                    { title: 'د تغذیې ارزښت او طبیعي ترکیب', desc: 'پروتین، طبیعي غوړي، منرالونه، مغذي توکي او ساینسي ترکیب.' },
+                    { title: 'د چلغوزې ځنګلونه او چاپېریال', desc: 'د ځنګل اکوسیستمونه، ایکولوژیکي دندې، بیا رغونه او دوامداره مدیریت.' },
+                    { title: 'حياتي تنوع او وحشي ژوي', desc: 'د وحشي ژویو استوګنځایونه، حیاتي تنوع، د اکوسیستم خدمتونه او د ساتنې ارزښتونه.' },
+                    { title: 'اقلیم او نړیوال زرغون چاپېریال', desc: 'د اقلیم مقاومت، کاربن، اوبه، د خاورې ساتنه او نړیوال چاپیریال ګټې.' },
+                    { title: 'د ځنګلونو ساتنه او بیا رغونه', desc: 'د ځنګل ساتنه، بیا رغونه، طبیعي بیا رغونه، کښت او دوامداره مدیریت.' },
+                    { title: 'د اکمالاتو ځنځیر او د ټولنې ژوند', desc: 'ځایی راټولوونکي، کلیوال ژوند، د ارزښت ځنځیرونه او د بې وزلۍ کمول.' },
+                    { title: 'دوامداره راټولول او د ټولنې پوهاوی', desc: 'خوندي راټولول، د ځنګل ساتنه، د ټولنې روزنه او د ساتنې پوهاوی.' },
+                    { title: 'څیړنه، پالیسي او ملګرتیا', desc: 'د څیړنې پوهه، دولتي پالیسي، FAO، GEF، NGOs، بنسټونه او راتلونکې ملګرتیا.' }
+                ]
+            },
+            fa: {
+                title: "رویال چلغوزه", sub: "اکوسیستم جهانی", wa: "💬 واتس‌اپ",
+                badge: "پاکستان • تجارت بین‌الملل و تحقیق",
+                hHead: "رویال چلغوزه <span>اکوسیستم جهانی</span>",
+                hDesc: "بازارهای تجاری حرفه‌ای و پوشه‌های تحقیقاتی عمیق علمی را بررسی کنید. هر پوشه به عنوان یک هب مستقل با رسانه، PDF، هوش مصنوعی رویال و واتس‌اپ عمل می‌کند.",
+                tLabel: "تجارت و بازرگانی", tTitle: "تجارت جهانی", tDesc: "۱۰ دایرکتوری جامع تجارت بین‌الملل با رسانه، هوش مصنوعی و ارتباط واتس‌اپ →",
+                rLabel: "علم و محیط زیست", tTitle: "تحقیق و دانش", tDesc: "۱۰ پوشه تحقیقاتی تفصیلی درباره منشاء، جنگل‌داری، گیاه‌شناسی، تغذیه و پایداری →",
+                theme: "شخصی‌سازی رنگ", createHub: "ایجاد هب سفارشی", createHubBtn: "+ ایجاد هب",
+                thTitle: "🌍 هب‌های تجارت جهانی", thDesc: "هر دسته‌بندی را انتخاب کنید تا وب‌سایت کوچک اختصاصی آن شامل گالری رسانه، ویدیو، اسناد PDF و هوش مصنوعی رویال باز شود.",
+                rhTitle: "🌲 هب‌های تحقیق و دانش", thDesc: "هر دسته‌بندی علمی را برای بررسی اسناد اختصاصی، گزارش‌های تحقیقی و هوش مصنوعی انتخاب کنید.",
+                backHome: "← بازگشت به خانه", backCat: "← بازگشت به دسته‌ها",
+                upTitle: "آپلود رسانه / سند در این پوشه", upBtn: "+ افزودن به این پوشه",
+                galTitle: "گالری محتوای پوشه (تصاویر، ویدیوها و PDF)",
+                aiTitle: "🤖 دستیار هوش مصنوعی رویال (متخصص پوشه)", aiDesc: "هر سوالی درباره موضوع این پوشه دارید بپرسید:", aiBtn: "پرسش از هوش مصنوعی",
+                waTag: "پشتیبانی فوری خریداران و محققان", waDesc: "سؤالی درباره این بخش خاص دارید؟ فوراً از طریق واتس‌اپ متصل شوید.", waBtnText: "💬 گفتگو در واتس‌اپ",
+                footer: "© ۲۰۲۶ رویال چلغوزهٔ. تمامی حقوق محفوظ است.<br>چیلاس، منطقه دیامر، گلگت-بلستان، پاکستان.",
+                openFolder: "باز کردن وب‌سایت پوشه ←",
+                tradeFolders: [
+                    { title: 'بازارهای جهانی', desc: 'تقاضای جهانی، فرصت‌های بازار و مقصدهای تجارت بین‌الملل.' },
+                    { title: 'بازار و خریداران ایالات متحده', desc: 'خریداران آمریکایی، واردکنندگان، فرصت‌های بازار و ارتباطات تجاری.' },
+                    { title: 'بازار و خریداران چین', desc: 'خریداران چینی، بازرگانان، واردکنندگان و فرصت‌های تجاری.' },
+                    { title: 'صادرات و لجستیک', desc: 'اسناد صادرات، گمرک، حمل‌ونقل، تحویل و لجستیک بین‌الملل.' },
+                    { title: 'محصول و کیفیت', desc: 'مغز، آجیل با پوست، برشتگی، درجه‌ها، مشخصات و استانداردهای کیفیت.' },
+                    { title: 'زنجیره تامین و ردیابی', desc: 'جنگل ← جمع‌آوری‌کننده ← فرآوری ← بسته‌بندی ← صادرات با ردیابی شفاف.' },
+                    { title: 'نشان جغرافیایی (GI)', desc: 'منشاء، هویت، اصالت، شهرت جغرافیایی و قابلیت ردیابی محصول.' },
+                    { title: 'شیمی آلی و کیفیت طبیعی', desc: 'روغن‌های طبیعی، ترکیب شیمیایی، خلوص، خواص تغذیه‌ای و ویژگی‌های کیفی.' },
+                    { title: 'فرآوری، بسته‌بندی و ارزش افزوده', desc: 'فرآوری، درجه‌بندی، برشتگی، بسته‌بندی، برندسازی و توسعه محصولات ممتاز.' },
+                    { title: 'تجارت پایدار و اخلاقی', desc: 'منبع‌یابی مسئولانه، ارزش عادلانه، منافع جامعه و تجارت مرتبط با حفاظت.' }
+                ],
+                researchFolders: [
+                    { title: 'منشاء جغرافیایی و تحقیق GI', desc: 'منشاء چلغوزه، هویت جغرافیایی، دانش سنتی و تحقیق GI.' },
+                    { title: 'زیست‌شناسی و گیاه‌شناسی چلغوزه', desc: 'زیست‌شناسی درخت، رشد، تولید مثل، توسعه دانه و زادآوری طبیعی.' },
+                    { title: 'ارزش تغذیه‌ای و ترکیب طبیعی', desc: 'پروتئین، روغن‌های طبیعی، مواد معدنی، مغذی‌ها و ترکیب علمی.' },
+                    { title: 'جنگل‌ها و اکولوژی چلغوزه', desc: 'اکوسیستم‌های جنگلی، توابع اکولوژیکی، زادآوری و مدیریت پایدار جنگل.' },
+                    { title: 'تنوع زیستی و حیات وحش', desc: 'زیستگاه‌های حیات وحش، تنوع زیستی، خدمات اکوسیستم و ارزش‌های حفاظتی.' },
+                    { title: 'اقلیم و محیط سبز جهانی', desc: 'تاب‌آوری اقلیمی، کربن، آب، حفاظت از خاک و مزایای زیست‌محیطی جهانی.' },
+                    { title: 'حفاظت و احیای جنگل', desc: 'حفاظت از جنگل، احیاء، زادآوری طبیعی، جنگل‌کاری و مدیریت پایدار.' },
+                    { title: 'زنجیره تامین و معیشت جوامع', desc: 'جمع‌آوری‌کنندگان محلی، معیشت روستایی، زنجیره‌های ارزش و کاهش فقر.' },
+                    { title: 'برداشت پایدار و آگاهی جامعه', desc: 'برداشت ایمن، حفاظت از جنگل، آموزش جامعه و آگاهی حفاظتی.' },
+                    { title: 'تحقیق، سیاست و مشارکت‌ها', desc: 'دانش پژوهشی، سیاست دولتی، فائو، GEF، نهادها و مشارکت‌های آینده.' }
+                ]
+            },
+            id: {
+                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
+                badge: "PAKISTAN • PERDAGANGAN & RISET INTERNASIONAL",
+                hHead: "Ekosistem <span>Royal Chilgoza</span>",
+                hDesc: "Jelajahi pasar perdagangan profesional dan folder riset ilmiah mendalam. Setiap folder beroperasi sebagai pusat independen dengan media, PDF, AI Royal, dan dukungan WhatsApp.",
+                tLabel: "Bisnis & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan internasional komprehensif dengan media, AI, & konektivitas WhatsApp →",
+                rLabel: "Sains & Ekologi", tTitle: "Riset & Pengetahuan", tDesc: "10 folder riset terperinci tentang asal-usul, kehutanan, botani, nutrisi, & keberlanjutan →",
+                theme: "Kustomisasi Tema", createHub: "Buat Hub Kustom", createHubBtn: "+ Buat Hub",
+                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih kategori di bawah untuk membuka situs mini khusus yang menampilkan galeri media, video, dokumen PDF, dan AI Royal.",
+                rhTitle: "🌲 PUSAT RISET & PENGETAHUAN", thDesc: "Pilih kategori ilmiah di bawah untuk menjelajahi dokumen khusus, laporan riset, dan asisten AI.",
+                backHome: "← Kembali ke Beranda", backCat: "← Kembali ke Kategori",
+                upTitle: "Unggah Media / Dokumen ke Folder Ini", upBtn: "+ Tambahkan ke Folder Ini",
+                galTitle: "Galeri Konten Folder (Gambar, Video & PDF)",
+                aiTitle: "🤖 Asisten AI Royal (Pakar Folder)", aiDesc: "Tanyakan apa saja tentang topik folder ini:", aiBtn: "Tanya Asisten AI",
+                waTag: "Dukungan Instan Pembeli & Peneliti", waDesc: "Punya pertanyaan tentang bagian ini? Hubungi langsung via WhatsApp.", waBtnText: "💬 Chat di WhatsApp Sekarang",
+                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta dilindungi.<br>Chilas, Distrik Diamer, Gilgit-Baltistan, Pakistan.",
+                openFolder: "Buka Website Folder →",
+                tradeFolders: [
+                    { title: 'Pasar Global', desc: 'Permintaan global, peluang pasar, dan tujuan perdagangan internasional.' },
+                    { title: 'Pasar & Pembeli AS', desc: 'Pembeli AS, importir, peluang pasar, dan koneksi bisnis.' },
+                    { title: 'Pasar & Pembeli Cina', desc: 'Pembeli Cina, trader, importir, dan peluang komersial.' },
+                    { title: 'Ekspor & Logistik', desc: 'Dokumen ekspor, bea cukai, pengiriman, pengiriman, dan logistik internasional.' },
+                    { title: 'Produk & Kualitas', desc: 'Biji, kacang dalam cangkang, pemanggangan, tingkat, spesifikasi, dan standar kualitas.' },
+                    { title: 'Rantai Pasokan & Keterlacakan', desc: 'Hutan → pengumpul → pemrosesan → pengemasan → ekspor dengan keterlacakan transparan.' },
+                    { title: 'Indikasi Geografis (GI)', desc: 'Asal, identitas, keaslian, reputasi geografis, dan keterlacakan produk.' },
+                    { title: 'Kimia Organik & Kualitas Alami', desc: 'Minyak alami, komposisi kimia, kemurnian, sifat nutrisi, dan karakteristik kualitas.' },
+                    { title: 'Pemrosesan, Pengemasan & Nilai Tambah', desc: 'Pemrosesan, penilaian, pemanggangan, pengemasan, branding, dan pengembangan produk premium.' },
+                    { title: 'Perdagangan Berkelanjutan & Etis', desc: 'Sumber yang bertanggung jawab, nilai wajar, manfaat komunitas, dan perdagangan terkait konservasi.' }
+                ],
+                researchFolders: [
+                    { title: 'Asal Geografis & Riset GI', desc: 'Asal Chilgoza, identitas geografis, pengetahuan tradisional, dan riset GI.' },
+                    { title: 'Biologi & Botani Chilgoza', desc: 'Biologi pohon, pertumbuhan, reproduksi, perkembangan benih, dan regenerasi alami.' },
+                    { title: 'Nilai Gizi & Komposisi Alami', desc: 'Protein, minyak alami, mineral, nutrisi, dan komposisi ilmiah.' },
+                    { title: 'Hutan & Ekologi Chilgoza', desc: 'Ekosistem hutan, fungsi ekologis, regenerasi, dan pengelolaan hutan berkelanjutan.' },
+                    { title: 'Keanekaragaman Hayati & Satwa Liar', desc: 'Habitat satwa liar, keanekaragaman hayati, layanan ekosistem, dan nilai konservasi.' },
+                    { title: 'Iklim & Lingkungan Hijau Global', desc: 'Ketahanan iklim, karbon, air, perlindungan tanah, dan manfaat lingkungan global.' },
+                    { title: 'Konservasi & Restorasi Hutan', desc: 'Perlindungan hutan, restorasi, regenerasi alami, penanaman, dan pengelolaan berkelanjutan.' },
+                    { title: 'Rantai Pasokan & Penghidupan Komunitas', desc: 'Pengumpul lokal, penghidupan pedesaan, rantai nilai, dan pengentasan kemiskinan.' },
+                    { title: 'Panen Berkelanjutan & Kesadaran Komunitas', desc: 'Pانهن aman, perlindungan hutan, pelatihan komunitas, dan kesadaran konservasi.' },
+                    { title: 'Riset, Kebijakan & Kemitraan', desc: 'Pengetahuan riset, kebijakan pemerintah, FAO, GEF, LSM, dan lembaga.' }
+                ]
+            },
+            ms: {
+                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
+                badge: "PAKISTAN • PERDAGANGAN & KAJIAN ANTARABANGSA",
+                hHead: "Ekosistem <span>Royal Chilgoza</span>",
+                hDesc: "Terokai pasaran perdagangan profesional dan folder penyelidikan saintifik. Setiap folder beroperasi sebagai hab bebas dengan media, PDF, AI Royal, dan sokongan WhatsApp.",
+                tLabel: "Perniagaan & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan antarabangsa komprehensif dengan media, AI, & sambungan WhatsApp →",
+                rLabel: "Sains & Ekologi", tTitle: "Penyelidikan & Pengetahuan", tDesc: "10 folder penyelidikan terperinci mengenai asal-usul, perhutanan, botani, pemakanan & kelestarian →",
+                theme: "Penyesuaian Tema", createHub: "Cipta Hab Tersuai", createHubBtn: "+ Cipta Hab",
+                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih mana-mana kategori di bawah untuk membuka laman web mini khusus yang menampilkan galeri media, video, dokumen PDF dan AI Royal.",
+                rhTitle: "🌲 PUSAT PENYELIDIKAN & PENGETAHUAN", thDesc: "Pilih mana-mana kategori saintifik di bawah untuk meneroka dokumen khas, laporan penyelidikan dan pembantu AI.",
+                backHome: "← Kembali ke Utama", backCat: "← Kembali ke Kategori",
+                upTitle: "Muat Naik Media / Dokumen ke Folder Ini", upBtn: "+ Tambah ke Folder Ini",
+                galTitle: "Galeri Kandungan Folder (Gambar, Video & PDF)",
+                aiTitle: "🤖 Pembantu AI Royal (Pakar Folder)", aiDesc: "Tanya apa sahaja tentang topik folder ini:", aiBtn: "Tanya Pembantu AI",
+                waTag: "Sokongan Pantas Pembeli & Penyelidik", waDesc: "Ada soalan mengenai bahagian ini? Hubungi segera melalui WhatsApp.", waBtnText: "💬 Berbual di WhatsApp Sekarang",
+                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta terpelihara.<br>Chilas, Daerah Diamer, Gilgit-Baltistan, Pakistan.",
+                openFolder: "Buka Laman Web Folder →",
+                tradeFolders: [
+                    { title: 'Pasaran Global', desc: 'Permintaan global, peluang pasaran dan destinasi perdagangan antarabangsa.' },
+                    { title: 'Pasaran & Pembeli AS', desc: 'Pembeli AS, pengimport, peluang pasaran dan hubungan perniagaan.' },
+                    { title: 'Pasaran & Pembeli China', desc: 'Pembeli China, pedagang, pengimport dan peluang komersial.' },
+                    { title: 'Eksport & Logistik', desc: 'Dokumen eksport, kastam, penghantaran, penyerahan dan logistik antarabangsa.' },
+                    { title: 'Produk & Kualiti', desc: 'Isi, kekacang dalam kulit, pemanggangan, gred, spesifikasi dan piawaian kualiti.' },
+                    { title: 'Rantaian Bekalan & Kebolehtesanan', desc: 'Hutan → pengumpul → pemprosesan → pembungkusan → eksport dengan kebolehtesanan telus.' },
+                    { title: 'Petunjuk Geografi (GI)', desc: 'Asal-usul, identiti, keaslian, reputasi geografi dan kebolehtesanan produk.' },
+                    { title: 'Kimia Organik & Kualiti Semula Jadi', desc: 'Minyak semulajadi, komposisi kimia, ketulenan, sifat pemakanan dan ciri kualiti.' },
+                    { title: 'Pemprosesan, Pembungkusan & Nilai Tambah', desc: 'Pemprosesan, penggredan, pemanggangan, pembungkusan, penjenamaan dan pembangunan produk premium.' },
+                    { title: 'Perdagangan Mampan & Etika', desc: 'Sumber bertanggungjawab, nilai adil, manfaat komuniti dan perdagangan berkaitan pemuliharaan.' }
+                ],
+                researchFolders: [
+                    { title: 'Asal Geografi & Kajian GI', desc: 'Asal Chilgoza, identiti geografi, pengetahuan tradisional dan kajian GI.' },
+                    { title: 'Biologi & Botani Chilgoza', desc: 'Biologi pokok, pertumbuhan, pembiakan, pembangunan benih dan pemulihan semula jadi.' },
+                    { title: 'Nilai Pemakanan & Komposisi Semula Jadi', desc: 'Protein, minyak semulajadi, mineral, nutrien dan komposisi saintifik.' },
+                    { title: 'Hutan & Ekologi Chilgoza', desc: 'Ekosistem hutan, fungsi ekologi, pemulihan dan pengurusan hutan mampan.' },
+                    { title: 'Kepelbagaian Biologi & Hidupan Liar', desc: 'Habitat hidupan liar, kepelbagaian biologi, perkhidmatan ekosistem dan nilai pemuliharaan.' },
+                    { title: 'Iklim & Persekitaran Hijau Global', desc: 'Daya tahan iklim, karbon, air, perlindungan tanah dan manfaat alam sekitar global.' },
+                    { title: 'Pemulihan & Pemeliharaan Hutan', desc: 'Perlindungan hutan, pemulihan, pemulihan semula jadi, penanaman dan pengurusan mampan.' },
+                    { title: 'Rantaian Bekalan & Mata Pencarian Komuniti', desc: 'Pengumpul tempatan, mata pencarian luar bandar, rantaian nilai dan pembasmian kemiskinan.' },
+                    { title: 'Tuai Mampan & Kesedaran Komuniti', desc: 'Tuai selamat, perlindungan hutan, latihan komuniti dan kesedaran pemuliharaan.' },
+                    { title: 'Penyelidikan, Dasar & Perkongsian', desc: 'Pengetahuan penyelidikan, dasar kerajaan, FAO, GEF, NGO, institusi dan perkongsian masa depan.' }
+                ]
+            },
+            tr: {
+                title: "ROYAL CHILGOZA", sub: "KÜRESEL EKOSİSTEM", wa: "💬 WhatsApp",
+                badge: "PAKİSTAN • ULUSLARARASI TİCARET VE ARAŞTIRMA",
+                hHead: "Royal Chilgoza <span>Ekosistemi</span>",
+                hDesc: "Profesyonel ticaret pazarlarını ve derin bilimsel araştırma klasörlerini keşfedin. Her klasör medya, PDF, Royal AI ve WhatsApp desteğiyle bağımsız bir merkezdir.",
+                tLabel: "İş ve Ticaret", tTitle: "Küresel Ticaret", tDesc: "Medya, AI ve WhatsApp bağlantısına sahip 10 kapsamlı uluslararası ticaret dizini →",
+                rLabel: "Bilim ve Ekoloji", tTitle: "Araştırma ve Bilgi", tDesc: "Menşei, ormancılık, botanik, beslenme ve sürdürülebilirlik üzerine 10 detaylı araştırma klasörü →",
+                theme: "Tema Özelleştirici", createHub: "Özel Merkez Oluştur", createHubBtn: "+ Merkez Oluştur",
+                thTitle: "🌍 KÜRESEL TİCARET MERKEZLERİ", thDesc: "Medya galerileri, video kaynakları, PDF belgeleri ve Royal AI Asistanı içeren özel mini web sitesini açmak için aşağıdaki kategoriyi seçin.",
+                rhTitle: "🌲 ARAŞTIRMA VE BİLGİ MERKEZLERİ", thDesc: "Özel belgeleri, araştırma raporlarını ve AI asistanını keşfetmek için aşağıdaki bilimsel kategoriyi seçin.",
+                backHome: "← Ana Sayfaya Dön", backCat: "← Kategorilere Dön",
+                upTitle: "Bu Klasöre Medya / Belge Yükle", upBtn: "+ Bu Klasöre Ekle",
+                galTitle: "Klasör İçerik Galerisi (Görseller, Videolar ve PDF'ler)",
+                aiTitle: "🤖 Royal AI Asistanı (Klasör Uzmanı)", aiDesc: "Bu klasör konusu hakkında özel bir şey sorun:", aiBtn: "AI Asistanına Sor",
+                waTag: "Anında Alıcı ve Araştırmacı Desteği", waDesc: "Bu belirli bölümle ilgili bir sorunuz mu var? WhatsApp üzerinden hemen bağlantı kurun.", waBtnText: "💬 Şimdi WhatsApp'ta Sohbet Et",
+                footer: "© 2026 Royal Chilgoza Pine Nuts. Tüm hakları saklıdır.<br>Chilas, Diamer Bölgesi, Gilgit-Baltistan, Pakistan.",
+                openFolder: "Klasör Web Sitesini Aç →",
+                tradeFolders: [
+                    { title: 'Küresel Piyasalar', desc: 'Küresel talep, pazar fırsatları ve uluslararası ticaret destinasyonları.' },
+                    { title: 'ABD Pazarı ve Alıcılar', desc: 'ABD’li alıcılar, ithalatçılar, pazar fırsatları ve iş bağlantıları.' },
+                    { title: 'Çin Pazarı ve Alıcılar', desc: 'Çinli alıcılar, tüccarlar, ithalatçılar ve ticari fırsatlar.' },
+                    { title: 'İhracat ve Lojistik', desc: 'İhracat belgeleri, gümrük, nakliye, teslimat ve uluslararası lojistik.' },
+                    { title: 'Ürün ve Kalite', desc: 'İç, kabuklu fıstık, kavurma, dereceler, özellikler ve kalite standartları.' },
+                    { title: 'Tedarik Zinciri ve İzlenebilirlik', desc: 'Orman → toplayıcı → işleme → paketleme → ihracat ile şeffaf izlenebilirlik.' },
+                    { title: 'Coğrafi İşaret (GI)', desc: 'Menşei, kimlik, otantiklik, coğrafi itibar ve ürün izlenebilirliği.' },
+                    { title: 'Organik Kimya ve Doğal Kalite', desc: 'Doğal yağlar, kimyasal bileşim, saflık, besin özellikleri ve kalite özellikleri.' },
+                    { title: 'İşleme, Paketleme ve Katma Değer', desc: 'İşleme, derecelendirme, kavurma, paketleme, markalaşma ve premium ürün geliştirme.' },
+                    { title: 'Sürdürülebilir ve Etik Ticaret', desc: 'Sorumlu tedarik, adil değer, topluluk faydaları ve koruma odaklı ticaret.' }
+                ],
+                researchFolders: [
+                    { title: 'Coğrafi Menşei ve GI Araştırması', desc: 'Çilgoza menşei, coğrafi kimlik, geleneksel bilgi ve GI araştırması.' },
+                    { title: 'Çilgoza Biyolojisi ve Botaniği', desc: 'Ağaç biyolojisi, büyüme, üreme, tohum gelişimi ve doğal yenilenme.' },
+                    { title: 'Besin Değeri ve Doğal Bileşim', desc: 'Protein, doğal yağlar, mineraller, besin maddeleri ve bilimsel bileşim.' },
+                    { title: 'Çilgoza Ormanları ve Ekoloji', desc: 'Orman ekosistemleri, ekolojik işlevler, yenilenme ve sürdürülebilir orman yönetimi.' },
+                    { title: 'Biyoçeşitlilik ve Yaban Hayatı', desc: 'Yaban hayatı yaşam alanları, biyoçeşitlilik, ekosistem hizmetleri ve koruma değerleri.' },
+                    { title: 'İklim ve Küresel Yeşil Çevre', desc: 'İklim direnci, karbon, su, toprak koruma ve küresel çevresel faydalar.' },
+                    { title: 'Orman Koruma ve Restorasyon', desc: 'Orman koruma, restorasyon, doğal yenilenme, dikim ve sürdürülebilir yönetim.' },
+                    { title: 'Tedarik Zinciri ve Topluluk Geçimi', desc: 'Yerel toplayıcılar, kırsal geçim kaynakları, değer zincirleri ve yoksulluğun azaltılması.' },
+                    { title: 'Sürdürülebilir Hasat ve Topluluk Bilinci', desc: 'Güvenli hasat, orman koruma, topluluk eğitimi ve koruma bilinci.' },
+                    { title: 'Araştırma, Politika ve Ortaklıklar', desc: 'Araştırma bilgisi, hükümet politikası, FAO, GEF, STK’lar, kurumlar ve ortaklıklar.' }
+                ]
+            },
+            ur: {
+                title: "رائل چلغوزہ", sub: "گلوبل سسٹم", wa: "💬 واٹس ایپ",
+                badge: "پاکستان • بین الاقوامی تجارت اور تحقیق",
+                hHead: "رائل چلغوزہ <span>گلوبل سسٹم</span>",
+                hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ہر فولڈر میڈیا، پی ڈی ایف، رائل اے آئی اور واٹس ایپ سپورٹ کے ساتھ ایک آزاد حب ہے۔",
+                tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
+                rLabel: "سائنس اور ماحولیات", tTitle: "ریسرچ اور نالج (تحقیق)", tDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
+                theme: "تھیم کلر سیٹنگ", createHub: "نیا مین حب بنائیں", createHubBtn: "+ حب بنائیں",
+                thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
+                rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
+                backHome: "← ہوم پیج پر واپس جائیں", backCat: "← زمرہ جات پر واپس جائیں",
+                upTitle: "اس فولڈر میں میڈیا یا ڈاکومنٹ اپلوڈ کریں", upBtn: "+ اس فولڈر میں شامل کریں",
+                galTitle: "فولڈر مواد گیلری (تصاویر، ویڈیوز اور پی ڈی ایف)",
+                aiTitle: "🤖 رائل اے آئی اسسٹنٹ (فولڈر ایکسپرٹ)", aiDesc: "اس فولڈر کے موضوع کے بارے میں کوئی بھی سوال پوچھیں:", aiBtn: "اے آئی سے پوچھیں",
+                waTag: "خریدار اور محقق کے لیے فوری تعاون", waDesc: "اس مخصوص حصے کے بارے میں کوئی سوال ہے؟ واٹس ایپ پر فوراً رابطہ کریں۔", waBtnText: "💬 واٹس ایپ پر چیٹ کریں",
+                footer: "© 2026 رائل چلغوزہ پائن نٹس۔ تمام حقوق محفوظ ہیں۔<br>چلاس، ضلع دیامر، گلگت بلتستان، پاکستان۔",
+                openFolder: "فولڈر ویب سائٹ کھولیں ←",
+                tradeFolders: [
+                    { title: 'عالمی مارکیٹس', desc: 'عالمی طلب، مارکیটের مواقع اور بین الاقوامی تجارتی مقامات۔' },
+                    { title: 'امریکہ مارکیٹ اور خریدار', desc: 'امریکہ کے خریدار، درآمد کنندگان، مارکیٹ کے مواقع اور کاروباری روابط۔' },
+                    { title: 'چین مارکیٹ اور خریدار', desc: 'چینی خریدار، تاجر، درآمد کنندگان اور تجارتی مواقع۔' },
+                    { title: 'برآمدات اور لاجسٹکس', desc: 'برآمدی دستاویزات، کسٹم، شپنگ، ترسیل اور بین الاقوامی لاجسٹکس۔' },
+                    { title: 'مصنوعات اور معیار', desc: 'مغزیات، چھلکے والے میوے، روسٹنگ، درجات، خصوصیات اور کوالٹی کے معیارات۔' },
+                    { title: 'سپلائی چین اور ٹریس ایبلٹی', desc: 'جنگل ← جمع کرنے والا ← پروسیسنگ ← پیکنگ ← برآمد، شفاف ٹریس ایبلٹی کے ساتھ۔' },
+                    { title: 'جیوگرافیکل انڈیکیشن (GI)', desc: 'ماخذ، شناخت، اصلیت، جغرافیائی شہرت اور پروڈکٹ ٹریس ایبلٹی۔' },
+                    { title: 'نامیاتی کیمسٹری اور قدرتی معیار', desc: 'قدرتی تیل، کیمیائی ساخت، خلوص، غذائی خصوصیات اور کوالٹی کی خصوصیات۔' },
+                    { title: 'پروسیسنگ، پیکنگ اور ویلیو ایڈیشن', desc: 'پروسیسنگ، گریڈنگ، روسٹنگ، پیکنگ، برانڈنگ اور پریمیم پروڈکٹ کی تیاری۔' },
+                    { title: 'پائیدار اور اخلاقی تجارت', desc: 'ذمہ دارانہ سورسنگ، منصفانہ قدر، کمیونٹی کے فوائد اور تحفظ سے جڑی تجارت۔' }
+                ],
+                researchFolders: [
+                    { title: 'جغرافیائی ماخذ اور GI ریسرچ', desc: 'چلغوزے کا ماخذ، جغرافیائی شناخت، روایتی علم اور GI تحقیق۔' },
+                    { title: 'چلغوزے کی بائیولوجی اور باٹنی', desc: 'درخت کی بائیولوجی، نشوونما، افزائش، بیج کی ترقی اور قدرتی بحالی۔' },
+                    { title: 'غذائی قدر اور قدرتی ساخت', desc: 'پروٹین، قدرتی تیل، معدنیات، غذائی اجزاء اور سائنسی ساخت۔' },
+                    { title: 'چلغوزے کے جنگلات اور ماحولیات', desc: 'جنگلات کے ماحولیاتی نظام، ماحولیاتی افعال، بحالی اور پائیدار جنگلات کا انتظام۔' },
+                    { title: 'حیاتیاتی تنوع اور جنگلی حیات', desc: 'جنگلی حیات کے مسکن، حیاتیاتی تنوع، ماحولیاتی نظام کی خدمات اور تحفظ کی قدریں۔' },
+                    { title: 'موسم اور عالمی سبز ماحول', desc: 'موسمی لچک، کاربن، پانی، مٹی کا تحفظ اور عالمی ماحولیاتی فوائد۔' },
+                    { title: 'جنگلات کا تحفظ اور بحالی', desc: 'جنگلات کا تحفظ، بحالی، قدرتی بحالی، پودے لگانا اور پائیدار انتظام۔' },
+                    { title: 'سپلائی چین اور کمیونٹی کی روزی روٹی', desc: 'مقامی جمع کرنے والے، دیہی روزی روٹی، ویلیو چینز اور غربت کا خاتمہ۔' },
+                    { title: 'پائیدار کٹائی اور کمیونٹی آگاہی', desc: 'محفوظ کٹائی، جنگلات کا تحفظ، کمیونٹی کی تربیت اور تحفظ کی آگاہی۔' },
+                    { title: 'تحقیق، پالیسی اور شراکت داریاں', desc: 'تحقیقی علم، حکومتی پالیسی، FAO، GEF، NGOs، ادارے اور مستقبل کی شراکت داریاں۔' }
+                ]
+            }
+        };
 
         let folderMediaDB = {};
         let currentActiveFolderId = null;
         let previousMainView = 'trade-main-view';
 
         function renderFolderGrids() {
+            const currentLang = document.getElementById('langSelect').value;
+            const t = translations[currentLang] || translations.en;
+
             const tradeGrid = document.getElementById('trade-folders-grid');
             tradeGrid.innerHTML = '';
-            tradeFolders.forEach(f => {
+            tradeFolders.forEach((f, index) => {
+                const localized = t.tradeFolders[index] || f;
                 tradeGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('trade', '${f.id}')">
                         <div>
                             <div class="card-tag">Hub ${f.tag}</div>
-                            <div class="card-title">${f.title}</div>
-                            <div class="card-desc">${f.desc}</div>
+                            <div class="card-title">${localized.title}</div>
+                            <div class="card-desc">${localized.desc}</div>
                         </div>
-                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</div>
+                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">${t.openFolder}</div>
                     </div>`;
             });
 
             const researchGrid = document.getElementById('research-folders-grid');
             researchGrid.innerHTML = '';
-            researchFolders.forEach(f => {
+            researchFolders.forEach((f, index) => {
+                const localized = t.researchFolders[index] || f;
                 researchGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('research', '${f.id}')">
                         <div>
                             <div class="card-tag">Hub ${f.tag}</div>
-                            <div class="card-title">${f.title}</div>
-                            <div class="card-desc">${f.desc}</div>
+                            <div class="card-title">${localized.title}</div>
+                            <div class="card-desc">${localized.desc}</div>
                         </div>
-                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</div>
+                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">${t.openFolder}</div>
                     </div>`;
             });
         }
+
+        const tradeFolders = [
+            { id: 't1', tag: '01' }, { id: 't2', tag: '02' }, { id: 't3', tag: '03' }, { id: 't4', tag: '04' },
+            { id: 't5', tag: '05' }, { id: 't6', tag: '06' }, { id: 't7', tag: '07' }, { id: 't8', tag: '08' },
+            { id: 't9', tag: '09' }, { id: 't10', tag: '10' }
+        ];
+
+        const researchFolders = [
+            { id: 'r1', tag: '01' }, { id: 'r2', tag: '02' }, { id: 'r3', tag: '03' }, { id: 'r4', tag: '04' },
+            { id: 'r5', tag: '05' }, { id: 'r6', tag: '06' }, { id: 'r7', tag: '07' }, { id: 'r8', tag: '08' },
+            { id: 'r9', tag: '09' }, { id: 'r10', tag: '10' }
+        ];
 
         function openSubFolder(type, id) {
             previousMainView = type === 'trade' ? 'trade-main-view' : 'research-main-view';
             currentActiveFolderId = id;
             const list = type === 'trade' ? tradeFolders : researchFolders;
-            const folder = list.find(x => x.id === id);
+            const index = list.findIndex(x => x.id === id);
+            const currentLang = document.getElementById('langSelect').value;
+            const t = translations[currentLang] || translations.en;
+            const localizedList = type === 'trade' ? t.tradeFolders : t.researchFolders;
+            const folderInfo = localizedList[index];
+            const originalFolder = list[index];
             
-            document.getElementById('sub-folder-tag').innerText = `Folder ${folder.tag} — ${type.toUpperCase()}`;
-            document.getElementById('sub-folder-title').innerText = folder.title;
-            document.getElementById('sub-folder-desc').innerText = folder.desc;
-            document.getElementById('aiFolderResponse').innerText = `Royal AI: Ready to assist with ${folder.title}. Ask any question below.`;
+            document.getElementById('sub-folder-tag').innerText = `Folder ${originalFolder.tag} — ${type.toUpperCase()}`;
+            document.getElementById('sub-folder-title').innerText = folderInfo.title;
+            document.getElementById('sub-folder-desc').innerText = folderInfo.desc;
+            document.getElementById('aiFolderResponse').innerText = `Royal AI: Ready to assist with ${folderInfo.title}. Ask any question below.`;
             
             renderFolderMedia();
             switchView('sub-folder-view');
@@ -547,186 +964,18 @@
             const desc = document.getElementById('newMainDesc').value;
             if(!title) return alert('Please enter hub title');
             const newId = 'custom_' + Date.now();
-            tradeFolders.push({ id: newId, tag: 'NEW', title, desc });
+            tradeFolders.push({ id: newId, tag: 'NEW' });
+            translations.en.tradeFolders.push({ title, desc });
+            Object.keys(translations).forEach(k => {
+                if(k !== 'en') {
+                    translations[k].tradeFolders.push({ title, desc });
+                }
+            });
             renderFolderGrids();
             document.getElementById('newMainTitle').value = '';
             document.getElementById('newMainDesc').value = '';
             alert('New hub created successfully!');
         }
-
-        // Multi-language Translation Dictionary (10 Languages)
-        const translations = {
-            en: {
-                title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
-                badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
-                hHead: "Royal Chilgoza <span>Ecosystem</span>",
-                hDesc: "Explore professional trade markets and deep scientific research folders. Each folder operates as an independent hub with media, PDFs, Royal AI, and direct WhatsApp support.",
-                tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
-                rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
-                theme: "Theme Customizer", createHub: "Create Custom Top-Level Hub", createBtn: "+ Create Hub",
-                thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
-                rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
-                backHome: "← Back to Home", backCat: "← Back to Categories",
-                upTitle: "Upload Media / Document to this Folder", upBtn: "+ Add to this Folder",
-                galTitle: "Folder Content Gallery (Images, Videos & PDFs)",
-                aiTitle: "🤖 Royal AI Assistant (Folder Expert)", aiDesc: "Ask anything specific about this folder topic:", aiBtn: "Ask AI Assistant",
-                waTag: "Instant Buyer & Researcher Support", waDesc: "Have a question regarding this specific section? Connect instantly via WhatsApp.", waBtnText: "💬 Chat on WhatsApp Now",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan."
-            },
-            ur: {
-                title: "رائل چلغوزہ", sub: "گلوبل سسٹم", wa: "💬 واٹس ایپ",
-                badge: "پاکستان • بین الاقوامی تجارت اور تحقیق",
-                hHead: "رائل چلغوزہ <span>گلوبل سسٹم</span>",
-                hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ہر فولڈر میڈیا، پی ڈی ایف، رائل اے آئی اور واٹس ایپ سپورٹ کے ساتھ ایک آزاد حب ہے۔",
-                tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
-                rLabel: "سائنس اور ماحولیات", rTitle: "ریسرچ اور نالج (تحقیق)", rDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
-                theme: "تھیم کلر سیٹنگ", createHub: "نیا مین حب بنائیں", createBtn: "+ حب بنائیں",
-                thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
-                rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
-                backHome: "← ہوم پیج پر واپس جائیں", backCat: "← زمرہ جات پر واپس جائیں",
-                upTitle: "اس فولڈر میں میڈیا یا ڈاکومنٹ اپلوڈ کریں", upBtn: "+ اس فولڈر میں شامل کریں",
-                galTitle: "فولڈر مواد گیلری (تصاویر، ویڈیوز اور پی ڈی ایف)",
-                aiTitle: "🤖 رائل اے آئی اسسٹنٹ (فولڈر ایکسپرٹ)", aiDesc: "اس فولڈر کے موضوع کے بارے میں کوئی بھی سوال پوچھیں:", aiBtn: "اے آئی سے پوچھیں",
-                waTag: "خریدار اور محقق کے لیے فوری تعاون", waDesc: "اس مخصوص حصے کے بارے میں کوئی سوال ہے؟ واٹس ایپ پر فوراً رابطہ کریں۔", waBtnText: "💬 واٹس ایپ پر چیٹ کریں",
-                footer: "© 2026 رائل چلغوزہ پائن نٹس۔ تمام حقوق محفوظ ہیں۔<br>چلاس، ضلع دیامر، گلگت بلتستان، پاکستان۔"
-            },
-            zh: {
-                title: "皇家松子", sub: "全球生态系统", wa: "💬 WhatsApp",
-                badge: "巴基斯坦 • 国际贸易与研究",
-                hHead: "皇家松子 <span>全球生态系统</span>",
-                hDesc: "探索专业的贸易市场和深入的科学研究文件夹。每个文件夹都是一个独立中心，配有媒体、PDF、皇家AI和直接WhatsApp支持。",
-                tLabel: "商业与贸易", tTitle: "全球贸易", tDesc: "10个全面的国际贸易目录，具有独立的媒体、AI和WhatsApp连接 →",
-                rLabel: "科学与生态", tTitle: "研究与知识", tDesc: "关于产地、林业、植物学、营养学和可持续性的10个详细研究文件夹 →",
-                theme: "主题颜色定制", createHub: "创建自定义主中心", createBtn: "+ 创建中心",
-                thTitle: "🌍 全球贸易中心", thDesc: "选择下方任意类别，打开包含媒体库、视频资源、PDF文档和皇家AI助手的专属微型网站。",
-                rhTitle: "🌲 研究与知识中心", thDesc: "选择下方任意科学类别，探索专属文档、研究报告、AI助手和直接贸易咨询。",
-                backHome: "← 返回首页", backCat: "← 返回分类",
-                upTitle: "向此文件夹上传媒体/文档", upBtn: "+ 添加到此文件夹",
-                galTitle: "文件夹内容库（图片、视频和PDF）",
-                aiTitle: "🤖 皇家AI助手（文件夹专家）", aiDesc: "询问有关此文件夹主题的具体问题：", aiBtn: "询问AI助手",
-                waTag: "即时买家与研究人员支持", waDesc: "对本部分有任何疑问？通过WhatsApp立即联系。", waBtnText: "💬 立即通过WhatsApp聊天",
-                footer: "© 2026 皇家松子。版权所有。<br>巴基斯坦吉尔吉特-巴尔蒂斯坦迪亚米尔地区奇拉斯。"
-            },
-            ar: {
-                title: "رويال تشيلغوزا", sub: "النظام البيئي العالمي", wa: "💬 واتساب",
-                badge: "باكستان • التجارة الدولية والأبحاث",
-                hHead: "رويال تشيلغوزا <span>النظام البيئي</span>",
-                hDesc: "استكشف أسواق التجارة المهنية ومجلدات البحوث العلمية العميقة. يعمل كل مجلد كمركز مستقل مع الوسائط، ملفات PDF، الذكاء الاصطناعي، ودعم واتساب.",
-                tLabel: "الأعمال والتجارة", tTitle: "التجارة العالمية", tDesc: "10 أدلة تجارية دولية شاملة مع وسائط فردية وتواصل عبر الذكاء الاصطناعي وواتساب →",
-                rLabel: "العلوم والبيئة", tTitle: "البحث والمعرفة", tDesc: "10 مجلدات بحثية مفصلة حول المنشأ، الغابات، علم النبات، التغذية والاستدامة →",
-                theme: "مخصص الألوان", createHub: "إنشاء مركز رئيسي مخصص", createBtn: "+ إنشاء مركز",
-                thTitle: "🌍 مراكز التجارة العالمية", thDesc: "اختر أي فئة أدناه لفتح موقعها المصغر المخصص الذي يضم معرض الوسائط، مقاطع الفيديو، مستندات PDF، ومساعد الذكاء الاصطناعي.",
-                rhTitle: "🌲 مراكز البحث والمعرفة", thDesc: "اختر أي فئة علمية أدناه لاستكشاف المستندات المخصصة، التقارير البحثية، مساعد الذكاء الاصطناعي، والاستفسارات التجارية المباشرة.",
-                backHome: "← العودة للرئيسية", backCat: "← العودة للفئات",
-                upTitle: "رفع وسائط / مستند إلى هذا المجلد", upBtn: "+ إضافة إلى هذا المجلد",
-                galTitle: "معرض محتوى المجلد (صور، فيديوهات و PDF)",
-                aiTitle: "🤖 مساعد رويال الذكي (خبير المجلد)", aiDesc: "اسأل أي شيء محدد حول موضوع هذا المجلد:", aiBtn: "اسأل المساعد الذكي",
-                waTag: "دعم فوري للمشترين والباحثين", waDesc: "هل لديك استفسار بخصوص هذا القسم المحدد؟ تواصل فوراً عبر واتساب.", waBtnText: "💬 تواصل عبر واتساب الآن",
-                footer: "© 2026 رائل تشيلغوزا. جميع الحقوق محفوظة.<br>شيلاس، منطقة ديامر، غلغت-بلتستان، باكستان."
-            },
-            ps: {
-                title: "رویال چلغوزه", sub: "نړیوال سیستم", wa: "💬 واټس اپ",
-                badge: "پاکستان • نړیوال تجارت او څیړنه",
-                hHead: "رویال چلغوزه <span>نړیوال سیسټم</span>",
-                hDesc: "مسلکي سوداګریز بازارونه او ژورې ساینسي څیړنیزې فولډرې وپلټئ. هر فولډر د رسنیو، PDF، رویال AI او واټس اپ ملاتړ سره یو خپلواک مرکز دی.",
-                tLabel: "سوداګري او تجارت", tTitle: "نړیوال تجارت", tDesc: "10 جامع نړیوال سوداګریز لارښودونه د رسنیو، AI او واټس اپ اړیکو سره →",
-                rLabel: "ساینس او چاپېریال", tTitle: "څیړنه او پوهه", tDesc: "د اصل، ځنګلونو، بوټو پوهنې، تغذیې او پایښت په اړه 10 تفصیلي څیړنیز فولډرونه →",
-                theme: "د موضوع رنګ تنظیم", createHub: "نوی اصلي مرکز جوړ کړئ", createBtn: "+ مرکز جوړ کړئ",
-                thTitle: "🌍 نړیوال سوداګریز مرکزونه", thDesc: "لاندې هره کټه ګوري وټاکئ ترڅو د هغې ځانګړی منی ویب پاڼه د رسنیو، ویډیوګانو، PDF سندونو او رویال AI مرستیال سره پرانیزئ.",
-                rhTitle: "🌲 د څیړنې او پوهې مرکزونه", thDesc: "لاندې هر ساینسي کټګوري وټاکئ ترڅو وقف شوي سندونه، څیړنیز راپورونه او د AI مرستیال وپلټئ.",
-                backHome: "← کور پاڼې ته تلل", backCat: "← کټګوریو ته تلل",
-                upTitle: "پدې فولډر کې رسنۍ یا سند اپلوډ کړئ", upBtn: "+ پدې فولډر کې اضافه کړئ",
-                galTitle: "د فولډر مینځپانګې ګالري (انځورونه، ویډیوګانې او PDF)",
-                aiTitle: "🤖 رویال AI مرستیال (د فولډر ماهر)", aiDesc: "د دې فولډر موضوع په اړه کومه ځانګړې پوښتنه وپوښتئ:", aiBtn: "AI ته پوښتنه وکړئ",
-                waTag: "د پیرودونکو او څیړونکو لپاره عاجل ملاتړ", waDesc: "د دې ځانګړې برخې په اړه پوښتنه لرئ؟ د واټس اپ له لارې په بېړه اړیکه ونیسئ.", waBtnText: "💬 همدا اوس په واټس اپ خبرې وکړئ",
-                footer: "© 2026 رویال چلغوزه پائن نټس. ټول حقوق خوندي دي.<br>چلاس، دیامر ضلع، گلگت بلتستان، پاکستان."
-            },
-            fa: {
-                title: "رویال چلغوزه", sub: "اکوسیستم جهانی", wa: "💬 واتس‌اپ",
-                badge: "پاکستان • تجارت بین‌الملل و تحقیق",
-                hHead: "رویال چلغوزه <span>اکوسیستم جهانی</span>",
-                hDesc: "بازارهای تجاری حرفه‌ای و پوشه‌های تحقیقاتی عمیق علمی را بررسی کنید. هر پوشه به عنوان یک هب مستقل با رسانه، PDF، هوش مصنوعی رویال و واتس‌اپ عمل می‌کند.",
-                tLabel: "تجارت و بازرگانی", tTitle: "تجارت جهانی", tDesc: "۱۰ دایرکتوری جامع تجارت بین‌الملل با رسانه، هوش مصنوعی و ارتباط واتس‌اپ →",
-                rLabel: "علم و محیط زیست", tTitle: "تحقیق و دانش", tDesc: "۱۰ پوشه تحقیقاتی تفصیلی درباره منشاء، جنگل‌داری، گیاه‌شناسی، تغذیه و پایداری →",
-                theme: "شخصی‌سازی رنگ", createHub: "ایجاد هب سفارشی", createBtn: "+ ایجاد هب",
-                thTitle: "🌍 هب‌های تجارت جهانی", thDesc: "هر دسته‌بندی را انتخاب کنید تا وب‌سایت کوچک اختصاصی آن شامل گالری رسانه، ویدیو، اسناد PDF و هوش مصنوعی رویال باز شود.",
-                rhTitle: "🌲 هب‌های تحقیق و دانش", thDesc: "هر دسته‌بندی علمی را برای بررسی اسناد اختصاصی، گزارش‌های تحقیقی و هوش مصنوعی انتخاب کنید.",
-                backHome: "← بازگشت به خانه", backCat: "← بازگشت به دسته‌ها",
-                upTitle: "آپلود رسانه / سند در این پوشه", upBtn: "+ افزودن به این پوشه",
-                galTitle: "گالری محتوای پوشه (تصاویر، ویدیوها و PDF)",
-                aiTitle: "🤖 دستیار هوش مصنوعی رویال (متخصص پوشه)", aiDesc: "هر سوالی درباره موضوع این پوشه دارید بپرسید:", aiBtn: "پرسش از هوش مصنوعی",
-                waTag: "پشتیبانی فوری خریداران و محققان", waDesc: "سؤالی درباره این بخش خاص دارید؟ فوراً از طریق واتس‌اپ متصل شوید.", waBtnText: "💬 گفتگو در واتس‌اپ",
-                footer: "© ۲۰۲۶ رویال چلغوزه‌. تمامی حقوق محفوظ است.<br>چیلاس، منطقه دیامر، گلگت-بلستان، پاکستان."
-            },
-            id: {
-                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
-                badge: "PAKISTAN • PERDAGANGAN & RISET INTERNASIONAL",
-                hHead: "Ekosistem <span>Royal Chilgoza</span>",
-                hDesc: "Jelajahi pasar perdagangan profesional dan folder riset ilmiah mendalam. Setiap folder beroperasi sebagai pusat independen dengan media, PDF, AI Royal, dan dukungan WhatsApp.",
-                tLabel: "Bisnis & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan internasional komprehensif dengan media, AI, & konektivitas WhatsApp →",
-                rLabel: "Sains & Ekologi", tTitle: "Riset & Pengetahuan", tDesc: "10 folder riset terperinci tentang asal-usul, kehutanan, botani, nutrisi, & keberlanjutan →",
-                theme: "Kustomisasi Tema", createHub: "Buat Hub Kustom", createBtn: "+ Buat Hub",
-                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih kategori di bawah untuk membuka situs mini khusus yang menampilkan galeri media, video, dokumen PDF, dan AI Royal.",
-                rhTitle: "🌲 PUSAT RISET & PENGETAHUAN", thDesc: "Pilih kategori ilmiah di bawah untuk menjelajahi dokumen khusus, laporan riset, dan asisten AI.",
-                backHome: "← Kembali ke Beranda", backCat: "← Kembali ke Kategori",
-                upTitle: "Unggah Media / Dokumen ke Folder Ini", upBtn: "+ Tambahkan ke Folder Ini",
-                galTitle: "Galeri Konten Folder (Gambar, Video & PDF)",
-                aiTitle: "🤖 Asisten AI Royal (Pakar Folder)", aiDesc: "Tanyakan apa saja tentang topik folder ini:", aiBtn: "Tanya Asisten AI",
-                waTag: "Dukungan Instan Pembeli & Peneliti", waDesc: "Punya pertanyaan tentang bagian ini? Hubungi langsung via WhatsApp.", waBtnText: "💬 Chat di WhatsApp Sekarang",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta dilindungi.<br>Chilas, Distrik Diamer, Gilgit-Baltistan, Pakistan."
-            },
-            ms: {
-                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
-                badge: "PAKISTAN • PERDAGANGAN & KAJIAN ANTARABANGSA",
-                hHead: "Ekosistem <span>Royal Chilgoza</span>",
-                hDesc: "Terokai pasaran perdagangan profesional dan folder penyelidikan saintifik. Setiap folder beroperasi sebagai hab bebas dengan media, PDF, AI Royal, dan sokongan WhatsApp.",
-                tLabel: "Perniagaan & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan antarabangsa komprehensif dengan media, AI, & sambungan WhatsApp →",
-                rLabel: "Sains & Ekologi", tTitle: "Penyelidikan & Pengetahuan", tDesc: "10 folder penyelidikan terperinci mengenai asal-usul, perhutanan, botani, pemakanan & kelestarian →",
-                theme: "Penyesuaian Tema", createHub: "Cipta Hab Tersuai", createBtn: "+ Cipta Hab",
-                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih mana-mana kategori di bawah untuk membuka laman web mini khusus yang menampilkan galeri media, video, dokumen PDF dan AI Royal.",
-                rhTitle: "🌲 PUSAT PENYELIDIKAN & PENGETAHUAN", thDesc: "Pilih mana-mana kategori saintifik di bawah untuk meneroka dokumen khas, laporan penyelidikan dan pembantu AI.",
-                backHome: "← Kembali ke Utama", backCat: "← Kembali ke Kategori",
-                upTitle: "Muat Naik Media / Dokumen ke Folder Ini", upBtn: "+ Tambah ke Folder Ini",
-                galTitle: "Galeri Kandungan Folder (Gambar, Video & PDF)",
-                aiTitle: "🤖 Pembantu AI Royal (Pakar Folder)", aiDesc: "Tanya apa sahaja tentang topik folder ini:", aiBtn: "Tanya Pembantu AI",
-                waTag: "Sokongan Pantas Pembeli & Penyelidik", waDesc: "Ada soalan mengenai bahagian ini? Hubungi segera melalui WhatsApp.", waBtnText: "💬 Berbual di WhatsApp Sekarang",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta terpelihara.<br>Chilas, Daerah Diamer, Gilgit-Baltistan, Pakistan."
-            },
-            tr: {
-                title: "ROYAL CHILGOZA", sub: "KÜRESEL EKOSİSTEM", wa: "💬 WhatsApp",
-                badge: "PAKİSTAN • ULUSLARARASI TİCARET VE ARAŞTIRMA",
-                hHead: "Royal Chilgoza <span>Ekosistemi</span>",
-                hDesc: "Profesyonel ticaret pazarlarını ve derin bilimsel araştırma klasörlerini keşfedin. Her klasör medya, PDF, Royal AI ve WhatsApp desteğiyle bağımsız bir merkezdir.",
-                tLabel: "İş ve Ticaret", tTitle: "Küresel Ticaret", tDesc: "Medya, AI ve WhatsApp bağlantısına sahip 10 kapsamlı uluslararası ticaret dizini →",
-                rLabel: "Bilim ve Ekoloji", tTitle: "Araştırma ve Bilgi", tDesc: "Menşei, ormancılık, botanik, beslenme ve sürdürülebilirlik üzerine 10 detaylı araştırma klasörü →",
-                theme: "Tema Özelleştirici", createHub: "Özel Merkez Oluştur", createBtn: "+ Merkez Oluştur",
-                thTitle: "🌍 KÜRESEL TİCARET MERKEZLERİ", thDesc: "Medya galerileri, video kaynakları, PDF belgeleri ve Royal AI Asistanı içeren özel mini web sitesini açmak için aşağıdaki kategoriyi seçin.",
-                rhTitle: "🌲 ARAŞTIRMA VE BİLGİ MERKEZLERİ", thDesc: "Özel belgeleri, araştırma raporlarını ve AI asistanını keşfetmek için aşağıdaki bilimsel kategoriyi seçin.",
-                backHome: "← Ana Sayfaya Dön", backCat: "← Kategorilere Dön",
-                upTitle: "Bu Klasöre Medya / Belge Yükle", upBtn: "+ Bu Klasöre Ekle",
-                galTitle: "Klasör İçerik Galerisi (Görseller, Videolar ve PDF'ler)",
-                aiTitle: "🤖 Royal AI Asistanı (Klasör Uzmanı)", aiDesc: "Bu klasör konusu hakkında özel bir şey sorun:", aiBtn: "AI Asistanına Sor",
-                waTag: "Anında Alıcı ve Araştırmacı Desteği", waDesc: "Bu belirli bölümle ilgili bir sorunuz mu var? WhatsApp üzerinden hemen bağlantı kurun.", waBtnText: "💬 Şimdi WhatsApp'ta Sohbet Et",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Tüm hakları saklıdır.<br>Chilas, Diamer Bölgesi, Gilgit-Baltistan, Pakistan."
-            },
-            ru: {
-                title: "ROYAL CHILGOZA", sub: "ГЛОБАЛЬНАЯ ЭКОСИСТЕМА", wa: "💬 WhatsApp",
-                badge: "ПАКИСТАН • МЕЖДУНАРОДНАЯ ТОРГОВЛЯ И ИССЛЕДОВАНИЯ",
-                hHead: "Экосистема <span>Royal Chilgoza</span>",
-                hDesc: "Изучайте профессиональные торговые рынки и научные папки. Каждая папка работает как независимый хаб с медиа, PDF, Royal AI и поддержкой WhatsApp.",
-                tLabel: "Бизнес и Торговля", tTitle: "Мировая Торговля", tDesc: "10 комплексных каталогов международной торговли с медиа, AI и связью через WhatsApp →",
-                rLabel: "Наука и Экология", tTitle: "Исследования и Знания", tDesc: "10 подробных папок об истохониках, лесном хозяйстве, ботанике, питании и устойчивости →",
-                theme: "Настройка Темы", createHub: "Создать Пользовательский Хаб", createBtn: "+ Создать Хаб",
-                thTitle: "🌍 ЦЕНТРЫ МИРОВОЙ ТОРГОВЛИ", thDesc: "Выберите любую категорию ниже, чтобы открыть её мини-сайт с медиагалереей, видео, PDF и AI-ассистентом.",
-                rhTitle: "🌲 ЦЕНТРЫ ИССЛЕДОВАНИЙ И ЗНАНИЙ", thDesc: "Выберите научную категорию для изучения документов, отчетов и прямого обращения.",
-                backHome: "← На главную", backCat: "← Назад к категориям",
-                upTitle: "Загрузить медиа / документ в эту папку", upBtn: "+ Добавить в папку",
-                galTitle: "Галерея содержимого папки (Фото, Видео и PDF)",
-                aiTitle: "🤖 AI-Ассистент Royal (Эксперт папки)", aiDesc: "Задайте вопрос по теме этой папки:", aiBtn: "Спросить AI-ассистента",
-                waTag: "Поддержка покупателей и исследователей", waDesc: "Есть вопросы по этому разделу? Свяжитесь через WhatsApp.", waBtnText: "💬 Чат в WhatsApp",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Все права защищены.<br>Чилас, округ Диамер, Гилгит-Балтистан, Пакистан."
-            }
-        };
 
         function changeLanguage(lang) {
             const t = translations[lang] || translations.en;
@@ -753,7 +1002,7 @@
             // Panel / Admin
             document.getElementById('theme-label').innerText = t.theme;
             document.getElementById('create-hub-label').innerText = t.createHub;
-            document.getElementById('create-hub-btn').innerText = t.createBtn;
+            document.getElementById('create-hub-btn').innerText = t.createHubBtn;
 
             // Trade & Research Header views
             document.getElementById('trade-head-title').innerText = t.thTitle;
@@ -777,6 +1026,9 @@
 
             // Footer
             document.getElementById('footer-text').innerHTML = t.footer;
+
+            // Re-render folder grids so folder cards update language properly
+            renderFolderGrids();
 
             // Text Direction (RTL for Urdu, Arabic, Persian, Pashto)
             const rtlLangs = ['ur', 'ar', 'fa', 'ps'];
