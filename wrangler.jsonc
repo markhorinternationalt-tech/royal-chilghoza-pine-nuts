@@ -1,24 +1,6 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "royal-chilghoza-pine-nuts",
-  "main": "src/worker.js",
-  "compatibility_date": "2026-08-28",
-
-  "assets": {
-    "directory": ".",
-    "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
-  },
-
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "royal-chilghoza-db",
-      "database_id": "1d70f158-1b34-49ee-a820-e613342590b9"
-    }
-  ],
-
-  "ai": {
-    "binding": "AI"
-  }
+  "main": "app.js",
+  "compatibility_date": "2026-09-01"
 }
