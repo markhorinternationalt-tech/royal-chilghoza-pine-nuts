@@ -1,13 +1,3 @@
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-async function handleRequest(request) {
-  return new Response("Royal Chilghoza Worker Active", {
-    headers: { 'content-type': 'text/plain;charset=UTF-8' }
-  });
-}
-
 const translations = {
     en: {
         brandTitle: "ROYAL CHILGHOZA",
