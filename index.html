@@ -1,124 +1,108 @@
-<!doctype html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Royal Chilghoza Pine Nuts</title>
-<meta name="description" content="Royal Chilghoza Pine Nuts — Pakistan origin, global trade, research, forests and responsible supply.">
-<link rel="canonical" href="/">
-<link rel="alternate" hreflang="en" href="/en">
-<link rel="alternate" hreflang="zh" href="/zh">
-<link rel="alternate" hreflang="ur" href="/ur">
-<link rel="alternate" hreflang="ps" href="/ps">
-<link rel="alternate" hreflang="fa" href="/fa">
-<link rel="alternate" hreflang="ru" href="/ru">
-<link rel="alternate" hreflang="id" href="/id">
-<link rel="alternate" hreflang="ms" href="/ms">
-<link rel="alternate" hreflang="ar" href="/ar">
-<link rel="stylesheet" href="/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Chilghoza Pine Nuts</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="site-header">
-  <a class="brand" href="#home" data-route="home">
-    <span class="brand-mark">🌲</span>
-    <span><strong>ROYAL CHILGHOZA</strong><small>PINE NUTS</small></span>
-  </a>
-  <nav class="main-nav">
-    <a href="#home" data-route="home" data-i18n="home">Home</a>
-    <a href="#trade" data-route="trade" data-i18n="trade">Trade & Business</a>
-    <a href="#research" data-route="research" data-i18n="research">Research & Knowledge</a>
-    <a href="#royalAI" data-route="royalAI" data-i18n="royalAI">Royal AI</a>
-    <a href="#admin" data-route="admin" data-i18n="admin">Admin</a>
-  </nav>
-  <div class="header-tools">
-    <button id="langBtn" class="language-button" type="button"><span id="langLabel">English</span> ▾</button>
-    <div id="langMenu" class="language-menu"></div>
-  </div>
-</header>
+    <header class="site-header">
+        <div class="brand-container">
+            <h1>ROYAL CHILGHOZA</h1>
+            <span class="sub-brand">PINE NUTS</span>
+        </div>
+        <div class="controls-container">
+            <select id="languageSwitcher" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="ur">اردو</option>
+                <option value="zh">中文</option>
+            </select>
+            <button onclick="toggleTheme()" class="theme-btn">🎨 Theme</button>
+        </div>
+    </header>
 
-<main>
-<section id="home" class="page active">
-  <div class="hero">
-    <div class="hero-overlay">
-      <div class="eyebrow">PAKISTAN • ORIGIN • GLOBAL</div>
-      <h1>Royal Chilghoza Pine Nuts</h1>
-      <p>From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
-      <div class="hero-actions">
-        <a href="#trade" data-route="trade" class="btn primary" data-i18n="trade">Trade & Business</a>
-        <a href="#research" data-route="research" class="btn ghost" data-i18n="research">Research & Knowledge</a>
-      </div>
+    <main class="main-content">
+        <section class="hero-section">
+            <h2>PAKISTAN • ORIGIN • GLOBAL</h2>
+            <h3>Royal Chilghoza Pine Nuts</h3>
+            <p>From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
+        </section>
+
+        <!-- Two Main Folders -->
+        <section class="main-folders-grid">
+            <div class="folder-card" onclick="openFolderModal('trade')">
+                <span class="icon">🌰</span>
+                <span class="category-tag">CHILGHOZA PINE NUTS</span>
+                <h2>GLOBAL TRADE</h2>
+                <p>Premium quality • Worldwide export →</p>
+            </div>
+            <div class="folder-card" onclick="openFolderModal('research')">
+                <span class="icon">🔬</span>
+                <span class="category-tag">CHILGHOZA</span>
+                <h2>RESEARCH & KNOWLEDGE</h2>
+                <p>Science • Origin • Forests • Quality →</p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <img src="profile.jpg" alt="Profile Picture" class="profile-img">
+        </section>
+
+        <!-- 8 Full-Size Images Grid with Editable Captions -->
+        <section class="gallery-section">
+            <h3>Exhibition Gallery & Field Logs</h3>
+            <div class="image-grid" id="imageGallery"></div>
+        </section>
+
+        <!-- Royal AI Assistant -->
+        <section class="ai-assistant-section">
+            <div class="ai-box">
+                <h3>🤖 Royal AI Assistant</h3>
+                <p>Ask anything about our harvests, B2B trade terms, or forest origins.</p>
+                <div class="chat-interface">
+                    <input type="text" id="aiQuery" placeholder="Type your inquiry here...">
+                    <button onclick="askRoyalAI()">Send</button>
+                </div>
+                <div id="aiResponse" class="ai-response"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Office Addresses -->
+    <footer class="site-footer">
+        <h3>Office Address & Contact</h3>
+        <div class="addresses-grid">
+            <div class="office-card">
+                <h4>🇨🇳 China Office</h4>
+                <p>Urumqi / Beijing Wholesale Hub</p>
+            </div>
+            <div class="office-card">
+                <h4>🇵🇰 Islamabad Office</h4>
+                <p>Blue Area, Islamabad, Pakistan</p>
+            </div>
+            <div class="office-card">
+                <h4>🏔️ Chilas Office</h4>
+                <p>Diamer District, Gilgit-Baltistan</p>
+            </div>
+            <div class="office-card">
+                <h4>🇦🇫 Afghanistan Office</h4>
+                <p>Kabul Trade Center Hub</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dynamic Folder Modal -->
+    <div id="folderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFolderModal()">&times;</span>
+            <h2 id="modalTitle">Folder Management</h2>
+            <div id="modalSubFolders" class="subfolder-list"></div>
+            <button onclick="addNewSubFolder()" class="add-btn">+ Add New Folder</button>
+        </div>
     </div>
-  </div>
 
-  <section class="section">
-    <div class="section-head">
-      <div><div class="eyebrow">ORIGINAL COLLECTION</div><h2>Gallery & Field Evidence</h2><p>Explore original project photos, forest mapping, and supply-chain evidence.</p></div>
-    </div>
-    <div id="homeGallery" class="home-gallery"></div>
-  </section>
-
-  <section class="split-card">
-    <div><div class="eyebrow">CHILGHOZA • PEOPLE • PARTNERSHIP</div><h2>Knowledge, trade, forests and stewardship</h2><p>A structured platform for international trade, research, forest knowledge, responsible supply and future institutional collaboration.</p></div>
-    <img src="/profile.jpg" alt="Royal Chilghoza profile" loading="lazy">
-  </section>
-</section>
-
-<section id="trade" class="page">
-  <div class="page-hero">
-    <div class="eyebrow">GLOBAL TRADE • QUALITY • MARKETS • SUPPLY</div>
-    <h1>Trade & Business</h1>
-    <p>A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.</p>
-  </div>
-  <div id="tradeFolders" class="folder-grid"></div>
-  <div id="tradeContent" class="detail-area"></div>
-</section>
-
-<section id="research" class="page">
-  <div class="page-hero">
-    <div class="eyebrow">SCIENCE • ORIGIN • FORESTS • QUALITY</div>
-    <h1>Research & Knowledge</h1>
-    <p>A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.</p>
-  </div>
-  <div id="researchFolders" class="folder-grid"></div>
-  <div id="researchContent" class="detail-area"></div>
-</section>
-
-<section id="royalAI" class="page rcpn-ai">
-  <div class="page-hero">
-    <div class="eyebrow">THE NEXT GENERATION</div>
-    <h1>Royal AI Assistant</h1>
-    <p>Improve, summarize, translate, research and prepare buyer-facing text. Human review remains required before publication.</p>
-  </div>
-  <textarea id="rcpnAiText" placeholder="Ask Royal AI..."></textarea>
-  <div class="ai-controls">
-    <select id="rcpnAiMode">
-      <option value="improve">Improve</option>
-      <option value="summary">Summary</option>
-      <option value="buyer">Buyer</option>
-      <option value="translate">Translate</option>
-      <option value="research">Research</option>
-      <option value="website">Website</option>
-    </select>
-    <button id="rcpnAiSend" class="btn primary" type="button">Send</button>
-  </div>
-  <pre id="rcpnAiResult"></pre>
-</section>
-
-<section id="admin" class="page">
-  <div class="page-hero">
-    <div class="eyebrow">OWNER CONTROL</div>
-    <h1>Admin Control Center</h1>
-    <p>Secure content control, media, users, permissions, versions, themes and AI assistance.</p>
-  </div>
-  <div id="adminContainer" class="admin-wrap"></div>
-</section>
-</main>
-
-<footer>
-  <strong>Royal Chilghoza Pine Nuts</strong>
-  <span>Pakistan • Origin • Global</span>
-</footer>
-
-<script src="/app.js" defer></script>
+    <script src="app.js"></script>
 </body>
 </html>
