@@ -313,6 +313,22 @@ window.onload = function() {
         renderGitHubGallery();
         renderFolderGrids();
     }
+
+    // Load saved custom theme colors if available
+    const savedTheme = localStorage.getItem('royal_theme');
+    if(savedTheme) {
+        try {
+            const t = JSON.parse(savedTheme);
+            if(document.getElementById('pickerBg')) {
+                document.getElementById('pickerBg').value = t.bg;
+                document.getElementById('pickerCard').value = t.card;
+                document.getElementById('pickerHeader').value = t.header;
+                document.getElementById('pickerHeading').value = t.heading;
+                document.getElementById('pickerGold').value = t.gold;
+                applyCustomTheme();
+            }
+        } catch(e) {}
+    }
 };
 
 function switchView(viewId) {
@@ -322,25 +338,27 @@ function switchView(viewId) {
 }
 
 function applyCustomTheme() {
-    const bg = document.getElementById('pickerBg').value;
-    const card = document.getElementById('pickerCard').value;
-    const header = document.getElementById('pickerHeader').value;
-    const heading = document.getElementById('pickerHeading').value;
-    const gold = document.getElementById('pickerGold').value;
+    const bg = document.getElementById('pickerBg') ? document.getElementById('pickerBg').value : '#0b1d14';
+    const card = document.getElementById('pickerCard') ? document.getElementById('pickerCard').value : '#11291d';
+    const header = document.getElementById('pickerHeader') ? document.getElementById('pickerHeader').value : '#0b1d14';
+    const heading = document.getElementById('pickerHeading') ? document.getElementById('pickerHeading').value : '#f3f4f6';
+    const gold = document.getElementById('pickerGold') ? document.getElementById('pickerGold').value : '#d4af37';
 
     document.documentElement.style.setProperty('--bg-primary', bg);
     document.documentElement.style.setProperty('--bg-card', card);
     document.documentElement.style.setProperty('--header-bg', header);
     document.documentElement.style.setProperty('--heading-color', heading);
     document.documentElement.style.setProperty('--text-gold', gold);
+
+    localStorage.setItem('royal_theme', JSON.stringify({ bg, card, header, heading, gold }));
 }
 
 function setTheme(bg, card, header, heading, gold) {
-    document.getElementById('pickerBg').value = bg;
-    document.getElementById('pickerCard').value = card;
-    document.getElementById('pickerHeader').value = header;
-    document.getElementById('pickerHeading').value = heading;
-    document.getElementById('pickerGold').value = gold;
+    if(document.getElementById('pickerBg')) document.getElementById('pickerBg').value = bg;
+    if(document.getElementById('pickerCard')) document.getElementById('pickerCard').value = card;
+    if(document.getElementById('pickerHeader')) document.getElementById('pickerHeader').value = header;
+    if(document.getElementById('pickerHeading')) document.getElementById('pickerHeading').value = heading;
+    if(document.getElementById('pickerGold')) document.getElementById('pickerGold').value = gold;
     applyCustomTheme();
 }
 
@@ -370,7 +388,7 @@ function changeLanguage(lang, saveToStorage = true) {
     if(t.hHead) document.getElementById('hero-heading').innerHTML = t.hHead;
     if(t.hDesc) document.getElementById('hero-desc').innerText = t.hDesc;
     if(t.tLabel) document.getElementById('trade-tag-label').innerText = t.tLabel;
-    if(t.rLabel) document.عد = document.getElementById('research-tag-label').innerText = t.rLabel;
+    if(t.rLabel) document.getElementById('research-tag-label').innerText = t.rLabel;
     if(t.thTitle) document.getElementById('trade-head-title').innerText = t.thTitle;
     if(t.thDesc) document.getElementById('trade-head-desc').innerText = t.thDesc;
     if(t.rhTitle) document.getElementById('research-head-title').innerText = t.rhTitle;
