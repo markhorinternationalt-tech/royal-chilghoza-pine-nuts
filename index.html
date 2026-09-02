@@ -13,12 +13,15 @@
             --text-main: #f5f2eb;
             --text-gold: #d4af37;
             --shadow-3d: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --heading-color: #f5f2eb;
+            --header-bg: #0b1f15;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-family);
             background-color: var(--bg-primary);
             color: var(--text-main);
             min-height: 100vh;
@@ -31,7 +34,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 18px 24px;
-            background: var(--bg-primary);
+            background: var(--header-bg);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -40,7 +43,7 @@
         }
 
         .logo-area { display: flex; flex-direction: column; cursor: pointer; }
-        .logo-title { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--text-gold); }
+        .logo-title { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--heading-color); }
         .logo-sub { font-size: 0.65rem; letter-spacing: 2px; color: #a3b899; text-transform: uppercase; }
 
         .header-actions { display: flex; gap: 10px; align-items: center; }
@@ -95,7 +98,7 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         }
 
-        .hero h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .hero h1 { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: var(--heading-color); }
         .hero h1 span { color: var(--text-gold); display: block; }
         .hero p { font-size: 0.9rem; line-height: 1.6; color: #d1d5db; max-width: 650px; margin: 0 auto; }
         .badge { font-size: 0.7rem; letter-spacing: 2px; color: var(--text-gold); font-weight: 700; display: block; margin-bottom: 8px; }
@@ -116,8 +119,40 @@
         .card:hover { transform: translateY(-4px); border-color: var(--text-gold); }
         .card-icon { font-size: 1.6rem; margin-bottom: 10px; }
         .card-tag { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-gold); margin-bottom: 4px; font-weight: 700; }
-        .card-title { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .card-title { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; }
         .card-desc { font-size: 0.85rem; color: #9ca3af; line-height: 1.5; }
+
+        /* GitHub 8 Images Gallery Section */
+        .github-gallery-section {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-3d);
+        }
+        .github-gallery-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            margin-top: 15px;
+        }
+        .github-img-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        .github-img-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .github-img-card h4 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--heading-color); margin-bottom: 4px; }
+        .github-img-card p { font-size: 0.75rem; color: #9ca3af; margin-bottom: 8px; }
 
         .sub-website-container {
             background: var(--bg-card);
@@ -128,7 +163,7 @@
             margin-bottom: 30px;
         }
         .sub-header { border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 20px; }
-        .sub-header h2 { font-family: 'Cinzel', serif; color: var(--text-gold); font-size: 1.6rem; margin-bottom: 6px; }
+        .sub-header h2 { font-family: 'Cinzel', serif; color: var(--heading-color); font-size: 1.6rem; margin-bottom: 6px; }
         .sub-header p { font-size: 0.9rem; color: #cbd5e1; }
 
         .media-upload-box {
@@ -138,7 +173,7 @@
             border-radius: 12px;
             margin-bottom: 20px;
         }
-        .media-upload-box input, .media-upload-box select {
+        .media-upload-box input, .media-upload-box select, .admin-panel input, .admin-panel textarea {
             width: 100%;
             padding: 8px 12px;
             background: rgba(0,0,0,0.5);
@@ -186,17 +221,6 @@
             border-radius: 15px;
             margin-bottom: 30px;
         }
-        .admin-panel input, .admin-panel textarea {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            color: var(--text-main);
-            margin-bottom: 10px;
-            outline: none;
-            font-family: inherit;
-        }
         .admin-btn {
             background: var(--text-gold);
             color: var(--bg-primary);
@@ -227,16 +251,30 @@
         .view-section.active { display: block; }
         .back-btn { background: none; border: none; color: var(--text-gold); font-size: 0.95rem; cursor: pointer; margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
+        /* Footer 4 Office Addresses Grid */
         footer {
-            text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             font-size: 0.85rem;
             color: #9ca3af;
             border-top: 1px solid var(--card-border);
             background-color: var(--bg-primary);
             margin-top: 40px;
-            line-height: 1.6;
         }
+        .footer-grid {
+            max-width: 950px;
+            margin: 0 auto 20px auto;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        }
+        .footer-office-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .footer-office-box h4 { font-family: 'Cinzel', serif; color: var(--text-gold); font-size: 0.95rem; margin-bottom: 6px; }
+        .footer-office-box p { font-size: 0.8rem; line-height: 1.5; color: #cbd5e1; }
     </style>
 </head>
 <body>
@@ -247,24 +285,24 @@
             <span class="logo-sub" id="site-sub">GLOBAL ECOSYSTEM</span>
         </div>
         <div class="header-actions">
+            <button class="whatsapp-float" onclick="openAdminModal()" style="background:#d4af37; color:#0b1f15; border:none; cursor:pointer;" id="admin-login-btn">🔐 Admin Login</button>
             <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" id="wa-btn">💬 WhatsApp</a>
             <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
-                <option value="en">English (انگریزی)</option>
-                <option value="zh">中文 (چائنہ)</option>
-                <option value="ru">Русский (روسی)</option>
-                <option value="ar">العربية (عربی)</option>
-                <option value="ps">پښتو (پشتو)</option>
-                <option value="fa">فارسی (فارسی)</option>
-                <option value="id">Bahasa Indonesia (انڈونیشیا)</option>
-                <option value="ms">Bahasa Melayu (ملائشیا)</option>
-                <option value="tr">Türkçe (ترکی)</option>
-                <option value="ur">اردو (اُردو)</option>
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="ru">Русский</option>
+                <option value="ar">العربية</option>
+                <option value="ps">پښتو</option>
+                <option value="fa">فارسی</option>
+                <option value="id">Bahasa Indonesia</option>
+                <option value="ms">Bahasa Melayu</option>
+                <option value="tr">Türkçe</option>
+                <option value="ur">اردو</option>
             </select>
         </div>
     </header>
 
     <div class="container">
-        <!-- HOME VIEW -->
         <div id="home-view" class="view-section active">
             
             <div class="hero" style="background-image: linear-gradient(rgba(10, 25, 15, 0.88), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
@@ -273,10 +311,24 @@
                 </div>
                 <span class="badge" id="hero-badge">PAKISTAN • INTERNATIONAL TRADE & RESEARCH</span>
                 <h1 id="hero-heading">Royal Chilgoza <span>Ecosystem</span></h1>
-                <p id="hero-desc">Explore professional trade markets and deep scientific research folders. Each folder operates as an independent hub with media, PDFs, Royal AI, and direct WhatsApp support.</p>
+                <p id="hero-desc">Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.</p>
             </div>
 
-            <!-- Main 2 Folders -->
+            <div class="ai-assistant-box" style="margin-bottom: 30px;">
+                <div style="font-family:'Cinzel',serif; font-size:1.2rem; color:var(--text-gold); margin-bottom:6px;" id="main-ai-title">🤖 Royal AI Assistant (Global Hub Expert)</div>
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;" id="main-ai-desc">Ask anything about Chilgoza export, origin, forestry, or trade specifications:</p>
+                <input type="text" id="mainAiQuery" placeholder="Ask AI assistant anything..." style="width:100%; padding:9px 12px; background:rgba(0,0,0,0.5); border:1px solid var(--card-border); border-radius:6px; color:var(--text-main); font-size:0.85rem; margin-bottom:8px; outline:none;">
+                <button class="admin-btn" style="padding:8px 16px; font-size:0.85rem; width:auto;" onclick="askMainAI()" id="main-ai-btn">Ask Royal AI</button>
+                <div class="ai-chat-output" id="mainAiResponse">Royal AI Assistant ready for global visitor inquiries...</div>
+            </div>
+
+            <div class="github-gallery-section">
+                <div class="card-tag" id="github-sec-tag">Project Gallery & Documentation</div>
+                <h3 style="font-family:'Cinzel',serif; color:var(--heading-color); font-size:1.3rem; margin-bottom:10px;" id="github-sec-title">Original 8 GitHub Project Images</h3>
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Fully manageable via Admin Mode (Replace image, edit titles, captions, and descriptions live).</p>
+                <div class="github-gallery-grid" id="githubGalleryContainer"></div>
+            </div>
+
             <div class="card-grid">
                 <div class="card" onclick="switchView('trade-main-view')">
                     <div>
@@ -297,27 +349,40 @@
                 </div>
             </div>
 
-            <!-- Theme & Custom Creator -->
-            <div class="theme-panel">
-                <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label">Theme Customizer</span>
-                <div class="color-options">
-                    <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15')"></div>
-                    <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e')"></div>
-                    <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d')"></div>
-                    <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233')"></div>
+            <div class="theme-panel" id="adminControlPanel" style="display:none;">
+                <div style="width:100%; margin-bottom:15px; border-bottom:1px solid var(--card-border); padding-bottom:10px;">
+                    <h3 style="font-family:'Cinzel',serif; color:var(--text-gold);">⚙️ ADMIN CONTROL CENTER</h3>
+                    <p style="font-size:0.8rem; color:#cbd5e1;">Manage themes, dynamic folders, office addresses, and image metadata live.</p>
+                </div>
+                <div style="width:100%; margin-bottom:15px;">
+                    <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label">Live Theme Customizer</span>
+                    <div class="color-options" style="margin-top:8px;">
+                        <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15', '#0b1f15')"></div>
+                        <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e', '#1a1a2e')"></div>
+                        <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d', '#2c1a1d')"></div>
+                        <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233', '#112233')"></div>
+                    </div>
+                </div>
+                <div style="width:100%;">
+                    <div class="card-tag" style="margin-bottom: 8px;">Create Custom Top-Level Folder Hub</div>
+                    <input type="text" id="newMainTitle" placeholder="Enter folder title...">
+                    <textarea id="newMainDesc" placeholder="Enter description..." rows="2"></textarea>
+                    <button class="admin-btn" onclick="addNewMainFolder()">+ Create New Folder Hub</button>
                 </div>
             </div>
 
-            <div class="admin-panel">
-                <div class="card-tag" style="margin-bottom: 8px;" id="create-hub-label">Create Custom Top-Level Hub</div>
-                <input type="text" id="newMainTitle" placeholder="Enter hub title...">
-                <textarea id="newMainDesc" placeholder="Enter description..." rows="2"></textarea>
-                <button class="admin-btn" onclick="addNewMainFolder()" id="create-hub-btn">+ Create Hub</button>
+            <div class="theme-panel">
+                <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label-pub">Theme Presets</span>
+                <div class="color-options">
+                    <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15', '#0b1f15')"></div>
+                    <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e', '#1a1a2e')"></div>
+                    <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d', '#2c1a1d')"></div>
+                    <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233', '#112233')"></div>
+                </div>
             </div>
 
         </div>
 
-        <!-- TRADE MAIN LIST VIEW (10 Folders) -->
         <div id="trade-main-view" class="view-section">
             <button class="back-btn" onclick="switchView('home-view')" id="back-home-1">← Back to Home</button>
             <div class="hero">
@@ -327,7 +392,6 @@
             <div class="card-grid" id="trade-folders-grid"></div>
         </div>
 
-        <!-- RESEARCH MAIN LIST VIEW (10 Folders) -->
         <div id="research-main-view" class="view-section">
             <button class="back-btn" onclick="switchView('home-view')" id="back-home-2">← Back to Home</button>
             <div class="hero">
@@ -337,7 +401,6 @@
             <div class="card-grid" id="research-folders-grid"></div>
         </div>
 
-        <!-- DYNAMIC SUB-WEBSITE / FOLDER VIEW -->
         <div id="sub-folder-view" class="view-section">
             <button class="back-btn" onclick="goBackToList()" id="back-cat-btn">← Back to Categories</button>
             <div class="sub-website-container">
@@ -347,9 +410,8 @@
                     <p id="sub-folder-desc">Detailed folder caption and operational description goes here.</p>
                 </div>
 
-                <!-- Media Upload Tool for this Folder -->
-                <div class="media-upload-box">
-                    <div class="card-tag" style="margin-bottom:6px;" id="upload-box-title">Upload Media / Document to this Folder</div>
+                <div class="media-upload-box" id="adminMediaBox" style="display:none;">
+                    <div class="card-tag" style="margin-bottom:6px;">Admin Mode: Upload Media / Document to this Folder</div>
                     <input type="text" id="mediaTitleInput" placeholder="Title (e.g. Batch Report / Lab Test)">
                     <select id="mediaTypeInput">
                         <option value="image">Image (JPG/PNG)</option>
@@ -357,13 +419,12 @@
                         <option value="pdf">PDF Document</option>
                     </select>
                     <input type="text" id="mediaUrlInput" placeholder="Enter filename or URL (e.g., report.pdf or photo.jpg)">
-                    <button class="admin-btn" onclick="addFolderMedia()" id="upload-btn">+ Add to this Folder</button>
+                    <button class="admin-btn" onclick="addFolderMedia()">+ Add to this Folder</button>
                 </div>
 
                 <div class="card-tag" style="margin-bottom: 10px;" id="gallery-box-title">Folder Content Gallery (Images, Videos & PDFs)</div>
                 <div class="media-grid" id="folderMediaContainer"></div>
 
-                <!-- Royal AI Assistant in Folder -->
                 <div class="ai-assistant-box">
                     <div style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--text-gold); margin-bottom:6px;" id="ai-box-title">🤖 Royal AI Assistant (Folder Expert)</div>
                     <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;" id="ai-box-desc">Ask anything specific about this folder topic:</p>
@@ -372,7 +433,6 @@
                     <div class="ai-chat-output" id="aiFolderResponse">AI ready to answer queries for this specific section...</div>
                 </div>
 
-                <!-- Direct WhatsApp Contact Bar -->
                 <div class="folder-whatsapp-bar">
                     <div class="card-tag" id="wa-bar-tag">Instant Buyer & Researcher Support</div>
                     <p style="font-size: 0.85rem; color: #d1d5db; margin: 5px 0 10px 0;" id="wa-bar-desc">Have a question regarding this specific section? Connect instantly via WhatsApp.</p>
@@ -384,28 +444,107 @@
     </div>
 
     <footer>
-        <p id="footer-text">© 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.</p>
+        <div class="footer-grid">
+            <div class="footer-office-box" id="office-1">
+                <h4 id="off1-title">Office 1: Headquarters</h4>
+                <p id="off1-desc">Main Bazaar, Chilas, Diamer District, Gilgit-Baltistan, Pakistan<br>Phone: +92 5812 450123<br>Email: admin@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-2">
+                <h4 id="off2-title">Office 2: Export Hub</h4>
+                <p id="off2-desc">Silk Road Trade Center, Gilgit, Pakistan<br>Phone: +92 5811 450456<br>Email: export@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-3">
+                <h4 id="off3-title">Office 3: Processing Yard</h4>
+                <p id="off3-desc">Indus Valley Mineral Yard, Chilas, Pakistan<br>Phone: +92 5812 450789<br>Email: minerals@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-4">
+                <h4 id="off4-title">Office 4: Liaison Office</h4>
+                <p id="off4-desc">Blue Area, Islamabad, Pakistan<br>Phone: +92 51 8456789<br>Email: islamabad@royalchilgoza.com</p>
+            </div>
+        </div>
+        <div style="text-align:center;" id="footer-text">
+            © 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.
+        </div>
     </footer>
 
     <script>
-        // Multi-language Master Translation Dictionary (10 Languages with complete folder support)
+        // 8 Original GitHub Images Database (Fully Editable via Admin Mode)
+        let githubImagesDB = [
+            { id: 1, title: "Chilgoza Forest", caption: "Natural Habitat", desc: "High altitude pine forests in Gilgit-Baltistan.", url: "01-forest.jpg" },
+            { id: 2, title: "Harvesting Batch", caption: "Traditional Collection", desc: "Safe sustainable harvesting by local communities.", url: "02-harvest.jpg" },
+            { id: 3, title: "In-Shell Pine Nuts", caption: "Raw Grade A", desc: "Directly from Chilas high mountain valleys.", url: "03-inshell.jpg" },
+            { id: 4, title: "Kernels Selection", caption: "Premium Quality", desc: "Carefully sorted and graded kernels.", url: "04-kernels.jpg" },
+            { id: 5, title: "Processing Yard", caption: "Modern Cleaning", desc: "Hygienic processing and packaging units.", url: "05-processing.jpg" },
+            { id: 6, title: "Laboratory Testing", caption: "Quality Assurance", desc: "Tested for purity and natural oils composition.", url: "06-lab.jpg" },
+            { id: 7, title: "Export Logistics", caption: "Global Shipping", desc: "Secure international transit and customs clearance.", url: "07-logistics.jpg" },
+            { id: 8, title: "Ecosystem View", caption: "Diamer District", desc: "Sustainable mountain ecosystem and research hub.", url: "08-chilghoza-forest.jpg" }
+        ];
+
+        let isAdminLoggedIn = false;
+
+        function openAdminModal() {
+            const pwd = prompt("Enter Admin Password (default: admin_chilas_2026):");
+            if(pwd === "admin_chilas_2026" || pwd === "admin") {
+                isAdminLoggedIn = true;
+                document.getElementById('adminControlPanel').style.display = 'block';
+                document.getElementById('adminMediaBox').style.display = 'block';
+                document.getElementById('admin-login-btn').innerText = "🔓 Admin Active";
+                renderGitHubGallery();
+                alert("Admin Access Granted! You can now edit images, create folders, and modify office addresses live.");
+            } else if(pwd !== null) {
+                alert("Incorrect password!");
+            }
+        }
+
+        function renderGitHubGallery() {
+            const container = document.getElementById('githubGalleryContainer');
+            container.innerHTML = '';
+            githubImagesDB.forEach((img, idx) => {
+                let html = `
+                    <div class="github-img-card">
+                        <img src="${img.url}" alt="${img.title}" onerror="this.src='08-chilghoza-forest.jpg'">
+                        <h4>${img.title}</h4>
+                        <p><strong>${img.caption}</strong><br>${img.desc}</p>
+                `;
+                if(isAdminLoggedIn) {
+                    html += `
+                        <button onclick="editGitHubImage(${idx})" style="background:var(--text-gold); color:var(--bg-primary); border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:600; margin-top:4px;">Edit Details</button>
+                    `;
+                }
+                html += `</div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        function editGitHubImage(idx) {
+            const item = githubImagesDB[idx];
+            const newTitle = prompt("Edit Title:", item.title);
+            if(newTitle === null) return;
+            const newCaption = prompt("Edit Caption:", item.caption);
+            const newDesc = prompt("Edit Description:", item.desc);
+            const newUrl = prompt("Edit Image Filename/URL:", item.url);
+
+            item.title = newTitle || item.title;
+            item.caption = newCaption || item.caption;
+            item.desc = newDesc || item.desc;
+            item.url = newUrl || item.url;
+            renderGitHubGallery();
+            alert("Image metadata updated successfully!");
+        }
+
+        // Multi-language Master Dictionary
         const translations = {
             en: {
                 title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
                 badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
                 hHead: "Royal Chilgoza <span>Ecosystem</span>",
-                hDesc: "Explore professional trade markets and deep scientific research folders. Each folder operates as an independent hub with media, PDFs, Royal AI, and direct WhatsApp support.",
+                hDesc: "Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.",
                 tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
                 rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
-                theme: "Theme Customizer", createHub: "Create Custom Top-Level Hub", createBtn: "+ Create Hub",
+                theme: "Theme Customizer",
                 thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
                 rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
                 backHome: "← Back to Home", backCat: "← Back to Categories",
-                upTitle: "Upload Media / Document to this Folder", upBtn: "+ Add to this Folder",
-                galTitle: "Folder Content Gallery (Images, Videos & PDFs)",
-                aiTitle: "🤖 Royal AI Assistant (Folder Expert)", aiDesc: "Ask anything specific about this folder topic:", aiBtn: "Ask AI Assistant",
-                waTag: "Instant Buyer & Researcher Support", waDesc: "Have a question regarding this specific section? Connect instantly via WhatsApp.", waBtnText: "💬 Chat on WhatsApp Now",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.",
                 openFolder: "Open Folder Website →",
                 tradeFolders: [
                     { title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
@@ -432,358 +571,17 @@
                     { title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
                 ]
             },
-            zh: {
-                title: "皇家松子", sub: "全球生态系统", wa: "💬 WhatsApp",
-                badge: "巴基斯坦 • 国际贸易与研究",
-                hHead: "皇家松子 <span>全球生态系统</span>",
-                hDesc: "探索专业的贸易市场和深入的科学研究文件夹。每个文件夹都是一个独立中心，配有媒体、PDF、皇家AI和直接WhatsApp支持。",
-                tLabel: "商业与贸易", tTitle: "全球贸易", tDesc: "10个全面的国际贸易目录，具有独立的媒体、AI和WhatsApp连接 →",
-                rLabel: "科学与生态", tTitle: "研究与知识", tDesc: "关于产地、林业、植物学、营养学和可持续性的10个详细研究文件夹 →",
-                theme: "主题颜色定制", createHub: "创建自定义主中心", createHubBtn: "+ 创建中心",
-                thTitle: "🌍 全球贸易中心", thDesc: "选择下方任意类别，打开包含媒体库、视频资源、PDF文档和皇家AI助手的专属微型网站。",
-                rhTitle: "🌲 研究与知识中心", thDesc: "选择下方任意科学类别，探索专属文档、研究报告、AI助手和直接贸易咨询。",
-                backHome: "← 返回首页", backCat: "← 返回分类",
-                upTitle: "向此文件夹上传媒体/文档", upBtn: "+ 添加到此文件夹",
-                galTitle: "文件夹内容库（图片、视频和PDF）",
-                aiTitle: "🤖 皇家AI助手（文件夹专家）", aiDesc: "询问有关此文件夹主题的具体问题：", aiBtn: "询问AI助手",
-                waTag: "即时买家与研究人员支持", waDesc: "对本部分有任何疑问？通过WhatsApp立即联系。", waBtnText: "💬 立即通过WhatsApp聊天",
-                footer: "© 2026 皇家松子。版权所有。<br>巴基斯坦吉尔吉特-巴尔蒂斯坦迪亚米尔地区奇拉斯。",
-                openFolder: "打开文件夹网站 →",
-                tradeFolders: [
-                    { title: '全球市场', desc: '全球需求、市场机会和国际贸易目的地。' },
-                    { title: '美国市场与买家', desc: '美国买家、进口商、市场机会和商业联系。' },
-                    { title: '中国市场与买家', desc: '中国买家、贸易商、进口商和商业机会。' },
-                    { title: '出口与物流', desc: '出口文件、海关、航运、交付和国际物流。' },
-                    { title: '产品与质量', desc: '果仁、带壳坚果、烘烤、等级、规格和质量标准。' },
-                    { title: '供应链与可追溯性', desc: '森林 → 采集者 → 加工 → 包装 → 出口，具有透明的可追溯性。' },
-                    { title: '地理标志 (GI)', desc: '产地、身份、真实性、地理声誉和产品可追溯性。' },
-                    { title: '有机化学与天然品质', desc: '天然油脂、化学成分、纯度、营养特性和质量特征。' },
-                    { title: '加工、包装与增值', desc: '加工、分级、烘烤、包装、品牌建设和优质产品开发。' },
-                    { title: '可持续与道德贸易', desc: '负责任的采购、公平价值、社区效益和与保护挂钩的贸易。' }
-                ],
-                researchFolders: [
-                    { title: '地理起源与GI研究', desc: '松子产地、地理特征、传统知识与地理标志研究。' },
-                    { title: '松子生物学与植物学', desc: '树木生物学、生长、繁殖、种子发育与自然更新。' },
-                    { title: '营养价值与天然成分', desc: '蛋白质、天然油脂、矿物质、营养成分与科学配比。' },
-                    { title: '松子森林与生态学', desc: '森林生态系统、生态功能、更新与可持续森林管理。' },
-                    { title: '生物多样性与野生动物', desc: '野生动物栖息地、生物多样性、生态系统服务与保护价值。' },
-                    { title: '气候与全球绿色环境', desc: '气候韧性、碳、水、土壤保护与全球环境效益。' },
-                    { title: '森林保护与恢复', desc: '森林保护、恢复、天然更新、人工林与可持续管理。' },
-                    { title: '供应链与社区生计', desc: '当地采集者、乡村生计、价值链、增收与减贫。' },
-                    { title: '可持续采收与社区意识', desc: '安全采收、森林保护、社区培训与保护意识。' },
-                    { title: '研究、政策与伙伴关系', desc: '研究知识、政府政策、粮农组织、全球环境基金、非政府组织、机构与未来伙伴关系。' }
-                ]
-            },
-            ru: {
-                title: "ROYAL CHILGOZA", sub: "ГЛОБАЛЬНАЯ ЭКОСИСТЕМА", wa: "💬 WhatsApp",
-                badge: "ПАКИСТАН • МЕЖДУНАРОДНАЯ ТОРГОВЛЯ И ИССЛЕДОВАНИЯ",
-                hHead: "Экосистема <span>Royal Chilgoza</span>",
-                hDesc: "Изучайте профессиональные торговые рынки и научные папки. Каждая папка работает как независимый хаб с медиа, PDF, Royal AI и поддержкой WhatsApp.",
-                tLabel: "Бизнес и Торговля", tTitle: "Мировая Торговля", tDesc: "10 комплексных каталогов международной торговли с медиа, AI и связью через WhatsApp →",
-                rLabel: "Наука и Экология", tTitle: "Исследования и Знания", tDesc: "10 подробных папок об источниках, лесном хозяйстве, ботанике, питании и устойчивости →",
-                theme: "Настройка Темы", createHub: "Создать Пользовательский Хаб", createHubBtn: "+ Создать Хаб",
-                thTitle: "🌍 ЦЕНТРЫ МИРОВОЙ ТОРГОВЛИ", thDesc: "Выберите любую категорию ниже, чтобы открыть её мини-сайт с медиагалереей, видео, PDF и AI-ассистентом.",
-                rhTitle: "🌲 ЦЕНТРЫ ИССЛЕДОВАНИЙ И ЗНАНИЙ", thDesc: "Выберите научную категорию для изучения документов, отчетов и прямого обращения.",
-                backHome: "← На главную", backCat: "← Назад к категориям",
-                upTitle: "Загрузить медиа / документ в эту папку", upBtn: "+ Добавить в папку",
-                galTitle: "Галерея содержимого папки (Фото, Видео и PDF)",
-                aiTitle: "🤖 AI-Ассистент Royal (Эксперт папки)", aiDesc: "Задайте вопрос по теме этой папки:", aiBtn: "Спросить AI-ассистента",
-                waTag: "Поддержка покупателей и исследователей", waDesc: "Есть вопросы по этому разделу? Свяжитесь через WhatsApp.", waBtnText: "💬 Чат в WhatsApp",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Все права защищены.<br>Чилас, округ Диамер, Гилгит-Балтистан, Пакистан.",
-                openFolder: "Открыть папку →",
-                tradeFolders: [
-                    { title: 'Мировые рынки', desc: 'Мировой спрос, рыночные возможности и направления международной торговли.' },
-                    { title: 'Рынок США и покупатели', desc: 'Покупатели из США, импортеры, рыночные возможности и деловые связи.' },
-                    { title: 'Рынок Китая и покупатели', desc: 'Китайские покупатели, трейдеры, импортеры и коммерческие возможности.' },
-                    { title: 'Экспорт и логистика', desc: 'Экспортная документация, таможня, доставка и международная логистика.' },
-                    { title: 'Продукт и качество', desc: 'Ядра, орехи в скорлупе, обжарка, сорта, спецификации и стандарты качества.' },
-                    { title: 'Цепочка поставок и прослеживаемость', desc: 'Лес → заготовитель → переработка → упаковка → экспорт с прозрачной прослеживаемостью.' },
-                    { title: 'Географическое указание (GI)', desc: 'Происхождение, идентичность, подлинность и репутация продукта.' },
-                    { title: 'Органическая химия и качество', desc: 'Природные масла, химический состав, чистота и питательные свойства.' },
-                    { title: 'Переработка, упаковка и добавленная стоимость', desc: 'Переработка, сортировка, обжарка, упаковка, брендинг и развитие премиум-продуктов.' },
-                    { title: 'Устойчивая и этичная торговля', desc: 'Ответственное снабжение, справедливая стоимость и польза для общества.' }
-                ],
-                researchFolders: [
-                    { title: 'Географическое происхождение и GI', desc: 'Происхождение чилгозы, традиционные знания и исследования GI.' },
-                    { title: 'Биология и ботаника чилгозы', desc: 'Биология дерева, рост, размножение, развитие семян и естественное возобновление.' },
-                    { title: 'Пищевая ценность и состав', desc: 'Белок, природные масла, минералы, питательные вещества и научный состав.' },
-                    { title: 'Леса и экология чилгозы', desc: 'Лесные экосистемы, экологические функции и устойчивое управление лесами.' },
-                    { title: 'Биоразнообразие и дикая природа', desc: 'Среты обитания диких животных, биоразнообразие и экосистемные услуги.' },
-                    { title: 'Климат и глобальная среда', desc: 'Климатическая устойчивость, углерод, вода, защита почв и экологические выгоды.' },
-                    { title: 'Сохранение и восстановление лесов', desc: 'Защита лесов, восстановление, естественное возобновление и устойчивое управление.' },
-                    { title: 'Цепочка поставок и жизнь общин', desc: 'Местные заготовители, сельские доходы, цепочки создания стоимости и снижение бедности.' },
-                    { title: 'Устойчивый сбор и осведомленность', desc: 'Безопасный сбор, защита лесов, обучение общин и экологическая осведомленность.' },
-                    { title: 'Исследования, политика и партнерство', desc: 'Научные знания, госполитика, ФАО, ГЭФ, НПО и институты.' }
-                ]
-            },
-            ar: {
-                title: "رويال تشيلغوزا", sub: "النظام البيئي العالمي", wa: "💬 واتساب",
-                badge: "باكستان • التجارة الدولية والأبحاث",
-                hHead: "رويال تشيلغوزا <span>النظام البيئي</span>",
-                hDesc: "استكشف أسواق التجارة المهنية ومجلدات البحوث العلمية العميقة. يعمل كل مجلد كمركز مستقل مع الوسائط، ملفات PDF، الذكاء الاصطناعي، ودعم واتساب.",
-                tLabel: "الأعمال والتجارة", tTitle: "التجارة العالمية", tDesc: "10 أدلة تجارية دولية شاملة مع وسائط فردية وتواصل عبر الذكاء الاصطناعي وواتساب →",
-                rLabel: "العلوم والبيئة", tTitle: "البحث والمعرفة", tDesc: "10 مجلدات بحثية مفصلة حول المنشأ، الغابات، علم النبات، التغذية والاستدامة →",
-                theme: "مخصص الألوان", createHub: "إنشاء مركز رئيسي مخصص", createHubBtn: "+ إنشاء مركز",
-                thTitle: "🌍 مراكز التجارة العالمية", thDesc: "اختر أي فئة أدناه لفتح موقعها المصغر المخصص الذي يضم معرض الوسائط، مقاطع الفيديو، مستندات PDF، ومساعد الذكاء الاصطناعي.",
-                rhTitle: "🌲 مراكز البحث والمعرفة", thDesc: "اختر أي فئة علمية أدناه لاستكشاف المستندات المخصصة، التقارير البحثية، مساعد الذكاء الاصطناعي، والاستفسارات التجارية المباشرة.",
-                backHome: "← العودة للرئيسية", backCat: "← العودة للفئات",
-                upTitle: "رفع وسائط / مستند إلى هذا المجلد", upBtn: "+ إضافة إلى هذا المجلد",
-                galTitle: "معرض محتوى المجلد (صور، فيديوهات و PDF)",
-                aiTitle: "🤖 مساعد رويال الذكي (خبير المجلد)", aiDesc: "اسأل أي شيء محدد حول موضوع هذا المجلد:", aiBtn: "اسأل المساعد الذكي",
-                waTag: "دعم فوري للمشترين والباحثين", waDesc: "هل لديك استفسار بخصوص هذا القسم المحدد؟ تواصل فوراً عبر واتساب.", waBtnText: "💬 تواصل عبر واتساب الآن",
-                footer: "© 2026 رائل تشيلغوزا. جميع الحقوق محفوظة.<br>شيلاس، منطقة ديامر، غلغت-بلتستان، باكستان.",
-                openFolder: "فتح موقع المجلد ←",
-                tradeFolders: [
-                    { title: 'الأسواق العالمية', desc: 'الطلب العالمي، فرص السوق وجهات التجارة الدولية.' },
-                    { title: 'سوق الولايات المتحدة والمشترون', desc: 'المشترون الأمريكيون، المستوردون، الفرص التجارية والاتصالات.' },
-                    { title: 'السوق الصيني والمشترون', desc: 'المشترون الصينيون، التجار، المستوردون والفرص التجارية.' },
-                    { title: 'التصدير والخدمات اللوجستية', desc: 'وثائق التصدير، الجمارك، الشحن، التوصيل واللوجستيات الدولية.' },
-                    { title: 'المنتج والجودة', desc: 'الحبوب، المكسرات بالقشر، التحميص، الدرجات والمواصفات.' },
-                    { title: 'سلسلة التوريد وإمكانية التتبع', desc: 'الغابة ← الجامع ← المعالجة ← التعبئة ← التصدير بشفافية تامة.' },
-                    { title: 'المؤشر الجغرافي (GI)', desc: 'المنشأ، الهوية، الأصالة، السمعة الجغرافية وإمكانية تتبع المنتج.' },
-                    { title: 'الكيمياء العضوية والجودة الطبيعية', desc: 'الزيوت الطبيعية، التركيب الكيميائي، النقاء والخصائص الغذائية.' },
-                    { title: 'المعالجة والتعبئة وإضافة القيمة', desc: 'المعالجة، التدرج، التحميص، التعبئة، العلامات التجارية وتطوير المنتجات المميزة.' },
-                    { title: 'التجارة المستدامة والأخلاقية', desc: 'المصادر المسؤولة، القيمة العادلة، منافع المجتمع والتجارة المرتبطة بالحفظ.' }
-                ],
-                researchFolders: [
-                    { title: 'المنشأ الجغرافي وبحوث المؤشر الجغرافي', desc: 'منشأ التشيلغوزا، الهوية الجغرافية، المعارف التقليدية وبحوث المؤشر الجغرافي.' },
-                    { title: 'بيولوجيا وعلم نبات التشيلغوزا', desc: 'بيولوجيا الأشجار، النمو، التكاثر، تطوير البذور والتجدد الطبيعي.' },
-                    { title: 'القيمة الغذائية والتركيب الطبيعي', desc: 'البروتين، الزيوت الطبيعية، المعادن، المغذيات والتركيب العلمي.' },
-                    { title: 'غابات وبيئة التشيلغوزا', desc: 'النظم الإيكولوجية للغابات، الوظائف البيئية والإدارة المستدامة للغابات.' },
-                    { title: 'التنوع البيولوجي والحياة البرية', desc: 'مواطن الحياة البرية، التنوع البيولوجي، خدمات النظام الإيكولوجي وقيم الحفظ.' },
-                    { title: 'المناخ والبيئة الخضراء العالمية', desc: 'المرونة المناخية، الكربون، المياه، حماية التربة والفوائد البيئية العالمية.' },
-                    { title: 'حفظ الغابات واستعادتها', desc: 'حماية الغابات، الاستعادة، التجدد الطبيعي، الزراعة والإدارة المستدامة.' },
-                    { title: 'سلسلة التوريد وسبل عيش المجتمعات', desc: 'الجامعون المحليون، سبل العيش الريفية، سلاسل القيمة وخفض الفقر.' },
-                    { title: 'الحصاد المستدام ووعي المجتمع', desc: 'الحصاد الآمن، حماية الغابات، تدريب المجتمع والوعي بالحفظ.' },
-                    { title: 'البحوث والسياسات والشراكات', desc: 'معارف البحوث، سياسات الحكومة، الفاو، مرفق البيئة العالمية والمنظمات غير الحكومية.' }
-                ]
-            },
-            ps: {
-                title: "رویال چلغوزه", sub: "نړیوال سیستم", wa: "💬 واټس اپ",
-                badge: "پاکستان • نړیوال تجارت او څیړنه",
-                hHead: "رویال چلغوزه <span>نړیوال سیسټم</span>",
-                hDesc: "مسلکي سوداګریز بازارونه او ژورې ساینسي څیړنیزې فولډرې وپلټئ. هر فولډر د رسنیو، PDF، رویال AI او واټس اپ ملاتړ سره یو خپلواک مرکز دی.",
-                tLabel: "سوداګري او تجارت", tTitle: "نړیوال تجارت", tDesc: "10 جامع نړیوال سوداګریز لارښودونه د رسنیو، AI او واټس اپ اړیکو سره →",
-                rLabel: "ساینس او چاپېریال", tTitle: "څیړنه او پوهه", tDesc: "د اصل، ځنګلونو، بوټو پوهنې، تغذیې او پایښت په اړه 10 تفصیلي څیړنیز فولډرونه →",
-                theme: "د موضوع رنګ تنظیم", createHub: "نوی اصلي مرکز جوړ کړئ", createHubBtn: "+ مرکز جوړ کړئ",
-                thTitle: "🌍 نړیوال سوداګریز مرکزونه", thDesc: "لاندې هره کټه ګوري وټاکئ ترڅو د هغې ځانګړی منی ویب پاڼه د رسنیو، ویډیوګانو، PDF سندونو او رویال AI مرستیال سره پرانیزئ.",
-                rhTitle: "🌲 د څیړنې او پوهې مرکزونه", thDesc: "لاندې هر ساینسي کټګوري وټاکئ ترڅو وقف شوي سندونه، څیړنیز راپورونه او د AI مرستیال وپلټئ.",
-                backHome: "← کور پاڼې ته تلل", backCat: "← کټګوریو ته تلل",
-                upTitle: "پدې فولډر کې رسنۍ یا سند اپلوډ کړئ", upBtn: "+ پدې فولډر کې اضافه کړئ",
-                galTitle: "د فولډر مینځپانګې ګالري (انځورونه، ویډیوګانې او PDF)",
-                aiTitle: "🤖 رویال AI مرستیال (د فولډر ماهر)", aiDesc: "د دې فولډر موضوع په اړه کومه ځانګړې پوښتنه وپوښتئ:", aiBtn: "AI ته پوښتنه وکړئ",
-                waTag: "د پیرودونکو او څیړونکو لپاره عاجل ملاتړ", waDesc: "د دې ځانګړې برخې په اړه پوښتنه لرئ؟ د واټس اپ له لارې په بېړه اړیکه ونیسئ.", waBtnText: "💬 همدا اوس په واټس اپ خبرې وکړئ",
-                footer: "© 2026 رویال چلغوزه پائن نټس. ټول حقوق خوندي دي.<br>چلاس، دیامر ضلع، گلگت بلتستان، پاکستان.",
-                openFolder: "د فولډر ویب پاڼه پرانیزئ ←",
-                tradeFolders: [
-                    { title: 'نړیوال بازارونه', desc: 'نړیواله غوښتنه، د بازار فرصتونه او نړیوال سوداګریز منزلونه.' },
-                    { title: 'د امریکا بازار او پیرودونکي', desc: 'د امریکا پیرودونکي، وارد کونکي، د بازار فرصتونه او سوداګریزې اړیکې.' },
-                    { title: 'د چین بازار او پیرودونکي', desc: 'چینایي پیرودونکي، سوداګر، وارد کونکي او سوداګریز فرصتونه.' },
-                    { title: 'صادرات او لوژستیک', desc: 'د صادراتو اسناد، ګمرک، بار وړل، تحویلي او نړیوال لوژستیک.' },
-                    { title: 'محصول او کیفیت', desc: 'زړي، په پوټکي کې مغز، پخول، درجې، مشخصات او د کیفیت معیارونه.' },
-                    { title: 'د اکمالاتو ځنځیر او د پام وړتیا', desc: 'ځنګل ← راټولوونکی ← پروسس ← بسته بندي ← صادرات، د روڼتیا سره.' },
-                    { title: 'جغرافیاوي نښه (GI)', desc: 'اصل، هویت، اصالت، جغرافیایي شهرت او د محصول د پام وړتیا.' },
-                    { title: 'عضوي کیمیا او طبیعي کیفیت', desc: 'طبیعي غوړي، کیمیاوي ترکیب، پاکوالی، د تغذیې ځانګړتیاوې او کیفیت.' },
-                    { title: 'پروسس، بسته بندي او د ارزښت لوړول', desc: 'پروسس، درجه بندي، پخول، بسته بندي، برانډینګ او د پریمیم محصولاتو پراختیا.' },
-                    { title: 'دوامداره او اخلاقي تجارت', desc: 'مسؤلانه سرچینې، عادلانه ارزښت، د ټولنې ګټې او د ساتنې سره تړلی تجارت.' }
-                ],
-                researchFolders: [
-                    { title: 'جغرافیاوي اصل او GI څیړنه', desc: 'د چلغوزې اصل، جغرافیایي هویت، دودیزه پوهه او د GI څیړنه.' },
-                    { title: 'د چلغوزې بیولوژي او نبات پوهنه', desc: 'د ونې بیولوژي، وده، بیا تولید، د تخم پراختیا او طبیعي بیا رغونه.' },
-                    { title: 'د تغذیې ارزښت او طبیعي ترکیب', desc: 'پروتین، طبیعي غوړي، منرالونه، مغذي توکي او ساینسي ترکیب.' },
-                    { title: 'د چلغوزې ځنګلونه او چاپېریال', desc: 'د ځنګل اکوسیستمونه، ایکولوژیکي دندې، بیا رغونه او دوامداره مدیریت.' },
-                    { title: 'حياتي تنوع او وحشي ژوي', desc: 'د وحشي ژویو استوګنځایونه، حیاتي تنوع، د اکوسیستم خدمتونه او د ساتنې ارزښتونه.' },
-                    { title: 'اقلیم او نړیوال زرغون چاپېریال', desc: 'د اقلیم مقاومت، کاربن، اوبه، د خاورې ساتنه او نړیوال چاپیریال ګټې.' },
-                    { title: 'د ځنګلونو ساتنه او بیا رغونه', desc: 'د ځنګل ساتنه، بیا رغونه، طبیعي بیا رغونه، کښت او دوامداره مدیریت.' },
-                    { title: 'د اکمالاتو ځنځیر او د ټولنې ژوند', desc: 'ځایی راټولوونکي، کلیوال ژوند، د ارزښت ځنځیرونه او د بې وزلۍ کمول.' },
-                    { title: 'دوامداره راټولول او د ټولنې پوهاوی', desc: 'خوندي راټولول، د ځنګل ساتنه، د ټولنې روزنه او د ساتنې پوهاوی.' },
-                    { title: 'څیړنه، پالیسي او ملګرتیا', desc: 'د څیړنې پوهه، دولتي پالیسي، FAO، GEF، NGOs، بنسټونه او راتلونکې ملګرتیا.' }
-                ]
-            },
-            fa: {
-                title: "رویال چلغوزه", sub: "اکوسیستم جهانی", wa: "💬 واتس‌اپ",
-                badge: "پاکستان • تجارت بین‌الملل و تحقیق",
-                hHead: "رویال چلغوزه <span>اکوسیستم جهانی</span>",
-                hDesc: "بازارهای تجاری حرفه‌ای و پوشه‌های تحقیقاتی عمیق علمی را بررسی کنید. هر پوشه به عنوان یک هب مستقل با رسانه، PDF، هوش مصنوعی رویال و واتس‌اپ عمل می‌کند.",
-                tLabel: "تجارت و بازرگانی", tTitle: "تجارت جهانی", tDesc: "۱۰ دایرکتوری جامع تجارت بین‌الملل با رسانه، هوش مصنوعی و ارتباط واتس‌اپ →",
-                rLabel: "علم و محیط زیست", tTitle: "تحقیق و دانش", tDesc: "۱۰ پوشه تحقیقاتی تفصیلی درباره منشاء، جنگل‌داری، گیاه‌شناسی، تغذیه و پایداری →",
-                theme: "شخصی‌سازی رنگ", createHub: "ایجاد هب سفارشی", createHubBtn: "+ ایجاد هب",
-                thTitle: "🌍 هب‌های تجارت جهانی", thDesc: "هر دسته‌بندی را انتخاب کنید تا وب‌سایت کوچک اختصاصی آن شامل گالری رسانه، ویدیو، اسناد PDF و هوش مصنوعی رویال باز شود.",
-                rhTitle: "🌲 هب‌های تحقیق و دانش", thDesc: "هر دسته‌بندی علمی را برای بررسی اسناد اختصاصی، گزارش‌های تحقیقی و هوش مصنوعی انتخاب کنید.",
-                backHome: "← بازگشت به خانه", backCat: "← بازگشت به دسته‌ها",
-                upTitle: "آپلود رسانه / سند در این پوشه", upBtn: "+ افزودن به این پوشه",
-                galTitle: "گالری محتوای پوشه (تصاویر، ویدیوها و PDF)",
-                aiTitle: "🤖 دستیار هوش مصنوعی رویال (متخصص پوشه)", aiDesc: "هر سوالی درباره موضوع این پوشه دارید بپرسید:", aiBtn: "پرسش از هوش مصنوعی",
-                waTag: "پشتیبانی فوری خریداران و محققان", waDesc: "سؤالی درباره این بخش خاص دارید؟ فوراً از طریق واتس‌اپ متصل شوید.", waBtnText: "💬 گفتگو در واتس‌اپ",
-                footer: "© ۲۰۲۶ رویال چلغوزهٔ. تمامی حقوق محفوظ است.<br>چیلاس، منطقه دیامر، گلگت-بلستان، پاکستان.",
-                openFolder: "باز کردن وب‌سایت پوشه ←",
-                tradeFolders: [
-                    { title: 'بازارهای جهانی', desc: 'تقاضای جهانی، فرصت‌های بازار و مقصدهای تجارت بین‌الملل.' },
-                    { title: 'بازار و خریداران ایالات متحده', desc: 'خریداران آمریکایی، واردکنندگان، فرصت‌های بازار و ارتباطات تجاری.' },
-                    { title: 'بازار و خریداران چین', desc: 'خریداران چینی، بازرگانان، واردکنندگان و فرصت‌های تجاری.' },
-                    { title: 'صادرات و لجستیک', desc: 'اسناد صادرات، گمرک، حمل‌ونقل، تحویل و لجستیک بین‌الملل.' },
-                    { title: 'محصول و کیفیت', desc: 'مغز، آجیل با پوست، برشتگی، درجه‌ها، مشخصات و استانداردهای کیفیت.' },
-                    { title: 'زنجیره تامین و ردیابی', desc: 'جنگل ← جمع‌آوری‌کننده ← فرآوری ← بسته‌بندی ← صادرات با ردیابی شفاف.' },
-                    { title: 'نشان جغرافیایی (GI)', desc: 'منشاء، هویت، اصالت، شهرت جغرافیایی و قابلیت ردیابی محصول.' },
-                    { title: 'شیمی آلی و کیفیت طبیعی', desc: 'روغن‌های طبیعی، ترکیب شیمیایی، خلوص، خواص تغذیه‌ای و ویژگی‌های کیفی.' },
-                    { title: 'فرآوری، بسته‌بندی و ارزش افزوده', desc: 'فرآوری، درجه‌بندی، برشتگی، بسته‌بندی، برندسازی و توسعه محصولات ممتاز.' },
-                    { title: 'تجارت پایدار و اخلاقی', desc: 'منبع‌یابی مسئولانه، ارزش عادلانه، منافع جامعه و تجارت مرتبط با حفاظت.' }
-                ],
-                researchFolders: [
-                    { title: 'منشاء جغرافیایی و تحقیق GI', desc: 'منشاء چلغوزه، هویت جغرافیایی، دانش سنتی و تحقیق GI.' },
-                    { title: 'زیست‌شناسی و گیاه‌شناسی چلغوزه', desc: 'زیست‌شناسی درخت، رشد، تولید مثل، توسعه دانه و زادآوری طبیعی.' },
-                    { title: 'ارزش تغذیه‌ای و ترکیب طبیعی', desc: 'پروتئین، روغن‌های طبیعی، مواد معدنی، مغذی‌ها و ترکیب علمی.' },
-                    { title: 'جنگل‌ها و اکولوژی چلغوزه', desc: 'اکوسیستم‌های جنگلی، توابع اکولوژیکی، زادآوری و مدیریت پایدار جنگل.' },
-                    { title: 'تنوع زیستی و حیات وحش', desc: 'زیستگاه‌های حیات وحش، تنوع زیستی، خدمات اکوسیستم و ارزش‌های حفاظتی.' },
-                    { title: 'اقلیم و محیط سبز جهانی', desc: 'تاب‌آوری اقلیمی، کربن، آب، حفاظت از خاک و مزایای زیست‌محیطی جهانی.' },
-                    { title: 'حفاظت و احیای جنگل', desc: 'حفاظت از جنگل، احیاء، زادآوری طبیعی، جنگل‌کاری و مدیریت پایدار.' },
-                    { title: 'زنجیره تامین و معیشت جوامع', desc: 'جمع‌آوری‌کنندگان محلی، معیشت روستایی، زنجیره‌های ارزش و کاهش فقر.' },
-                    { title: 'برداشت پایدار و آگاهی جامعه', desc: 'برداشت ایمن، حفاظت از جنگل، آموزش جامعه و آگاهی حفاظتی.' },
-                    { title: 'تحقیق، سیاست و مشارکت‌ها', desc: 'دانش پژوهشی، سیاست دولتی، فائو، GEF، نهادها و مشارکت‌های آینده.' }
-                ]
-            },
-            id: {
-                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
-                badge: "PAKISTAN • PERDAGANGAN & RISET INTERNASIONAL",
-                hHead: "Ekosistem <span>Royal Chilgoza</span>",
-                hDesc: "Jelajahi pasar perdagangan profesional dan folder riset ilmiah mendalam. Setiap folder beroperasi sebagai pusat independen dengan media, PDF, AI Royal, dan dukungan WhatsApp.",
-                tLabel: "Bisnis & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan internasional komprehensif dengan media, AI, & konektivitas WhatsApp →",
-                rLabel: "Sains & Ekologi", tTitle: "Riset & Pengetahuan", tDesc: "10 folder riset terperinci tentang asal-usul, kehutanan, botani, nutrisi, & keberlanjutan →",
-                theme: "Kustomisasi Tema", createHub: "Buat Hub Kustom", createHubBtn: "+ Buat Hub",
-                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih kategori di bawah untuk membuka situs mini khusus yang menampilkan galeri media, video, dokumen PDF, dan AI Royal.",
-                rhTitle: "🌲 PUSAT RISET & PENGETAHUAN", thDesc: "Pilih kategori ilmiah di bawah untuk menjelajahi dokumen khusus, laporan riset, dan asisten AI.",
-                backHome: "← Kembali ke Beranda", backCat: "← Kembali ke Kategori",
-                upTitle: "Unggah Media / Dokumen ke Folder Ini", upBtn: "+ Tambahkan ke Folder Ini",
-                galTitle: "Galeri Konten Folder (Gambar, Video & PDF)",
-                aiTitle: "🤖 Asisten AI Royal (Pakar Folder)", aiDesc: "Tanyakan apa saja tentang topik folder ini:", aiBtn: "Tanya Asisten AI",
-                waTag: "Dukungan Instan Pembeli & Peneliti", waDesc: "Punya pertanyaan tentang bagian ini? Hubungi langsung via WhatsApp.", waBtnText: "💬 Chat di WhatsApp Sekarang",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta dilindungi.<br>Chilas, Distrik Diamer, Gilgit-Baltistan, Pakistan.",
-                openFolder: "Buka Website Folder →",
-                tradeFolders: [
-                    { title: 'Pasar Global', desc: 'Permintaan global, peluang pasar, dan tujuan perdagangan internasional.' },
-                    { title: 'Pasar & Pembeli AS', desc: 'Pembeli AS, importir, peluang pasar, dan koneksi bisnis.' },
-                    { title: 'Pasar & Pembeli Cina', desc: 'Pembeli Cina, trader, importir, dan peluang komersial.' },
-                    { title: 'Ekspor & Logistik', desc: 'Dokumen ekspor, bea cukai, pengiriman, pengiriman, dan logistik internasional.' },
-                    { title: 'Produk & Kualitas', desc: 'Biji, kacang dalam cangkang, pemanggangan, tingkat, spesifikasi, dan standar kualitas.' },
-                    { title: 'Rantai Pasokan & Keterlacakan', desc: 'Hutan → pengumpul → pemrosesan → pengemasan → ekspor dengan keterlacakan transparan.' },
-                    { title: 'Indikasi Geografis (GI)', desc: 'Asal, identitas, keaslian, reputasi geografis, dan keterlacakan produk.' },
-                    { title: 'Kimia Organik & Kualitas Alami', desc: 'Minyak alami, komposisi kimia, kemurnian, sifat nutrisi, dan karakteristik kualitas.' },
-                    { title: 'Pemrosesan, Pengemasan & Nilai Tambah', desc: 'Pemrosesan, penilaian, pemanggangan, pengemasan, branding, dan pengembangan produk premium.' },
-                    { title: 'Perdagangan Berkelanjutan & Etis', desc: 'Sumber yang bertanggung jawab, nilai wajar, manfaat komunitas, dan perdagangan terkait konservasi.' }
-                ],
-                researchFolders: [
-                    { title: 'Asal Geografis & Riset GI', desc: 'Asal Chilgoza, identitas geografis, pengetahuan tradisional, dan riset GI.' },
-                    { title: 'Biologi & Botani Chilgoza', desc: 'Biologi pohon, pertumbuhan, reproduksi, perkembangan benih, dan regenerasi alami.' },
-                    { title: 'Nilai Gizi & Komposisi Alami', desc: 'Protein, minyak alami, mineral, nutrisi, dan komposisi ilmiah.' },
-                    { title: 'Hutan & Ekologi Chilgoza', desc: 'Ekosistem hutan, fungsi ekologis, regenerasi, dan pengelolaan hutan berkelanjutan.' },
-                    { title: 'Keanekaragaman Hayati & Satwa Liar', desc: 'Habitat satwa liar, keanekaragaman hayati, layanan ekosistem, dan nilai konservasi.' },
-                    { title: 'Iklim & Lingkungan Hijau Global', desc: 'Ketahanan iklim, karbon, air, perlindungan tanah, dan manfaat lingkungan global.' },
-                    { title: 'Konservasi & Restorasi Hutan', desc: 'Perlindungan hutan, restorasi, regenerasi alami, penanaman, dan pengelolaan berkelanjutan.' },
-                    { title: 'Rantai Pasokan & Penghidupan Komunitas', desc: 'Pengumpul lokal, penghidupan pedesaan, rantai nilai, dan pengentasan kemiskinan.' },
-                    { title: 'Panen Berkelanjutan & Kesadaran Komunitas', desc: 'Pانهن aman, perlindungan hutan, pelatihan komunitas, dan kesadaran konservasi.' },
-                    { title: 'Riset, Kebijakan & Kemitraan', desc: 'Pengetahuan riset, kebijakan pemerintah, FAO, GEF, LSM, dan lembaga.' }
-                ]
-            },
-            ms: {
-                title: "ROYAL CHILGOZA", sub: "EKOSISTEM GLOBAL", wa: "💬 WhatsApp",
-                badge: "PAKISTAN • PERDAGANGAN & KAJIAN ANTARABANGSA",
-                hHead: "Ekosistem <span>Royal Chilgoza</span>",
-                hDesc: "Terokai pasaran perdagangan profesional dan folder penyelidikan saintifik. Setiap folder beroperasi sebagai hab bebas dengan media, PDF, AI Royal, dan sokongan WhatsApp.",
-                tLabel: "Perniagaan & Perdagangan", tTitle: "Perdagangan Global", tDesc: "10 direktori perdagangan antarabangsa komprehensif dengan media, AI, & sambungan WhatsApp →",
-                rLabel: "Sains & Ekologi", tTitle: "Penyelidikan & Pengetahuan", tDesc: "10 folder penyelidikan terperinci mengenai asal-usul, perhutanan, botani, pemakanan & kelestarian →",
-                theme: "Penyesuaian Tema", createHub: "Cipta Hab Tersuai", createHubBtn: "+ Cipta Hab",
-                thTitle: "🌍 PUSAT PERDAGANGAN GLOBAL", thDesc: "Pilih mana-mana kategori di bawah untuk membuka laman web mini khusus yang menampilkan galeri media, video, dokumen PDF dan AI Royal.",
-                rhTitle: "🌲 PUSAT PENYELIDIKAN & PENGETAHUAN", thDesc: "Pilih mana-mana kategori saintifik di bawah untuk meneroka dokumen khas, laporan penyelidikan dan pembantu AI.",
-                backHome: "← Kembali ke Utama", backCat: "← Kembali ke Kategori",
-                upTitle: "Muat Naik Media / Dokumen ke Folder Ini", upBtn: "+ Tambah ke Folder Ini",
-                galTitle: "Galeri Kandungan Folder (Gambar, Video & PDF)",
-                aiTitle: "🤖 Pembantu AI Royal (Pakar Folder)", aiDesc: "Tanya apa sahaja tentang topik folder ini:", aiBtn: "Tanya Pembantu AI",
-                waTag: "Sokongan Pantas Pembeli & Penyelidik", waDesc: "Ada soalan mengenai bahagian ini? Hubungi segera melalui WhatsApp.", waBtnText: "💬 Berbual di WhatsApp Sekarang",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Hak cipta terpelihara.<br>Chilas, Daerah Diamer, Gilgit-Baltistan, Pakistan.",
-                openFolder: "Buka Laman Web Folder →",
-                tradeFolders: [
-                    { title: 'Pasaran Global', desc: 'Permintaan global, peluang pasaran dan destinasi perdagangan antarabangsa.' },
-                    { title: 'Pasaran & Pembeli AS', desc: 'Pembeli AS, pengimport, peluang pasaran dan hubungan perniagaan.' },
-                    { title: 'Pasaran & Pembeli China', desc: 'Pembeli China, pedagang, pengimport dan peluang komersial.' },
-                    { title: 'Eksport & Logistik', desc: 'Dokumen eksport, kastam, penghantaran, penyerahan dan logistik antarabangsa.' },
-                    { title: 'Produk & Kualiti', desc: 'Isi, kekacang dalam kulit, pemanggangan, gred, spesifikasi dan piawaian kualiti.' },
-                    { title: 'Rantaian Bekalan & Kebolehtesanan', desc: 'Hutan → pengumpul → pemprosesan → pembungkusan → eksport dengan kebolehtesanan telus.' },
-                    { title: 'Petunjuk Geografi (GI)', desc: 'Asal-usul, identiti, keaslian, reputasi geografi dan kebolehtesanan produk.' },
-                    { title: 'Kimia Organik & Kualiti Semula Jadi', desc: 'Minyak semulajadi, komposisi kimia, ketulenan, sifat pemakanan dan ciri kualiti.' },
-                    { title: 'Pemprosesan, Pembungkusan & Nilai Tambah', desc: 'Pemprosesan, penggredan, pemanggangan, pembungkusan, penjenamaan dan pembangunan produk premium.' },
-                    { title: 'Perdagangan Mampan & Etika', desc: 'Sumber bertanggungjawab, nilai adil, manfaat komuniti dan perdagangan berkaitan pemuliharaan.' }
-                ],
-                researchFolders: [
-                    { title: 'Asal Geografi & Kajian GI', desc: 'Asal Chilgoza, identiti geografi, pengetahuan tradisional dan kajian GI.' },
-                    { title: 'Biologi & Botani Chilgoza', desc: 'Biologi pokok, pertumbuhan, pembiakan, pembangunan benih dan pemulihan semula jadi.' },
-                    { title: 'Nilai Pemakanan & Komposisi Semula Jadi', desc: 'Protein, minyak semulajadi, mineral, nutrien dan komposisi saintifik.' },
-                    { title: 'Hutan & Ekologi Chilgoza', desc: 'Ekosistem hutan, fungsi ekologi, pemulihan dan pengurusan hutan mampan.' },
-                    { title: 'Kepelbagaian Biologi & Hidupan Liar', desc: 'Habitat hidupan liar, kepelbagaian biologi, perkhidmatan ekosistem dan nilai pemuliharaan.' },
-                    { title: 'Iklim & Persekitaran Hijau Global', desc: 'Daya tahan iklim, karbon, air, perlindungan tanah dan manfaat alam sekitar global.' },
-                    { title: 'Pemulihan & Pemeliharaan Hutan', desc: 'Perlindungan hutan, pemulihan, pemulihan semula jadi, penanaman dan pengurusan mampan.' },
-                    { title: 'Rantaian Bekalan & Mata Pencarian Komuniti', desc: 'Pengumpul tempatan, mata pencarian luar bandar, rantaian nilai dan pembasmian kemiskinan.' },
-                    { title: 'Tuai Mampan & Kesedaran Komuniti', desc: 'Tuai selamat, perlindungan hutan, latihan komuniti dan kesedaran pemuliharaan.' },
-                    { title: 'Penyelidikan, Dasar & Perkongsian', desc: 'Pengetahuan penyelidikan, dasar kerajaan, FAO, GEF, NGO, institusi dan perkongsian masa depan.' }
-                ]
-            },
-            tr: {
-                title: "ROYAL CHILGOZA", sub: "KÜRESEL EKOSİSTEM", wa: "💬 WhatsApp",
-                badge: "PAKİSTAN • ULUSLARARASI TİCARET VE ARAŞTIRMA",
-                hHead: "Royal Chilgoza <span>Ekosistemi</span>",
-                hDesc: "Profesyonel ticaret pazarlarını ve derin bilimsel araştırma klasörlerini keşfedin. Her klasör medya, PDF, Royal AI ve WhatsApp desteğiyle bağımsız bir merkezdir.",
-                tLabel: "İş ve Ticaret", tTitle: "Küresel Ticaret", tDesc: "Medya, AI ve WhatsApp bağlantısına sahip 10 kapsamlı uluslararası ticaret dizini →",
-                rLabel: "Bilim ve Ekoloji", tTitle: "Araştırma ve Bilgi", tDesc: "Menşei, ormancılık, botanik, beslenme ve sürdürülebilirlik üzerine 10 detaylı araştırma klasörü →",
-                theme: "Tema Özelleştirici", createHub: "Özel Merkez Oluştur", createHubBtn: "+ Merkez Oluştur",
-                thTitle: "🌍 KÜRESEL TİCARET MERKEZLERİ", thDesc: "Medya galerileri, video kaynakları, PDF belgeleri ve Royal AI Asistanı içeren özel mini web sitesini açmak için aşağıdaki kategoriyi seçin.",
-                rhTitle: "🌲 ARAŞTIRMA VE BİLGİ MERKEZLERİ", thDesc: "Özel belgeleri, araştırma raporlarını ve AI asistanını keşfetmek için aşağıdaki bilimsel kategoriyi seçin.",
-                backHome: "← Ana Sayfaya Dön", backCat: "← Kategorilere Dön",
-                upTitle: "Bu Klasöre Medya / Belge Yükle", upBtn: "+ Bu Klasöre Ekle",
-                galTitle: "Klasör İçerik Galerisi (Görseller, Videolar ve PDF'ler)",
-                aiTitle: "🤖 Royal AI Asistanı (Klasör Uzmanı)", aiDesc: "Bu klasör konusu hakkında özel bir şey sorun:", aiBtn: "AI Asistanına Sor",
-                waTag: "Anında Alıcı ve Araştırmacı Desteği", waDesc: "Bu belirli bölümle ilgili bir sorunuz mu var? WhatsApp üzerinden hemen bağlantı kurun.", waBtnText: "💬 Şimdi WhatsApp'ta Sohbet Et",
-                footer: "© 2026 Royal Chilgoza Pine Nuts. Tüm hakları saklıdır.<br>Chilas, Diamer Bölgesi, Gilgit-Baltistan, Pakistan.",
-                openFolder: "Klasör Web Sitesini Aç →",
-                tradeFolders: [
-                    { title: 'Küresel Piyasalar', desc: 'Küresel talep, pazar fırsatları ve uluslararası ticaret destinasyonları.' },
-                    { title: 'ABD Pazarı ve Alıcılar', desc: 'ABD’li alıcılar, ithalatçılar, pazar fırsatları ve iş bağlantıları.' },
-                    { title: 'Çin Pazarı ve Alıcılar', desc: 'Çinli alıcılar, tüccarlar, ithalatçılar ve ticari fırsatlar.' },
-                    { title: 'İhracat ve Lojistik', desc: 'İhracat belgeleri, gümrük, nakliye, teslimat ve uluslararası lojistik.' },
-                    { title: 'Ürün ve Kalite', desc: 'İç, kabuklu fıstık, kavurma, dereceler, özellikler ve kalite standartları.' },
-                    { title: 'Tedarik Zinciri ve İzlenebilirlik', desc: 'Orman → toplayıcı → işleme → paketleme → ihracat ile şeffaf izlenebilirlik.' },
-                    { title: 'Coğrafi İşaret (GI)', desc: 'Menşei, kimlik, otantiklik, coğrafi itibar ve ürün izlenebilirliği.' },
-                    { title: 'Organik Kimya ve Doğal Kalite', desc: 'Doğal yağlar, kimyasal bileşim, saflık, besin özellikleri ve kalite özellikleri.' },
-                    { title: 'İşleme, Paketleme ve Katma Değer', desc: 'İşleme, derecelendirme, kavurma, paketleme, markalaşma ve premium ürün geliştirme.' },
-                    { title: 'Sürdürülebilir ve Etik Ticaret', desc: 'Sorumlu tedarik, adil değer, topluluk faydaları ve koruma odaklı ticaret.' }
-                ],
-                researchFolders: [
-                    { title: 'Coğrafi Menşei ve GI Araştırması', desc: 'Çilgoza menşei, coğrafi kimlik, geleneksel bilgi ve GI araştırması.' },
-                    { title: 'Çilgoza Biyolojisi ve Botaniği', desc: 'Ağaç biyolojisi, büyüme, üreme, tohum gelişimi ve doğal yenilenme.' },
-                    { title: 'Besin Değeri ve Doğal Bileşim', desc: 'Protein, doğal yağlar, mineraller, besin maddeleri ve bilimsel bileşim.' },
-                    { title: 'Çilgoza Ormanları ve Ekoloji', desc: 'Orman ekosistemleri, ekolojik işlevler, yenilenme ve sürdürülebilir orman yönetimi.' },
-                    { title: 'Biyoçeşitlilik ve Yaban Hayatı', desc: 'Yaban hayatı yaşam alanları, biyoçeşitlilik, ekosistem hizmetleri ve koruma değerleri.' },
-                    { title: 'İklim ve Küresel Yeşil Çevre', desc: 'İklim direnci, karbon, su, toprak koruma ve küresel çevresel faydalar.' },
-                    { title: 'Orman Koruma ve Restorasyon', desc: 'Orman koruma, restorasyon, doğal yenilenme, dikim ve sürdürülebilir yönetim.' },
-                    { title: 'Tedarik Zinciri ve Topluluk Geçimi', desc: 'Yerel toplayıcılar, kırsal geçim kaynakları, değer zincirleri ve yoksulluğun azaltılması.' },
-                    { title: 'Sürdürülebilir Hasat ve Topluluk Bilinci', desc: 'Güvenli hasat, orman koruma, topluluk eğitimi ve koruma bilinci.' },
-                    { title: 'Araştırma, Politika ve Ortaklıklar', desc: 'Araştırma bilgisi, hükümet politikası, FAO, GEF, STK’lar, kurumlar ve ortaklıklar.' }
-                ]
-            },
             ur: {
                 title: "رائل چلغوزہ", sub: "گلوبل سسٹم", wa: "💬 واٹس ایپ",
                 badge: "پاکستان • بین الاقوامی تجارت اور تحقیق",
                 hHead: "رائل چلغوزہ <span>گلوبل سسٹم</span>",
-                hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ہر فولڈر میڈیا، پی ڈی ایف، رائل اے آئی اور واٹس ایپ سپورٹ کے ساتھ ایک آزاد حب ہے۔",
+                hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ایڈمن موڈ کے ذریعے لائیو قابلِ ترمیم۔",
                 tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
                 rLabel: "سائنس اور ماحولیات", tTitle: "ریسرچ اور نالج (تحقیق)", tDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
-                theme: "تھیم کلر سیٹنگ", createHub: "نیا مین حب بنائیں", createHubBtn: "+ حب بنائیں",
+                theme: "تھیم کلر سیٹنگ",
                 thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
                 rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
                 backHome: "← ہوم پیج پر واپس جائیں", backCat: "← زمرہ جات پر واپس جائیں",
-                upTitle: "اس فولڈر میں میڈیا یا ڈاکومنٹ اپلوڈ کریں", upBtn: "+ اس فولڈر میں شامل کریں",
-                galTitle: "فولڈر مواد گیلری (تصاویر، ویڈیوز اور پی ڈی ایف)",
-                aiTitle: "🤖 رائل اے آئی اسسٹنٹ (فولڈر ایکسپرٹ)", aiDesc: "اس فولڈر کے موضوع کے بارے میں کوئی بھی سوال پوچھیں:", aiBtn: "اے آئی سے پوچھیں",
-                waTag: "خریدار اور محقق کے لیے فوری تعاون", waDesc: "اس مخصوص حصے کے بارے میں کوئی سوال ہے؟ واٹس ایپ پر فوراً رابطہ کریں۔", waBtnText: "💬 واٹس ایپ پر چیٹ کریں",
-                footer: "© 2026 رائل چلغوزہ پائن نٹس۔ تمام حقوق محفوظ ہیں۔<br>چلاس، ضلع دیامر، گلگت بلتستان، پاکستان۔",
                 openFolder: "فولڈر ویب سائٹ کھولیں ←",
                 tradeFolders: [
                     { title: 'عالمی مارکیٹس', desc: 'عالمی طلب، مارکیটের مواقع اور بین الاقوامی تجارتی مقامات۔' },
@@ -816,6 +614,18 @@
         let currentActiveFolderId = null;
         let previousMainView = 'trade-main-view';
 
+        let tradeFolders = [
+            { id: 't1', tag: '01' }, { id: 't2', tag: '02' }, { id: 't3', tag: '03' }, { id: 't4', tag: '04' },
+            { id: 't5', tag: '05' }, { id: 't6', tag: '06' }, { id: 't7', tag: '07' }, { id: 't8', tag: '08' },
+            { id: 't9', tag: '09' }, { id: 't10', tag: '10' }
+        ];
+
+        let researchFolders = [
+            { id: 'r1', tag: '01' }, { id: 'r2', tag: '02' }, { id: 'r3', tag: '03' }, { id: 'r4', tag: '04' },
+            { id: 'r5', tag: '05' }, { id: 'r6', tag: '06' }, { id: 'r7', tag: '07' }, { id: 'r8', tag: '08' },
+            { id: 'r9', tag: '09' }, { id: 'r10', tag: '10' }
+        ];
+
         function renderFolderGrids() {
             const currentLang = document.getElementById('langSelect').value;
             const t = translations[currentLang] || translations.en;
@@ -823,7 +633,7 @@
             const tradeGrid = document.getElementById('trade-folders-grid');
             tradeGrid.innerHTML = '';
             tradeFolders.forEach((f, index) => {
-                const localized = t.tradeFolders[index] || f;
+                const localized = (t.tradeFolders && t.tradeFolders[index]) ? t.tradeFolders[index] : { title: 'Custom Hub', desc: f.desc || 'Custom folder hub.' };
                 tradeGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('trade', '${f.id}')">
                         <div>
@@ -831,14 +641,17 @@
                             <div class="card-title">${localized.title}</div>
                             <div class="card-desc">${localized.desc}</div>
                         </div>
-                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">${t.openFolder}</div>
+                        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</span>
+                            ${isAdminLoggedIn ? `<button onclick="event.stopPropagation(); deleteFolder('trade', '${f.id}')" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer;">Delete</button>` : ''}
+                        </div>
                     </div>`;
             });
 
             const researchGrid = document.getElementById('research-folders-grid');
             researchGrid.innerHTML = '';
             researchFolders.forEach((f, index) => {
-                const localized = t.researchFolders[index] || f;
+                const localized = (t.researchFolders && t.researchFolders[index]) ? t.researchFolders[index] : { title: 'Custom Research Hub', desc: f.desc || 'Custom research folder.' };
                 researchGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('research', '${f.id}')">
                         <div>
@@ -846,22 +659,26 @@
                             <div class="card-title">${localized.title}</div>
                             <div class="card-desc">${localized.desc}</div>
                         </div>
-                        <div style="margin-top:12px; font-size:0.75rem; color:var(--text-gold); font-weight:600;">${t.openFolder}</div>
+                        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</span>
+                            ${isAdminLoggedIn ? `<button onclick="event.stopPropagation(); deleteFolder('research', '${f.id}')" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer;">Delete</button>` : ''}
+                        </div>
                     </div>`;
             });
         }
 
-        const tradeFolders = [
-            { id: 't1', tag: '01' }, { id: 't2', tag: '02' }, { id: 't3', tag: '03' }, { id: 't4', tag: '04' },
-            { id: 't5', tag: '05' }, { id: 't6', tag: '06' }, { id: 't7', tag: '07' }, { id: 't8', tag: '08' },
-            { id: 't9', tag: '09' }, { id: 't10', tag: '10' }
-        ];
-
-        const researchFolders = [
-            { id: 'r1', tag: '01' }, { id: 'r2', tag: '02' }, { id: 'r3', tag: '03' }, { id: 'r4', tag: '04' },
-            { id: 'r5', tag: '05' }, { id: 'r6', tag: '06' }, { id: 'r7', tag: '07' }, { id: 'r8', tag: '08' },
-            { id: 'r9', tag: '09' }, { id: 'r10', tag: '10' }
-        ];
+        function deleteFolder(type, id) {
+            if(!confirm("Are you sure you want to delete this folder?")) return;
+            if(type === 'trade') {
+                tradeFolders = tradeFolders.filter(x => x.id !== id);
+                translations.en.tradeFolders = translations.en.tradeFolders.filter((_, idx) => tradeFolders[idx] !== undefined);
+            } else {
+                researchFolders = researchFolders.filter(x => x.id !== id);
+                translations.en.researchFolders = translations.en.researchFolders.filter((_, idx) => researchFolders[idx] !== undefined);
+            }
+            renderFolderGrids();
+            alert("Folder removed successfully!");
+        }
 
         function openSubFolder(type, id) {
             previousMainView = type === 'trade' ? 'trade-main-view' : 'research-main-view';
@@ -870,9 +687,9 @@
             const index = list.findIndex(x => x.id === id);
             const currentLang = document.getElementById('langSelect').value;
             const t = translations[currentLang] || translations.en;
-            const localizedList = type === 'trade' ? t.tradeFolders : t.researchFolders;
-            const folderInfo = localizedList[index];
-            const originalFolder = list[index];
+            const localizedList = type === 'trade' ? (t.tradeFolders || []) : (t.researchFolders || []);
+            const folderInfo = localizedList[index] || { title: 'Folder Hub', desc: 'Operational description.' };
+            const originalFolder = list[index] || { tag: 'NEW' };
             
             document.getElementById('sub-folder-tag').innerText = `Folder ${originalFolder.tag} — ${type.toUpperCase()}`;
             document.getElementById('sub-folder-title').innerText = folderInfo.title;
@@ -918,13 +735,16 @@
             items.forEach((item, idx) => {
                 let html = `<div class="media-card"><div style="font-weight:600; color:var(--text-gold); margin-bottom:6px;">${item.title}</div>`;
                 if(item.type === 'image') {
-                    html += `<img src="${item.url}" alt="Image">`;
+                    html += `<img src="${item.url}" alt="Image" onerror="this.src='08-chilghoza-forest.jpg'">`;
                 } else if(item.type === 'video') {
                     html += `<video controls src="${item.url}"></video>`;
                 } else if(item.type === 'pdf') {
                     html += `<a href="${item.url}" target="_blank" class="pdf-link">📄 View PDF Document</a>`;
                 }
-                html += `<button onclick="removeMedia(${idx})" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer; margin-top:4px;">Remove Item</button></div>`;
+                if(isAdminLoggedIn) {
+                    html += `<button onclick="removeMedia(${idx})" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer; margin-top:4px;">Remove Item</button>`;
+                }
+                html += `</div>`;
                 container.innerHTML += html;
             });
         }
@@ -934,17 +754,28 @@
             renderFolderMedia();
         }
 
+        function askMainAI() {
+            const query = document.getElementById('mainAiQuery').value;
+            if(!query) return alert('Please enter your question for Royal AI');
+            const respBox = document.getElementById('mainAiResponse');
+            respBox.innerHTML = `<em>Thinking... analyzing global ecosystem parameters...</em>`;
+            setTimeout(() => {
+                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Regarding "${query}", our verified Gilgit-Baltistan Chilgoza framework ensures 100% genuine organic origin, optimal export standards, and direct traceability across all 10 international markets.`;
+            }, 800);
+        }
+
         function askFolderAI() {
             const query = document.getElementById('aiFolderQuery').value;
             if(!query) return alert('Please enter your question for Royal AI');
             const respBox = document.getElementById('aiFolderResponse');
             respBox.innerHTML = `<em>Thinking... analyzing parameters for this section...</em>`;
             setTimeout(() => {
-                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on the professional standards of this section regarding "${query}", our verified Gilgit-Baltistan Chilgoza framework ensures 100% authenticity, optimal export grading, and direct traceable origin.`;
+                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on the professional standards of this section regarding "${query}", our verified Gilgit-Baltistan Chilgoza framework ensures 100% authenticity and optimal export grading.`;
             }, 800);
         }
 
         window.onload = function() {
+            renderGitHubGallery();
             renderFolderGrids();
         };
 
@@ -954,83 +785,39 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function setTheme(colorHex) {
-            document.documentElement.style.setProperty('--bg-primary', colorHex);
-            document.documentElement.style.setProperty('--bg-card', colorHex + 'ee');
+        function setTheme(bgHex, headerHex) {
+            document.documentElement.style.setProperty('--bg-primary', bgHex);
+            document.documentElement.style.setProperty('--bg-card', bgHex + 'ee');
+            document.documentElement.style.setProperty('--header-bg', headerHex);
         }
 
         function addNewMainFolder() {
             const title = document.getElementById('newMainTitle').value;
             const desc = document.getElementById('newMainDesc').value;
-            if(!title) return alert('Please enter hub title');
+            if(!title) return alert('Please enter folder title');
             const newId = 'custom_' + Date.now();
-            tradeFolders.push({ id: newId, tag: 'NEW' });
+            tradeFolders.push({ id: newId, tag: 'NEW', desc: desc });
+            if(!translations.en.tradeFolders) translations.en.tradeFolders = [];
             translations.en.tradeFolders.push({ title, desc });
-            Object.keys(translations).forEach(k => {
-                if(k !== 'en') {
-                    translations[k].tradeFolders.push({ title, desc });
-                }
-            });
             renderFolderGrids();
             document.getElementById('newMainTitle').value = '';
             document.getElementById('newMainDesc').value = '';
-            alert('New hub created successfully!');
+            alert('New folder hub created successfully!');
         }
 
         function changeLanguage(lang) {
             const t = translations[lang] || translations.en;
+            if(t.title) document.getElementById('site-title').innerText = t.title;
+            if(t.sub) document.getElementById('site-sub').innerText = t.sub;
+            if(t.badge) document.getElementById('hero-badge').innerText = t.badge;
+            if(t.hHead) document.getElementById('hero-heading').innerHTML = t.hHead;
+            if(t.hDesc) document.getElementById('hero-desc').innerText = t.hDesc;
+            if(t.thTitle) document.getElementById('trade-head-title').innerText = t.thTitle;
+            if(t.thDesc) document.getElementById('trade-head-desc').innerText = t.thDesc;
+            if(t.rhTitle) document.getElementById('research-head-title').innerText = t.rhTitle;
+            if(t.rhDesc) document.getElementById('research-head-desc').innerText = t.rhDesc;
             
-            // Header
-            document.getElementById('site-title').innerText = t.title;
-            document.getElementById('site-sub').innerText = t.sub;
-            document.getElementById('wa-btn').innerText = t.wa;
-
-            // Hero
-            document.getElementById('hero-badge').innerText = t.badge;
-            document.getElementById('hero-heading').innerHTML = t.hHead;
-            document.getElementById('hero-desc').innerText = t.hDesc;
-
-            // Main 2 Cards
-            document.getElementById('trade-tag-label').innerText = t.tLabel;
-            document.getElementById('trade-main-title').innerText = t.tTitle;
-            document.getElementById('trade-main-desc').innerText = t.tDesc;
-
-            document.getElementById('research-tag-label').innerText = t.rLabel;
-            document.getElementById('research-main-title').innerText = t.rTitle;
-            document.getElementById('research-main-desc').innerText = t.rDesc;
-
-            // Panel / Admin
-            document.getElementById('theme-label').innerText = t.theme;
-            document.getElementById('create-hub-label').innerText = t.createHub;
-            document.getElementById('create-hub-btn').innerText = t.createHubBtn;
-
-            // Trade & Research Header views
-            document.getElementById('trade-head-title').innerText = t.thTitle;
-            document.getElementById('trade-head-desc').innerText = t.thDesc;
-            document.getElementById('research-head-title').innerText = t.rhTitle;
-            document.getElementById('research-head-desc').innerText = t.rhDesc;
-            document.getElementById('back-home-1').innerText = t.backHome;
-            document.getElementById('back-home-2').innerText = t.backHome;
-            document.getElementById('back-cat-btn').innerText = t.backCat;
-
-            // Sub folder view elements
-            document.getElementById('upload-box-title').innerText = t.upTitle;
-            document.getElementById('upload-btn').innerText = t.upBtn;
-            document.getElementById('gallery-box-title').innerText = t.galTitle;
-            document.getElementById('ai-box-title').innerText = t.aiTitle;
-            document.getElementById('ai-box-desc').innerText = t.aiDesc;
-            document.getElementById('ai-ask-btn').innerText = t.aiBtn;
-            document.getElementById('wa-bar-tag').innerText = t.waTag;
-            document.getElementById('wa-bar-desc').innerText = t.waDesc;
-            document.getElementById('wa-bar-btn').innerText = t.waBtnText;
-
-            // Footer
-            document.getElementById('footer-text').innerHTML = t.footer;
-
-            // Re-render folder grids so folder cards update language properly
             renderFolderGrids();
-
-            // Text Direction (RTL for Urdu, Arabic, Persian, Pashto)
             const rtlLangs = ['ur', 'ar', 'fa', 'ps'];
             document.body.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
         }
