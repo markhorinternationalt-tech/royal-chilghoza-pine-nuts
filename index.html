@@ -46,13 +46,13 @@
         .logo-title { font-family: 'Cinzel', serif; font-size: 1.2rem; font-weight: 700; color: var(--heading-color); }
         .logo-sub { font-size: 0.65rem; letter-spacing: 2px; color: #a3b899; text-transform: uppercase; }
 
-        .header-actions { display: flex; gap: 10px; align-items: center; }
+        .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 
         .lang-selector {
             background: var(--bg-card);
             border: 1px solid var(--card-border);
             color: var(--text-main);
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 30px;
             font-size: 0.8rem;
             cursor: pointer;
@@ -62,18 +62,16 @@
         .whatsapp-float {
             background: #25d366;
             color: #fff;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-            transition: transform 0.3s ease;
         }
-        .whatsapp-float:hover { transform: scale(1.05); }
         .admin-login-btn { background: #d4af37; color: #0b1f15; border: none; cursor: pointer; }
 
         .container { max-width: 950px; margin: 0 auto; padding: 24px 16px 60px 16px; }
@@ -134,7 +132,7 @@
         .github-gallery-grid {
             display: grid;
             gap: 16px;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             margin-top: 15px;
         }
         .github-img-card {
@@ -146,7 +144,7 @@
         }
         .github-img-card img {
             width: 100%;
-            height: 120px;
+            height: 130px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 8px;
@@ -268,8 +266,8 @@
             <span class="logo-sub" id="site-sub">GLOBAL ECOSYSTEM</span>
         </div>
         <div class="header-actions">
-            <button class="whatsapp-float admin-login-btn" onclick="openAdminModal()" id="admin-login-btn">🔐 Admin Login</button>
-            <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" id="wa-btn">💬 WhatsApp</a>
+            <button class="whatsapp-float admin-login-btn" onclick="openAdminModal()" id="admin-login-btn">🔐 Admin</button>
+            <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" id="wa-btn">💬 WA</a>
             <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
                 <option value="en">English</option>
                 <option value="zh">中文</option>
@@ -277,8 +275,8 @@
                 <option value="ar">العربية</option>
                 <option value="ps">پښتو</option>
                 <option value="fa">فارسی</option>
-                <option value="id">Bahasa Indonesia</option>
-                <option value="ms">Bahasa Melayu</option>
+                <option value="id">Bahasa</option>
+                <option value="ms">Melayu</option>
                 <option value="tr">Türkçe</option>
                 <option value="ur">اردو</option>
             </select>
@@ -291,7 +289,7 @@
             
             <div class="hero" style="background-image: linear-gradient(rgba(10, 25, 15, 0.88), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
                 <div class="profile-container">
-                    <img src="profile.jpg" alt="Profile" class="profile-img">
+                    <img src="profile.jpg" alt="Profile" class="profile-img" onerror="this.src='001.jpg'">
                 </div>
                 <span class="badge" id="hero-badge">PAKISTAN • INTERNATIONAL TRADE & RESEARCH</span>
                 <h1 id="hero-heading">Royal Chilgoza <span>Ecosystem</span></h1>
@@ -328,11 +326,11 @@
                 <div class="ai-chat-output" id="mainAiResponse">Royal AI Assistant ready for global visitor inquiries...</div>
             </div>
 
-            <!-- 8 Original GitHub Images Gallery Section -->
+            <!-- 8 GitHub Project Images Gallery Section -->
             <div class="github-gallery-section">
                 <div class="card-tag" id="github-sec-tag">Project Gallery & Documentation</div>
                 <h3 style="font-family:'Cinzel',serif; color:var(--heading-color); font-size:1.3rem; margin-bottom:10px;" id="github-sec-title">Original 8 GitHub Project Images</h3>
-                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Fully manageable via Admin Mode (Replace image, edit titles, captions, and descriptions live).</p>
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Loaded directly from your GitHub files with matching captions.</p>
                 <div class="github-gallery-grid" id="githubGalleryContainer"></div>
             </div>
 
@@ -364,11 +362,12 @@
 
             <!-- Manual Theme Presets Panel -->
             <div class="theme-panel">
-                <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label-pub">Theme Presets</span>
+                <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label-pub">Theme Multi-Color Presets</span>
                 <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
                     <button onclick="setTheme('#0b1f15', '#122a1e', '#0b1f15', '#f5f2eb', '#d4af37')" class="preset-btn" style="background:#0b1f15; border-color:#d4af37;">Deep Forest</button>
                     <button onclick="setTheme('#1a1a2e', '#16213e', '#1a1a2e', '#ffffff', '#e94560')" class="preset-btn" style="background:#1a1a2e; border-color:#e94560;">Royal Navy</button>
                     <button onclick="setTheme('#2c1a1d', '#3d2427', '#2c1a1d', '#fff5f5', '#ecc94b')" class="preset-btn" style="background:#2c1a1d; border-color:#ecc94b;">Burgundy Gold</button>
+                    <button onclick="setTheme('#111827', '#1f2937', '#111827', '#f9fafb', '#38bdf8')" class="preset-btn" style="background:#111827; border-color:#38bdf8;">Slate Blue</button>
                 </div>
             </div>
 
@@ -412,7 +411,7 @@
                         <option value="video">Video (MP4 link)</option>
                         <option value="pdf">PDF Document</option>
                     </select>
-                    <input type="text" id="mediaUrlInput" placeholder="Enter filename or URL (e.g., report.pdf or photo.jpg)" class="custom-input">
+                    <input type="text" id="mediaUrlInput" placeholder="Enter filename or URL (e.g., report.pdf)" class="custom-input">
                     <button class="admin-btn" onclick="addFolderMedia()">+ Add to this Folder</button>
                 </div>
 
@@ -462,15 +461,16 @@
     </footer>
 
     <script>
+        // Exact 8 GitHub Images Database matching your repository filenames
         let githubImagesDB = [
-            { id: 1, title: "Chilgoza Forest Habitat", caption: "Natural Forests", desc: "High altitude pine forests in Gilgit-Baltistan.", url: "01-forest.jpg" },
-            { id: 2, title: "Traditional Harvesting", caption: "Safe Collection", desc: "Sustainable harvesting by local mountain communities.", url: "02-harvest.jpg" },
-            { id: 3, title: "Raw In-Shell Nuts", caption: "Grade A Quality", desc: "Directly harvested from Chilas high mountain valleys.", url: "03-inshell.jpg" },
-            { id: 4, title: "Selected Kernels", caption: "Premium Sorting", desc: "Carefully sorted and graded organic kernels.", url: "04-kernels.jpg" },
-            { id: 5, title: "Modern Processing", caption: "Hygienic Units", desc: "State-of-the-art cleaning and packaging units.", url: "05-processing.jpg" },
-            { id: 6, title: "Laboratory Quality", caption: "Testing Purity", desc: "Tested for purity, nutrition, and natural oils composition.", url: "06-lab.jpg" },
-            { id: 7, title: "Global Export Logistics", caption: "Secure Shipping", desc: "International transit and customs clearance protocols.", url: "07-logistics.jpg" },
-            { id: 8, title: "Diamer Mountain Ecosystem", caption: "Sustainable Research Hub", desc: "Preserving local ecology and supporting sustainable trade.", url: "08-chilghoza-forest.jpg" }
+            { id: 1, title: "Chilgoza Lot Collection", caption: "Batch Lot Verification", desc: "Bulk pine nut lots ready for sorting and export processing.", url: "01-chilghoza-lot.jpg" },
+            { id: 2, title: "Natural Pine Cones", caption: "Cone Inspection", desc: "Freshly harvested wild pine cones from high altitude valleys.", url: "02-chilghoza-cones.jpg" },
+            { id: 3, title: "Selected Kernels", caption: "Grade A Quality", desc: "High purity organic pine nut kernels sorted for global markets.", url: "03-chilghoza-kernel.jpg" },
+            { id: 4, title: "Traditional Harvesting", caption: "Safe Collection", desc: "Sustainable harvesting techniques by expert local mountain communities.", url: "04-chilghoza-harvest.jpg" },
+            { id: 5, title: "Raw In-Shell Kernels", caption: "Natural Protection", desc: "In-shell chilgoza nuts preserving natural oils and freshness.", url: "05-chilghoza-raw-kernels.jpg" },
+            { id: 6, title: "Cone Closeup View", caption: "Detailed Botany", desc: "Botanical closeup showing natural resin, scales, and seed formation.", url: "06-chilghoza-cone-closeup.jpg" },
+            { id: 7, title: "Products Display", caption: "Packaging Ready", desc: "Export-grade packaged chilgoza displays and wholesale standards.", url: "07-chilghoza-products-display.jpg" },
+            { id: 8, title: "Chilgoza Forest Habitat", caption: "Natural Forests", desc: "High altitude mountain forest ecosystem in Gilgit-Baltistan.", url: "08-chilghoza-forest.jpg" }
         ];
 
         let isAdminLoggedIn = false;
@@ -481,10 +481,10 @@
                 isAdminLoggedIn = true;
                 document.getElementById('adminControlPanel').style.display = 'block';
                 document.getElementById('adminMediaBox').style.display = 'block';
-                document.getElementById('admin-login-btn').innerText = "🔓 Admin Active";
+                document.getElementById('admin-login-btn').innerText = "🔓 Active";
                 renderGitHubGallery();
                 renderFolderGrids();
-                alert("Admin Access Granted! You can now edit images, create custom themes, and manage folders.");
+                alert("Admin Access Granted!");
             } else if(pwd !== null) {
                 alert("Incorrect password!");
             }
@@ -527,7 +527,7 @@
 
         const translations = {
             en: {
-                title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
+                title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WA",
                 badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
                 hHead: "Royal Chilgoza <span>Ecosystem</span>",
                 hDesc: "Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.",
@@ -558,6 +558,40 @@
                     { title: 'Supply Chain & Community Livelihoods', desc: 'Local collectors, rural livelihoods, value chains, income generation and poverty reduction.' },
                     { title: 'Sustainable Harvesting & Community Awareness', desc: 'Safe harvesting, forest protection, community training and conservation awareness.' },
                     { title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
+                ]
+            },
+            zh: {
+                title: "皇家松子", sub: "全球生态系统", wa: "💬 微信/WhatsApp",
+                badge: "巴基斯坦 • 国际贸易与研究",
+                hHead: "皇家松子 <span>生态系统</span>",
+                hDesc: "探索专业贸易市场和深入的科学研究文件夹。可通过管理员模式进行实时完全编辑。",
+                tLabel: "商业与贸易", tTitle: "全球贸易", tDesc: "10个全面的国际贸易目录，包含独立媒体、AI和WhatsApp连接 →",
+                rLabel: "科学与生态", tTitle: "研究与知识", tDesc: "关于产地、林业、植物学、营养学和可持续性的10个详细研究文件夹 →",
+                thTitle: "🌍 全球贸易枢纽", thDesc: "选择下方任意分类以打开其专属的微型网站，包含媒体库、视频资源、PDF文档和皇家AI助手。",
+                rhTitle: "🌲 研究与知识枢纽", rhDesc: "选择下方任意科学分类以浏览专属文档、研究报告、AI助手和直接贸易咨询。",
+                tradeFolders: [
+                    { title: '全球市场', desc: '全球需求、市场机会和国际贸易目的地。' },
+                    { title: '美国市场与买家', desc: '美国买家、进口商、市场机会和商业联系。' },
+                    { title: '中国市场与买家', desc: '中国买家、贸易商、进口商和商业机会。' },
+                    { title: '出口与物流', desc: '出口文件、海关、运输、交付和国际物流。' },
+                    { title: '产品与质量', desc: '松仁、带壳松子、烘烤、等级、规格和质量标准。' },
+                    { title: '供应链与可追溯性', desc: '森林 → 采集商 → 加工 → 包装 → 出口，具备透明的可追溯性。' },
+                    { title: '地理标志 (GI)', desc: '产地、身份、真实性、地理声誉和产品可追溯性。' },
+                    { title: '有机化学与天然品质', desc: '天然油脂、化学成分、纯度、营养特性和质量特征。' },
+                    { title: '加工、包装与增值', desc: '加工、分级、烘烤、包装、品牌建设和高端产品开发。' },
+                    { title: '可持续与道德贸易', desc: '负责任采购、公平价值、社区效益和保护关联贸易。' }
+                ],
+                researchFolders: [
+                    { title: '地理产地与GI研究', desc: '松子产地、地理身份、传统知识和GI研究。' },
+                    { title: '松子生物学与植物学', desc: '树木生物学、生长、繁殖、种子发育和自然更新。' },
+                    { title: '营养价值与天然成分', desc: '蛋白质、天然油脂、矿物质、营养素和科学成分。' },
+                    { title: '松子森林与生态', desc: '森林生态系统、生态功能、更新和可持续森林管理。' },
+                    { title: '生物多样性与野生动物', desc: '野生动物栖息地、生物多样性、生态系统服务和保护价值。' },
+                    { title: '气候与全球绿色环境', desc: '气候韧性、碳、水、土壤保护和全球环境效益。' },
+                    { title: '森林保护与恢复', desc: '森林保护、恢复、自然更新、人工林和可持续管理。' },
+                    { title: '供应链与社区生计', desc: '本地采集者、农村生计、价值链、增加收入和减少贫困。' },
+                    { title: '可持续采收与社区意识', desc: '安全采收、森林保护、社区培训和保护意识。' },
+                    { title: '研究、政策与伙伴关系', desc: '研究知识、政府政策、粮农组织、全球环境基金、非政府组织、机构和未来伙伴关系。' }
                 ]
             },
             ur: {
