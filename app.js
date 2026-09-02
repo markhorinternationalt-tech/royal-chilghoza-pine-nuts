@@ -1,403 +1,444 @@
-// Exact 8 GitHub Images Database matching your repository filenames
-        let githubImagesDB = [
-            { id: 1, title: "Chilgoza Lot Collection", caption: "Batch Lot Verification", desc: "Bulk pine nut lots ready for sorting and export processing.", url: "01-chilghoza-lot.jpg" },
-            { id: 2, title: "Natural Pine Cones", caption: "Cone Inspection", desc: "Freshly harvested wild pine cones from high altitude valleys.", url: "02-chilghoza-cones.jpg" },
-            { id: 3, title: "Selected Kernels", caption: "Grade A Quality", desc: "High purity organic pine nut kernels sorted for global markets.", url: "03-chilghoza-kernel.jpg" },
-            { id: 4, title: "Traditional Harvesting", caption: "Safe Collection", desc: "Sustainable harvesting techniques by expert local mountain communities.", url: "04-chilghoza-harvest.jpg" },
-            { id: 5, title: "Raw In-Shell Kernels", caption: "Natural Protection", desc: "In-shell chilgoza nuts preserving natural oils and freshness.", url: "05-chilghoza-raw-kernels.jpg" },
-            { id: 6, title: "Cone Closeup View", caption: "Detailed Botany", desc: "Botanical closeup showing natural resin, scales, and seed formation.", url: "06-chilghoza-cone-closeup.jpg" },
-            { id: 7, title: "Products Display", caption: "Packaging Ready", desc: "Export-grade packaged chilgoza displays and wholesale standards.", url: "07-chilghoza-products-display.jpg" },
-            { id: 8, title: "Chilgoza Forest Habitat", caption: "Natural Forests", desc: "High altitude mountain forest ecosystem in Gilgit-Baltistan.", url: "08-chilghoza-forest.jpg" }
-        ];
+document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
 
-        let isAdminLoggedIn = false;
+  const $ = (id) => document.getElementById(id);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const api = async (url, options = {}) => {
+    const r = await fetch(url, { credentials: "same-origin", ...options });
+    let d = {};
+    try { d = await r.json(); } catch {}
+    if (!r.ok) throw new Error(d.error || `Request failed (${r.status})`);
+    return d;
+  };
 
-        function openAdminModal() {
-            const pwd = prompt("Enter Admin Password (default: admin_chilas_2026):");
-            if(pwd === "admin_chilas_2026" || pwd === "admin") {
-                isAdminLoggedIn = true;
-                document.getElementById('adminControlPanel').style.display = 'block';
-                document.getElementById('adminMediaBox').style.display = 'block';
-                document.getElementById('admin-login-btn').innerText = "🔓 Active";
-                renderGitHubGallery();
-                renderFolderGrids();
-                alert("Admin Access Granted!");
-            } else if(pwd !== null) {
-                alert("Incorrect password!");
-            }
-        }
+  // =========================================================
+  // 10 LANGUAGES — USER LOCAL ONLY
+  // Language choice is NEVER written to a global D1 setting.
+  // =========================================================
+  const LANGS = [
+    ["en","English","ltr"],["zh","中文","ltr"],["ur","اردو","rtl"],
+    ["ps","پښتو","rtl"],["fa","فارسی / دری","rtl"],["ru","Русский","ltr"],
+    ["id","Bahasa Indonesia","ltr"],["ms","Bahasa Melayu","ltr"],["ar","العربية","rtl"],["tr","Türkçe","ltr"]
+  ];
 
-        function renderGitHubGallery() {
-            const container = document.getElementById('githubGalleryContainer');
-            if(!container) return;
-            container.innerHTML = '';
-            githubImagesDB.forEach((img, idx) => {
-                let html = `
-                    <div class="github-img-card">
-                        <img src="${img.url}" alt="${img.title}" onerror="this.src='08-chilghoza-forest.jpg'">
-                        <h4>${img.title}</h4>
-                        <p><strong>${img.caption}</strong><br>${img.desc}</p>
-                `;
-                if(isAdminLoggedIn) {
-                    html += `<button onclick="editGitHubImage(${idx})" style="background:var(--text-gold); color:var(--bg-primary); border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:600; margin-top:4px;">Edit Details</button>`;
-                }
-                html += `</div>`;
-                container.innerHTML += html;
-            });
-        }
+  const UI = {
+    en:{home:"Home",trade:"Trade & Business",research:"Research & Knowledge",admin:"Admin",
+      language:"Language",explore:"Explore",back:"Back",ai:"Royal AI Assistant",
+      upload:"Upload",edit:"Edit",delete:"Delete",save:"Save",cancel:"Cancel",
+      createFolder:"Create New Folder",folderName:"Folder Name",description:"Description",
+      caption:"Mini Caption",alt:"Alt Text",login:"Login",logout:"Logout",
+      username:"Username",password:"Password",full:"Full-size view",hidden:"Hidden",visible:"Visible"},
+    zh:{home:"首页",trade:"贸易与商业",research:"研究与知识",admin:"管理",language:"语言",explore:"探索",
+      back:"返回",ai:"Royal AI 助手",upload:"上传",edit:"编辑",delete:"删除",save:"保存",cancel:"取消",
+      createFolder:"创建新文件夹",folderName:"文件夹名称",description:"描述",caption:"简短说明",alt:"替代文字",
+      login:"登录",logout:"退出",username:"用户名",password:"密码",full:"全尺寸查看",hidden:"隐藏",visible:"显示"},
+    ur:{home:"ہوم",trade:"تجارت و کاروبار",research:"تحقیق و علم",admin:"ایڈمن",language:"زبان",explore:"ملاحظہ",
+      back:"واپس",ai:"Royal AI معاون",upload:"اپلوڈ",edit:"ترمیم",delete:"حذف",save:"محفوظ",cancel:"منسوخ",
+      createFolder:"نیا فولڈر بنائیں",folderName:"فولڈر کا نام",description:"تفصیل",caption:"مختصر کیپشن",alt:"Alt Text",
+      login:"لاگ اِن",logout:"لاگ آؤٹ",username:"صارف نام",password:"پاس ورڈ",full:"فل سائز",hidden:"مخفی",visible:"نمایاں"},
+    ps:{home:"کور",trade:"سوداګري او تجارت",research:"څېړنه او پوهه",admin:"اداره",language:"ژبه",explore:"کتنه",
+      back:"شاته",ai:"Royal AI مرستیال",upload:"اپلوډ",edit:"سمون",delete:"ړنګول",save:"خوندي کول",cancel:"لغوه",
+      createFolder:"نوی فولډر جوړ کړئ",folderName:"د فولډر نوم",description:"تشریح",caption:"لنډه کیپشن",alt:"بدیل متن",
+      login:"ننوتل",logout:"وتل",username:"کارن نوم",password:"پټنوم",full:"بشپړ کچه",hidden:"پټ",visible:"ښکاره"},
+    fa:{home:"خانه",trade:"تجارت و کسب‌وکار",research:"پژوهش و دانش",admin:"مدیریت",language:"زبان",explore:"مشاهده",
+      back:"بازگشت",ai:"دستیار Royal AI",upload:"آپلود",edit:"ویرایش",delete:"حذف",save:"ذخیره",cancel:"لغو",
+      createFolder:"ایجاد پوشه جدید",folderName:"نام پوشه",description:"توضیحات",caption:"عنوان کوتاه",alt:"متن جایگزین",
+      login:"ورود",logout:"خروج",username:"نام کاربری",password:"رمز عبور",full:"نمایش کامل",hidden:"پنهان",visible:"نمایش"},
+    ru:{home:"Главная",trade:"Торговля и бизнес",research:"Исследования и знания",admin:"Админ",language:"Язык",explore:"Открыть",
+      back:"Назад",ai:"Royal AI",upload:"Загрузить",edit:"Изменить",delete:"Удалить",save:"Сохранить",cancel:"Отмена",
+      createFolder:"Создать папку",folderName:"Название папки",description:"Описание",caption:"Краткая подпись",alt:"Alt-текст",
+      login:"Войти",logout:"Выйти",username:"Имя пользователя",password:"Пароль",full:"Полный размер",hidden:"Скрыто",visible:"Видимо"},
+    id:{home:"Beranda",trade:"Perdagangan & Bisnis",research:"Riset & Pengetahuan",admin:"Admin",language:"Bahasa",explore:"Jelajahi",
+      back:"Kembali",ai:"Asisten Royal AI",upload:"Unggah",edit:"Edit",delete:"Hapus",save:"Simpan",cancel:"Batal",
+      createFolder:"Buat Folder Baru",folderName:"Nama Folder",description:"Deskripsi",caption:"Keterangan singkat",alt:"Teks Alt",
+      login:"Masuk",logout:"Keluar",username:"Nama pengguna",password:"Kata sandi",full:"Tampilan penuh",hidden:"Tersembunyi",visible:"Terlihat"},
+    ms:{home:"Laman Utama",trade:"Perdagangan & Perniagaan",research:"Penyelidikan & Pengetahuan",admin:"Admin",language:"Bahasa",explore:"Terokai",
+      back:"Kembali",ai:"Pembantu Royal AI",upload:"Muat naik",edit:"Edit",delete:"Padam",save:"Simpan",cancel:"Batal",
+      createFolder:"Cipta Folder Baharu",folderName:"Nama Folder",description:"Penerangan",caption:"Kapsyen ringkas",alt:"Teks Alt",
+      login:"Log masuk",logout:"Log keluar",username:"Nama pengguna",password:"Kata laluan",full:"Paparan penuh",hidden:"Tersembunyi",visible:"Kelihatan"},
+    ar:{home:"الرئيسية",trade:"التجارة والأعمال",research:"البحث والمعرفة",admin:"الإدارة",language:"اللغة",explore:"استكشف",
+      back:"رجوع",ai:"مساعد Royal AI",upload:"رفع",edit:"تعديل",delete:"حذف",save:"حفظ",cancel:"إلغاء",
+      createFolder:"إنشاء مجلد جديد",folderName:"اسم المجلد",description:"الوصف",caption:"تعليق مختصر",alt:"نص بديل",
+      login:"تسجيل الدخول",logout:"تسجيل الخروج",username:"اسم المستخدم",password:"كلمة المرور",full:"عرض بالحجم الكامل",hidden:"مخفي",visible:"ظاهر"},
+    tr:{home:"Ana Sayfa",trade:"Ticaret ve İş",research:"Araştırma ve Bilgi",admin:"Yönetim",language:"Dil",explore:"Keşfet",
+      back:"Geri",ai:"Royal AI Asistanı",upload:"Yükle",edit:"Düzenle",delete:"Sil",save:"Kaydet",cancel:"İptal",
+      createFolder:"Yeni Klasör Oluştur",folderName:"Klasör Adı",description:"Açıklama",caption:"Kısa Başlık",alt:"Alt Metin",
+      login:"Giriş",logout:"Çıkış",username:"Kullanıcı Adı",password:"Şifre",full:"Tam Boyut",hidden:"Gizli",visible:"Görünür"}
+  };
 
-        function editGitHubImage(idx) {
-            const item = githubImagesDB[idx];
-            const newTitle = prompt("Edit Title:", item.title);
-            if(newTitle === null) return;
-            const newCaption = prompt("Edit Caption:", item.caption);
-            const newDesc = prompt("Edit Description:", item.desc);
-            const newUrl = prompt("Edit Image Filename/URL:", item.url);
+  let lang = localStorage.getItem("rcpn_language") || "en";
+  const langInfo = () => LANGS.find(x => x[0] === lang) || LANGS[0];
+  const t = (k) => (UI[lang] && UI[lang][k]) || UI.en[k] || k;
 
-            item.title = newTitle || item.title;
-            item.caption = newCaption || item.caption;
-            item.desc = newDesc || item.desc;
-            item.url = newUrl || item.url;
-            renderGitHubGallery();
-            alert("Image updated successfully!");
-        }
+  function applyLanguage(code) {
+    if (!LANGS.some(x => x[0] === code)) code = "en";
+    lang = code;
+    localStorage.setItem("rcpn_language", code);
+    const [,name,dir] = langInfo();
+    document.documentElement.lang = code;
+    document.documentElement.dir = dir;
+    document.documentElement.dataset.language = code;
+    $$("[data-i18n]").forEach(el => {
+      const k = el.dataset.i18n;
+      if (t(k)) el.textContent = t(k);
+    });
+    const label = $("langLabel");
+    if (label) label.textContent = name;
+    renderFolders();
+    loadHomeImages();
+  }
 
-        const translations = {
-            en: {
-                title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WA",
-                badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
-                hHead: "Royal Chilgoza <span>Ecosystem</span>",
-                hDesc: "Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.",
-                tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
-                rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
-                thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
-                rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
-                tradeFolders: [
-                    { title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
-                    { title: 'USA Market & Buyers', desc: 'U.S. buyers, importers, market opportunities and business connections.' },
-                    { title: 'China Market & Buyers', desc: 'Chinese buyers, traders, importers and commercial opportunities.' },
-                    { title: 'Export & Logistics', desc: 'Export documentation, customs, shipping, delivery and international logistics.' },
-                    { title: 'Product & Quality', desc: 'Kernels, in-shell nuts, roasting, grades, specifications and quality standards.' },
-                    { title: 'Supply Chain & Traceability', desc: 'Forest → collector → processing → packing → export, with transparent traceability.' },
-                    { title: 'Geographical Indication (GI)', desc: 'Origin, identity, authenticity, geographical reputation and product traceability.' },
-                    { title: 'Organic Chemistry & Natural Quality', desc: 'Natural oils, chemical composition, purity, nutritional properties and quality characteristics.' },
-                    { title: 'Processing, Packaging & Value Addition', desc: 'Processing, grading, roasting, packaging, branding and premium product development.' },
-                    { title: 'Sustainable & Ethical Trade', desc: 'Responsible sourcing, fair value, community benefits and conservation-linked trade.' }
-                ],
-                researchFolders: [
-                    { title: 'Geographical Origin & GI Research', desc: 'Chilgoza origin, geographical identity, traditional knowledge and GI research.' },
-                    { title: 'Chilgoza Biology & Botany', desc: 'Tree biology, growth, reproduction, seed development and natural regeneration.' },
-                    { title: 'Nutrition Value & Natural Composition', desc: 'Protein, natural oils, minerals, nutrients and scientific composition.' },
-                    { title: 'Chilgoza Forests & Ecology', desc: 'Forest ecosystems, ecological functions, regeneration and sustainable forest management.' },
-                    { title: 'Biodiversity & Wildlife', desc: 'Wildlife habitats, biodiversity, ecosystem services and conservation values.' },
-                    { title: 'Climate & Global Green Environment', desc: 'Climate resilience, carbon, water, soil protection and global environmental benefits.' },
-                    { title: 'Forest Conservation & Restoration', desc: 'Forest protection, restoration, natural regeneration, plantation and sustainable management.' },
-                    { title: 'Supply Chain & Community Livelihoods', desc: 'Local collectors, rural livelihoods, value chains, income generation and poverty reduction.' },
-                    { title: 'Sustainable Harvesting & Community Awareness', desc: 'Safe harvesting, forest protection, community training and conservation awareness.' },
-                    { title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
-                ]
-            },
-            zh: {
-                title: "皇家松子", sub: "全球生态系统", wa: "💬 微信/WhatsApp",
-                badge: "巴基斯坦 • 国际贸易与研究",
-                hHead: "皇家松子 <span>生态系统</span>",
-                hDesc: "探索专业贸易市场和深入的科学研究文件夹。可通过管理员模式进行实时完全编辑。",
-                tLabel: "商业与贸易", tTitle: "全球贸易", tDesc: "10个全面的国际贸易目录，包含独立媒体、AI和WhatsApp连接 →",
-                rLabel: "科学与生态", tTitle: "研究与知识", tDesc: "关于产地、林业、植物学、营养学和可持续性的10个详细研究文件夹 →",
-                thTitle: "🌍 全球贸易枢纽", thDesc: "选择下方任意分类以打开其专属的微型网站，包含媒体库、视频资源、PDF文档和皇家AI助手。",
-                rhTitle: "🌲 研究与知识枢纽", rhDesc: "选择下方任意科学分类以浏览专属文档、研究报告、AI助手和直接贸易咨询。",
-                tradeFolders: [
-                    { title: '全球市场', desc: '全球需求、市场机会和国际贸易目的地。' },
-                    { title: '美国市场与买家', desc: '美国买家、进口商、市场机会和商业联系。' },
-                    { title: '中国市场与买家', desc: '中国买家、贸易商、进口商和商业机会。' },
-                    { title: '出口与物流', desc: '出口文件、海关、运输、交付和国际物流。' },
-                    { title: '产品与质量', desc: '松仁、带壳松子、烘烤、等级、规格和质量标准。' },
-                    { title: '供应链与可追溯性', desc: '森林 → 采集商 → 加工 → 包装 → 出口，具备透明的可追溯性。' },
-                    { title: '地理标志 (GI)', desc: '产地、身份、真实性、地理声誉和产品可追溯性。' },
-                    { title: '有机化学与天然品质', desc: '天然油脂、化学成分、纯度、营养特性和质量特征。' },
-                    { title: '加工、包装与增值', desc: '加工、分级、烘烤、包装、品牌建设和高端产品开发。' },
-                    { title: '可持续与道德贸易', desc: '负责任采购、公平价值、社区效益和保护关联贸易。' }
-                ],
-                researchFolders: [
-                    { title: '地理产地与GI研究', desc: '松子产地、地理身份、传统知识和GI研究。' },
-                    { title: '松子生物学与植物学', desc: '树木生物学、生长、繁殖、种子发育和自然更新。' },
-                    { title: '营养价值与天然成分', desc: '蛋白质、天然油脂、矿物质、营养素和科学成分。' },
-                    { title: '松子森林与生态', desc: '森林生态系统、生态功能、更新和可持续森林管理。' },
-                    { title: '生物多样性与野生动物', desc: '野生动物栖息地、生物多样性、生态系统服务和保护价值。' },
-                    { title: '气候与全球绿色环境', desc: '气候韧性、碳、水、土壤保护和全球环境效益。' },
-                    { title: '森林保护与恢复', desc: '森林保护、恢复、自然更新、人工林和可持续管理。' },
-                    { title: '供应链与社区生计', desc: '本地采集者、农村生计、价值链、增加收入和减少贫困。' },
-                    { title: '可持续采收与社区意识', desc: '安全采收、森林保护、社区培训和保护意识。' },
-                    { title: '研究、政策与伙伴关系', desc: '研究知识、政府政策、粮农组织、全球环境基金、非政府组织、机构和未来伙伴关系。' }
-                ]
-            },
-            ur: {
-                title: "رائل چلغوزہ", sub: "گلوبل سسٹم", wa: "💬 واٹس ایپ",
-                badge: "پاکستان • بین الاقوامی تجارت اور تحقیق",
-                hHead: "رائل چلغوزہ <span>گلوبل سسٹم</span>",
-                hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ایڈمن موڈ کے ذریعے لائیو قابلِ ترمیم۔",
-                tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
-                rLabel: "سائنس اور ماحولیات", tTitle: "ریسرچ اور نالج (تحقیق)", tDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
-                thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
-                rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
-                tradeFolders: [
-                    { title: 'عالمی مارکیٹس', desc: 'عالمی طلب، مارکیটের مواقع اور بین الاقوامی تجارتی مقامات۔' },
-                    { title: 'امریکہ مارکیٹ اور خریدار', desc: 'امریکہ کے خریدار، درآمد کنندگان، مارکیٹ کے مواقع اور کاروباری روابط۔' },
-                    { title: 'چین مارکیٹ اور خریدار', desc: 'چینی خریدار، تاجر، درآمد کنندگان اور تجارتی مواقع۔' },
-                    { title: 'برآمدات اور لاجسٹکس', desc: 'برآمدی دستاویزات، کسٹم، شپنگ، ترسیل اور بین الاقوامی لاجسٹکس۔' },
-                    { title: 'مصنوعات اور معیار', desc: 'مغزیات، چھلکے والے میوے، روسٹنگ، درجات، خصوصیات اور کوالٹی کے معیارات۔' },
-                    { title: 'سپلائی چین اور ٹریس ایبلٹی', desc: 'جنگل ← جمع کرنے والا ← پروسیسنگ ← پیکنگ ← برآمد، شفاف ٹریس ایبلٹی کے ساتھ۔' },
-                    { title: 'جیوگرافیکل انڈیکیشن (GI)', desc: 'ماخذ، شناخت، اصلیت، جغرافیائی شہرت اور پروڈکٹ ٹریس ایبلٹی۔' },
-                    { title: 'نامیاتی کیمسٹری اور قدرتی معیار', desc: 'قدرتی تیل، کیمیائی ساخت، خلوص، غذائی خصوصیات اور کوالٹی کی خصوصیات۔' },
-                    { title: 'پروسیسنگ، پیکنگ اور ویلیو ایڈیشن', desc: 'پروسیسنگ، گریڈنگ، روسٹنگ، پیکنگ، برانڈنگ اور پریمیم پروڈکٹ کی تیاری۔' },
-                    { title: 'پائیدار اور اخلاقی تجارت', desc: 'ذمہ دارانہ سورسنگ، منصفانہ قدر، کمیونٹی کے فوائد اور تحفظ سے جڑی تجارت۔' }
-                ],
-                researchFolders: [
-                    { title: 'جغرافیائی ماخذ اور GI ریسرچ', desc: 'چلغوزے کا ماخذ، جغرافیائی شناخت، روایتی علم اور GI تحقیق۔' },
-                    { title: 'چلغوزے کی بائیولوجی اور باٹنی', desc: 'درخت کی بائیولوجی، نشوونما، افزائش، بیج کی ترقی اور قدرتی بحالی۔' },
-                    { title: 'غذائی قدر اور قدرتی ساخت', desc: 'پروٹین، قدرتی تیل، معدنیات، غذائی اجزاء اور سائنسی ساخت۔' },
-                    { title: 'چلغوزے کے جنگلات اور ماحولیات', desc: 'جنگلات کے ماحولیاتی نظام، ماحولیاتی افعال، بحالی اور پائیدار جنگلات کا انتظام۔' },
-                    { title: 'حیاتیاتی تنوع اور جنگلی حیات', desc: 'جنگلی حیات کے مسکن، حیاتیاتی تنوع، ماحولیاتی نظام کی خدمات اور تحفظ کی قدریں۔' },
-                    { title: 'موسم اور عالمی سبز ماحول', desc: 'موسمی لچک، کاربن، پانی، مٹی کا تحفظ اور عالمی ماحولیاتی فوائد۔' },
-                    { title: 'جنگلات کا تحفظ اور بحالی', desc: 'جنگلات کا تحفظ، بحالی، قدرتی بحالی، پودے لگانا اور پائیدار انتظام۔' },
-                    { title: 'سپلائی چین اور کمیونٹی کی روزی روٹی', desc: 'مقامی جمع کرنے والے، دیہی روزی روٹی، ویلیو چینز اور غربت کا خاتمہ۔' },
-                    { title: 'پائیدار کٹائی اور کمیونٹی آگاہی', desc: 'محفوظ کٹائی، جنگلات کا تحفظ، کمیونٹی کی تربیت اور تحفظ کی آگاہی۔' },
-                    { title: 'تحقیق، پالیسی اور شراکت داریاں', desc: 'تحقیقی علم، حکومتی پالیسی، FAO، GEF، NGOs، ادارے اور مستقبل کی شراکت داریاں۔' }
-                ]
-            }
-        };
+  function ensureLanguageMenu() {
+    let btn = $("langBtn"), menu = $("langMenu");
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.id = "langBtn"; btn.className = "rcpn-language-button";
+      btn.type = "button"; btn.setAttribute("aria-expanded","false");
+      btn.innerHTML = '<span id="langLabel">English</span> ▾';
+      document.body.appendChild(btn);
+    }
+    if (!menu) {
+      menu = document.createElement("div");
+      menu.id = "langMenu"; menu.className = "rcpn-language-menu";
+      document.body.appendChild(menu);
+    }
+    menu.innerHTML = LANGS.map(([c,n]) => `<button type="button" data-lang="${c}">${n}</button>`).join("");
+    $$("#langMenu [data-lang]").forEach(b => b.onclick = () => {
+      applyLanguage(b.dataset.lang);
+      menu.classList.remove("open");
+    });
+    btn.onclick = e => { e.stopPropagation(); menu.classList.toggle("open"); };
+    document.addEventListener("click", () => menu.classList.remove("open"), {once:false});
+  }
 
-        let folderMediaDB = {};
-        let currentActiveFolderId = null;
-        let previousMainView = 'trade-main-view';
+  // =========================================================
+  // HOME — 8 GITHUB ORIGINALS + FULL SIZE + EDITABLE METADATA
+  // =========================================================
+  const homeFallback = [
+    ["01-chilghoza-lot.jpg","Chilghoza Lot","Premium Chilghoza lot from Pakistan"],
+    ["02-chilghoza-cones.jpg","Chilghoza Cones","Chilghoza pine cones"],
+    ["03-chilghoza-kernel.jpg","Chilghoza Kernel","Chilghoza pine nut kernel"],
+    ["04-chilghoza-harvest.jpg","Chilghoza Harvest","Chilghoza harvest scene"],
+    ["05-chilghoza-raw-kernels.jpg","Raw Chilghoza Kernels","Raw kernels ready for grading and trade"],
+    ["06-chilghoza-cone-closeup.jpg","Chilghoza Cone Close-up","Close view of Chilghoza cone"],
+    ["07-chilghoza-products-display.jpg","Chilghoza Products","Chilghoza product presentation"],
+    ["08-chilghoza-forest.jpg","Chilghoza Forest","Chilghoza forest landscape"]
+  ];
 
-        let tradeFolders = [
-            { id: 't1', tag: '01' }, { id: 't2', tag: '02' }, { id: 't3', tag: '03' }, { id: 't4', tag: '04' },
-            { id: 't5', tag: '05' }, { id: 't6', tag: '06' }, { id: 't7', tag: '07' }, { id: 't8', tag: '08' },
-            { id: 't9', tag: '09' }, { id: 't10', tag: '10' }
-        ];
+  function imageUrl(item) {
+    if (item.source === "r2" && item.r2_key) return `/api/media/file/${encodeURIComponent(item.r2_key)}`;
+    return `/${item.file_name}`;
+  }
 
-        let researchFolders = [
-            { id: 'r1', tag: '01' }, { id: 'r2', tag: '02' }, { id: 'r3', tag: '03' }, { id: 'r4', tag: '04' },
-            { id: 'r5', tag: '05' }, { id: 'r6', tag: '06' }, { id: 'r7', tag: '07' }, { id: 'r8', tag: '08' },
-            { id: 'r9', tag: '09' }, { id: 'r10', tag: '10' }
-        ];
+  function openLightbox(item) {
+    let box = $("rcpnLightbox");
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "rcpnLightbox";
+      box.className = "rcpn-lightbox";
+      document.body.appendChild(box);
+    }
+    box.innerHTML = `
+      <button class="rcpn-lightbox-close" aria-label="Close">×</button>
+      <div class="rcpn-lightbox-inner">
+        <img src="${imageUrl(item)}" alt="${esc(item.alt_text || item.title || "")}">
+        <h3>${esc(item.title || "")}</h3>
+        <p>${esc(item.description || item.caption || "")}</p>
+      </div>`;
+    box.classList.add("open");
+    box.onclick = e => { if (e.target === box || e.target.classList.contains("rcpn-lightbox-close")) box.classList.remove("open"); };
+  }
 
-        function renderFolderGrids() {
-            const currentLang = document.getElementById('langSelect').value;
-            const t = translations[currentLang] || translations.en;
-            const folderVisualImages = githubImagesDB.map(img => img.url);
+  function esc(v) {
+    return String(v ?? "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
 
-            const makeFolderCard = (type, f, index, localized) => {
-                const imageUrl = folderVisualImages[(index + (type === 'research' ? 4 : 0)) % folderVisualImages.length];
-                const safeTitle = localized.title || (type === 'trade' ? 'Trade Hub' : 'Research Hub');
-                const safeDesc = localized.desc || (type === 'trade' ? 'Global trade, buyers and export opportunities.' : 'Science, ecology and Chilgoza knowledge.');
-                return `
-                    <div class="card folder-card" onclick="openSubFolder('${type}', '${f.id}')">
-                        <div class="folder-card-media">
-                            <img src="${imageUrl}" alt="${safeTitle}" loading="lazy">
-                        </div>
-                        <div class="folder-card-body">
-                            <span class="folder-card-number">${String(f.tag || (index + 1)).padStart(2, '0')}</span>
-                            <div class="card-tag">${type === 'trade' ? 'GLOBAL TRADE' : 'RESEARCH & KNOWLEDGE'}</div>
-                            <div class="card-title">${safeTitle}</div>
-                            <div class="card-desc">${safeDesc}</div>
-                        </div>
-                        <div>
-                            <span>Explore Folder →</span>
-                            ${isAdminLoggedIn ? `<button onclick="event.stopPropagation(); deleteFolder('${type}', '${f.id}')" style="background:none;border:none;color:#f87171;font-size:.7rem;cursor:pointer;">Delete</button>` : ''}
-                        </div>
-                    </div>`;
-            };
+  async function loadHomeImages() {
+    const gallery = $("homeGallery");
+    if (!gallery) return;
+    let items = [];
+    try { items = (await api("/api/home-images")).items || []; } catch {}
+    if (!items.length) {
+      items = homeFallback.map(([file,title,desc],i) => ({id:0,file_name:file,title,caption:title,description:desc,alt_text:title,sort_order:i,source:"github"}));
+    }
+    gallery.innerHTML = items.map(item => `
+      <figure class="rcpn-home-image-card" data-id="${item.id}">
+        <button class="rcpn-image-open" type="button" title="${t("full")}">
+          <img src="${imageUrl(item)}" alt="${esc(item.alt_text || item.title)}" loading="lazy">
+        </button>
+        <figcaption>
+          <strong>${esc(item.title)}</strong>
+          <span>${esc(item.caption || "")}</span>
+        </figcaption>
+      </figure>`).join("");
+    $$(".rcpn-home-image-card .rcpn-image-open", gallery).forEach((b,i) => b.onclick = () => openLightbox(items[i]));
+  }
 
-            const tradeGrid = document.getElementById('trade-folders-grid');
-            if(tradeGrid) {
-                tradeGrid.innerHTML = '';
-                tradeFolders.forEach((f, index) => {
-                    const localized = (t.tradeFolders && t.tradeFolders[index]) ? t.tradeFolders[index] : { title: 'Custom Hub', desc: 'Custom folder hub.' };
-                    tradeGrid.innerHTML += makeFolderCard('trade', f, index, localized);
-                });
-            }
+  // =========================================================
+  // TRADE / RESEARCH — D1 FOLDERS, DYNAMICALLY EXTENDABLE
+  // =========================================================
+  let researchItems = [], tradeItems = [];
 
-            const researchGrid = document.getElementById('research-folders-grid');
-            if(researchGrid) {
-                researchGrid.innerHTML = '';
-                researchFolders.forEach((f, index) => {
-                    const localized = (t.researchFolders && t.researchFolders[index]) ? t.researchFolders[index] : { title: 'Custom Research Hub', desc: 'Custom research folder.' };
-                    researchGrid.innerHTML += makeFolderCard('research', f, index, localized);
-                });
-            }
-        }
+  async function loadFolders() {
+    try {
+      researchItems = (await api("/api/folders?section=research")).items || [];
+      tradeItems = (await api("/api/folders?section=trade")).items || [];
+    } catch { researchItems=[]; tradeItems=[]; }
+    renderFolders();
+  }
 
-        function deleteFolder(type, id) {
-            if(!confirm("Are you sure you want to delete this folder?")) return;
-            if(type === 'trade') {
-                tradeFolders = tradeFolders.filter(x => x.id !== id);
-            } else {
-                researchFolders = researchFolders.filter(x => x.id !== id);
-            }
-            renderFolderGrids();
-            alert("Folder removed successfully!");
-        }
+  async function translated(item, type) {
+    try {
+      const x = await api(`/api/translations?item_type=${encodeURIComponent(type)}&item_id=${item.id}&language=${lang}`);
+      return x.translation || item;
+    } catch { return item; }
+  }
 
-        function openSubFolder(type, id) {
-            previousMainView = type === 'trade' ? 'trade-main-view' : 'research-main-view';
-            currentActiveFolderId = id;
-            const list = type === 'trade' ? tradeFolders : researchFolders;
-            const index = list.findIndex(x => x.id === id);
-            const currentLang = document.getElementById('langSelect').value;
-            const t = translations[currentLang] || translations.en;
-            const localizedList = type === 'trade' ? (t.tradeFolders || []) : (t.researchFolders || []);
-            const folderInfo = localizedList[index] || { title: 'Folder Hub', desc: 'Operational description.' };
-            const originalFolder = list[index] || { tag: 'NEW' };
-            
-            document.getElementById('sub-folder-tag').innerText = `Folder ${originalFolder.tag} — ${type.toUpperCase()}`;
-            document.getElementById('sub-folder-title').innerText = folderInfo.title;
-            document.getElementById('sub-folder-desc').innerText = folderInfo.desc;
-            document.getElementById('aiFolderResponse').innerText = `Royal AI: Ready to assist with ${folderInfo.title}. Ask any question below.`;
-            
-            renderFolderMedia();
-            switchView('sub-folder-view');
-        }
+  function renderFolderSet(gridId, detailId, items) {
+    const grid = $(gridId), detail = $(detailId);
+    if (!grid || !detail) return;
+    grid.innerHTML = items.map((x,i) => `
+      <article class="folder rcpn-folder" data-folder-id="${x.id}" tabindex="0">
+        <div class="folder-image-wrap"><img class="folder-image" src="/${homeFallback[i % homeFallback.length][0]}" alt="${esc(x.title)}" loading="lazy"><span class="folder-num">${String(x.sort_order || i+1).padStart(2,"0")}</span></div>
+        <div class="folder-copy">
+          <span class="folder-kicker">${i % 2 === 0 ? "TRADE • GLOBAL" : "RESEARCH • KNOWLEDGE"}</span>
+          <h3>${esc(x.title)}</h3>
+          <p>${esc(x.description || "")}</p>
+        </div>
+      </article>`).join("");
+    $$(".rcpn-folder", grid).forEach(card => {
+      const open = async () => {
+        const id = Number(card.dataset.folderId);
+        const item = items.find(x => x.id === id);
+        if (!item) return;
+        const tr = await translated(item, "folder");
+        detail.innerHTML = `<div class="detail-box">
+          <div class="eyebrow">ROYAL CHILGHOZA</div>
+          <h2>${esc(tr.title || item.title)}</h2>
+          <p>${esc(tr.description || item.description || "")}</p>
+          <div class="rcpn-folder-content" data-folder-content="${id}">
+            <p>Loading…</p>
+          </div>
+        </div>`;
+        try {
+          const c = await api(`/api/content?folder_id=${id}`);
+          const list = (c.items || []).filter(x => x.folder_id === id && x.status === "published");
+          const media = await api("/api/media/public");
+          const imgs = (media.items || []).filter(x => Number(x.folder_id) === id);
+          const host = detail.querySelector(".rcpn-folder-content");
+          const contentHtml = list.map(v => `<article class="rcpn-content-card"><h3>${esc(v.title)}</h3><p>${esc(v.description)}</p><div>${esc(v.body)}</div></article>`).join("");
+          const mediaHtml = imgs.length ? `<div class="folder-media-grid">${imgs.map(x => `<button class="folder-media" type="button"><img src="${imageUrl(x)}" alt="${esc(x.alt_text || x.title)}"><span>${esc(x.caption || x.title)}</span></button>`).join("")}</div>` : "";
+          host.innerHTML = (contentHtml || `<p>No published content yet.</p>`) + mediaHtml;
+          $$(".folder-media",host).forEach((b,i)=>b.onclick=()=>openLightbox(imgs[i]));
+        } catch {}
+        detail.scrollIntoView({behavior:"smooth",block:"start"});
+      };
+      card.onclick = open;
+      card.onkeydown = e => { if(e.key==="Enter" || e.key===" ") { e.preventDefault(); open(); } };
+    });
+  }
 
-        function goBackToList() {
-            switchView(previousMainView);
-        }
+  function renderFolders() {
+    renderFolderSet("researchFolders","researchContent",researchItems);
+    renderFolderSet("tradeFolders","tradeContent",tradeItems);
+  }
 
-        function addFolderMedia() {
-            if(!currentActiveFolderId) return;
-            const title = document.getElementById('mediaTitleInput').value;
-            const type = document.getElementById('mediaTypeInput').value;
-            const url = document.getElementById('mediaUrlInput').value;
-            if(!title || !url) return alert('Please enter title and filename/URL');
+  // =========================================================
+  // ROYAL AI — USER FACING
+  // =========================================================
+  function ensureAI() {
+    let host = $("royalAI");
+    if (!host) {
+      host = document.createElement("section");
+      host.id = "royalAI";
+      host.className = "rcpn-ai";
+      host.innerHTML = `
+        <div class="eyebrow">ROYAL AI</div><h2>${t("ai")}</h2>
+        <textarea id="rcpnAiText" placeholder="Ask Royal AI..."></textarea>
+        <div class="rcpn-ai-actions">
+          <select id="rcpnAiMode"><option value="improve">Improve</option><option value="summary">Summary</option><option value="buyer">Buyer</option><option value="translate">Translate</option><option value="research">Research</option></select>
+          <button id="rcpnAiSend" type="button">Send</button>
+        </div>
+        <pre id="rcpnAiResult"></pre>`;
+      document.body.appendChild(host);
+    }
+    $("rcpnAiSend")?.addEventListener("click", async () => {
+      const text = $("rcpnAiText")?.value.trim();
+      if (!text) return;
+      const out = $("rcpnAiResult"); out.textContent = "…";
+      try {
+        const d = await api("/api/ai",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({text,mode:$("rcpnAiMode").value,language:lang})});
+        out.textContent = typeof d.result === "string" ? d.result : JSON.stringify(d.result,null,2);
+      } catch(e) { out.textContent = e.message; }
+    }, {once:true});
+  }
 
-            if(!folderMediaDB[currentActiveFolderId]) {
-                folderMediaDB[currentActiveFolderId] = [];
-            }
-            folderMediaDB[currentActiveFolderId].push({ title, type, url });
-            
-            document.getElementById('mediaTitleInput').value = '';
-            document.getElementById('mediaUrlInput').value = '';
-            renderFolderMedia();
-            alert('Media added successfully!');
-        }
+  // =========================================================
+  // ADMIN — ADMIN ONLY MEDIA/FOLDER ACTIONS
+  // =========================================================
+  let adminReady = false;
+  async function checkAuth() {
+    try { return (await api("/api/me")).auth === true; } catch { return false; }
+  }
 
-        function renderFolderMedia() {
-            const container = document.getElementById('folderMediaContainer');
-            if(!container) return;
-            container.innerHTML = '';
-            const items = folderMediaDB[currentActiveFolderId] || [];
-            
-            if(items.length === 0) {
-                container.innerHTML = `<p style="font-size:0.85rem; color:#9ca3af; grid-column: 1/-1; text-align:center; padding:15px;">No custom media or documents uploaded in this folder yet.</p>`;
-                return;
-            }
+  function ensureAdminUI() {
+    if ($("rcpnAdminUI")) return;
+    const section = document.createElement("section");
+    section.id = "rcpnAdminUI";
+    section.className = "rcpn-admin-ui";
+    section.innerHTML = `
+      <div class="eyebrow">ADMIN ONLY</div><h2>${t("admin")}</h2>
+      <div id="rcpnAdminLogin">
+        <input id="rcpnAdminUser" placeholder="${t("username")}" value="admin">
+        <input id="rcpnAdminPass" type="password" placeholder="${t("password")}">
+        <button id="rcpnAdminLoginBtn">${t("login")}</button>
+        <p id="rcpnAdminStatus"></p>
+      </div>
+      <div id="rcpnAdminPanel" hidden>
+        <div class="rcpn-admin-row">
+          <button id="rcpnNewResearch">${t("createFolder")} — Research</button>
+          <button id="rcpnNewTrade">${t("createFolder")} — Trade</button>
+          <button id="rcpnReloadAdmin">Reload</button>
+          <button id="rcpnLogout">${t("logout")}</button>
+        </div>
+        <h3>Homepage Images</h3><div id="rcpnAdminHome"></div>
+        <h3>Upload Media</h3>
+        <form id="rcpnUploadForm" class="rcpn-upload-form">
+          <input id="rcpnUploadFile" type="file" accept="image/*,video/*,application/pdf" required>
+          <input id="rcpnUploadTitle" placeholder="Title">
+          <input id="rcpnUploadCaption" placeholder="Mini Caption">
+          <textarea id="rcpnUploadDescription" placeholder="Description"></textarea>
+          <input id="rcpnUploadAlt" placeholder="Alt Text">
+          <button type="submit">${t("upload")}</button>
+          <p id="rcpnUploadStatus"></p>
+        </form>
+        <h3>Uploaded Media</h3><div id="rcpnAdminMedia"></div>
+        <h3>Folders</h3><div id="rcpnAdminFolders"></div>
+      </div>`;
+    document.body.appendChild(section);
 
-            items.forEach((item, idx) => {
-                let html = `<div class="media-card"><div style="font-weight:650; color:var(--text-gold); margin-bottom:6px;">${item.title}</div>`;
-                if(item.type === 'image') {
-                    html += `<img src="${item.url}" alt="Image" onerror="this.src='08-chilghoza-forest.jpg'">`;
-                } else if(item.type === 'video') {
-                    html += `<video controls src="${item.url}"></video>`;
-                } else if(item.type === 'pdf') {
-                    html += `<a href="${item.url}" target="_blank" class="pdf-link">📄 View PDF Document</a>`;
-                }
-                if(isAdminLoggedIn) {
-                    html += `<button onclick="removeMedia(${idx})" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer; margin-top:4px;">Remove Item</button>`;
-                }
-                html += `</div>`;
-                container.innerHTML += html;
-            });
-        }
+    $("rcpnAdminLoginBtn").onclick = async () => {
+      const status=$("rcpnAdminStatus"); status.textContent="…";
+      try {
+        await api("/api/login",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({username:$("rcpnAdminUser").value,password:$("rcpnAdminPass").value})});
+        $("rcpnAdminLogin").hidden=true; $("rcpnAdminPanel").hidden=false; adminReady=true; await loadAdmin();
+      } catch(e){status.textContent=e.message;}
+    };
+    $("rcpnUploadForm").onsubmit=async(e)=>{
+      e.preventDefault();
+      const file=$("rcpnUploadFile").files[0];
+      if(!file) return;
+      const status=$("rcpnUploadStatus"); status.textContent="Uploading…";
+      const fd=new FormData();
+      fd.append("file",file);
+      fd.append("title",$("rcpnUploadTitle").value);
+      fd.append("caption",$("rcpnUploadCaption").value);
+      fd.append("description",$("rcpnUploadDescription").value);
+      fd.append("alt_text",$("rcpnUploadAlt").value);
+      try{
+        await api("/api/media",{method:"POST",body:fd});
+        status.textContent="Uploaded.";
+        e.target.reset();
+        await loadAdmin();
+      }catch(err){status.textContent=err.message;}
+    };
+    $("rcpnThemeSave").onclick=async()=>{
+      await api("/api/settings/theme",{method:"PUT",headers:{"content-type":"application/json"},body:JSON.stringify({
+        background:$("rcpnThemeBg").value,accent:$("rcpnThemeAccent").value,text:$("rcpnThemeText").value
+      })});
+      applyTheme({background:$("rcpnThemeBg").value,accent:$("rcpnThemeAccent").value,text:$("rcpnThemeText").value});
+    };
+    $("rcpnReloadAdmin").onclick=loadAdmin;
+    $("rcpnLogout").onclick=async()=>{await api("/api/logout",{method:"POST"});location.reload();};
+    $("rcpnNewResearch").onclick=()=>newFolder("research");
+    $("rcpnNewTrade").onclick=()=>newFolder("trade");
+  }
 
-        function removeMedia(idx) {
-            folderMediaDB[currentActiveFolderId].splice(idx, 1);
-            renderFolderMedia();
-        }
+  function adminImageRow(item, home=false) {
+    return `<div class="rcpn-admin-item">
+      <img src="${imageUrl(item)}" alt="">
+      <input data-k="title" value="${esc(item.title)}" placeholder="Title">
+      <input data-k="caption" value="${esc(item.caption)}" placeholder="${t("caption")}">
+      <textarea data-k="description" placeholder="${t("description")}">${esc(item.description)}</textarea>
+      <input data-k="alt_text" value="${esc(item.alt_text)}" placeholder="${t("alt")}">
+      <label><input type="checkbox" data-k="visible" ${item.visible ? "checked":""}> ${item.visible ? t("visible"):t("hidden")}</label>
+      <button data-save>${t("save")}</button>
+      ${home ? "" : `<button data-delete>${t("delete")}</button>`}
+    </div>`;
+  }
 
-        function askMainAI() {
-            const query = document.getElementById('mainAiQuery').value;
-            if(!query) return alert('Please enter your question for Royal AI');
-            const respBox = document.getElementById('mainAiResponse');
-            respBox.innerHTML = `<em>Thinking... analyzing ecosystem parameters...</em>`;
-            setTimeout(() => {
-                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Regarding "${query}", our Gilgit-Baltistan Chilgoza framework ensures verified organic origin and optimal export standards.`;
-            }, 800);
-        }
+  async function loadAdmin() {
+    if (!adminReady) return;
+    const h=$("rcpnAdminHome"), m=$("rcpnAdminMedia"), f=$("rcpnAdminFolders");
+    const home=(await api("/api/home-images/admin")).items||[];
+    h.innerHTML=home.map(x=>adminImageRow(x,true)).join("");
+    $$("#rcpnAdminHome .rcpn-admin-item").forEach((row,i)=>{
+      row.querySelector("[data-save]").onclick=async()=>{
+        const x=home[i]; const payload={};
+        $$("[data-k]",row).forEach(el=>payload[el.dataset.k]=el.type==="checkbox"?el.checked:el.value);
+        await api(`/api/home-images/${x.id}`,{method:"PATCH",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
+        await loadHomeImages();
+      };
+    });
 
-        function askFolderAI() {
-            const query = document.getElementById('aiFolderQuery').value;
-            if(!query) return alert('Please enter your question for Royal AI');
-            const respBox = document.getElementById('aiFolderResponse');
-            respBox.innerHTML = `<em>Thinking... analyzing section parameters...</em>`;
-            setTimeout(() => {
-                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on professional standards regarding "${query}", our framework ensures 100% authenticity and optimal grading.`;
-            }, 800);
-        }
+    const media=(await api("/api/media")).items||[];
+    m.innerHTML=media.map(x=>adminImageRow(x,false)).join("") || "<p>No R2 media yet.</p>";
+    $$("#rcpnAdminMedia .rcpn-admin-item").forEach((row,i)=>{
+      row.querySelector("[data-save]").onclick=async()=>{
+        const x=media[i], payload={};
+        $$("[data-k]",row).forEach(el=>payload[el.dataset.k]=el.type==="checkbox"?el.checked:el.value);
+        await api(`/api/media/${x.id}`,{method:"PATCH",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
+        await loadAdmin();
+      };
+      row.querySelector("[data-delete]")?.addEventListener("click",async()=>{
+        if(confirm("Delete this media permanently?")) { await api(`/api/media/${media[i].id}`,{method:"DELETE"}); await loadAdmin(); }
+      });
+    });
 
-        window.onload = function() {
-            renderGitHubGallery();
-            renderFolderGrids();
-        };
+    const folders=[...researchItems,...tradeItems];
+    f.innerHTML=folders.map(x=>`<div class="rcpn-admin-folder"><b>${esc(x.section)}</b> — ${esc(x.title)}
+      <button data-del="${x.id}">${t("delete")}</button></div>`).join("");
+    $$("[data-del]",f).forEach(b=>b.onclick=async()=>{
+      if(confirm("Delete this folder?")) { await api(`/api/folders/${b.dataset.del}`,{method:"DELETE"}); await loadFolders(); await loadAdmin(); }
+    });
+  }
 
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+  async function newFolder(section) {
+    const title=prompt(t("folderName"));
+    if(!title) return;
+    const description=prompt(t("description"))||"";
+    await api("/api/folders",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({section,title,description,status:"published"})});
+    await loadFolders();
+    await loadAdmin();
+  }
 
-        function applyCustomTheme() {
-            const bg = document.getElementById('pickerBg').value;
-            const card = document.getElementById('pickerCard').value;
-            const header = document.getElementById('pickerHeader').value;
-            const heading = document.getElementById('pickerHeading').value;
-            const gold = document.getElementById('pickerGold').value;
+  function applyTheme(theme){
+    if(!theme) return;
+    const root=document.documentElement;
+    if(theme.background) root.style.setProperty("--bg",theme.background);
+    if(theme.accent) root.style.setProperty("--accent",theme.accent);
+    if(theme.text) root.style.setProperty("--text",theme.text);
+  }
+  async function loadTheme(){
+    try{ const d=await api("/api/settings/theme"); applyTheme(d.theme); }catch{}
+  }
 
-            document.documentElement.style.setProperty('--bg-primary', bg);
-            document.documentElement.style.setProperty('--bg-card', card);
-            document.documentElement.style.setProperty('--header-bg', header);
-            document.documentElement.style.setProperty('--heading-color', heading);
-            document.documentElement.style.setProperty('--text-gold', gold);
-        }
+  // =========================================================
+  // GLOBAL NAV COMPATIBILITY
+  // =========================================================
+  $$("[data-route]").forEach(el => el.addEventListener("click", e => {
+    const id=el.dataset.route;
+    if ($(id)) { e.preventDefault(); $$(".page").forEach(p=>p.classList.toggle("active",p.id===id)); history.pushState({page:id},"",`#${id}`); if(id==="admin") ensureAdminUI(); }
+  }));
 
-        function setTheme(bg, card, header, heading, gold) {
-            document.getElementById('pickerBg').value = bg;
-            document.getElementById('pickerCard').value = card;
-            document.getElementById('pickerHeader').value = header;
-            document.getElementById('pickerHeading').value = heading;
-            document.getElementById('pickerGold').value = gold;
-            applyCustomTheme();
-        }
+  ensureLanguageMenu();
+  ensureAI();
+  ensureAdminUI();
+  applyLanguage(lang);
+  loadHomeImages();
+  loadFolders();
+  loadTheme();
 
-        function addNewMainFolder() {
-            const title = document.getElementById('newMainTitle').value;
-            const desc = document.getElementById('newMainDesc').value;
-            if(!title) return alert('Please enter folder title');
-            const newId = 'custom_' + Date.now();
-            tradeFolders.push({ id: newId, tag: 'NEW' });
-            if(!translations.en.tradeFolders) translations.en.tradeFolders = [];
-            translations.en.tradeFolders.push({ title, desc });
-            renderFolderGrids();
-            document.getElementById('newMainTitle').value = '';
-            document.getElementById('newMainDesc').value = '';
-            alert('New folder hub created successfully!');
-        }
-
-        function changeLanguage(lang) {
-            const t = translations[lang] || translations.en;
-            if(t.title) document.getElementById('site-title').innerText = t.title;
-            if(t.sub) document.getElementById('site-sub').innerText = t.sub;
-            if(t.badge) document.getElementById('hero-badge').innerText = t.badge;
-            if(t.hHead) document.getElementById('hero-heading').innerHTML = t.hHead;
-            if(t.hDesc) document.getElementById('hero-desc').innerText = t.hDesc;
-            if(t.tLabel) document.getElementById('trade-tag-label').innerText = t.tLabel;
-            if(t.rLabel) document.getElementById('research-tag-label').innerText = t.rLabel;
-            if(t.thTitle) document.getElementById('trade-head-title').innerText = t.thTitle;
-            if(t.thDesc) document.getElementById('trade-head-desc').innerText = t.thDesc;
-            if(t.rhTitle) document.getElementById('research-head-title').innerText = t.rhTitle;
-            if(t.rhDesc) document.getElementById('research-head-desc').innerText = t.rhDesc;
-            
-            renderFolderGrids();
-            const rtlLangs = ['ur', 'ar', 'fa', 'ps'];
-            document.body.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
-        }
+  // Do not grant public users any media write controls.
+  // Upload/edit/delete APIs are protected by Worker authentication.
+});
