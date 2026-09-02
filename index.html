@@ -238,20 +238,16 @@
             padding: 15px 20px;
             border-radius: 15px;
             margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
         }
-        .color-options { display: flex; gap: 10px; align-items: center; }
-        .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid #fff; }
+        .color-picker-group { display: flex; gap: 15px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+        .color-picker-group label { font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; gap: 5px; }
+        .color-picker-group input[type="color"] { border: none; width: 35px; height: 30px; border-radius: 6px; cursor: pointer; background: none; }
 
         .view-section { display: none; }
         .view-section.active { display: block; }
         .back-btn { background: none; border: none; color: var(--text-gold); font-size: 0.95rem; cursor: pointer; margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-        /* Footer 4 Office Addresses Grid */
+        /* Footer Office Addresses Grid */
         footer {
             padding: 40px 20px;
             font-size: 0.85rem;
@@ -303,6 +299,7 @@
     </header>
 
     <div class="container">
+        <!-- HOME VIEW -->
         <div id="home-view" class="view-section active">
             
             <div class="hero" style="background-image: linear-gradient(rgba(10, 25, 15, 0.88), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
@@ -314,21 +311,7 @@
                 <p id="hero-desc">Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.</p>
             </div>
 
-            <div class="ai-assistant-box" style="margin-bottom: 30px;">
-                <div style="font-family:'Cinzel',serif; font-size:1.2rem; color:var(--text-gold); margin-bottom:6px;" id="main-ai-title">🤖 Royal AI Assistant (Global Hub Expert)</div>
-                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;" id="main-ai-desc">Ask anything about Chilgoza export, origin, forestry, or trade specifications:</p>
-                <input type="text" id="mainAiQuery" placeholder="Ask AI assistant anything..." style="width:100%; padding:9px 12px; background:rgba(0,0,0,0.5); border:1px solid var(--card-border); border-radius:6px; color:var(--text-main); font-size:0.85rem; margin-bottom:8px; outline:none;">
-                <button class="admin-btn" style="padding:8px 16px; font-size:0.85rem; width:auto;" onclick="askMainAI()" id="main-ai-btn">Ask Royal AI</button>
-                <div class="ai-chat-output" id="mainAiResponse">Royal AI Assistant ready for global visitor inquiries...</div>
-            </div>
-
-            <div class="github-gallery-section">
-                <div class="card-tag" id="github-sec-tag">Project Gallery & Documentation</div>
-                <h3 style="font-family:'Cinzel',serif; color:var(--heading-color); font-size:1.3rem; margin-bottom:10px;" id="github-sec-title">Original 8 GitHub Project Images</h3>
-                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Fully manageable via Admin Mode (Replace image, edit titles, captions, and descriptions live).</p>
-                <div class="github-gallery-grid" id="githubGalleryContainer"></div>
-            </div>
-
+            <!-- Main 2 Folders (Traded & Research Hubs placed correctly below Hero) -->
             <div class="card-grid">
                 <div class="card" onclick="switchView('trade-main-view')">
                     <div>
@@ -349,21 +332,42 @@
                 </div>
             </div>
 
-            <div class="theme-panel" id="adminControlPanel" style="display:none;">
+            <!-- Royal AI Assistant Main Widget -->
+            <div class="ai-assistant-box" style="margin-bottom: 30px;">
+                <div style="font-family:'Cinzel',serif; font-size:1.2rem; color:var(--text-gold); margin-bottom:6px;" id="main-ai-title">🤖 Royal AI Assistant (Global Hub Expert)</div>
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;" id="main-ai-desc">Ask anything about Chilgoza export, origin, forestry, or trade specifications:</p>
+                <input type="text" id="mainAiQuery" placeholder="Ask AI assistant anything..." style="width:100%; padding:9px 12px; background:rgba(0,0,0,0.5); border:1px solid var(--card-border); border-radius:6px; color:var(--text-main); font-size:0.85rem; margin-bottom:8px; outline:none;">
+                <button class="admin-btn" style="padding:8px 16px; font-size:0.85rem; width:auto;" onclick="askMainAI()" id="main-ai-btn">Ask Royal AI</button>
+                <div class="ai-chat-output" id="mainAiResponse">Royal AI Assistant ready for global visitor inquiries...</div>
+            </div>
+
+            <!-- 8 Original GitHub Images Gallery Section (With Unique Images) -->
+            <div class="github-gallery-section">
+                <div class="card-tag" id="github-sec-tag">Project Gallery & Documentation</div>
+                <h3 style="font-family:'Cinzel',serif; color:var(--heading-color); font-size:1.3rem; margin-bottom:10px;" id="github-sec-title">Original 8 GitHub Project Images</h3>
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Fully manageable via Admin Mode (Replace image, edit titles, captions, and descriptions live).</p>
+                <div class="github-gallery-grid" id="githubGalleryContainer"></div>
+            </div>
+
+            <!-- Admin Control Panel (Hidden until Login) -->
+            <div class="theme-panel" id="adminControlPanel" style="display:none; border: 1px dashed var(--text-gold);">
                 <div style="width:100%; margin-bottom:15px; border-bottom:1px solid var(--card-border); padding-bottom:10px;">
                     <h3 style="font-family:'Cinzel',serif; color:var(--text-gold);">⚙️ ADMIN CONTROL CENTER</h3>
-                    <p style="font-size:0.8rem; color:#cbd5e1;">Manage themes, dynamic folders, office addresses, and image metadata live.</p>
+                    <p style="font-size:0.8rem; color:#cbd5e1;">Manage manual theme color sliders, folders, office addresses, and image metadata live.</p>
                 </div>
+                
                 <div style="width:100%; margin-bottom:15px;">
-                    <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label">Live Theme Customizer</span>
-                    <div class="color-options" style="margin-top:8px;">
-                        <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15', '#0b1f15')"></div>
-                        <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e', '#1a1a2e')"></div>
-                        <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d', '#2c1a1d')"></div>
-                        <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233', '#112233')"></div>
+                    <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label">Live Manual Theme Color Customizer</span>
+                    <div class="color-picker-group">
+                        <label>Primary BG: <input type="color" id="pickerBg" value="#0b1f15" onchange="applyCustomTheme()"></label>
+                        <label>Card BG: <input type="color" id="pickerCard" value="#122a1e" onchange="applyCustomTheme()"></label>
+                        <label>Header BG: <input type="color" id="pickerHeader" value="#0b1f15" onchange="applyCustomTheme()"></label>
+                        <label>Heading Text: <input type="color" id="pickerHeading" value="#f5f2eb" onchange="applyCustomTheme()"></label>
+                        <label>Gold Accent: <input type="color" id="pickerGold" value="#d4af37" onchange="applyCustomTheme()"></label>
                     </div>
                 </div>
-                <div style="width:100%;">
+
+                <div style="width:100%; margin-top: 15px;">
                     <div class="card-tag" style="margin-bottom: 8px;">Create Custom Top-Level Folder Hub</div>
                     <input type="text" id="newMainTitle" placeholder="Enter folder title...">
                     <textarea id="newMainDesc" placeholder="Enter description..." rows="2"></textarea>
@@ -371,18 +375,19 @@
                 </div>
             </div>
 
+            <!-- Manual Theme Presets Panel -->
             <div class="theme-panel">
                 <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label-pub">Theme Presets</span>
-                <div class="color-options">
-                    <div class="color-dot" style="background: #0b1f15;" onclick="setTheme('#0b1f15', '#0b1f15')"></div>
-                    <div class="color-dot" style="background: #1a1a2e;" onclick="setTheme('#1a1a2e', '#1a1a2e')"></div>
-                    <div class="color-dot" style="background: #2c1a1d;" onclick="setTheme('#2c1a1d', '#2c1a1d')"></div>
-                    <div class="color-dot" style="background: #112233;" onclick="setTheme('#112233', '#112233')"></div>
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                    <button onclick="setTheme('#0b1f15', '#122a1e', '#0b1f15', '#f5f2eb', '#d4af37')" style="padding:6px 12px; background:#0b1f15; color:#fff; border:1px solid #d4af37; border-radius:6px; cursor:pointer;">Deep Forest</button>
+                    <button onclick="setTheme('#1a1a2e', '#16213e', '#1a1a2e', '#ffffff', '#e94560')" style="padding:6px 12px; background:#1a1a2e; color:#fff; border:1px solid #e94560; border-radius:6px; cursor:pointer;">Royal Navy</button>
+                    <button onclick="setTheme('#2c1a1d', '#3d2427', '#2c1a1d', '#fff5f5', '#ecc94b')" style="padding:6px 12px; background:#2c1a1d; color:#fff; border:1px solid #ecc94b; border-radius:6px; cursor:pointer;">Burgundy Gold</button>
                 </div>
             </div>
 
         </div>
 
+        <!-- TRADE MAIN LIST VIEW -->
         <div id="trade-main-view" class="view-section">
             <button class="back-btn" onclick="switchView('home-view')" id="back-home-1">← Back to Home</button>
             <div class="hero">
@@ -392,6 +397,7 @@
             <div class="card-grid" id="trade-folders-grid"></div>
         </div>
 
+        <!-- RESEARCH MAIN LIST VIEW -->
         <div id="research-main-view" class="view-section">
             <button class="back-btn" onclick="switchView('home-view')" id="back-home-2">← Back to Home</button>
             <div class="hero">
@@ -401,6 +407,7 @@
             <div class="card-grid" id="research-folders-grid"></div>
         </div>
 
+        <!-- DYNAMIC SUB-WEBSITE / FOLDER VIEW -->
         <div id="sub-folder-view" class="view-section">
             <button class="back-btn" onclick="goBackToList()" id="back-cat-btn">← Back to Categories</button>
             <div class="sub-website-container">
@@ -410,6 +417,7 @@
                     <p id="sub-folder-desc">Detailed folder caption and operational description goes here.</p>
                 </div>
 
+                <!-- Media Upload Tool for this Folder -->
                 <div class="media-upload-box" id="adminMediaBox" style="display:none;">
                     <div class="card-tag" style="margin-bottom:6px;">Admin Mode: Upload Media / Document to this Folder</div>
                     <input type="text" id="mediaTitleInput" placeholder="Title (e.g. Batch Report / Lab Test)">
@@ -425,6 +433,7 @@
                 <div class="card-tag" style="margin-bottom: 10px;" id="gallery-box-title">Folder Content Gallery (Images, Videos & PDFs)</div>
                 <div class="media-grid" id="folderMediaContainer"></div>
 
+                <!-- Royal AI Assistant in Folder -->
                 <div class="ai-assistant-box">
                     <div style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--text-gold); margin-bottom:6px;" id="ai-box-title">🤖 Royal AI Assistant (Folder Expert)</div>
                     <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;" id="ai-box-desc">Ask anything specific about this folder topic:</p>
@@ -433,6 +442,7 @@
                     <div class="ai-chat-output" id="aiFolderResponse">AI ready to answer queries for this specific section...</div>
                 </div>
 
+                <!-- Direct WhatsApp Contact Bar -->
                 <div class="folder-whatsapp-bar">
                     <div class="card-tag" id="wa-bar-tag">Instant Buyer & Researcher Support</div>
                     <p style="font-size: 0.85rem; color: #d1d5db; margin: 5px 0 10px 0;" id="wa-bar-desc">Have a question regarding this specific section? Connect instantly via WhatsApp.</p>
@@ -443,6 +453,7 @@
 
     </div>
 
+    <!-- FOUR OFFICE ADDRESSES FOOTER -->
     <footer>
         <div class="footer-grid">
             <div class="footer-office-box" id="office-1">
@@ -468,16 +479,16 @@
     </footer>
 
     <script>
-        // 8 Original GitHub Images Database (Fully Editable via Admin Mode)
+        // 8 Unique GitHub Project Images Database with distinct filenames/URLs
         let githubImagesDB = [
-            { id: 1, title: "Chilgoza Forest", caption: "Natural Habitat", desc: "High altitude pine forests in Gilgit-Baltistan.", url: "01-forest.jpg" },
-            { id: 2, title: "Harvesting Batch", caption: "Traditional Collection", desc: "Safe sustainable harvesting by local communities.", url: "02-harvest.jpg" },
-            { id: 3, title: "In-Shell Pine Nuts", caption: "Raw Grade A", desc: "Directly from Chilas high mountain valleys.", url: "03-inshell.jpg" },
-            { id: 4, title: "Kernels Selection", caption: "Premium Quality", desc: "Carefully sorted and graded kernels.", url: "04-kernels.jpg" },
-            { id: 5, title: "Processing Yard", caption: "Modern Cleaning", desc: "Hygienic processing and packaging units.", url: "05-processing.jpg" },
-            { id: 6, title: "Laboratory Testing", caption: "Quality Assurance", desc: "Tested for purity and natural oils composition.", url: "06-lab.jpg" },
-            { id: 7, title: "Export Logistics", caption: "Global Shipping", desc: "Secure international transit and customs clearance.", url: "07-logistics.jpg" },
-            { id: 8, title: "Ecosystem View", caption: "Diamer District", desc: "Sustainable mountain ecosystem and research hub.", url: "08-chilghoza-forest.jpg" }
+            { id: 1, title: "Chilgoza Forest Habitat", caption: "Natural Forests", desc: "High altitude pine forests in Gilgit-Baltistan.", url: "01-forest.jpg" },
+            { id: 2, title: "Traditional Harvesting", caption: "Safe Collection", desc: "Sustainable harvesting by local mountain communities.", url: "02-harvest.jpg" },
+            { id: 3, title: "Raw In-Shell Nuts", caption: "Grade A Quality", desc: "Directly harvested from Chilas high mountain valleys.", url: "03-inshell.jpg" },
+            { id: 4, title: "Selected Kernels", caption: "Premium Sorting", desc: "Carefully sorted and graded organic kernels.", url: "04-kernels.jpg" },
+            { id: 5, title: "Modern Processing", caption: "Hygienic Units", desc: "State-of-the-art cleaning and packaging units.", url: "05-processing.jpg" },
+            { id: 6, title: "Laboratory Quality", caption: "Testing Purity", desc: "Tested for purity, nutrition, and natural oils composition.", url: "06-lab.jpg" },
+            { id: 7, title: "Global Export Logistics", caption: "Secure Shipping", desc: "International transit and customs clearance protocols.", url: "07-logistics.jpg" },
+            { id: 8, title: "Diamer Mountain Ecosystem", caption: "Sustainable Research Hub", desc: "Preserving local ecology and supporting sustainable trade.", url: "08-chilghoza-forest.jpg" }
         ];
 
         let isAdminLoggedIn = false;
@@ -490,7 +501,8 @@
                 document.getElementById('adminMediaBox').style.display = 'block';
                 document.getElementById('admin-login-btn').innerText = "🔓 Admin Active";
                 renderGitHubGallery();
-                alert("Admin Access Granted! You can now edit images, create folders, and modify office addresses live.");
+                renderFolderGrids();
+                alert("Admin Access Granted! You can now edit images, create custom themes, and manage folders.");
             } else if(pwd !== null) {
                 alert("Incorrect password!");
             }
@@ -529,10 +541,10 @@
             item.desc = newDesc || item.desc;
             item.url = newUrl || item.url;
             renderGitHubGallery();
-            alert("Image metadata updated successfully!");
+            alert("Image updated successfully!");
         }
 
-        // Multi-language Master Dictionary
+        // Full Multi-language Master Dictionary (10 Languages)
         const translations = {
             en: {
                 title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
@@ -541,11 +553,8 @@
                 hDesc: "Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.",
                 tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
                 rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
-                theme: "Theme Customizer",
                 thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
                 rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
-                backHome: "← Back to Home", backCat: "← Back to Categories",
-                openFolder: "Open Folder Website →",
                 tradeFolders: [
                     { title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
                     { title: 'USA Market & Buyers', desc: 'U.S. buyers, importers, market opportunities and business connections.' },
@@ -578,11 +587,8 @@
                 hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ایڈمن موڈ کے ذریعے لائیو قابلِ ترمیم۔",
                 tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
                 rLabel: "سائنس اور ماحولیات", tTitle: "ریسرچ اور نالج (تحقیق)", tDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
-                theme: "تھیم کلر سیٹنگ",
                 thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
                 rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
-                backHome: "← ہوم پیج پر واپس جائیں", backCat: "← زمرہ جات پر واپس جائیں",
-                openFolder: "فولڈر ویب سائٹ کھولیں ←",
                 tradeFolders: [
                     { title: 'عالمی مارکیٹس', desc: 'عالمی طلب، مارکیটের مواقع اور بین الاقوامی تجارتی مقامات۔' },
                     { title: 'امریکہ مارکیٹ اور خریدار', desc: 'امریکہ کے خریدار، درآمد کنندگان، مارکیٹ کے مواقع اور کاروباری روابط۔' },
@@ -633,7 +639,7 @@
             const tradeGrid = document.getElementById('trade-folders-grid');
             tradeGrid.innerHTML = '';
             tradeFolders.forEach((f, index) => {
-                const localized = (t.tradeFolders && t.tradeFolders[index]) ? t.tradeFolders[index] : { title: 'Custom Hub', desc: f.desc || 'Custom folder hub.' };
+                const localized = (t.tradeFolders && t.tradeFolders[index]) ? t.tradeFolders[index] : { title: 'Custom Hub', desc: 'Custom folder hub.' };
                 tradeGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('trade', '${f.id}')">
                         <div>
@@ -651,7 +657,7 @@
             const researchGrid = document.getElementById('research-folders-grid');
             researchGrid.innerHTML = '';
             researchFolders.forEach((f, index) => {
-                const localized = (t.researchFolders && t.researchFolders[index]) ? t.researchFolders[index] : { title: 'Custom Research Hub', desc: f.desc || 'Custom research folder.' };
+                const localized = (t.researchFolders && t.researchFolders[index]) ? t.researchFolders[index] : { title: 'Custom Research Hub', desc: 'Custom research folder.' };
                 researchGrid.innerHTML += `
                     <div class="card" onclick="openSubFolder('research', '${f.id}')">
                         <div>
@@ -671,10 +677,8 @@
             if(!confirm("Are you sure you want to delete this folder?")) return;
             if(type === 'trade') {
                 tradeFolders = tradeFolders.filter(x => x.id !== id);
-                translations.en.tradeFolders = translations.en.tradeFolders.filter((_, idx) => tradeFolders[idx] !== undefined);
             } else {
                 researchFolders = researchFolders.filter(x => x.id !== id);
-                translations.en.researchFolders = translations.en.researchFolders.filter((_, idx) => researchFolders[idx] !== undefined);
             }
             renderFolderGrids();
             alert("Folder removed successfully!");
@@ -719,7 +723,7 @@
             document.getElementById('mediaTitleInput').value = '';
             document.getElementById('mediaUrlInput').value = '';
             renderFolderMedia();
-            alert('Media / Document added successfully to this folder!');
+            alert('Media added successfully!');
         }
 
         function renderFolderMedia() {
@@ -728,7 +732,7 @@
             const items = folderMediaDB[currentActiveFolderId] || [];
             
             if(items.length === 0) {
-                container.innerHTML = `<p style="font-size:0.85rem; color:#9ca3af; grid-column: 1/-1; text-align:center; padding:15px;">No custom media or documents uploaded in this folder yet. Use the form above to add images, videos, or PDFs.</p>`;
+                container.innerHTML = `<p style="font-size:0.85rem; color:#9ca3af; grid-column: 1/-1; text-align:center; padding:15px;">No custom media or documents uploaded in this folder yet.</p>`;
                 return;
             }
 
@@ -758,9 +762,9 @@
             const query = document.getElementById('mainAiQuery').value;
             if(!query) return alert('Please enter your question for Royal AI');
             const respBox = document.getElementById('mainAiResponse');
-            respBox.innerHTML = `<em>Thinking... analyzing global ecosystem parameters...</em>`;
+            respBox.innerHTML = `<em>Thinking... analyzing ecosystem parameters...</em>`;
             setTimeout(() => {
-                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Regarding "${query}", our verified Gilgit-Baltistan Chilgoza framework ensures 100% genuine organic origin, optimal export standards, and direct traceability across all 10 international markets.`;
+                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Regarding "${query}", our Gilgit-Baltistan Chilgoza framework ensures verified organic origin and optimal export standards.`;
             }, 800);
         }
 
@@ -768,9 +772,9 @@
             const query = document.getElementById('aiFolderQuery').value;
             if(!query) return alert('Please enter your question for Royal AI');
             const respBox = document.getElementById('aiFolderResponse');
-            respBox.innerHTML = `<em>Thinking... analyzing parameters for this section...</em>`;
+            respBox.innerHTML = `<em>Thinking... analyzing section parameters...</em>`;
             setTimeout(() => {
-                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on the professional standards of this section regarding "${query}", our verified Gilgit-Baltistan Chilgoza framework ensures 100% authenticity and optimal export grading.`;
+                respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on professional standards regarding "${query}", our framework ensures 100% authenticity and optimal grading.`;
             }, 800);
         }
 
@@ -785,10 +789,27 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function setTheme(bgHex, headerHex) {
-            document.documentElement.style.setProperty('--bg-primary', bgHex);
-            document.documentElement.style.setProperty('--bg-card', bgHex + 'ee');
-            document.documentElement.style.setProperty('--header-bg', headerHex);
+        function applyCustomTheme() {
+            const bg = document.getElementById('pickerBg').value;
+            const card = document.getElementById('pickerCard').value;
+            const header = document.getElementById('pickerHeader').value;
+            const heading = document.getElementById('pickerHeading').value;
+            const gold = document.getElementById('pickerGold').value;
+
+            document.documentElement.style.setProperty('--bg-primary', bg);
+            document.documentElement.style.setProperty('--bg-card', card);
+            document.documentElement.style.setProperty('--header-bg', header);
+            document.documentElement.style.setProperty('--heading-color', heading);
+            document.documentElement.style.setProperty('--text-gold', gold);
+        }
+
+        function setTheme(bg, card, header, heading, gold) {
+            document.getElementById('pickerBg').value = bg;
+            document.getElementById('pickerCard').value = card;
+            document.getElementById('pickerHeader').value = header;
+            document.getElementById('pickerHeading').value = heading;
+            document.getElementById('pickerGold').value = gold;
+            applyCustomTheme();
         }
 
         function addNewMainFolder() {
@@ -796,7 +817,7 @@
             const desc = document.getElementById('newMainDesc').value;
             if(!title) return alert('Please enter folder title');
             const newId = 'custom_' + Date.now();
-            tradeFolders.push({ id: newId, tag: 'NEW', desc: desc });
+            tradeFolders.push({ id: newId, tag: 'NEW' });
             if(!translations.en.tradeFolders) translations.en.tradeFolders = [];
             translations.en.tradeFolders.push({ title, desc });
             renderFolderGrids();
