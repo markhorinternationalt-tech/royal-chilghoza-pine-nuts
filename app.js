@@ -29,6 +29,7 @@ function openAdminModal() {
 
 function renderGitHubGallery() {
     const container = document.getElementById('githubGalleryContainer');
+    if(!container) return;
     container.innerHTML = '';
     githubImagesDB.forEach((img, idx) => {
         let html = `
@@ -61,7 +62,7 @@ function editGitHubImage(idx) {
     alert("Image updated successfully!");
 }
 
-// Master Language Dictionary (English & Urdu fully detailed)
+// Master Language Dictionary
 const translations = {
     en: {
         title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
@@ -150,7 +151,8 @@ let researchFolders = [
 ];
 
 function renderFolderGrids() {
-    const currentLang = document.getElementById('langSelect').value;
+    const langSelect = document.getElementById('langSelect');
+    const currentLang = langSelect ? langSelect.value : (localStorage.getItem('royal_lang') || 'en');
     const t = translations[currentLang] || translations.en;
 
     const tradeGrid = document.getElementById('trade-folders-grid');
@@ -210,7 +212,8 @@ function openSubFolder(type, id) {
     currentActiveFolderId = id;
     const list = type === 'trade' ? tradeFolders : researchFolders;
     const index = list.findIndex(x => x.id === id);
-    const currentLang = document.getElementById('langSelect').value;
+    const langSelect = document.getElementById('langSelect');
+    const currentLang = langSelect ? langSelect.value : (localStorage.getItem('royal_lang') || 'en');
     const t = translations[currentLang] || translations.en;
     const localizedList = type === 'trade' ? (t.tradeFolders || []) : (t.researchFolders || []);
     const folderInfo = localizedList[index] || { title: 'Folder Hub', desc: 'Operational description.' };
@@ -301,8 +304,15 @@ function askFolderAI() {
 }
 
 window.onload = function() {
-    renderGitHubGallery();
-    renderFolderGrids();
+    const savedLang = localStorage.getItem('royal_lang');
+    const langSelect = document.getElementById('langSelect');
+    if(savedLang && langSelect) {
+        langSelect.value = savedLang;
+        changeLanguage(savedLang, false);
+    } else {
+        renderGitHubGallery();
+        renderFolderGrids();
+    }
 };
 
 function switchView(viewId) {
@@ -348,7 +358,11 @@ function addNewMainFolder() {
     alert('New folder hub created successfully!');
 }
 
-function changeLanguage(lang) {
+function changeLanguage(lang, saveToStorage = true) {
+    if(saveToStorage) {
+        localStorage.setItem('royal_lang', lang);
+    }
+    
     const t = translations[lang] || translations.en;
     if(t.title) document.getElementById('site-title').innerText = t.title;
     if(t.sub) document.getElementById('site-sub').innerText = t.sub;
@@ -356,13 +370,15 @@ function changeLanguage(lang) {
     if(t.hHead) document.getElementById('hero-heading').innerHTML = t.hHead;
     if(t.hDesc) document.getElementById('hero-desc').innerText = t.hDesc;
     if(t.tLabel) document.getElementById('trade-tag-label').innerText = t.tLabel;
-    if(t.rLabel) document.getElementById('research-tag-label').innerText = t.rLabel;
+    if(t.rLabel) document.عد = document.getElementById('research-tag-label').innerText = t.rLabel;
     if(t.thTitle) document.getElementById('trade-head-title').innerText = t.thTitle;
     if(t.thDesc) document.getElementById('trade-head-desc').innerText = t.thDesc;
     if(t.rhTitle) document.getElementById('research-head-title').innerText = t.rhTitle;
     if(t.rhDesc) document.getElementById('research-head-desc').innerText = t.rhDesc;
     
+    renderGitHubGallery();
     renderFolderGrids();
+    
     const rtlLangs = ['ur', 'ar', 'fa', 'ps'];
     document.body.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
 }
