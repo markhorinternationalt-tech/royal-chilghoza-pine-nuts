@@ -1,217 +1,368 @@
+// 8 Unique GitHub Project Images Database
+let githubImagesDB = [
+    { id: 1, title: "Chilgoza Forest Habitat", caption: "Natural Forests", desc: "High altitude pine forests in Gilgit-Baltistan.", url: "01-forest.jpg" },
+    { id: 2, title: "Traditional Harvesting", caption: "Safe Collection", desc: "Sustainable harvesting by local mountain communities.", url: "02-harvest.jpg" },
+    { id: 3, title: "Raw In-Shell Nuts", caption: "Grade A Quality", desc: "Directly harvested from Chilas high mountain valleys.", url: "03-inshell.jpg" },
+    { id: 4, title: "Selected Kernels", caption: "Premium Sorting", desc: "Carefully sorted and graded organic kernels.", url: "04-kernels.jpg" },
+    { id: 5, title: "Modern Processing", caption: "Hygienic Units", desc: "State-of-the-art cleaning and packaging units.", url: "05-processing.jpg" },
+    { id: 6, title: "Laboratory Quality", caption: "Testing Purity", desc: "Tested for purity, nutrition, and natural oils composition.", url: "06-lab.jpg" },
+    { id: 7, title: "Global Export Logistics", caption: "Secure Shipping", desc: "International transit and customs clearance protocols.", url: "07-logistics.jpg" },
+    { id: 8, title: "Diamer Mountain Ecosystem", caption: "Sustainable Research Hub", desc: "Preserving local ecology and supporting sustainable trade.", url: "08-chilghoza-forest.jpg" }
+];
+
+let isAdminLoggedIn = false;
+
+function openAdminModal() {
+    const pwd = prompt("Enter Admin Password (default: admin_chilas_2026):");
+    if(pwd === "admin_chilas_2026" || pwd === "admin") {
+        isAdminLoggedIn = true;
+        document.getElementById('adminControlPanel').style.display = 'block';
+        document.getElementById('adminMediaBox').style.display = 'block';
+        document.getElementById('admin-login-btn').innerText = "🔓 Admin Active";
+        renderGitHubGallery();
+        renderFolderGrids();
+        alert("Admin Access Granted! You can now edit images, create custom themes, and manage folders.");
+    } else if(pwd !== null) {
+        alert("Incorrect password!");
+    }
+}
+
+function renderGitHubGallery() {
+    const container = document.getElementById('githubGalleryContainer');
+    container.innerHTML = '';
+    githubImagesDB.forEach((img, idx) => {
+        let html = `
+            <div class="github-img-card">
+                <img src="${img.url}" alt="${img.title}" onerror="this.src='08-chilghoza-forest.jpg'">
+                <h4>${img.title}</h4>
+                <p><strong>${img.caption}</strong><br>${img.desc}</p>
+        `;
+        if(isAdminLoggedIn) {
+            html += `<button onclick="editGitHubImage(${idx})" style="background:var(--text-gold); color:var(--bg-primary); border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer; font-weight:600; margin-top:4px;">Edit Details</button>`;
+        }
+        html += `</div>`;
+        container.innerHTML += html;
+    });
+}
+
+function editGitHubImage(idx) {
+    const item = githubImagesDB[idx];
+    const newTitle = prompt("Edit Title:", item.title);
+    if(newTitle === null) return;
+    const newCaption = prompt("Edit Caption:", item.caption);
+    const newDesc = prompt("Edit Description:", item.desc);
+    const newUrl = prompt("Edit Image Filename/URL:", item.url);
+
+    item.title = newTitle || item.title;
+    item.caption = newCaption || item.caption;
+    item.desc = newDesc || item.desc;
+    item.url = newUrl || item.url;
+    renderGitHubGallery();
+    alert("Image updated successfully!");
+}
+
+// Master Language Dictionary (English & Urdu fully detailed)
 const translations = {
     en: {
-        brandTitle: "ROYAL CHILGHOZA",
-        subBrand: "PINE NUTS",
-        heroTop: "PAKISTAN • ORIGIN • GLOBAL",
-        heroMain: "Royal Chilghoza Pine Nuts",
-        heroDesc: "From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.",
-        tagTrade: "CHILGHOZA PINE NUTS",
-        folderTrade: "GLOBAL TRADE",
-        descTrade: "Premium quality • Worldwide export →",
-        tagResearch: "CHILGHOZA",
-        folderResearch: "RESEARCH & KNOWLEDGE",
-        descResearch: "Science • Origin • Forests • Quality →",
-        galleryTitle: "Exhibition Gallery & Field Logs",
-        aiTitle: "🤖 Royal AI Assistant",
-        aiDesc: "Ask anything about our harvests, B2B trade terms, or forest origins.",
-        aiSend: "Send",
-        footerTitle: "Office Address & Contact",
-        chinaOffice: "🇨🇳 China Office",
-        islamabadOffice: "🇵🇰 Islamabad Office",
-        chilasOffice: "🏔️ Chilas Office",
-        afghanOffice: "🇦🇫 Afghanistan Office"
+        title: "ROYAL CHILGOZA", sub: "GLOBAL ECOSYSTEM", wa: "💬 WhatsApp",
+        badge: "PAKISTAN • INTERNATIONAL TRADE & RESEARCH",
+        hHead: "Royal Chilgoza <span>Ecosystem</span>",
+        hDesc: "Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.",
+        tLabel: "Business & Commerce", tTitle: "Global Trade", tDesc: "10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →",
+        rLabel: "Science & Ecology", rTitle: "Research & Knowledge", rDesc: "10 detailed research folders on origin, forestry, botany, nutrition & sustainability →",
+        thTitle: "🌍 GLOBAL TRADE HUBS", thDesc: "Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.",
+        rhTitle: "🌲 RESEARCH & KNOWLEDGE HUBS", rhDesc: "Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.",
+        tradeFolders: [
+            { title: 'Global Markets', desc: 'Global demand, market opportunities and international trade destinations.' },
+            { title: 'USA Market & Buyers', desc: 'U.S. buyers, importers, market opportunities and business connections.' },
+            { title: 'China Market & Buyers', desc: 'Chinese buyers, traders, importers and commercial opportunities.' },
+            { title: 'Export & Logistics', desc: 'Export documentation, customs, shipping, delivery and international logistics.' },
+            { title: 'Product & Quality', desc: 'Kernels, in-shell nuts, roasting, grades, specifications and quality standards.' },
+            { title: 'Supply Chain & Traceability', desc: 'Forest → collector → processing → packing → export, with transparent traceability.' },
+            { title: 'Geographical Indication (GI)', desc: 'Origin, identity, authenticity, geographical reputation and product traceability.' },
+            { title: 'Organic Chemistry & Natural Quality', desc: 'Natural oils, chemical composition, purity, nutritional properties and quality characteristics.' },
+            { title: 'Processing, Packaging & Value Addition', desc: 'Processing, grading, roasting, packaging, branding and premium product development.' },
+            { title: 'Sustainable & Ethical Trade', desc: 'Responsible sourcing, fair value, community benefits and conservation-linked trade.' }
+        ],
+        researchFolders: [
+            { title: 'Geographical Origin & GI Research', desc: 'Chilgoza origin, geographical identity, traditional knowledge and GI research.' },
+            { title: 'Chilgoza Biology & Botany', desc: 'Tree biology, growth, reproduction, seed development and natural regeneration.' },
+            { title: 'Nutrition Value & Natural Composition', desc: 'Protein, natural oils, minerals, nutrients and scientific composition.' },
+            { title: 'Chilgoza Forests & Ecology', desc: 'Forest ecosystems, ecological functions, regeneration and sustainable forest management.' },
+            { title: 'Biodiversity & Wildlife', desc: 'Wildlife habitats, biodiversity, ecosystem services and conservation values.' },
+            { title: 'Climate & Global Green Environment', desc: 'Climate resilience, carbon, water, soil protection and global environmental benefits.' },
+            { title: 'Forest Conservation & Restoration', desc: 'Forest protection, restoration, natural regeneration, plantation and sustainable management.' },
+            { title: 'Supply Chain & Community Livelihoods', desc: 'Local collectors, rural livelihoods, value chains, income generation and poverty reduction.' },
+            { title: 'Sustainable Harvesting & Community Awareness', desc: 'Safe harvesting, forest protection, community training and conservation awareness.' },
+            { title: 'Research, Policy & Partnerships', desc: 'Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.' }
+        ]
     },
     ur: {
-        brandTitle: "رائل چلغوزہ",
-        subBrand: "پائن نٹس",
-        heroTop: "پاکستان • اوریجن • گلوبل",
-        heroMain: "رائل چلغوزہ پائن نٹس",
-        heroDesc: "پاکستان کے چلغوزے کے جنگلات سے پوری دنیا تک — اعلیٰ ترین معیار، اصل اور ذمہ دارانہ سپلائی چین کا امتزاج۔",
-        tagTrade: "چلغوزہ پائن نٹس",
-        folderTrade: "گلوبل ٹریڈ (عالمی تجارت)",
-        descTrade: "اعلیٰ معیار • دنیا بھر میں برآمدات →",
-        tagResearch: "چلغوزہ ریسرچ",
-        folderResearch: "ریسرچ اور نالج (تحقیق)",
-        descResearch: "سائنس • اوریجن • جنگلات • معیار →",
-        galleryTitle: "نمائش گیلری اور فیلڈ لاگز (تمام 8 تصاویر)",
-        aiTitle: "🤖 رائل اے آئی اسسٹنٹ",
-        aiDesc: "ہمارے ہارویسٹ، تجارتی شرائط اور جنگلات کے بارے میں کچھ بھی پوچھیں۔",
-        aiSend: "ارسال کریں",
-        footerTitle: "دفتری پتہ اور رابطے",
-        chinaOffice: "🇨🇳 چین آفس",
-        islamabadOffice: "🇵🇰 اسلام آباد آفس",
-        chilasOffice: "🏔️ چلاس آفس",
-        afghanOffice: "🇦🇫 افغانستان آفس"
-    },
-    zh: {
-        brandTitle: "皇家松子",
-        subBrand: "松子仁",
-        heroTop: "巴基斯坦 • 原产地 • 全球",
-        heroMain: "皇家松子仁",
-        heroDesc: "从巴基斯坦的松子林走向世界——连接优质品质、真实产源和可靠供应链。",
-        tagTrade: "松子仁",
-        folderTrade: "全球贸易",
-        descTrade: "优质品质 • 全球出口 →",
-        tagResearch: "松子研究",
-        folderResearch: "研究与知识",
-        descResearch: "科学 • 产地 • 森林 • 质量 →",
-        galleryTitle: "展会画廊与实地日志",
-        aiTitle: "🤖 皇家人工智能助手",
-        aiDesc: "随时咨询我们的收成、B2B贸易条款或森林产地。",
-        aiSend: "发送",
-        footerTitle: "办公地址与联系方式",
-        chinaOffice: "🇨🇳 中国办事处",
-        islamabadOffice: "🇵🇰 伊斯兰堡办事处",
-        chilasOffice: "🏔️ 奇拉斯办事处",
-        afghanOffice: "🇦🇫 阿富汗办事处"
+        title: "رائل چلغوزہ", sub: "گلوبل سسٹم", wa: "💬 واٹس ایپ",
+        badge: "پاکستان • بین الاقوامی تجارت اور تحقیق",
+        hHead: "رائل چلغوزہ <span>گلوبل سسٹم</span>",
+        hDesc: "پرافیشنل تجارتی منڈیوں اور سائنسی تحقیقی فولڈرز کا جائزہ لیں۔ ایڈمن موڈ کے ذریعے لائیو قابلِ ترمیم۔",
+        tLabel: "تجارت اور کاروبار", tTitle: "گلوبل ٹریڈ (عالمی تجارت)", tDesc: "10 جامع بین الاقوامی تجارتی ڈائریکٹریاں، میڈیا، اے آئی اور واٹس ایپ رابطے کے ساتھ →",
+        rLabel: "سائنس اور ماحولیات", tTitle: "ریسرچ اور نالج (تحقیق)", tDesc: "ماخذ، جنگلات، نباتات، غذایت اور پائیداری پر 10 تفصیلی تحقیقی فولڈرز →",
+        thTitle: "🌍 گلوبل ٹریڈ حبز", thDesc: "میڈیا گیلری، ویڈیوز، پی ڈی ایف اور رائل اے آئی اسسٹنٹ پر مشتمل منی ویب سائٹ کھولنے کے لیے نیچے کسی بھی زمرے کا انتخاب کریں۔",
+        rhTitle: "🌲 ریسرچ اور نالج حبز", rhDesc: "مخصوص دستاویزات، تحقیقی رپورٹس، اے آئی اسسٹنٹ اور تجارتی معلومات کے لیے سائنسی زمرے کا انتخاب کریں۔",
+        tradeFolders: [
+            { title: 'عالمی مارکیٹس', desc: 'عالمی طلب، مارکیটের مواقع اور بین الاقوامی تجارتی مقامات۔' },
+            { title: 'امریکہ مارکیٹ اور خریدار', desc: 'امریکہ کے خریدار، درآمد کنندگان، مارکیٹ کے مواقع اور کاروباری روابط۔' },
+            { title: 'چین مارکیٹ اور خریدار', desc: 'چینی خریدار، تاجر، درآمد کنندگان اور تجارتی مواقع۔' },
+            { title: 'برآمدات اور لاجسٹکس', desc: 'برآمدی دستاویزات، کسٹم، شپنگ، ترسیل اور بین الاقوامی لاجسٹکس۔' },
+            { title: 'مصنوعات اور معیار', desc: 'مغزیات، چھلکے والے میوے، روسٹنگ، درجات، خصوصیات اور کوالٹی کے معیارات۔' },
+            { title: 'سپلائی چین اور ٹریس ایبلٹی', desc: 'جنگل ← جمع کرنے والا ← پروسیسنگ ← پیکنگ ← برآمد، شفاف ٹریس ایبلٹی کے ساتھ۔' },
+            { title: 'جیوگرافیکل انڈیکیشن (GI)', desc: 'ماخذ، شناخت، اصلیت، جغرافیائی شہرت اور پروڈکٹ ٹریس ایبلٹی۔' },
+            { title: 'نامیاتی کیمسٹری اور قدرتی معیار', desc: 'قدرتی تیل، کیمیائی ساخت، خلوص، غذائی خصوصیات اور کوالٹی کی خصوصیات۔' },
+            { title: 'پروسیسنگ، پیکنگ اور ویلیو ایڈیشن', desc: 'پروسیسنگ، گریڈنگ، روسٹنگ، پیکنگ، برانڈنگ اور پریمیم پروڈکٹ کی تیاری۔' },
+            { title: 'پائیدار اور اخلاقی تجارت', desc: 'ذمہ دارانہ سورسنگ، منصفانہ قدر، کمیونٹی کے فوائد اور تحفظ سے جڑی تجارت۔' }
+        ],
+        researchFolders: [
+            { title: 'جغرافیائی ماخذ اور GI ریسرچ', desc: 'چلغوزے کا ماخذ، جغرافیائی شناخت، روایتی علم اور GI تحقیق۔' },
+            { title: 'چلغوزے کی بائیولوجی اور باٹنی', desc: 'درخت کی بائیولوجی، نشوونما، افزائش، بیج کی ترقی اور قدرتی بحالی۔' },
+            { title: 'غذائی قدر اور قدرتی ساخت', desc: 'پروٹین، قدرتی تیل، معدنیات، غذائی اجزاء اور سائنسی ساخت۔' },
+            { title: 'چلغوزے کے جنگلات اور ماحولیات', desc: 'جنگلات کے ماحولیاتی نظام، ماحولیاتی افعال، بحالی اور پائیدار جنگلات کا انتظام۔' },
+            { title: 'حیاتیاتی تنوع اور جنگلی حیات', desc: 'جنگلی حیات کے مسکن، حیاتیاتی تنوع، ماحولیاتی نظام کی خدمات اور تحفظ کی قدریں۔' },
+            { title: 'موسم اور عالمی سبز ماحول', desc: 'موسمی لچک، کاربن، پانی، مٹی کا تحفظ اور عالمی ماحولیاتی فوائد۔' },
+            { title: 'جنگلات کا تحفظ اور بحالی', desc: 'جنگلات کا تحفظ، بحالی، قدرتی بحالی، پودے لگانا اور پائیدار انتظام۔' },
+            { title: 'سپلائی چین اور کمیونٹی کی روزی روٹی', desc: 'مقامی جمع کرنے والے، دیہی روزی روٹی، ویلیو چینز اور غربت کا خاتمہ۔' },
+            { title: 'پائیدار کٹائی اور کمیونٹی آگاہی', desc: 'محفوظ کٹائی، جنگلات کا تحفظ، کمیونٹی کی تربیت اور تحفظ کی آگاہی۔' },
+            { title: 'تحقیق، پالیسی اور شراکت داریاں', desc: 'تحقیقی علم، حکومتی پالیسی، FAO، GEF، NGOs، ادارے اور مستقبل کی شراکت داریاں۔' }
+        ]
     }
 };
 
-// Complete 8 Gallery Images Array
-const galleryImages = [
-    { file: "01-chilghoza-lot.jpg", caption: "01. Chilghoza Bulk Lot Selection & Grading" },
-    { file: "02-chilghoza-cones.jpg", caption: "02. Freshly Harvested Wild Pine Cones" },
-    { file: "03-chilghoza-kernel.jpg", caption: "03. Premium Cleaned Raw Kernels" },
-    { file: "04-chilghoza-harvest.jpg", caption: "04. Forest Gathering & Harvesting Season" },
-    { file: "05-chilghoza-raw-kernels.jpg", caption: "05. In-Shell Wholesale Stock View" },
-    { file: "06-chilghoza-cone-closeup.jpg", caption: "06. Cone Close-up & Purity Indicator" },
-    { file: "07-chilghoza-products-displ.jpg", caption: "07. Export Ready Display Packets" },
-    { file: "08-chilghoza-forest.jpg", caption: "08. High Altitude Native Chilghoza Forest" }
-];
+let folderMediaDB = {};
+let currentActiveFolderId = null;
+let previousMainView = 'trade-main-view';
 
 let tradeFolders = [
-    "Global Markets (USA, China, Central Asia)",
-    "Export & Logistics & Packaging",
-    "Product & Quality Specifications",
-    "Buyers & Bulk Pricing Direct Desk"
+    { id: 't1', tag: '01' }, { id: 't2', tag: '02' }, { id: 't3', tag: '03' }, { id: 't4', tag: '04' },
+    { id: 't5', tag: '05' }, { id: 't6', tag: '06' }, { id: 't7', tag: '07' }, { id: 't8', tag: '08' },
+    { id: 't9', tag: '09' }, { id: 't10', tag: '10' }
 ];
 
 let researchFolders = [
-    "Geographical Indication (GI) & Origin",
-    "Chilghoza Forests Ecology & Harvesting",
-    "Global Environment & Climate Impact",
-    "Organic & Natural Product Claims"
+    { id: 'r1', tag: '01' }, { id: 'r2', tag: '02' }, { id: 'r3', tag: '03' }, { id: 'r4', tag: '04' },
+    { id: 'r5', tag: '05' }, { id: 'r6', tag: '06' }, { id: 'r7', tag: '07' }, { id: 'r8', tag: '08' },
+    { id: 'r9', tag: '09' }, { id: 'r10', tag: '10' }
 ];
 
-let activeFolderType = '';
+function renderFolderGrids() {
+    const currentLang = document.getElementById('langSelect').value;
+    const t = translations[currentLang] || translations.en;
 
-document.addEventListener("DOMContentLoaded", () => {
-    renderGallery();
-});
+    const tradeGrid = document.getElementById('trade-folders-grid');
+    if(tradeGrid) {
+        tradeGrid.innerHTML = '';
+        tradeFolders.forEach((f, index) => {
+            const localized = (t.tradeFolders && t.tradeFolders[index]) ? t.tradeFolders[index] : { title: 'Custom Hub', desc: 'Custom folder hub.' };
+            tradeGrid.innerHTML += `
+                <div class="card" onclick="openSubFolder('trade', '${f.id}')">
+                    <div>
+                        <div class="card-tag">Hub ${f.tag}</div>
+                        <div class="card-title">${localized.title}</div>
+                        <div class="card-desc">${localized.desc}</div>
+                    </div>
+                    <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</span>
+                        ${isAdminLoggedIn ? `<button onclick="event.stopPropagation(); deleteFolder('trade', '${f.id}')" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer;">Delete</button>` : ''}
+                    </div>
+                </div>`;
+        });
+    }
 
-function renderGallery() {
-    const galleryContainer = document.getElementById("imageGallery");
-    if (!galleryContainer) return;
-    galleryContainer.innerHTML = "";
+    const researchGrid = document.getElementById('research-folders-grid');
+    if(researchGrid) {
+        researchGrid.innerHTML = '';
+        researchFolders.forEach((f, index) => {
+            const localized = (t.researchFolders && t.researchFolders[index]) ? t.researchFolders[index] : { title: 'Custom Research Hub', desc: 'Custom research folder.' };
+            researchGrid.innerHTML += `
+                <div class="card" onclick="openSubFolder('research', '${f.id}')">
+                    <div>
+                        <div class="card-tag">Hub ${f.tag}</div>
+                        <div class="card-title">${localized.title}</div>
+                        <div class="card-desc">${localized.desc}</div>
+                    </div>
+                    <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.75rem; color:var(--text-gold); font-weight:600;">Open Folder Website →</span>
+                        ${isAdminLoggedIn ? `<button onclick="event.stopPropagation(); deleteFolder('research', '${f.id}')" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer;">Delete</button>` : ''}
+                    </div>
+                </div>`;
+        });
+    }
+}
+
+function deleteFolder(type, id) {
+    if(!confirm("Are you sure you want to delete this folder?")) return;
+    if(type === 'trade') {
+        tradeFolders = tradeFolders.filter(x => x.id !== id);
+    } else {
+        researchFolders = researchFolders.filter(x => x.id !== id);
+    }
+    renderFolderGrids();
+    alert("Folder removed successfully!");
+}
+
+function openSubFolder(type, id) {
+    previousMainView = type === 'trade' ? 'trade-main-view' : 'research-main-view';
+    currentActiveFolderId = id;
+    const list = type === 'trade' ? tradeFolders : researchFolders;
+    const index = list.findIndex(x => x.id === id);
+    const currentLang = document.getElementById('langSelect').value;
+    const t = translations[currentLang] || translations.en;
+    const localizedList = type === 'trade' ? (t.tradeFolders || []) : (t.researchFolders || []);
+    const folderInfo = localizedList[index] || { title: 'Folder Hub', desc: 'Operational description.' };
+    const originalFolder = list[index] || { tag: 'NEW' };
     
-    galleryImages.forEach((img, index) => {
-        galleryContainer.innerHTML += `
-            <div class="gallery-item">
-                <img src="${img.file}" alt="Chilghoza Asset">
-                <div class="caption-box">
-                    <textarea onchange="updateCaption(${index}, this.value)">${img.caption}</textarea>
-                    <button onclick="removeImage(${index})" style="background:#a00; color:#fff; border:none; padding:4px 8px; margin-top:5px; border-radius:4px; cursor:pointer;">Remove</button>
-                </div>
-            </div>
-        `;
-    });
-}
-
-function updateCaption(index, newText) {
-    galleryImages[index].caption = newText;
-}
-
-function removeImage(index) {
-    galleryImages.splice(index, 1);
-    renderGallery();
-}
-
-function openFolderModal(type) {
-    activeFolderType = type;
-    const modal = document.getElementById("folderModal");
-    const title = document.getElementById("modalTitle");
-    const container = document.getElementById("modalSubFolders");
+    document.getElementById('sub-folder-tag').innerText = `Folder ${originalFolder.tag} — ${type.toUpperCase()}`;
+    document.getElementById('sub-folder-title').innerText = folderInfo.title;
+    document.getElementById('sub-folder-desc').innerText = folderInfo.desc;
+    document.getElementById('aiFolderResponse').innerText = `Royal AI: Ready to assist with ${folderInfo.title}. Ask any question below.`;
     
-    title.innerText = type === 'trade' ? "Global Trade Sub-Folders" : "Research & Knowledge Sub-Folders";
-    let folders = type === 'trade' ? tradeFolders : researchFolders;
-    container.innerHTML = "";
+    renderFolderMedia();
+    switchView('sub-folder-view');
+}
+
+function goBackToList() {
+    switchView(previousMainView);
+}
+
+function addFolderMedia() {
+    if(!currentActiveFolderId) return;
+    const title = document.getElementById('mediaTitleInput').value;
+    const type = document.getElementById('mediaTypeInput').value;
+    const url = document.getElementById('mediaUrlInput').value;
+    if(!title || !url) return alert('Please enter title and filename/URL');
+
+    if(!folderMediaDB[currentActiveFolderId]) {
+        folderMediaDB[currentActiveFolderId] = [];
+    }
+    folderMediaDB[currentActiveFolderId].push({ title, type, url });
     
-    folders.forEach((folder, index) => {
-        container.innerHTML += `
-            <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <input type="text" value="${folder}" onchange="renameFolder('${type}', ${index}, this.value)" style="flex:1; background:var(--bg-primary); color:#fff; border:1px solid var(--accent-gold); padding:6px; border-radius:4px;">
-                <button onclick="deleteFolder('${type}', ${index})" style="background:#800; color:#fff; border:none; padding:6px 10px; border-radius:4px; cursor:pointer;">Del</button>
-            </div>
-        `;
-    });
-    modal.style.display = "block";
+    document.getElementById('mediaTitleInput').value = '';
+    document.getElementById('mediaUrlInput').value = '';
+    renderFolderMedia();
+    alert('Media added successfully!');
 }
 
-function closeFolderModal() {
-    document.getElementById("folderModal").style.display = "none";
-}
+function renderFolderMedia() {
+    const container = document.getElementById('folderMediaContainer');
+    if(!container) return;
+    container.innerHTML = '';
+    const items = folderMediaDB[currentActiveFolderId] || [];
+    
+    if(items.length === 0) {
+        container.innerHTML = `<p style="font-size:0.85rem; color:#9ca3af; grid-column: 1/-1; text-align:center; padding:15px;">No custom media or documents uploaded in this folder yet.</p>`;
+        return;
+    }
 
-function addNewSubFolder() {
-    let name = prompt("Enter new folder name:");
-    if(name) {
-        if(activeFolderType === 'trade') {
-            tradeFolders.push(name);
-        } else {
-            researchFolders.push(name);
+    items.forEach((item, idx) => {
+        let html = `<div class="media-card"><div style="font-weight:650; color:var(--text-gold); margin-bottom:6px;">${item.title}</div>`;
+        if(item.type === 'image') {
+            html += `<img src="${item.url}" alt="Image" onerror="this.src='08-chilghoza-forest.jpg'">`;
+        } else if(item.type === 'video') {
+            html += `<video controls src="${item.url}"></video>`;
+        } else if(item.type === 'pdf') {
+            html += `<a href="${item.url}" target="_blank" class="pdf-link">📄 View PDF Document</a>`;
         }
-        openFolderModal(activeFolderType);
-    }
+        if(isAdminLoggedIn) {
+            html += `<button onclick="removeMedia(${idx})" style="background:none; border:none; color:#f87171; font-size:0.75rem; cursor:pointer; margin-top:4px;">Remove Item</button>`;
+        }
+        html += `</div>`;
+        container.innerHTML += html;
+    });
 }
 
-function renameFolder(type, index, newName) {
-    if(type === 'trade') {
-        tradeFolders[index] = newName;
-    } else {
-        researchFolders[index] = newName;
-    }
+function removeMedia(idx) {
+    folderMediaDB[currentActiveFolderId].splice(idx, 1);
+    renderFolderMedia();
 }
 
-function deleteFolder(type, index) {
-    if(type === 'trade') {
-        tradeFolders.splice(index, 1);
-    } else {
-        researchFolders.splice(index, 1);
-    }
-    openFolderModal(type);
-}
-
-function askRoyalAI() {
-    let query = document.getElementById("aiQuery").value;
-    let responseBox = document.getElementById("aiResponse");
-    if(!query) return;
-    
-    responseBox.innerHTML = "Processing query via Royal AI Assistant...";
+function askMainAI() {
+    const query = document.getElementById('mainAiQuery').value;
+    if(!query) return alert('Please enter your question for Royal AI');
+    const respBox = document.getElementById('mainAiResponse');
+    respBox.innerHTML = `<em>Thinking... analyzing ecosystem parameters...</em>`;
     setTimeout(() => {
-        responseBox.innerHTML = `<strong>Royal AI:</strong> Regarding "${query}" — our bulk inventory maintains high-grade natural moisture levels and verified origin standards across all international export channels.`;
+        respBox.innerHTML = `<strong>Royal AI Answer:</strong> Regarding "${query}", our Gilgit-Baltistan Chilgoza framework ensures verified organic origin and optimal export standards.`;
     }, 800);
 }
 
-function changeTheme(themeName) {
-    document.body.className = ""; 
-    if(themeName !== 'forest') {
-        document.body.classList.add(`theme-${themeName}`);
-    }
+function askFolderAI() {
+    const query = document.getElementById('aiFolderQuery').value;
+    if(!query) return alert('Please enter your question for Royal AI');
+    const respBox = document.getElementById('aiFolderResponse');
+    respBox.innerHTML = `<em>Thinking... analyzing section parameters...</em>`;
+    setTimeout(() => {
+        respBox.innerHTML = `<strong>Royal AI Answer:</strong> Based on professional standards regarding "${query}", our framework ensures 100% authenticity and optimal grading.`;
+    }, 800);
+}
+
+window.onload = function() {
+    renderGitHubGallery();
+    renderFolderGrids();
+};
+
+function switchView(viewId) {
+    document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function applyCustomTheme() {
+    const bg = document.getElementById('pickerBg').value;
+    const card = document.getElementById('pickerCard').value;
+    const header = document.getElementById('pickerHeader').value;
+    const heading = document.getElementById('pickerHeading').value;
+    const gold = document.getElementById('pickerGold').value;
+
+    document.documentElement.style.setProperty('--bg-primary', bg);
+    document.documentElement.style.setProperty('--bg-card', card);
+    document.documentElement.style.setProperty('--header-bg', header);
+    document.documentElement.style.setProperty('--heading-color', heading);
+    document.documentElement.style.setProperty('--text-gold', gold);
+}
+
+function setTheme(bg, card, header, heading, gold) {
+    document.getElementById('pickerBg').value = bg;
+    document.getElementById('pickerCard').value = card;
+    document.getElementById('pickerHeader').value = header;
+    document.getElementById('pickerHeading').value = heading;
+    document.getElementById('pickerGold').value = gold;
+    applyCustomTheme();
+}
+
+function addNewMainFolder() {
+    const title = document.getElementById('newMainTitle').value;
+    const desc = document.getElementById('newMainDesc').value;
+    if(!title) return alert('Please enter folder title');
+    const newId = 'custom_' + Date.now();
+    tradeFolders.push({ id: newId, tag: 'NEW' });
+    if(!translations.en.tradeFolders) translations.en.tradeFolders = [];
+    translations.en.tradeFolders.push({ title, desc });
+    renderFolderGrids();
+    document.getElementById('newMainTitle').value = '';
+    document.getElementById('newMainDesc').value = '';
+    alert('New folder hub created successfully!');
 }
 
 function changeLanguage(lang) {
-    const t = translations[lang];
-    if (!t) return;
+    const t = translations[lang] || translations.en;
+    if(t.title) document.getElementById('site-title').innerText = t.title;
+    if(t.sub) document.getElementById('site-sub').innerText = t.sub;
+    if(t.badge) document.getElementById('hero-badge').innerText = t.badge;
+    if(t.hHead) document.getElementById('hero-heading').innerHTML = t.hHead;
+    if(t.hDesc) document.getElementById('hero-desc').innerText = t.hDesc;
+    if(t.tLabel) document.getElementById('trade-tag-label').innerText = t.tLabel;
+    if(t.rLabel) document.getElementById('research-tag-label').innerText = t.rLabel;
+    if(t.thTitle) document.getElementById('trade-head-title').innerText = t.thTitle;
+    if(t.thDesc) document.getElementById('trade-head-desc').innerText = t.thDesc;
+    if(t.rhTitle) document.getElementById('research-head-title').innerText = t.rhTitle;
+    if(t.rhDesc) document.getElementById('research-head-desc').innerText = t.rhDesc;
     
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (t[key]) {
-            el.innerText = t[key];
-        }
-    });
-
-    if (lang === 'ur') {
-        document.documentElement.dir = 'rtl';
-    } else {
-        document.documentElement.dir = 'ltr';
-    }
+    renderFolderGrids();
+    const rtlLangs = ['ur', 'ar', 'fa', 'ps'];
+    document.body.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
 }
