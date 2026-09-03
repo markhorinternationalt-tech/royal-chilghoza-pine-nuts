@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Trade Hubs | Royal Chilgoza Ecosystem</title>
+  <style>
+    :root {
+      --bg-dark: #0b1a12;
+      --bg-card: #12261c;
+      --gold: #d4af37;
+      --gold-light: #f0d78c;
+      --text-main: #f5f5f0;
+      --text-muted: #b8c5b0;
+      --border: rgba(212, 175, 55, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 26, 18, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .logo span {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-admin { background: var(--gold); color: #0b1a12; }
+    .btn-wa { background: #25d366; color: white; }
+
+    .lang-select {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    /* Back Link */
+    .back-link {
+      display: inline-block;
+      margin: 25px 5% 10px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Page Hero */
+    .page-hero {
+      text-align: center;
+      padding: 30px 5% 50px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-hero .icon {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .page-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Hubs Grid */
+    .hubs-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5% 80px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .hub-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 26px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .hub-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    .hub-number {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .hub-card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .hub-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hub-card .open-link {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* WhatsApp Section */
+    .wa-section {
+      text-align: center;
+      padding: 40px 5% 70px;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: white;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .wa-btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .hub-card h2 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      ROYAL CHILGOZA
+      <span>GLOBAL ECOSYSTEM</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-admin">Admin</button>
+      <button class="btn btn-wa">WA</button>
+      <select class="lang-select">
+        <option>English</option>
+        <option>中文</option>
+        <option>العربية</option>
+        <option>پښتو</option>
+        <option>Русский</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Back -->
+  <a href="index.html" class="back-link">← Back to Home</a>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="icon">🌍</div>
+    <h1>Global Trade Hubs</h1>
+    <p>Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.</p>
+  </section>
+
+  <!-- 10 Hubs -->
+  <div class="hubs-container">
+
+    <div class="hub-card" onclick="location.href='hub-global-markets.html'">
+      <div class="hub-number">HUB 01</div>
+      <h2>Global Markets</h2>
+      <p>Global demand, market opportunities and international trade destinations.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-usa-market.html'">
+      <div class="hub-number">HUB 02</div>
+      <h2>USA Market & Buyers</h2>
+      <p>U.S. buyers, importers, market opportunities and business connections.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-china-market.html'">
+      <div class="hub-number">HUB 03</div>
+      <h2>China Market & Buyers</h2>
+      <p>Chinese buyers, traders, importers and commercial opportunities.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-export-logistics.html'">
+      <div class="hub-number">HUB 04</div>
+      <h2>Export & Logistics</h2>
+      <p>Export documentation, customs, shipping, delivery and international logistics.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-product-quality.html'">
+      <div class="hub-number">HUB 05</div>
+      <h2>Product & Quality</h2>
+      <p>Kernels, in-shell nuts, roasting, grades, specifications and quality standards.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-supply-chain.html'">
+      <div class="hub-number">HUB 06</div>
+      <h2>Supply Chain & Traceability</h2>
+      <p>Forest → collector → processing → packing → export, with transparent traceability.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-gi.html'">
+      <div class="hub-number">HUB 07</div>
+      <h2>Geographical Indication (GI)</h2>
+      <p>Origin, identity, authenticity, geographical reputation and product traceability.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-organic-chemistry.html'">
+      <div class="hub-number">HUB 08</div>
+      <h2>Organic Chemistry & Natural Quality</h2>
+      <p>Natural oils, chemical composition, purity, nutritional properties and quality characteristics.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-processing.html'">
+      <div class="hub-number">HUB 09</div>
+      <h2>Processing, Packaging & Value Addition</h2>
+      <p>Processing, grading, roasting, packaging, branding and premium product development.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card" onclick="location.href='hub-sustainable-trade.html'">
+      <div class="hub-number">HUB 10</div>
+      <h2>Sustainable & Ethical Trade</h2>
+      <p>Responsible sourcing, fair value, community benefits and conservation-linked trade.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+  </div>
+
+  <!-- WhatsApp -->
+  <section class="wa-section">
+    <a href="https://wa.me/920000000000" class="wa-btn" target="_blank">
+      💬 Chat on WhatsApp Now
+    </a>
+  </section>
+
+  <footer>
+    © 2026 Royal Chilgoza Ecosystem • Global Trade Hubs
+  </footer>
+
+</body>
+</html>
