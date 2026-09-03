@@ -1,186 +1,214 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Royal Chilghoza Pine Nuts</title>
-  <style>
-    :root{
-      --forest:#102f25;
-      --forest2:#173c2e;
-      --cream:#f5efdf;
-      --gold:#c8a45d;
-      --line:rgba(200,164,93,.72);
-      --glass:rgba(10,39,29,.72);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      background:var(--forest);
-      color:var(--cream);
-      font-family:Arial,Helvetica,sans-serif;
-    }
-    a{text-decoration:none;color:inherit}
-    .rc-home{
-      position:relative;
-      min-height:100vh;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg,rgba(8,29,22,.18),rgba(8,29,22,.88)),
-        url("001.jpg") center/cover no-repeat;
-    }
-    .rc-home:after{
-      content:"";
-      position:absolute;inset:0;
-      background:linear-gradient(180deg,rgba(6,24,18,.12) 0%,rgba(6,24,18,.24) 42%,#102f25 100%);
-      pointer-events:none;
-    }
-    .rc-wrap{position:relative;z-index:2;max-width:1180px;margin:auto;padding:0 22px}
-    .rc-header{
-      height:78px;display:flex;align-items:center;justify-content:space-between;
-      border-bottom:1px solid rgba(245,239,223,.24);
-    }
-    .rc-brand{font-size:12px;letter-spacing:.22em;font-weight:700;line-height:1.5}
-    .rc-brand span{display:block;font-weight:400;color:#ddd4bd}
-    .rc-lang{font-size:12px;letter-spacing:.14em;color:white;border:1px solid rgba(255,255,255,.45);padding:9px 13px;border-radius:999px;background:rgba(0,0,0,.16)}
-    .rc-hero{min-height:590px;display:flex;align-items:center;justify-content:center;text-align:center;padding:70px 0 55px}
-    .rc-kicker{font-size:12px;letter-spacing:.34em;color:var(--gold);font-weight:700}
-    .rc-title{
-      margin:15px auto 16px;
-      max-width:900px;
-      font-family:Georgia,"Times New Roman",serif;
-      font-weight:400;
-      font-size:clamp(48px,8vw,92px);
-      line-height:.98;
-      letter-spacing:-.025em;
-      color:var(--cream);
-      text-shadow:0 3px 22px rgba(0,0,0,.38);
-    }
-    .rc-sub{max-width:700px;margin:auto;color:#eee5d2;font-size:16px;line-height:1.8}
-    .rc-options{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;
-      margin-top:38px;
-    }
-    .rc-card{
-      min-height:175px;padding:28px 28px 25px;border:1px solid var(--line);
-      border-radius:20px;background:var(--glass);
-      backdrop-filter:blur(7px);box-shadow:0 18px 45px rgba(0,0,0,.24);
-      transition:.2s ease;
-    }
-    .rc-card:hover{transform:translateY(-3px);background:rgba(10,48,35,.82)}
-    .rc-card small{display:block;color:var(--gold);font-weight:700;letter-spacing:.24em;font-size:10px;margin-bottom:13px}
-    .rc-card h2{font-family:Georgia,"Times New Roman",serif;font-size:30px;font-weight:400;margin:0 0 10px}
-    .rc-card p{margin:0;color:#e5dcc8;line-height:1.65;font-size:14px}
-    .rc-section{background:var(--forest);padding:70px 0}
-    .rc-section h2{font-family:Georgia,"Times New Roman",serif;font-size:38px;font-weight:400;margin:0 0 12px}
-    .rc-section-intro{max-width:700px;color:#cfc6b2;line-height:1.7}
-    .rc-profile{text-align:center;padding:55px 0 25px}
-    .rc-profile img{width:130px;height:130px;object-fit:cover;border-radius:50%;border:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.3)}
-    .rc-profile h3{font-family:Georgia,serif;font-size:24px;font-weight:400;margin:17px 0 5px}
-    .rc-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
-    .rc-gallery img{width:100%;height:170px;object-fit:cover;border-radius:12px;border:1px solid rgba(200,164,93,.3)}
-    .rc-footer{padding:60px 0 45px;border-top:1px solid rgba(200,164,93,.25);color:#d5cbb6}
-    .rc-footer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .rc-office{padding:20px;border:1px solid rgba(200,164,93,.25);border-radius:14px;background:rgba(255,255,255,.025)}
-    .rc-office b{color:var(--gold);font-size:11px;letter-spacing:.15em}
-    .rc-office p{line-height:1.6;font-size:13px;margin:8px 0 0}
-    @media(max-width:720px){
-      .rc-options,.rc-footer-grid{grid-template-columns:1fr}
-      .rc-gallery{grid-template-columns:repeat(2,1fr)}
-      .rc-gallery img{height:130px}
-      .rc-hero{min-height:650px;padding-top:45px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Chilgoza Pine Nuts - Global Trade & Research Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!--
-  INDEX-ONLY VISUAL UPDATE
-  Purpose: apply the premium forest/cream/gold home look from the supplied backup.
-  Keep Gemini's existing app.js, styles.css, backend, CMS, folders, AI and language system.
-  Do NOT add the old Base64/43-image assets.
--->
-
-<section class="rc-home">
-  <div class="rc-wrap">
-    <header class="rc-header">
-      <div class="rc-brand">ROYAL CHILGHOZA <span>PINE NUTS</span></div>
-      <div class="rc-lang" aria-label="Language selector">ENGLISH ▾</div>
+    <header>
+        <div class="logo-area" onclick="switchView('home-view')">
+            <span class="logo-title" id="site-title">ROYAL CHILGOZA</span>
+            <span class="logo-sub" id="site-sub">GLOBAL ECOSYSTEM</span>
+        </div>
+        <div class="header-actions">
+            <button class="whatsapp-float admin-login-btn" onclick="openAdminModal()" id="admin-login-btn">🔐 Admin</button>
+            <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" id="wa-btn">💬 WA</a>
+            <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="ru">Русский</option>
+                <option value="ar">العربية</option>
+                <option value="ps">پښتو</option>
+                <option value="fa">فارسی</option>
+                <option value="id">Bahasa</option>
+                <option value="ms">Melayu</option>
+                <option value="tr">Türkçe</option>
+                <option value="ur">اردو</option>
+            </select>
+        </div>
     </header>
 
-    <div class="rc-hero">
-      <div>
-        <div class="rc-kicker">FROM THE FORESTS OF DIAMER</div>
-        <h1 class="rc-title">Royal Chilghoza<br>Pine Nuts</h1>
-        <p class="rc-sub">
-          A premium international gateway to Chilghoza pine nuts — connecting origin,
-          knowledge, responsible trade and global markets.
-        </p>
+    <div class="container">
+        <!-- HOME VIEW -->
+        <div id="home-view" class="view-section active">
+            
+            <div class="hero" style="background-image: linear-gradient(rgba(10, 25, 15, 0.88), rgba(10, 25, 15, 0.92)), url('08-chilghoza-forest.jpg');">
+                <div class="profile-container">
+                    <img src="profile.jpg" alt="Profile" class="profile-img" onerror="this.src='001.jpg'">
+                </div>
+                <span class="badge" id="hero-badge">PAKISTAN • INTERNATIONAL TRADE & RESEARCH</span>
+                <h1 id="hero-heading">Royal Chilgoza <span>Ecosystem</span></h1>
+                <p id="hero-desc">Explore professional trade markets and deep scientific research folders. Fully editable live via Admin Mode.</p>
+            </div>
 
-        <div class="rc-options">
-          <a class="rc-card" href="#global-trade">
-            <small>GLOBAL TRADE</small>
-            <h2>Trade &amp; Business</h2>
-            <p>Explore quality, supply, export, buyers, markets and international trade opportunities.</p>
-          </a>
-          <a class="rc-card" href="#research-knowledge">
-            <small>RESEARCH &amp; KNOWLEDGE</small>
-            <h2>Research &amp; Knowledge</h2>
-            <p>Discover Chilghoza forests, origin, harvesting, GI, science, biodiversity and communities.</p>
-          </a>
+            <!-- Main Folders Grid -->
+            <div class="card-grid">
+                <div class="card" onclick="switchView('trade-main-view')">
+                    <div>
+                        <div class="card-icon">🌍</div>
+                        <div class="card-tag" id="trade-tag-label">Business & Commerce</div>
+                        <div class="card-title" id="trade-main-title">Global Trade</div>
+                        <div class="card-desc" id="trade-main-desc">10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity →</div>
+                    </div>
+                </div>
+
+                <div class="card" onclick="switchView('research-main-view')">
+                    <div>
+                        <div class="card-icon">🌲</div>
+                        <div class="card-tag" id="research-tag-label">Science & Ecology</div>
+                        <div class="card-title" id="research-main-title">Research & Knowledge</div>
+                        <div class="card-desc" id="research-main-desc">10 detailed research folders on origin, forestry, botany, nutrition & sustainability →</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Royal AI Assistant Main Widget -->
+            <div class="ai-assistant-box">
+                <div style="font-family:'Cinzel',serif; font-size:1.2rem; color:var(--text-gold); margin-bottom:6px;" id="main-ai-title">🤖 Royal AI Assistant (Global Hub Expert)</div>
+                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;" id="main-ai-desc">Ask anything about Chilgoza export, origin, forestry, or trade specifications:</p>
+                <input type="text" id="mainAiQuery" placeholder="Ask AI assistant anything..." class="custom-input">
+                <button class="admin-btn" style="width:auto; margin-top:8px;" onclick="askMainAI()" id="main-ai-btn">Ask Royal AI</button>
+                <div class="ai-chat-output" id="mainAiResponse">Royal AI Assistant ready for global visitor inquiries...</div>
+            </div>
+
+            <!-- 8 GitHub Project Images Gallery Section -->
+            <div class="github-gallery-section">
+                <div class="card-tag" id="github-sec-tag">Project Gallery & Documentation</div>
+                <h3 style="font-family:'Cinzel',serif; color:var(--heading-color); font-size:1.3rem; margin-bottom:10px;" id="github-sec-title">Original 8 GitHub Project Images</h3>
+                <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:15px;" id="github-sec-desc">Loaded directly from your GitHub files with matching captions.</p>
+                <div class="github-gallery-grid" id="githubGalleryContainer"></div>
+            </div>
+
+            <!-- Admin Control Panel -->
+            <div class="theme-panel" id="adminControlPanel" style="display:none; border: 1px dashed var(--text-gold);">
+                <div style="width:100%; margin-bottom:15px; border-bottom:1px solid var(--card-border); padding-bottom:10px;">
+                    <h3 style="font-family:'Cinzel',serif; color:var(--text-gold);">⚙️ ADMIN CONTROL CENTER</h3>
+                    <p style="font-size:0.8rem; color:#cbd5e1;">Manage manual theme color sliders, folders, office addresses, and image metadata live.</p>
+                </div>
+                
+                <div style="width:100%; margin-bottom:15px;">
+                    <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label">Live Manual Theme Color Customizer</span>
+                    <div class="color-picker-group">
+                        <label>Primary BG: <input type="color" id="pickerBg" value="#0b1f15" onchange="applyCustomTheme()"></label>
+                        <label>Card BG: <input type="color" id="pickerCard" value="#122a1e" onchange="applyCustomTheme()"></label>
+                        <label>Header BG: <input type="color" id="pickerHeader" value="#0b1f15" onchange="applyCustomTheme()"></label>
+                        <label>Heading Text: <input type="color" id="pickerHeading" value="#f5f2eb" onchange="applyCustomTheme()"></label>
+                        <label>Gold Accent: <input type="color" id="pickerGold" value="#d4af37" onchange="applyCustomTheme()"></label>
+                    </div>
+                </div>
+
+                <div style="width:100%; margin-top: 15px;">
+                    <div class="card-tag" style="margin-bottom: 8px;">Create Custom Top-Level Folder Hub</div>
+                    <input type="text" id="newMainTitle" placeholder="Enter folder title..." class="custom-input">
+                    <textarea id="newMainDesc" placeholder="Enter description..." rows="2" class="custom-input"></textarea>
+                    <button class="admin-btn" onclick="addNewMainFolder()">+ Create New Folder Hub</button>
+                </div>
+            </div>
+
+            <!-- Manual Theme Presets Panel -->
+            <div class="theme-panel">
+                <span style="font-weight: 600; font-size: 0.9rem;" id="theme-label-pub">Theme Multi-Color Presets</span>
+                <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+                    <button onclick="setTheme('#0b1f15', '#122a1e', '#0b1f15', '#f5f2eb', '#d4af37')" class="preset-btn" style="background:#0b1f15; border-color:#d4af37;">Deep Forest</button>
+                    <button onclick="setTheme('#1a1a2e', '#16213e', '#1a1a2e', '#ffffff', '#e94560')" class="preset-btn" style="background:#1a1a2e; border-color:#e94560;">Royal Navy</button>
+                    <button onclick="setTheme('#2c1a1d', '#3d2427', '#2c1a1d', '#fff5f5', '#ecc94b')" class="preset-btn" style="background:#2c1a1d; border-color:#ecc94b;">Burgundy Gold</button>
+                    <button onclick="setTheme('#111827', '#1f2937', '#111827', '#f9fafb', '#38bdf8')" class="preset-btn" style="background:#111827; border-color:#38bdf8;">Slate Blue</button>
+                </div>
+            </div>
+
         </div>
-      </div>
+
+        <!-- TRADE MAIN LIST VIEW -->
+        <div id="trade-main-view" class="view-section">
+            <button class="back-btn" onclick="switchView('home-view')" id="back-home-1">← Back to Home</button>
+            <div class="hero">
+                <h1 style="font-size: 1.8rem;" id="trade-head-title">🌍 GLOBAL TRADE HUBS</h1>
+                <p id="trade-head-desc">Select any category below to open its dedicated mini-website featuring media galleries, video resources, PDF documents, and Royal AI Assistant.</p>
+            </div>
+            <div class="card-grid" id="trade-folders-grid"></div>
+        </div>
+
+        <!-- RESEARCH MAIN LIST VIEW -->
+        <div id="research-main-view" class="view-section">
+            <button class="back-btn" onclick="switchView('home-view')" id="back-home-2">← Back to Home</button>
+            <div class="hero">
+                <h1 style="font-size: 1.8rem;" id="research-head-title">🌲 RESEARCH & KNOWLEDGE HUBS</h1>
+                <p id="research-head-desc">Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.</p>
+            </div>
+            <div class="card-grid" id="research-folders-grid"></div>
+        </div>
+
+        <!-- DYNAMIC SUB-WEBSITE / FOLDER VIEW -->
+        <div id="sub-folder-view" class="view-section">
+            <button class="back-btn" onclick="goBackToList()" id="back-cat-btn">← Back to Categories</button>
+            <div class="sub-website-container">
+                <div class="sub-header">
+                    <span class="card-tag" id="sub-folder-tag">Category Hub</span>
+                    <h2 id="sub-folder-title">Folder Title</h2>
+                    <p id="sub-folder-desc">Detailed folder caption and operational description goes here.</p>
+                </div>
+
+                <div class="media-upload-box" id="adminMediaBox" style="display:none;">
+                    <div class="card-tag" style="margin-bottom:6px;">Admin Mode: Upload Media / Document to this Folder</div>
+                    <input type="text" id="mediaTitleInput" placeholder="Title (e.g. Batch Report / Lab Test)" class="custom-input">
+                    <select id="mediaTypeInput" class="custom-input">
+                        <option value="image">Image (JPG/PNG)</option>
+                        <option value="video">Video (MP4 link)</option>
+                        <option value="pdf">PDF Document</option>
+                    </select>
+                    <input type="text" id="mediaUrlInput" placeholder="Enter filename or URL (e.g., report.pdf)" class="custom-input">
+                    <button class="admin-btn" onclick="addFolderMedia()">+ Add to this Folder</button>
+                </div>
+
+                <div class="card-tag" style="margin-bottom: 10px;" id="gallery-box-title">Folder Content Gallery (Images, Videos & PDFs)</div>
+                <div class="media-grid" id="folderMediaContainer"></div>
+
+                <div class="ai-assistant-box">
+                    <div style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--text-gold); margin-bottom:6px;" id="ai-box-title">🤖 Royal AI Assistant (Folder Expert)</div>
+                    <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;" id="ai-box-desc">Ask anything specific about this folder topic:</p>
+                    <input type="text" id="aiFolderQuery" placeholder="Ask AI about specifications, origin, trade terms..." class="custom-input">
+                    <button class="admin-btn" style="padding:6px 12px; font-size:0.85rem;" onclick="askFolderAI()" id="ai-ask-btn">Ask AI Assistant</button>
+                    <div class="ai-chat-output" id="aiFolderResponse">AI ready to answer queries for this specific section...</div>
+                </div>
+
+                <div class="folder-whatsapp-bar">
+                    <div class="card-tag" id="wa-bar-tag">Instant Buyer & Researcher Support</div>
+                    <p style="font-size: 0.85rem; color: #d1d5db; margin: 5px 0 10px 0;" id="wa-bar-desc">Have a question regarding this specific section? Connect instantly via WhatsApp.</p>
+                    <a href="https://wa.me/920000000000" target="_blank" class="whatsapp-float" style="display: inline-flex; justify-content: center;" id="wa-bar-btn">💬 Chat on WhatsApp Now</a>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
-</section>
 
-<!-- Visual anchors only. Gemini's existing dynamic application can render its live content around/after this shell. -->
-<section class="rc-section" id="global-trade">
-  <div class="rc-wrap">
-    <h2>Global Trade</h2>
-    <p class="rc-section-intro">A premium presentation area for the existing Gemini trade folders and international business content.</p>
-  </div>
-</section>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-office-box" id="office-1">
+                <h4 id="off1-title">Office 1: Headquarters</h4>
+                <p id="off1-desc">Main Bazaar, Chilas, Diamer District, Gilgit-Baltistan, Pakistan<br>Phone: +92 5812 450123<br>Email: admin@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-2">
+                <h4 id="off2-title">Office 2: Export Hub</h4>
+                <p id="off2-desc">Silk Road Trade Center, Gilgit, Pakistan<br>Phone: +92 5811 450456<br>Email: export@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-3">
+                <h4 id="off3-title">Office 3: Processing Yard</h4>
+                <p id="off3-desc">Indus Valley Mineral Yard, Chilas, Pakistan<br>Phone: +92 5812 450789<br>Email: minerals@royalchilgoza.com</p>
+            </div>
+            <div class="footer-office-box" id="office-4">
+                <h4 id="off4-title">Office 4: Liaison Office</h4>
+                <p id="off4-desc">Blue Area, Islamabad, Pakistan<br>Phone: +92 51 8456789<br>Email: islamabad@royalchilgoza.com</p>
+            </div>
+        </div>
+        <div style="text-align:center;" id="footer-text">
+            © 2026 Royal Chilgoza Pine Nuts. All rights reserved.<br>Chilas, Diamer District, Gilgit-Baltistan, Pakistan.
+        </div>
+    </footer>
 
-<section class="rc-section" id="research-knowledge">
-  <div class="rc-wrap">
-    <h2>Research &amp; Knowledge</h2>
-    <p class="rc-section-intro">A premium presentation area for the existing Gemini research folders, GI work, science and field knowledge.</p>
-  </div>
-</section>
-
-<section class="rc-section">
-  <div class="rc-wrap">
-    <div class="rc-profile">
-      <img src="profile.jpg" alt="Royal Chilghoza profile">
-      <h3>Royal Chilghoza Pine Nuts</h3>
-      <p class="rc-section-intro">Origin, people, forests and global connection.</p>
-    </div>
-
-    <div class="rc-gallery" aria-label="Current GitHub project images">
-      <img src="01-chilghoza-lot.jpg" alt="">
-      <img src="02-chilghoza-cones.jpg" alt="">
-      <img src="03-chilghoza-kernel.jpg" alt="">
-      <img src="04-chilghoza-harvest.jpg" alt="">
-      <img src="05-chilghoza-raw-kernels.jpg" alt="">
-      <img src="06-chilghoza-cone-closeup.jpg" alt="">
-      <img src="07-chilghoza-products-display.jpg" alt="">
-      <img src="08-chilghoza-forest.jpg" alt="">
-    </div>
-  </div>
-</section>
-
-<footer class="rc-footer">
-  <div class="rc-wrap">
-    <div class="rc-footer-grid">
-      <div class="rc-office"><b>HEADQUARTERS</b><p>Main Bazaar, Chilas, Diamer District, Gilgit-Baltistan, Pakistan</p></div>
-      <div class="rc-office"><b>EXPORT HUB</b><p>Silk Road Trade Center, Gilgit, Pakistan</p></div>
-      <div class="rc-office"><b>PROCESSING YARD</b><p>Indus Valley Mineral Yard, Chilas, Pakistan</p></div>
-      <div class="rc-office"><b>LIAISON OFFICE</b><p>Blue Area, Islamabad, Pakistan</p></div>
-    </div>
-  </div>
-</footer>
-
+    <script src="app.js"></script>
 </body>
 </html>
