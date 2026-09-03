@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research & Knowledge Hubs | Royal Chilgoza Ecosystem</title>
+  <style>
+    :root {
+      --bg-dark: #0b1a12;
+      --bg-card: #12261c;
+      --gold: #d4af37;
+      --gold-light: #f0d78c;
+      --text-main: #f5f5f0;
+      --text-muted: #b8c5b0;
+      --border: rgba(212, 175, 55, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 26, 18, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .logo span {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-admin { background: var(--gold); color: #0b1a12; }
+    .btn-wa { background: #25d366; color: white; }
+
+    .lang-select {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 25px 5% 10px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .page-hero {
+      text-align: center;
+      padding: 30px 5% 50px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-hero .icon {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+
+    .page-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .hubs-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5% 80px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .hub-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 26px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .hub-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    .hub-number {
+      font-size: 0.8rem;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .hub-card h2 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    .hub-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 14px;
+    }
+
+    .hub-card .open-link {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .wa-section {
+      text-align: center;
+      padding: 40px 5% 70px;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: white;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .wa-btn:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      ROYAL CHILGOZA
+      <span>GLOBAL ECOSYSTEM</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-admin">Admin</button>
+      <button class="btn btn-wa">WA</button>
+      <select class="lang-select">
+        <option>English</option>
+        <option>中文</option>
+        <option>العربية</option>
+        <option>پښتو</option>
+        <option>Русский</option>
+      </select>
+    </div>
+  </header>
+
+  <a href="index.html" class="back-link">← Back to Home</a>
+
+  <section class="page-hero">
+    <div class="icon">🌲</div>
+    <h1>Research & Knowledge Hubs</h1>
+    <p>Select any scientific category below to explore dedicated documents, research reports, AI assistant, and direct trade inquiries.</p>
+  </section>
+
+  <div class="hubs-container">
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 01</div>
+      <h2>Geographical Origin & GI Research</h2>
+      <p>Chilgoza origin, geographical identity, traditional knowledge and GI research.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 02</div>
+      <h2>Chilgoza Biology & Botany</h2>
+      <p>Tree biology, growth, reproduction, seed development and natural regeneration.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 03</div>
+      <h2>Nutrition Value & Natural Composition</h2>
+      <p>Protein, natural oils, minerals, nutrients and scientific composition.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 04</div>
+      <h2>Chilgoza Forests & Ecology</h2>
+      <p>Forest ecosystems, ecological functions, regeneration and sustainable forest management.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 05</div>
+      <h2>Biodiversity & Wildlife</h2>
+      <p>Wildlife habitats, biodiversity, ecosystem services and conservation values.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 06</div>
+      <h2>Climate & Global Green Environment</h2>
+      <p>Climate resilience, carbon, water, soil protection and global environmental benefits.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 07</div>
+      <h2>Forest Conservation & Restoration</h2>
+      <p>Forest protection, restoration, natural regeneration, plantation and sustainable management.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 08</div>
+      <h2>Supply Chain & Community Livelihoods</h2>
+      <p>Local collectors, rural livelihoods, value chains, income generation and poverty reduction.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 09</div>
+      <h2>Sustainable Harvesting & Community Awareness</h2>
+      <p>Safe harvesting, forest protection, community training and conservation awareness.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+    <div class="hub-card">
+      <div class="hub-number">HUB 10</div>
+      <h2>Research, Policy & Partnerships</h2>
+      <p>Research knowledge, government policy, FAO, GEF, NGOs, institutions and future partnerships.</p>
+      <div class="open-link">Open Folder Website →</div>
+    </div>
+
+  </div>
+
+  <section class="wa-section">
+    <a href="https://wa.me/920000000000" class="wa-btn" target="_blank">
+      💬 Chat on WhatsApp Now
+    </a>
+  </section>
+
+  <footer>
+    © 2026 Royal Chilgoza Ecosystem • Research & Knowledge Hubs
+  </footer>
+
+</body>
+</html>
