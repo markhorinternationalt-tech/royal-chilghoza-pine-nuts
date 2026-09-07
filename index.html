@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Royal Chilghoza Pine Nuts</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* اگر کسی اضافی اسٹائل کی ضرورت ہو تو یہاں ڈالیں، ورنہ خالی */
-    </style>
 </head>
 <body>
 
@@ -19,8 +16,8 @@
     <header class="site-header">
         <a href="#" class="brand">
             <div class="profile-frame">
-                <!-- اپنی CEO تصویر کا نام درست کریں -->
-                <img src="Profile Picture CEO.jpg" alt="CEO">
+                <!-- راستہ درست کیا گیا: src/ -->
+                <img src="src/Profile Picture CEO.jpg" alt="CEO">
             </div>
             <div class="brand-copy">
                 <b>ROYAL CHILGHOZA</b>
@@ -79,14 +76,13 @@
         </div>
     </section>
 
-    <!-- ========== GATEWAY CARDS (Trade & Knowledge) ========== -->
+    <!-- ========== GATEWAY CARDS ========== -->
     <section class="section-shell" id="trade">
         <div class="section-heading">
             <h2>Chilghoza <span class="gold">Pine Nuts</span></h2>
             <p>Premium quality • Worldwide export →</p>
         </div>
         <div class="gateway-grid">
-            <!-- Card 1: Global Trade -->
             <div class="glass-card gateway-card" data-view="trade">
                 <div class="gateway-icon">🌍</div>
                 <h2>Global Trade</h2>
@@ -94,7 +90,6 @@
                 <p style="margin-top: 10px; color: var(--gold2);">Export & Logistics • Product & Quality • Buyers & Pricing • Supply Chain</p>
                 <div style="margin-top: 20px;"><a href="#" class="btn btn-gold" style="padding: 10px 22px;">View Details →</a></div>
             </div>
-            <!-- Card 2: Research & Knowledge -->
             <div class="glass-card gateway-card" data-view="knowledge">
                 <div class="gateway-icon">🔬</div>
                 <h2>Research & Knowledge</h2>
@@ -113,22 +108,21 @@
         </div>
         <div class="gallery-grid">
             <figure class="gallery-item">
-                <img src="01-chilghoza-lot.jpg" alt="Chilghoza lot" loading="lazy">
+                <img src="src/01-chilghoza-lot.jpg" alt="Chilghoza lot" loading="lazy">
                 <figcaption><span>Harvest</span> Freshly collected cones</figcaption>
             </figure>
             <figure class="gallery-item">
-                <img src="02-chilghoza-cones.jpg" alt="Cones" loading="lazy">
+                <img src="src/02-chilghoza-cones.jpg" alt="Cones" loading="lazy">
                 <figcaption><span>Forest</span> Chilghoza cones</figcaption>
             </figure>
             <figure class="gallery-item">
-                <img src="03-chilghoza-kernel.jpg" alt="Kernels" loading="lazy">
+                <img src="src/03-chilghoza-kernel.jpg" alt="Kernels" loading="lazy">
                 <figcaption><span>Quality</span> Premium kernels</figcaption>
             </figure>
             <figure class="gallery-item">
-                <img src="04-chilghoza-harvest.jpg" alt="Harvest" loading="lazy">
+                <img src="src/04-chilghoza-harvest.jpg" alt="Harvest" loading="lazy">
                 <figcaption><span>Tradition</span> Harvesting in the wild</figcaption>
             </figure>
-            <!-- مزید تصاویر چاہیں تو شامل کریں -->
         </div>
     </section>
 
@@ -163,7 +157,7 @@
         </a>
     </section>
 
-    <!-- ========== OFFICES (اختیاری) ========== -->
+    <!-- ========== OFFICES ========== -->
     <section class="offices-section" style="padding: 40px 0;">
         <div class="section-shell" style="padding: 0;">
             <div class="section-heading">
@@ -180,7 +174,6 @@
     </section>
 
     <!-- ========== FULL VIEW (HUB PAGES) ========== -->
-    <!-- یہ ڈیفالٹ طور پر چھپا ہوا ہے، جب گیٹ وے کارڈ پر کلک ہو تو کھلے گا -->
     <div class="full-view" id="fullView">
         <div class="view-topbar">
             <button id="closeFullView">← Back</button>
@@ -188,7 +181,7 @@
             <select><option>English</option></select>
         </div>
         <div class="hub-page" id="hubPage">
-            <!-- مواد جاوا اسکرپٹ کے ذریعے ڈالا جائے گا -->
+            <!-- Dynamic content -->
         </div>
     </div>
 
@@ -204,20 +197,18 @@
         </div>
     </dialog>
 
-    <!-- ========== SCRIPTS ========== -->
     <script>
         (function() {
-            // ---- Mobile Drawer ----
+            // Mobile Drawer
             const menuToggle = document.getElementById('menuToggle');
             const drawer = document.getElementById('mobileDrawer');
             const closeDrawer = document.getElementById('closeDrawer');
             function toggleDrawer() { drawer.classList.toggle('open'); }
             menuToggle.addEventListener('click', toggleDrawer);
             closeDrawer.addEventListener('click', toggleDrawer);
-            // Close drawer on link click
             drawer.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleDrawer));
 
-            // ---- Admin Dialog ----
+            // Admin Dialog
             const adminOpen = document.getElementById('adminOpen');
             const adminDialog = document.getElementById('adminDialog');
             const adminClose = document.getElementById('adminClose');
@@ -225,13 +216,12 @@
             adminClose.addEventListener('click', () => adminDialog.close());
             adminDialog.addEventListener('click', (e) => { if (e.target === adminDialog) adminDialog.close(); });
 
-            // ---- Gateway Cards -> Open Full View ----
+            // Gateway Cards -> Open Full View
             const fullView = document.getElementById('fullView');
             const closeFullView = document.getElementById('closeFullView');
             const viewTitle = document.getElementById('viewTitle');
             const hubPage = document.getElementById('hubPage');
 
-            // ڈیٹا: ٹریڈ اور نالج کے لیے کارڈز
             const hubData = {
                 trade: {
                     title: 'Global Trade',
@@ -258,7 +248,6 @@
                 const data = hubData[viewKey];
                 if (!data) return;
                 viewTitle.textContent = data.title;
-                // Build hub cards
                 let html = `<h1>${data.title}</h1>
                             <p class="hub-lead">Explore our expertise in ${data.title.toLowerCase()}.</p>
                             <div class="hub-grid-page">`;
@@ -276,15 +265,12 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // ہر گیٹ وے کارڈ پر کلک ایونٹ
             document.querySelectorAll('.gateway-card').forEach(card => {
                 card.addEventListener('click', function(e) {
-                    // اگر کلک کسی لنک یا بٹن پر ہو تو اسے روکیں نہیں، ورنہ کھولیں
                     if (e.target.closest('a, .btn')) return;
                     const view = this.dataset.view;
                     if (view) openFullView(view);
                 });
-                // لنک پر کلک کرنے پر بھی کام کرے
                 card.querySelector('a')?.addEventListener('click', function(e) {
                     e.preventDefault();
                     const view = this.closest('.gateway-card').dataset.view;
@@ -292,12 +278,11 @@
                 });
             });
 
-            // Close full view
             closeFullView.addEventListener('click', () => {
                 fullView.classList.remove('open');
             });
 
-            // ---- AI Form (simulated) ----
+            // AI Form
             const aiForm = document.getElementById('aiForm');
             const aiInput = document.getElementById('aiInput');
             const aiMessages = document.getElementById('aiMessages');
@@ -305,11 +290,9 @@
                 e.preventDefault();
                 const q = aiInput.value.trim();
                 if (!q) return;
-                // Add user message
                 const userP = document.createElement('p');
                 userP.innerHTML = `<strong>You:</strong> ${q}`;
                 aiMessages.appendChild(userP);
-                // Simulate AI response
                 const responses = [
                     "Chilghoza pine nuts are rich in healthy fats and proteins.",
                     "Our supply chain is fully traceable from forest to export.",
