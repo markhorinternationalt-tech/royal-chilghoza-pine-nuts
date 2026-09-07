@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ROYAL CHILGHOZA PINE NUTS</title>
   
-  <!-- Fonts Matching Original Screenshot -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -44,12 +43,13 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
     }
 
     .brand-logo {
       display: flex;
       flex-direction: column;
+      cursor: pointer;
     }
 
     .brand-title {
@@ -74,8 +74,9 @@
       padding: 6px 16px;
       border-radius: 20px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
+      outline: none;
     }
 
     /* CONTAINER */
@@ -87,8 +88,7 @@
 
     /* HERO SECTION */
     .hero {
-      margin-bottom: 40px;
-      position: relative;
+      margin-bottom: 30px;
     }
 
     .hero-tag {
@@ -102,11 +102,11 @@
 
     .hero-heading {
       font-family: 'Cinzel', serif;
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 600;
       line-height: 1.15;
       color: #ffffff;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .hero-desc {
@@ -126,14 +126,15 @@
     .card {
       background-color: var(--card-bg);
       border-radius: 16px;
-      padding: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 22px;
+      border: 1px solid rgba(212, 175, 55, 0.1);
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.2s ease;
     }
 
-    .card:active {
-      transform: scale(0.98);
+    .card:hover {
+      border-color: var(--text-gold);
+      transform: translateY(-2px);
     }
 
     .card-num {
@@ -141,17 +142,17 @@
       color: var(--text-gold);
       font-weight: 700;
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .card-icon {
       font-size: 1.5rem;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .card-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       color: var(--text-gold);
       margin-bottom: 6px;
       font-weight: 600;
@@ -162,7 +163,33 @@
       color: var(--text-muted);
     }
 
-    /* LIGHT SECTION (FROM FOREST TO MARKET) */
+    /* FOLDER DETAILS (DYNAMIC MODAL / CONTAINER) */
+    .folder-detail {
+      display: none;
+      background-color: var(--card-bg);
+      border: 1px solid var(--text-gold);
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .folder-detail.active {
+      display: block;
+    }
+
+    .btn-back {
+      background: transparent;
+      border: 1px solid var(--text-gold);
+      color: var(--text-gold);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    /* LIGHT SECTION */
     .light-section {
       background-color: var(--bg-cream);
       color: var(--text-cream-dark);
@@ -180,13 +207,7 @@
 
     .light-section .hero-desc {
       color: #4a5c52;
-      margin-bottom: 30px;
-    }
-
-    .gallery-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      margin-bottom: 24px;
     }
 
     .gallery-card {
@@ -209,20 +230,16 @@
       color: #666;
     }
 
-    /* ADMIN LOGIN SECTION */
-    .admin-section {
-      padding-top: 20px;
-    }
-
+    /* ADMIN FORM */
     .admin-input {
       width: 100%;
-      padding: 14px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(212, 175, 55, 0.2);
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(212, 175, 55, 0.3);
       border-radius: 8px;
       color: #fff;
-      margin-top: 8px;
-      margin-bottom: 20px;
+      margin-top: 6px;
+      margin-bottom: 16px;
     }
 
     .btn-login {
@@ -235,18 +252,23 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
   <!-- HEADER -->
   <header>
-    <div class="brand-logo">
+    <div class="brand-logo" onclick="showMain()">
       <div class="brand-title">ROYAL CHILGHOZA</div>
       <div class="brand-subtitle">PINE NUTS</div>
     </div>
-    <select class="lang-dropdown">
-      <option value="en">🌐 English ∨</option>
+    <select class="lang-dropdown" id="langSelect" onchange="toggleLanguage()">
+      <option value="en">🌐 English</option>
       <option value="ur">اردو</option>
     </select>
   </header>
@@ -254,105 +276,111 @@
   <div class="container">
     
     <!-- MAIN HERO -->
-    <section class="hero">
+    <section class="hero" id="mainHero">
       <div class="hero-tag">PAKISTAN • ORIGINAL</div>
-      <h1 class="hero-heading">Royal<br>Chilghoza<br>Pine Nuts</h1>
-      <p class="hero-desc">From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
+      <h1 class="hero-heading" id="txt-title">Royal<br>Chilghoza<br>Pine Nuts</h1>
+      <p class="hero-desc" id="txt-desc">From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
     </section>
 
-    <!-- MAIN CATEGORY CARDS -->
-    <div class="cards-wrapper">
-      <div class="card">
+    <!-- MAIN CARDS -->
+    <div class="cards-wrapper" id="mainCards">
+      <div class="card" onclick="openFolder('globalTrade')">
         <div class="card-icon">🌰</div>
         <div class="card-num">CHILGHOZA PINE NUTS</div>
         <div class="card-title">GLOBAL TRADE</div>
-        <div class="card-subtitle">Premium quality • Worldwide export →</div>
+        <div class="card-subtitle" id="txt-gt-sub">Premium quality • Worldwide export →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('researchKnowledge')">
         <div class="card-icon">🔬</div>
         <div class="card-num">CHILGHOZA</div>
         <div class="card-title">RESEARCH & KNOWLEDGE</div>
-        <div class="card-subtitle">Science • Origin • Forests • Quality →</div>
+        <div class="card-subtitle" id="txt-rk-sub">Science • Origin • Forests • Quality →</div>
       </div>
     </div>
 
+    <!-- DYNAMIC FOLDER DISPLAY AREA -->
+    <div id="folderView" class="folder-detail">
+      <button class="btn-back" onclick="closeFolder()">← Back to Overview</button>
+      <div id="folderContent"></div>
+    </div>
+
     <!-- TRADE & BUSINESS HUB SECTION -->
-    <section class="hero" style="margin-top: 50px;">
-      <h2 class="hero-heading" style="font-size: 2.1rem;">Trade & Business</h2>
-      <p class="hero-desc">A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.</p>
+    <section class="hero" style="margin-top: 40px;">
+      <h2 class="hero-heading" style="font-size: 2rem;">Trade & Business</h2>
+      <p class="hero-desc" id="txt-tb-desc">A structured international trade centre for product quality, export readiness, buyers, logistics and responsible supply-chain information.</p>
     </section>
 
     <div class="cards-wrapper">
-      <div class="card">
+      <div class="card" onclick="openFolder('globalMarkets')">
         <div class="card-num">01</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Global Markets</div>
-        <div class="card-subtitle">USA • China • Central Asia • Middle East</div>
+        <div class="card-subtitle">USA • China • Central Asia • Middle East →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('exportLogistics')">
         <div class="card-num">02</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Export & Logistics</div>
-        <div class="card-subtitle">Packaging • documentation • shipping • customs</div>
+        <div class="card-subtitle">Packaging • documentation • shipping • customs →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('productQuality')">
         <div class="card-num">03</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Product & Quality</div>
-        <div class="card-subtitle">Kernels • in-shell • roasting • grades • specifications</div>
+        <div class="card-subtitle">Kernels • in-shell • roasting • grades • specifications →</div>
       </div>
     </div>
 
     <!-- RESEARCH & KNOWLEDGE SECTION -->
-    <section class="hero" style="margin-top: 50px;">
+    <section class="hero" style="margin-top: 40px;">
       <div class="hero-tag">SCIENCE • ORIGIN • FORESTS • QUALITY</div>
-      <h2 class="hero-heading" style="font-size: 2.1rem;">Research & Knowledge</h2>
-      <p class="hero-desc">A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.</p>
+      <h2 class="hero-heading" style="font-size: 2rem;">Research & Knowledge</h2>
+      <p class="hero-desc" id="txt-rk-desc">A knowledge centre for Chilghoza origin, geographical indication, forests, biodiversity, climate, organic claims, nutrition, processing and traceability.</p>
     </section>
 
     <div class="cards-wrapper">
-      <div class="card">
+      <div class="card" onclick="openFolder('giFolder')">
         <div class="card-num">01</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Geographical Indication (GI)</div>
-        <div class="card-subtitle">Origin protection • product identity • traceability • supply-chain evidence</div>
+        <div class="card-subtitle">Origin protection • product identity • traceability →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('forestsFolder')">
         <div class="card-num">02</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Chilghoza Forests</div>
-        <div class="card-subtitle">Forest ecology • regeneration • harvesting • conservation</div>
+        <div class="card-subtitle">Forest ecology • regeneration • harvesting • conservation →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('climateFolder')">
         <div class="card-num">03</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Global Environment & Climate</div>
-        <div class="card-subtitle">Biodiversity • carbon • ecosystem services • climate resilience</div>
+        <div class="card-subtitle">Biodiversity • carbon • ecosystem services →</div>
       </div>
 
-      <div class="card">
+      <div class="card" onclick="openFolder('organicFolder')">
         <div class="card-num">04</div>
         <div class="card-title" style="color: #fff; font-size: 1.2rem;">Organic & Natural Product Claims</div>
-        <div class="card-subtitle">Evidence • standards • chain of custody • responsible declarations</div>
+        <div class="card-subtitle">Evidence • standards • chain of custody →</div>
       </div>
     </div>
 
     <!-- ADMIN LOGIN SECTION -->
-    <section class="admin-section" style="margin-top: 50px;">
+    <section class="admin-section" style="margin-top: 40px;">
       <div class="hero-tag">OWNER CONTROL</div>
-      <h2 class="hero-heading" style="font-size: 2.1rem;">Admin Control Center</h2>
-      <p class="hero-desc">Secure content control, media, users, permissions, versions, themes and AI assistance. Ordinary content and theme changes are designed to avoid redeployment.</p>
+      <h2 class="hero-heading" style="font-size: 2rem;">Admin Control Center</h2>
+      <p class="hero-desc">Secure content control, media, users, permissions, versions, themes and AI assistance.</p>
 
-      <div style="margin-top: 30px;">
-        <h3 style="font-family: 'Cinzel', serif; color: #fff; font-size: 1.5rem; margin-bottom: 10px;">Admin Login</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Sign in to manage content and website settings.</p>
+      <div style="margin-top: 24px;">
+        <h3 style="font-family: 'Cinzel', serif; color: #fff; font-size: 1.4rem; margin-bottom: 8px;">Admin Login</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Sign in to manage content and website settings.</p>
         
         <label style="font-size: 0.85rem; color: var(--text-muted);">Username</label>
-        <input type="text" class="admin-input">
+        <input type="text" class="admin-input" placeholder="Enter username">
         
         <label style="font-size: 0.85rem; color: var(--text-muted);">Password</label>
-        <input type="password" class="admin-input">
+        <input type="password" class="admin-input" placeholder="Enter password">
         
-        <button class="btn-login">Login</button>
+        <button class="btn-login" onclick="alert('Admin Authentication Active')">Login</button>
       </div>
     </section>
 
@@ -365,14 +393,85 @@
       <h2 class="hero-heading">From Forest to Market</h2>
       <p class="hero-desc">Only the supplied original project photographs are used. Each image can later receive an editable title, description, caption and category from Admin.</p>
 
-      <div class="gallery-grid">
-        <div class="gallery-card">
-          <img src="https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/01-chilghoza-lot.jpg" alt="Field photograph">
-          <div class="gallery-card-title">Forest and field project photograph</div>
-        </div>
+      <div class="gallery-card">
+        <img src="https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/01-chilghoza-lot.jpg" alt="Field photograph">
+        <div class="gallery-card-title">Forest and field project photograph</div>
       </div>
     </div>
   </section>
+
+  <!-- INTERACTIVE JAVASCRIPT FOR FOLDERS & ENGLISH SYSTEM -->
+  <script>
+    const folderData = {
+      globalTrade: {
+        title: "Global Trade Hub",
+        content: "<p style='color: #9ab0a5;'>Welcome to the International Chilghoza Export Center. Connecting high-grade Pine Nuts from Pakistan's northern regions directly to world buyers with full verification and premium packing standards.</p>"
+      },
+      researchKnowledge: {
+        title: "Research & Knowledge Center",
+        content: "<p style='color: #9ab0a5;'>Explore scientific documentation, origin verification, sustainable forest harvesting techniques, and chemical/nutritional profiles of Pinus gerardiana.</p>"
+      },
+      globalMarkets: {
+        title: "Global Markets & Distribution",
+        content: "<p style='color: #9ab0a5;'>Detailed trade standards for United States, European Union, China, Middle East, and Central Asian markets.</p>"
+      },
+      exportLogistics: {
+        title: "Export & Logistics Documentation",
+        content: "<p style='color: #9ab0a5;'>Complete exporter guidelines: Vacuum packing, phytosanitary certifications, air/sea freight routing, and customs clearance protocols.</p>"
+      },
+      productQuality: {
+        title: "Product Specifications & Grading",
+        content: "<p style='color: #9ab0a5;'>Grade A Raw Kernels, Roasted In-Shell, Grade B Commercial, size metrics (counts per 100g), moisture limits, and purity benchmarks.</p>"
+      },
+      giFolder: {
+        title: "Geographical Indication (GI)",
+        content: "<p style='color: #9ab0a5;'>Official geographic boundaries, legal protection of Pakistani Chilghoza, and origin validation systems.</p>"
+      },
+      forestsFolder: {
+        title: "Chilghoza Forest Ecology",
+        content: "<p style='color: #9ab0a5;'>Sustainable harvesting practices, wild forest management, local community rights, and cone collection timing.</p>"
+      },
+      climateFolder: {
+        title: "Global Environment & Climate",
+        content: "<p style='color: #9ab0a5;'>Carbon sequestration of pine forests, biodiversity preservation, and ecosystem protection in high-altitude zones.</p>"
+      },
+      organicFolder: {
+        title: "Organic & Natural Claims",
+        content: "<p style='color: #9ab0a5;'>100% Wild Harvested, chemical-free processing, organic certification pathways, and lab purity reports.</p>"
+      }
+    };
+
+    function openFolder(key) {
+      const folderView = document.getElementById('folderView');
+      const folderContent = document.getElementById('folderContent');
+      if (folderData[key]) {
+        folderContent.innerHTML = `<h2 style="font-family:'Cinzel', serif; color:var(--text-gold); margin-bottom:12px;">${folderData[key].title}</h2>${folderData[key].content}`;
+        folderView.classList.add('active');
+        folderView.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function closeFolder() {
+      const folderView = document.getElementById('folderView');
+      folderView.classList.remove('active');
+    }
+
+    function showMain() {
+      closeFolder();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleLanguage() {
+      const lang = document.getElementById('langSelect').value;
+      if (lang === 'ur') {
+        document.getElementById('txt-title').innerHTML = "رائل چلغوزہ<br>پائن نٹس";
+        document.getElementById('txt-desc').innerText = "پاکستان کے قدرتی چلغوزہ کے جنگلات سے پوری دنیا تک — اعلیٰ ترین معیار، اصل پیداوار اور تجارت کا معتبر ذریعہ۔";
+      } else {
+        document.getElementById('txt-title').innerHTML = "Royal<br>Chilghoza<br>Pine Nuts";
+        document.getElementById('txt-desc').innerText = "From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.";
+      }
+    }
+  </script>
 
 </body>
 </html>
