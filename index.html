@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Royal Chilghoza Pine Nuts — Global Ecosystem</title>
   
-  <!-- Modern Typography & Google Fonts -->
+  <!-- Typography & Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
   
-  <!-- CSS Stylesheet Connection -->
+  <!-- CSS Connection -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Ambient 3D Glowing Background Canvas -->
+  <!-- Ambient Glowing Background Elements -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
   <div class="ambient-glow glow-3"></div>
@@ -23,30 +23,33 @@
   <!-- Main Container -->
   <div class="app-wrapper">
 
-    <!-- TOP NAVIGATION BAR -->
+    <!-- TOP NAVIGATION BAR WITH PROFILE FRAME -->
     <header class="navbar">
       <div class="brand">
-        <span class="brand-crown">👑</span>
+        <!-- Royal Profile Picture Frame -->
+        <div class="profile-frame">
+          <img src="https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/user_profile.jpg" alt="Syed Azeem Shah" class="profile-img" onerror="this.src='https://via.placeholder.com/50/d4af37/000000?text=SAS'" />
+        </div>
         <div class="brand-title">
           ROYAL CHILGHOZA
-          <small>GLOBAL ECOSYSTEM</small>
+          <small>SYED AZEEM SHAH • GLOBAL ECOSYSTEM</small>
         </div>
       </div>
 
       <div class="nav-controls">
-        <!-- Admin Portal Access -->
+        <!-- Admin Portal -->
         <a href="/admin" class="btn btn-admin">
           <span class="btn-icon">⚙️</span>
           <span id="adminBtnText">Admin Portal</span>
         </a>
 
-        <!-- Direct WhatsApp Trade Connect -->
+        <!-- WhatsApp Trade Link -->
         <a href="https://wa.me/920000000000" target="_blank" class="btn btn-wa">
           <span class="btn-icon">💬</span>
           <span id="waBtnText">WhatsApp Trade</span>
         </a>
 
-        <!-- 5-Languages Selector Dropdown -->
+        <!-- 5-Language Selector -->
         <div class="lang-selector-wrapper">
           <select id="langSelect" class="lang-dropdown">
             <option value="en" selected>English</option>
@@ -59,8 +62,8 @@
       </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <main class="hero-section">
+    <!-- HERO SECTION WITH BACKGROUND IMAGE -->
+    <main class="hero-section hero-bg-overlay">
       <div class="badge-tag" id="tagline">PAKISTAN • ORIGIN • GLOBAL</div>
 
       <h1 class="hero-title" id="mainHeading">
@@ -71,7 +74,7 @@
         Connecting authentic Chilghoza pine nuts from Pakistan's native forests to global commercial trade and scientific research ecosystems.
       </p>
 
-      <!-- 3D INTERACTIVE CARDS GRID (Global Trade & Research Hubs) -->
+      <!-- 3D CARDS GRID -->
       <div class="hubs-grid">
 
         <!-- GLOBAL TRADE CARD -->
@@ -101,7 +104,22 @@
       </div>
     </main>
 
-    <!-- PROJECT GALLERY SECTION -->
+    <!-- PERMANENT ROYAL AI ASSISTANT PANEL -->
+    <section class="ai-section-panel">
+      <div class="ai-card-glow">
+        <h3 id="aiTitleText">🤖 Royal AI Assistant</h3>
+        <p id="aiDescText">Ask Cloudflare Workers AI about market trends, specifications, or GI validation:</p>
+        
+        <div class="ai-input-wrapper">
+          <textarea id="homeAiInput" placeholder="Enter your query regarding Pine Nuts trade or research..."></textarea>
+          <button onclick="askWorkersAI('homeAiInput', 'homeAiResponse')" class="btn btn-admin" id="aiBtnText">Ask AI Assistant</button>
+        </div>
+
+        <div id="homeAiResponse" class="ai-response-box" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- 8 HD GALLERY IMAGES SECTION -->
     <section class="gallery-section">
       <div class="section-header">
         <h2 id="galleryTitle">Project Gallery</h2>
@@ -109,29 +127,32 @@
       </div>
 
       <div id="galleryGrid" class="gallery-grid">
-        <!-- Dynamic Images injected by app.js (/api/home-images) -->
-        <div class="gallery-placeholder">Loading Official Media...</div>
+        <!-- 8 Images Injected via app.js -->
+        <div class="gallery-placeholder">Loading Official Media Gallery...</div>
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ADDRESS & FOOTER SECTION -->
     <footer class="footer">
-      <p>© 2026 Royal Chilghoza Pine Nuts Global Ecosystem. Powered by Cloudflare D1 & Workers AI.</p>
+      <div class="address-box">
+        <h4 id="addressTitleText">Headquarters & Native Origin</h4>
+        <p id="addressDetailText">Chilas, Diamer District, Gilgit-Baltistan, Pakistan</p>
+      </div>
+      <p style="margin-top:20px;">© 2026 Royal Chilghoza Pine Nuts Global Ecosystem. Powered by Cloudflare D1 & Workers AI.</p>
     </footer>
 
   </div>
 
-  <!-- DYNAMIC MODAL OVERLAY (HUBS & AI ASSISTANT PANEL) -->
+  <!-- DYNAMIC MODAL OVERLAY -->
   <div id="hubModal" class="modal-overlay">
     <div class="modal-card">
-      <button class="modal-close" onclick="closeModal()">✕</button>
       <div id="modalBody" class="modal-body">
-        <!-- Dynamic Hub List / Hub Details & Workers AI injected via app.js -->
+        <!-- Dynamic Hub Content Loaded Here -->
       </div>
     </div>
   </div>
 
-  <!-- JavaScript Engine Connection -->
+  <!-- JS Engine -->
   <script src="app.js"></script>
 </body>
 </html>
