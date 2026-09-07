@@ -1,248 +1,118 @@
 /* ==========================================================================
-   ROYAL CHILGHOZA ECOSYSTEM — PRODUCTION READY ENGINE
-   Fixes: Inner Folder Translation, 3D Back Buttons, Royal AI Panel, 
-   Profile Framing, HD R2 Gallery & Address Details
+   ROYAL CHILGHOZA PINE NUTS ECOSYSTEM — PRODUCTION ENGINE
    ========================================================================== */
 
-// Global State
 let currentLang = 'en';
-let globalFolders = [];
-let homepageImages = [];
+let globalHubs = [];
+let globalOffices = [];
 
-// Supported Languages & Translations
-const LANGUAGES_META = {
-  en: { name: 'English', dir: 'ltr' },
-  zh: { name: '中文', dir: 'ltr' },
-  ar: { name: 'العربية', dir: 'rtl' },
-  ps: { name: 'پښتو', dir: 'rtl' },
-  ru: { name: 'Русский', dir: 'ltr' }
-};
-
-const translations = {
-  en: {
-    tagline: "PAKISTAN • ORIGIN • GLOBAL",
-    mainHeading: 'Royal Chilghoza<br><span class="gold-text">Pine Nuts</span>',
-    heroDesc: "Connecting authentic Chilghoza pine nuts from Pakistan's native forests to global commercial trade and scientific research ecosystems.",
-    tradeTitle: "GLOBAL TRADE",
-    tradeDesc: "10 Dedicated Hubs • Premium Quality Export →",
-    researchTitle: "RESEARCH & KNOWLEDGE",
-    researchDesc: "10 Academic Hubs • Scientific Forest Research →",
-    galleryTitle: "Project Gallery",
-    gallerySub: "Authentic forest harvesting, processing, and premium quality pine nut display",
-    adminBtn: "Admin Portal",
-    waBtn: "WhatsApp Trade",
-    backBtn: "← Back to Main",
-    aiTitle: "🤖 Royal AI Assistant",
-    aiDesc: "Ask Cloudflare Workers AI about market trends, specifications, or GI validation:",
-    aiBtn: "Ask AI Assistant",
-    addressTitle: "Headquarters & Native Origin",
-    addressText: "Chilas, Diamer District, Gilgit-Baltistan, Pakistan"
-  },
-  zh: {
-    tagline: "巴基斯坦 • 原产地 • 全球",
-    mainHeading: '皇家松子<br><span class="gold-text">Chilghoza</span>',
-    heroDesc: "将巴基斯坦原生森林的正宗 Chilghoza 松子连接到全球商业贸易和科学研究生态系统。",
-    tradeTitle: "全球贸易",
-    tradeDesc: "10 个专属中心 • 优质出口 →",
-    researchTitle: "研究与知识",
-    researchDesc: "10 个学术中心 • 科学森林研究 →",
-    galleryTitle: "项目图库",
-    gallerySub: "真实森林采收、加工与松子展示",
-    adminBtn: "管理门户",
-    waBtn: "微信/WhatsApp 咨询",
-    backBtn: "← 返回主页",
-    aiTitle: "🤖 皇家 AI 助手",
-    aiDesc: "向 Cloudflare Workers AI 查询市场趋势、规格或地理标志验证：",
-    aiBtn: "询问 AI 助手",
-    addressTitle: "总部与原产地",
-    addressText: "巴基斯坦 吉尔吉特-巴尔蒂斯坦 迪亚梅尔区 奇拉斯"
-  },
-  ar: {
-    tagline: "باكستان • الأصل • عالمي",
-    mainHeading: 'الصنوبر الملكي<br><span class="gold-text">جلغوزة</span>',
-    heroDesc: "ربط صنوبر الجلغوزة الأصلي من غابات باكستان بالتجارة العالمية والنظم البيئية للبحوث العلمية.",
-    tradeTitle: "التجارة العالمية",
-    tradeDesc: "10 مراكز متخصصة • تصدير بجودة عالية →",
-    researchTitle: "الأبحاث والمعرفة",
-    researchDesc: "10 مراكز أكاديمية • دراسات الغابات العلمية →",
-    galleryTitle: "معرض الصور",
-    gallerySub: "الحصاد الطبيعي، المعالجة، وعرض الصنوبر الممتاز",
-    adminBtn: "بوابة الإدارة",
-    waBtn: "واتساب للتجارة",
-    backBtn: "← العودة للرئيسية",
-    aiTitle: "🤖 مساعد الذكاء الاصطناعي الملكي",
-    aiDesc: "اسأل الذكاء الاصطناعي عن اتجاهات السوق، المواصفات، أو توثيق المؤشر الجغرافي:",
-    aiBtn: "اسأل المساعد",
-    addressTitle: "المقر الرئيسي والموطن الأصلي",
-    addressText: "شيلاس، مقاطعة ديامير، غلغت-بلتستان، باكستان"
-  },
-  ps: {
-    tagline: "پاکستان • اصل • نړیوال",
-    mainHeading: 'شاهي جلغوزي<br><span class="gold-text">پائن مغز</span>',
-    heroDesc: "د پاکستان له طبیعي ځنګلونو څخه اصلی جلغوزي نړیوال تجارني او علمي څیړنیز سیسټم سره نښلول.",
-    tradeTitle: "نړیوال تجارت",
-    tradeDesc: "10 ځانګړي مرکزونه • لوړ کیفیت صادرات →",
-    researchTitle: "څیړنه او پوهه",
-    researchDesc: "10 اکاډمیک مرکزونه • علمي څیړنې →",
-    galleryTitle: "د پروژې ګالري",
-    gallerySub: "د ځنګل څخه راټولول، پروسس او کیفیت ښودنه",
-    adminBtn: "اډمن پورټل",
-    waBtn: "واټساپ راکړه ورکړه",
-    backBtn: "← اصلي صفحې ته بېرته",
-    aiTitle: "🤖 شاهي AI مرستیال",
-    aiDesc: "د بازار نرخونو، مشخصاتو او د اصل تصدیق په اړه د AI څخه پوښتنه وکړئ:",
-    aiBtn: "پوښتنه وکړئ",
-    addressTitle: "مرکزي دفتر او اصلي سرچینه",
-    addressText: "چلاس، دیامر ولسوالۍ، گلگت بلتستان، پاکستان"
-  },
-  ru: {
-    tagline: "ПАКИСТАН • ПРОИСХОЖДЕНИЕ • ГЛОБАЛЬНО",
-    mainHeading: 'Королевский Кедровый<br><span class="gold-text">Орех Чилгоза</span>',
-    heroDesc: "Поставка аутентичного кедрового ореха Чилгоза из лесов Пакистана для мировой торговли и научных исследований.",
-    tradeTitle: "ГЛОБАЛЬНАЯ ТОРГОВЛЯ",
-    tradeDesc: "10 торговых хабов • Экспорт премиум качества →",
-    researchTitle: "ИССЛЕДОВАНИЯ И ЗНАНИЯ",
-    researchDesc: "10 научных хабов • Экология и ботаника →",
-    galleryTitle: "Галерея Проекта",
-    gallerySub: "Лесной сбор, обработка и презентация продукции",
-    adminBtn: "Админ панель",
-    waBtn: "WhatsApp Связь",
-    backBtn: "← На главную",
-    aiTitle: "🤖 Королевский AI Ассистент",
-    aiDesc: "Задайте вопрос AI о рыночных трендах, спецификациях и сертификатах:",
-    aiBtn: "Спросить AI",
-    addressTitle: "Штаб-квартира и Происхождение",
-    addressText: "Чилас, Округ Диамер, Гилгит-Балтистан, Пакистан"
-  }
-};
-
-// Fallback 8 HD R2 Gallery Images
 const defaultGallery = [
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_harvest_1.jpg", title: "Forest Harvest", alt_text: "Native Forest Collection" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_processing_2.jpg", title: "Mechanical Shelling", alt_text: "Processing Line" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_raw_3.jpg", title: "In-Shell Grade A", alt_text: "Raw Pine Nuts" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_kernel_4.jpg", title: "Shelled Kernels", alt_text: "Export Quality Kernels" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_pack_5.jpg", title: "Vacuum Packaging", alt_text: "Nitrogen Flush Bags" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_lab_6.jpg", title: "Quality Control", alt_text: "Lab Chemical Inspection" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_forest_7.jpg", title: "Diamer Canopy Forest", alt_text: "Chilas Forest" },
-  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/chilghoza_export_8.jpg", title: "Global Shipping", alt_text: "Export Logistics" }
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/01-chilghoza-lot.jpg", title: "Chilghoza Pine Nuts Lot Inspection & Grading" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/02-chilghoza-cones.jpg", title: "Harvested Cones of Chilghoza Pine Nuts" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/03-chilghoza-kernel.jpg", title: "Premium Shelled Kernels of Chilghoza Pine Nuts" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/04-chilghoza-harvest.jpg", title: "Sustainable Harvesting of Chilghoza Pine Nuts" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/05-chilghoza-raw-kernels.jpg", title: "Raw Selection of Chilghoza Pine Nuts" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/06-chilghoza-cone-closeup.jpg", title: "Macro Detail of Chilghoza Pine Nuts Cone" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/07-chilghoza-products-display.jpg", title: "Export Packaging of Chilghoza Pine Nuts" },
+  { file_name: "https://pub-2098d8c2138743ae88c222ff444c82b9.r2.dev/08-chilghoza-forest.jpg", title: "Chilas, Diamer Native Chilghoza Pine Nuts Forest" }
 ];
 
-// App Initialization
 document.addEventListener('DOMContentLoaded', async () => {
-  setupEventListeners();
-  await loadFoldersFromWorker();
-  await loadHomepageImages();
-  applyLanguage('en');
+  renderGallery(defaultGallery);
+  await loadData();
 });
 
-function setupEventListeners() {
-  const langSelect = document.getElementById('langSelect');
-  if (langSelect) {
-    langSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
-  }
-}
-
-async function loadFoldersFromWorker() {
+async function loadData() {
   try {
-    const res = await fetch('/api/folders');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.items && data.items.length > 0) globalFolders = data.items;
+    const resSettings = await fetch('/api/settings');
+    if (resSettings.ok) {
+      const settings = await resSettings.json();
+      if (settings.globalLang) changeLanguage(settings.globalLang);
+      if (settings.bgColor) document.documentElement.style.setProperty('--bg-primary', settings.bgColor);
+      if (settings.goldColor) document.documentElement.style.setProperty('--gold-primary', settings.goldColor);
+    }
+
+    const resHubs = await fetch('/api/hubs');
+    if (resHubs.ok) {
+      const data = await resHubs.json();
+      globalHubs = data.items || [];
+    }
+
+    const resOffices = await fetch('/api/offices');
+    if (resOffices.ok) {
+      const data = await resOffices.json();
+      globalOffices = data.items || [];
+      renderOffices(globalOffices);
     }
   } catch (err) {
-    console.warn("Using internal fallback hubs.");
+    console.warn("Using default client setup.");
   }
 }
 
-async function loadHomepageImages() {
-  try {
-    const res = await fetch('/api/home-images');
-    if (res.ok) {
-      const data = await res.json();
-      if (data.items && data.items.length > 0) {
-        homepageImages = data.items;
-        renderGallery(homepageImages);
-        return;
-      }
-    }
-  } catch (err) {}
-  renderGallery(defaultGallery);
+function renderGallery(items) {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  grid.innerHTML = items.map(img => `
+    <div class="gallery-card">
+      <img src="${img.file_name}" alt="${img.title}" loading="lazy">
+      <div class="gallery-caption">${img.title}</div>
+    </div>
+  `).join('');
 }
 
-function changeLanguage(langCode) {
-  if (!LANGUAGES_META[langCode]) return;
-  currentLang = langCode;
-  document.documentElement.setAttribute('dir', LANGUAGES_META[langCode].dir);
-  document.documentElement.setAttribute('lang', langCode);
-  applyLanguage(langCode);
+function renderOffices(offices) {
+  const grid = document.getElementById('officesGrid');
+  if (!grid) return;
+  if (offices.length === 0) {
+    offices = [
+      { title: "Headquarters & Native Origin", address: "Chilas, Diamer District, Gilgit-Baltistan, Pakistan", phone: "+92 300 0000000", whatsapp: "923000000000" },
+      { title: "Regional Operations Hub", address: "Gilgit, Gilgit-Baltistan, Pakistan", phone: "+92 300 0000000", whatsapp: "923000000000" },
+      { title: "Federal & Trade Desk", address: "Islamabad, Pakistan", phone: "+92 51 0000000", whatsapp: "923000000000" },
+      { title: "International Trade Desk", address: "China / International Export Desk", phone: "+86 000 0000000", whatsapp: "923000000000" }
+    ];
+  }
+  grid.innerHTML = offices.map(off => `
+    <div class="office-card">
+      <h3 style="color:var(--gold-primary); font-size:1.1rem; margin-bottom:8px;">${off.title}</h3>
+      <p style="color:var(--text-muted); font-size:0.85rem;">📍 ${off.address}</p>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin-top:5px;">📞 ${off.phone || 'N/A'}</p>
+      <a href="https://wa.me/${off.whatsapp}" target="_blank" class="btn btn-wa" style="margin-top:12px; font-size:0.75rem; padding:6px 12px;">💬 WhatsApp Office</a>
+    </div>
+  `).join('');
 }
 
-function applyLanguage(lang) {
-  const t = translations[lang] || translations.en;
-  
-  const setText = (id, text) => {
-    const el = document.getElementById(id);
-    if (el) el.innerText = text;
-  };
-
-  setText('tagline', t.tagline);
-  const headingEl = document.getElementById('mainHeading');
-  if (headingEl) headingEl.innerHTML = t.mainHeading;
-  
-  setText('heroDesc', t.heroDesc);
-  setText('tradeTitle', t.tradeTitle);
-  setText('tradeDesc', t.tradeDesc);
-  setText('researchTitle', t.researchTitle);
-  setText('researchDesc', t.researchDesc);
-  setText('galleryTitle', t.galleryTitle);
-  setText('gallerySub', t.gallerySub);
-  setText('adminBtnText', t.adminBtn);
-  setText('waBtnText', t.waBtn);
-  setText('aiTitleText', t.aiTitle);
-  setText('aiDescText', t.aiDesc);
-  setText('aiBtnText', t.aiBtn);
-  setText('addressTitleText', t.addressTitle);
-  setText('addressDetailText', t.addressText);
-}
-
-// Open Category Hubs Modal with 3D Back Controls & Multi-language Support
+// OPEN CATEGORY GATEWAY & MINI-WEBSITE HUBS
 function openCategory(sectionType) {
   const modal = document.getElementById('hubModal');
   const modalBody = document.getElementById('modalBody');
-  const t = translations[currentLang] || translations.en;
-
-  let items = globalFolders.filter(f => f.section === sectionType);
-
-  const icon = sectionType === 'trade' ? '🌐' : '🔬';
-  const titleText = sectionType === 'trade' ? t.tradeTitle : t.researchTitle;
+  const items = globalHubs.filter(h => h.section === sectionType);
 
   let html = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; border-bottom:1px solid var(--border-gold); padding-bottom:15px;">
-      <button onclick="closeModal()" class="btn btn-admin" style="font-size:0.85rem;">${t.backBtn}</button>
-      <span style="color:var(--gold-primary); font-size:1.1rem; font-weight:800;">${icon} ${titleText}</span>
+      <h2 style="color:var(--gold-primary);">${sectionType === 'trade' ? 'Global Trade Hubs for Chilghoza Pine Nuts' : 'Research & Knowledge Hubs for Chilghoza Pine Nuts'}</h2>
+      <button onclick="closeModal()" class="btn btn-admin">✕ Close</button>
     </div>
     <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px;">
   `;
 
   if (items.length === 0) {
     for (let i = 1; i <= 10; i++) {
-      const padNum = String(i).padStart(2, '0');
+      const pad = String(i).padStart(2, '0');
       html += `
-        <div class="hub-card-item" onclick="openHubDetail('HUB ${padNum}', '${sectionType.toUpperCase()} Spec details for Hub ${padNum}', '${sectionType}')">
-          <div style="color:var(--gold-primary); font-size:0.8rem; font-weight:800;">HUB ${padNum}</div>
-          <h3 style="color:var(--text-main); font-size:1.15rem; font-weight:700; margin:8px 0;">${sectionType === 'trade' ? 'Trade Hub' : 'Research Hub'} ${padNum}</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Click to explore full specifications, compliance rules, and export data.</p>
+        <div class="card-3d" onclick="openHubDetail('Hub ${pad} - ${sectionType === 'trade' ? 'Trade Gateway' : 'Scientific Study'} for Chilghoza Pine Nuts', 'Full specifications, certification, and trade details regarding Chilghoza Pine Nuts from Chilas, Diamer District.')">
+          <div style="color:var(--gold-primary); font-size:0.8rem; font-weight:800;">HUB ${pad}</div>
+          <h3 style="color:var(--text-main); font-size:1.1rem; margin:8px 0;">${sectionType === 'trade' ? 'Commercial Export Hub' : 'Research & Botanical Hub'} ${pad}</h3>
+          <p style="color:var(--text-muted); font-size:0.85rem;">Explore Mini-Website Gateway →</p>
         </div>
       `;
     }
   } else {
     items.forEach((hub, idx) => {
       html += `
-        <div class="hub-card-item" onclick="openHubDetail('${hub.title.replace(/'/g, "\\'")}', '${(hub.description || '').replace(/'/g, "\\'")}', '${sectionType}')">
+        <div class="card-3d" onclick="openHubDetail('${hub.title.replace(/'/g, "\\'")}', '${(hub.description || '').replace(/'/g, "\\'")}')">
           <div style="color:var(--gold-primary); font-size:0.8rem; font-weight:800;">HUB ${String(idx + 1).padStart(2, '0')}</div>
-          <h3 style="color:var(--text-main); font-size:1.15rem; font-weight:700; margin:8px 0;">${hub.title}</h3>
-          <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">${hub.description || ''}</p>
+          <h3 style="color:var(--text-main); font-size:1.1rem; margin:8px 0;">${hub.title}</h3>
+          <p style="color:var(--text-muted); font-size:0.85rem;">${hub.description || 'Access dedicated mini-website layout →'}</p>
         </div>
       `;
     });
@@ -253,91 +123,95 @@ function openCategory(sectionType) {
   modal.style.display = 'flex';
 }
 
-function openHubDetail(title, desc, sectionType) {
+// MINI-WEBSITE LAYOUT RENDERING FOR HUBS
+function openHubDetail(title, desc) {
   const modalBody = document.getElementById('modalBody');
-  const t = translations[currentLang] || translations.en;
-
   modalBody.innerHTML = `
     <div style="text-align:left;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <button onclick="openCategory('${sectionType}')" class="btn btn-admin" style="font-size:0.85rem;">${t.backBtn}</button>
-        <span style="color:var(--gold-primary); font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase;">${sectionType} Hub</span>
-      </div>
-
-      <h2 style="color:var(--gold-primary); font-size:1.8rem; font-weight:800; margin-bottom:12px;">${title}</h2>
-      <p style="color:var(--text-main); font-size:1rem; line-height:1.7; margin-bottom:20px;">${desc}</p>
-
-      <div style="background:rgba(5, 13, 8, 0.9); border:1px solid var(--border-gold); padding:20px; border-radius:16px; margin-bottom:20px;">
-        <h4 style="color:var(--gold-light); font-size:1rem; margin-bottom:10px;">Technical & Legal Standards:</h4>
-        <ul style="color:var(--text-muted); font-size:0.88rem; padding-left:18px; line-height:1.8;">
-          <li><strong>Origin:</strong> Chilas, Diamer District, Gilgit-Baltistan (Protected GI).</li>
-          <li><strong>Export HS Codes:</strong> 0802.91.00 (In-Shell) | 0802.92.00 (Shelled Kernels).</li>
-          <li><strong>Quality Registration:</strong> Phytosanitary Certified, GACC / CIFER Ready.</li>
+      <button onclick="closeModal()" class="btn btn-admin" style="margin-bottom:20px;">← Back to Hubs</button>
+      <div style="background:rgba(212,175,55,0.08); border:1px solid var(--border-gold); padding:10px 18px; border-radius:30px; display:inline-block; color:var(--gold-primary); font-size:0.8rem; font-weight:800; margin-bottom:15px;">DEDICATED MINI-WEBSITE HUB</div>
+      <h1 style="color:var(--gold-primary); font-size:2.2rem; margin-bottom:15px;">${title}</h1>
+      <p style="color:var(--text-main); font-size:1.05rem; line-height:1.8; margin-bottom:25px;">${desc}</p>
+      
+      <div style="background:#020c06; border:1px solid var(--border-gold); padding:25px; border-radius:16px; margin-bottom:25px;">
+        <h3 style="color:var(--gold-light); margin-bottom:12px;">Technical & Botanical Specifications:</h3>
+        <ul style="color:var(--text-muted); font-size:0.9rem; padding-left:20px; line-height:1.8;">
+          <li><strong>Product Origin:</strong> Protected Geographical Indication (GI), Chilas, Diamer District, Pakistan.</li>
+          <li><strong>Commercial Grade:</strong> Premium A-Grade Export Standard (In-Shell & Shelled Kernels).</li>
+          <li><strong>Chemical Profile:</strong> Rich in Pinolenic Acid, Antioxidants, and Essential Fatty Acids.</li>
         </ul>
       </div>
 
-      <a href="https://wa.me/920000000000" target="_blank" class="btn btn-wa" style="width:100%; justify-content:center;">
-        <span>💬 Contact Trade Desk via WhatsApp</span>
+      <a href="https://wa.me/923000000000" target="_blank" class="btn btn-wa" style="width:100%; justify-content:center; padding:15px; font-size:1rem;">
+        💬 Contact Trade Desk for Chilghoza Pine Nuts
       </a>
     </div>
   `;
 }
 
-// Permanent & Modal Workers AI Call
-async function askWorkersAI(inputContainerId, responseBoxId) {
-  const input = document.getElementById(inputContainerId);
-  const responseBox = document.getElementById(responseBoxId);
-  if (!input || !input.value.trim()) return;
+async function askWorkersAI() {
+  const input = document.getElementById('homeAiInput');
+  const responseBox = document.getElementById('homeAiResponse');
+  if (!input.value.trim()) return;
 
   responseBox.style.display = 'block';
-  responseBox.innerHTML = '<span style="color:var(--gold-primary);">Processing query with Cloudflare Workers AI...</span>';
+  responseBox.innerHTML = '<span style="color:var(--gold-primary);">Processing with Cloudflare Workers AI...</span>';
 
   try {
     const res = await fetch('/api/ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text: input.value.trim(),
-        language: currentLang
-      })
+      body: JSON.stringify({ text: input.value.trim(), language: currentLang })
     });
-
     const data = await res.json();
-    if (res.ok && data.result) {
-      responseBox.innerText = typeof data.result === 'string' ? data.result : JSON.stringify(data.result);
-    } else {
-      responseBox.innerText = "Royal AI: " + (data.error || "Service unavailable.");
-    }
+    responseBox.innerText = data.result || "No response received.";
   } catch (err) {
-    responseBox.innerText = "Error connecting to Workers AI engine.";
+    responseBox.innerText = "Error connecting to AI Assistant.";
   }
 }
 
-// Render 8 HD Gallery Images
-function renderGallery(images) {
-  const grid = document.getElementById('galleryGrid');
-  if (!grid) return;
+function changeLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', (lang === 'ar' || lang === 'ps') ? 'rtl' : 'ltr');
+}
 
-  let html = '';
-  images.forEach(img => {
-    html += `
-      <div style="position:relative; overflow:hidden; border-radius:16px; border:1px solid var(--border-gold); background:#050d08;">
-        <img src="${img.file_name}" alt="${img.alt_text || 'Chilghoza'}" style="width:100%; height:200px; object-fit:cover; display:block; transition:0.4s ease;" loading="lazy" />
-        <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(3, 10, 5, 0.85); padding:10px; backdrop-filter:blur(5px);">
-          <div style="color:var(--gold-primary); font-size:0.85rem; font-weight:700;">${img.title}</div>
-        </div>
-      </div>
-    `;
-  });
-  grid.innerHTML = html;
+function toggleAdminModal() {
+  const modal = document.getElementById('adminModal');
+  modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
 }
 
 function closeModal() {
-  const modal = document.getElementById('hubModal');
-  if (modal) modal.style.display = 'none';
+  document.getElementById('hubModal').style.display = 'none';
 }
 
-window.onclick = function(event) {
-  const modal = document.getElementById('hubModal');
-  if (event.target === modal) closeModal();
-};
+function switchAdminTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+function applyCustomTheme() {
+  const bg = document.getElementById('bgColorInput').value;
+  const gold = document.getElementById('goldColorInput').value;
+  document.documentElement.style.setProperty('--bg-primary', bg);
+  document.documentElement.style.setProperty('--gold-primary', gold);
+}
+
+async function saveAdminSettings() {
+  const bg = document.getElementById('bgColorInput').value;
+  const gold = document.getElementById('goldColorInput').value;
+  const lang = document.getElementById('adminGlobalLang').value;
+
+  try {
+    await fetch('/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bgColor: bg, goldColor: gold, globalLang: lang })
+    });
+    alert('Admin Settings Saved Successfully!');
+  } catch (err) {
+    alert('Failed to save admin settings.');
+  }
+}
