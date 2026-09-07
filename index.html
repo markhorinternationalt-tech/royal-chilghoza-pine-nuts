@@ -1,142 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Royal Chilghoza Pine Nuts | Global Ecosystem</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Royal Chilghoza Pine Nuts — Global Ecosystem</title>
+  
+  <!-- Modern Typography & Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet Connection -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Background Hero Overlay Container -->
-  <div class="hero-wrapper">
-    <!-- Top Navigation Header -->
-    <header>
-      <div class="logo">
-        ROYAL CHILGHOZA
-        <span>PINE NUTS</span>
+  <!-- Ambient 3D Glowing Background Canvas -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Main Container -->
+  <div class="app-wrapper">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="navbar">
+      <div class="brand">
+        <span class="brand-crown">👑</span>
+        <div class="brand-title">
+          ROYAL CHILGHOZA
+          <small>GLOBAL ECOSYSTEM</small>
+        </div>
       </div>
-      <div class="header-actions">
-        <button class="btn btn-admin" id="adminBtn">Admin</button>
-        <button class="btn btn-wa" onclick="window.open('https://wa.me/920000000000','_blank')">WA</button>
-        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
-          <option value="en">🌐 English</option>
-          <option value="zh">中文</option>
-          <option value="ar">العربية</option>
-          <option value="ps">پښتو</option>
-          <option value="ru">Русский</option>
-        </select>
+
+      <div class="nav-controls">
+        <!-- Admin Portal Access -->
+        <a href="/admin" class="btn btn-admin">
+          <span class="btn-icon">⚙️</span>
+          <span id="adminBtnText">Admin Portal</span>
+        </a>
+
+        <!-- Direct WhatsApp Trade Connect -->
+        <a href="https://wa.me/920000000000" target="_blank" class="btn btn-wa">
+          <span class="btn-icon">💬</span>
+          <span id="waBtnText">WhatsApp Trade</span>
+        </a>
+
+        <!-- 5-Languages Selector Dropdown -->
+        <div class="lang-selector-wrapper">
+          <select id="langSelect" class="lang-dropdown">
+            <option value="en" selected>English</option>
+            <option value="zh">中文</option>
+            <option value="ar">العربية</option>
+            <option value="ps">پښتو</option>
+            <option value="ru">Русский</option>
+          </select>
+        </div>
       </div>
     </header>
 
-    <!-- Main Hero Text Section -->
-    <section class="hero-content">
-      <p class="tagline" id="tagline">PAKISTAN • ORIGIN • GLOBAL</p>
-      <h1 id="mainHeading">Royal Chilghoza<br><span class="gold-text">Pine Nuts</span></h1>
+    <!-- HERO SECTION -->
+    <main class="hero-section">
+      <div class="badge-tag" id="tagline">PAKISTAN • ORIGIN • GLOBAL</div>
+
+      <h1 class="hero-title" id="mainHeading">
+        Royal Chilghoza<br><span class="gold-text">Pine Nuts</span>
+      </h1>
+
       <p class="hero-desc" id="heroDesc">
-        From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains, and deep knowledge.
+        Connecting authentic Chilghoza pine nuts from Pakistan's native forests to global commercial trade and scientific research ecosystems.
       </p>
 
-      <!-- Main Portals Grid (Inside Background Image View) -->
-      <div class="portals-container">
-        <div class="portal-card" onclick="openCategory('trade')">
-          <div class="portal-icon">🌰</div>
-          <span class="portal-sub">CHILGHOZA PINE NUTS</span>
-          <h2 id="tradeTitle">GLOBAL TRADE</h2>
-          <p id="tradeDesc">Premium quality • Worldwide export →</p>
+      <!-- 3D INTERACTIVE CARDS GRID (Global Trade & Research Hubs) -->
+      <div class="hubs-grid">
+
+        <!-- GLOBAL TRADE CARD -->
+        <div class="3d-card trade-card" onclick="openCategory('trade')">
+          <div class="card-glow"></div>
+          <div class="card-icon">🌐</div>
+          <h2 class="card-title" id="tradeTitle">GLOBAL TRADE</h2>
+          <p class="card-desc" id="tradeDesc">10 Dedicated Hubs • Premium Quality Export →</p>
+          <div class="card-footer">
+            <span class="badge">Export Certified</span>
+            <span class="arrow">➜</span>
+          </div>
         </div>
 
-        <div class="portal-card" onclick="openCategory('research')">
-          <div class="portal-icon">🔬</div>
-          <span class="portal-sub">CHILGHOZA</span>
-          <h2 id="researchTitle">RESEARCH & KNOWLEDGE</h2>
-          <p id="researchDesc">Science • Origin • Forests • Quality →</p>
+        <!-- RESEARCH & KNOWLEDGE CARD -->
+        <div class="3d-card research-card" onclick="openCategory('research')">
+          <div class="card-glow"></div>
+          <div class="card-icon">🔬</div>
+          <h2 class="card-title" id="researchTitle">RESEARCH & KNOWLEDGE</h2>
+          <p class="card-desc" id="researchDesc">10 Academic Hubs • Scientific Forest Research →</p>
+          <div class="card-footer">
+            <span class="badge">Botanical GI</span>
+            <span class="arrow">➜</span>
+          </div>
         </div>
+
+      </div>
+    </main>
+
+    <!-- PROJECT GALLERY SECTION -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 id="galleryTitle">Project Gallery</h2>
+        <p id="gallerySub">Authentic forest harvesting, processing, and premium quality pine nut display</p>
+      </div>
+
+      <div id="galleryGrid" class="gallery-grid">
+        <!-- Dynamic Images injected by app.js (/api/home-images) -->
+        <div class="gallery-placeholder">Loading Official Media...</div>
       </div>
     </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>© 2026 Royal Chilghoza Pine Nuts Global Ecosystem. Powered by Cloudflare D1 & Workers AI.</p>
+    </footer>
+
   </div>
 
-  <!-- Profile & Gallery Section -->
-  <section class="main-body-section">
-    <div class="profile-container">
-      <img src="profile.jpg" alt="Syed Azeem Shah" class="profile-img" />
-      <h3>Syed Azeem Shah</h3>
-      <p>Founder & Managing Director</p>
-    </div>
-
-    <div class="section-title">
-      <h2 id="galleryTitle">Project Gallery</h2>
-      <p id="gallerySub">Authentic forest harvesting, processing & premium pine nut display</p>
-    </div>
-
-    <div class="gallery-grid">
-      <div class="gallery-card">
-        <img src="01-chilghoza-lot.jpg" alt="Chilghoza Lot" />
-        <div class="caption">Premium Grade Chilghoza Lot</div>
+  <!-- DYNAMIC MODAL OVERLAY (HUBS & AI ASSISTANT PANEL) -->
+  <div id="hubModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalBody" class="modal-body">
+        <!-- Dynamic Hub List / Hub Details & Workers AI injected via app.js -->
       </div>
-      <div class="gallery-card">
-        <img src="02-chilghoza-cones.jpg" alt="Chilghoza Cones" />
-        <div class="caption">Fresh Natural Pine Cones</div>
-      </div>
-      <div class="gallery-card">
-        <img src="03-chilghoza-kernel.jpg" alt="Chilghoza Kernel" />
-        <div class="caption">Hand-Selected Shelled Kernels</div>
-      </div>
-      <div class="gallery-card">
-        <img src="04-chilghoza-harvest.jpg" alt="Harvesting" />
-        <div class="caption">Traditional Sustainable Harvesting</div>
-      </div>
-      <div class="gallery-card">
-        <img src="05-chilghoza-raw-kernels.jpg" alt="Raw Kernels" />
-        <div class="caption">Organic Raw Kernels</div>
-      </div>
-      <div class="gallery-card">
-        <img src="06-chilghoza-cone-closeup.jpg" alt="Cone Closeup" />
-        <div class="caption">Detailed Botanical Structure</div>
-      </div>
-      <div class="gallery-card">
-        <img src="07-chilghoza-products-display.jpg" alt="Products Display" />
-        <div class="caption">Export Ready Value-Added Packaging</div>
-      </div>
-      <div class="gallery-card">
-        <img src="08-chilghoza-forest.jpg" alt="Chilghoza Forest" />
-        <div class="caption">Native High-Altitude Pine Forests</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal for Hubs -->
-  <div class="modal-overlay" id="hubModal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="closeModal()">&times;</span>
-      <div id="modalBody"></div>
     </div>
   </div>
 
-  <footer>
-    <div class="addresses-grid">
-      <div class="address-box">
-        <h4>Chilas Head Office</h4>
-        <p>Main Market, Chilas, Diamer, Gilgit-Baltistan, Pakistan</p>
-      </div>
-      <div class="address-box">
-        <h4>Rawalpindi Office</h4>
-        <p>Trade Center, Islamabad-Rawalpindi Region, Pakistan</p>
-      </div>
-      <div class="address-box">
-        <h4>Export & Logistics Unit</h4>
-        <p>Dry Port Industrial Zone, Pakistan</p>
-      </div>
-      <div class="address-box">
-        <h4>International Trade Contact</h4>
-        <p>Direct WhatsApp / Email Ecosystem Support</p>
-      </div>
-    </div>
-    <div class="copyright">
-      © 2026 Royal Chilghoza Ecosystem • All Rights Reserved
-    </div>
-  </footer>
-
+  <!-- JavaScript Engine Connection -->
   <script src="app.js"></script>
 </body>
 </html>
