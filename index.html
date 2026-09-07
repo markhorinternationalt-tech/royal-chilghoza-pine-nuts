@@ -1,305 +1,331 @@
-<!doctype html>
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html lang="ur">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#03140a">
-<meta name="description" content="Royal Chilghoza Pine Nuts — Global Trade and Research & Knowledge Ecosystem.">
-<meta name="keywords" content="Chilghoza Pine Nuts, Pine Nuts, Pakistan, Global Trade, Research, Export, Forests">
-<title>Royal Chilghoza Pine Nuts</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Chilghoza Pine Nuts</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* اگر کسی اضافی اسٹائل کی ضرورت ہو تو یہاں ڈالیں، ورنہ خالی */
+    </style>
 </head>
 <body>
-<div class="ambient ambient-a"></div>
-<div class="ambient ambient-b"></div>
 
-<!-- ====== HEADER ====== -->
-<header class="site-header" id="top">
-  <a class="brand" href="#top" aria-label="Royal Chilghoza Pine Nuts home">
-    <span class="profile-frame"><img src="profile.jpg" alt="Syed Azeem Shah profile" onerror="this.closest('.profile-frame').classList.add('image-missing')"></span>
-    <span class="brand-copy"><b>ROYAL CHILGHOZA</b><small>PINE NUTS</small></span>
-  </a>
-  <nav class="desktop-nav">
-    <a href="#top" data-i18n="navHome">Home</a>
-    <a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a>
-    <a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a>
-    <a href="#gallery" data-i18n="navGallery">Gallery</a>
-    <a href="#contact">WhatsApp</a>
-  </nav>
-  <div class="header-actions">
-    <select id="languageSelect" aria-label="Language">
-      <option value="en">🌐 English</option>
-      <option value="zh">🌐 中文</option>
-      <option value="ar">🌐 العربية</option>
-      <option value="ps">🌐 پښتو</option>
-      <option value="ru">🌐 Русский</option>
-    </select>
-    <button id="adminOpen" class="admin-trigger" data-i18n="admin">Admin</button>
-    <button id="menuOpen" class="menu-trigger">☰</button>
-  </div>
-</header>
+    <!-- Ambient Glows -->
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
 
-<!-- ====== MAIN PAGE ====== -->
-<main id="mainPage">
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+        <a href="#" class="brand">
+            <div class="profile-frame">
+                <!-- اپنی CEO تصویر کا نام درست کریں -->
+                <img src="Profile Picture CEO.jpg" alt="CEO">
+            </div>
+            <div class="brand-copy">
+                <b>ROYAL CHILGHOZA</b>
+                <small>PINE NUTS</small>
+            </div>
+        </a>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <p class="eyebrow" data-i18n="eyebrow">PAKISTAN · ORIGIN · GLOBAL</p>
-      <h1><span data-i18n="heroRoyal">Royal</span> <span class="gold" data-i18n="heroTitle">Chilghoza Pine Nuts</span></h1>
-      <p data-i18n="heroText">From the Chilghoza Pine Nuts forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and knowledge.</p>
-      <div class="hero-actions">
-        <button class="btn btn-gold" data-open-gateway="trade" data-i18n="exploreTrade">Explore Global Trade</button>
-        <button class="btn btn-glass" data-open-gateway="research" data-i18n="exploreResearch">Explore Research</button>
-      </div>
-    </div>
-  </section>
+        <nav class="desktop-nav">
+            <a href="#home">Home</a>
+            <a href="#trade">Trade</a>
+            <a href="#knowledge">Knowledge</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </nav>
 
-  <!-- GATEWAYS -->
-  <section class="section-shell gateway-section" id="gateways">
-    <div class="section-heading">
-      <p class="eyebrow" data-i18n="gatewayEyebrow">TWO PRIMARY GATEWAYS</p>
-      <h2 data-i18n="gatewayTitle">One Royal Chilghoza Pine Nuts Ecosystem</h2>
-    </div>
-    <div class="gateway-grid">
-      <article class="gateway-card glass-card">
-        <div class="gateway-icon">◈</div>
-        <p class="eyebrow">01 · CHILGHOZA PINE NUTS</p>
-        <h2 data-i18n="tradeTitle">GLOBAL TRADE</h2>
-        <p data-i18n="tradeText">Premium quality · Worldwide export · Markets and buyers</p>
-        <button class="btn btn-gold" data-open-gateway="trade" data-i18n="openGateway">Open Gateway</button>
-      </article>
-      <article class="gateway-card glass-card">
-        <div class="gateway-icon">✦</div>
-        <p class="eyebrow">02 · CHILGHOZA PINE NUTS</p>
-        <h2 data-i18n="researchTitle">RESEARCH & KNOWLEDGE</h2>
-        <p data-i18n="researchText">Science · Origin · Forests · Ecology · Knowledge</p>
-        <button class="btn btn-gold" data-open-gateway="research" data-i18n="openGateway">Open Gateway</button>
-      </article>
-    </div>
-  </section>
-
-  <!-- GALLERY -->
-  <section class="section-shell gallery-section" id="gallery">
-    <div class="section-heading">
-      <p class="eyebrow" data-i18n="galleryEyebrow">ROYAL FIELD ARCHIVE</p>
-      <h2 data-i18n="galleryTitle">Chilghoza Pine Nuts Gallery</h2>
-      <p data-i18n="galleryText">Eight editable visual records from forest, harvest, grading and export.</p>
-    </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </section>
-
-  <!-- AI SECTION -->
-  <section class="section-shell ai-section">
-    <div class="ai-panel glass-card">
-      <div class="ai-orb"><span>AI</span></div>
-      <div>
-        <p class="eyebrow">ROYAL AI · CLOUDFLARE WORKERS AI</p>
-        <h2 data-i18n="aiTitle">Royal AI Assistant</h2>
-        <p data-i18n="aiText">Ask about Chilghoza Pine Nuts, trade, quality, forests and research.</p>
-        <div class="ai-mode" id="aiModeLabel">Visitor Assistant</div>
-        <form id="aiForm">
-          <input id="aiInput" data-i18n-placeholder="aiPlaceholder" placeholder="Ask about Chilghoza Pine Nuts...">
-          <button class="btn btn-gold" data-i18n="ask">Ask AI</button>
-        </form>
-        <div id="aiMessages" class="ai-messages" aria-live="polite"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHATSAPP GATEWAY -->
-  <section class="section-shell contact-section" id="contact">
-    <a id="mainWhatsapp" class="whatsapp-gateway" target="_blank" rel="noopener">
-      <span>◉</span>
-      <div>
-        <small data-i18n="directInquiry">DIRECT TRADE INQUIRY</small>
-        <b data-i18n="whatsappTitle">WhatsApp Chilghoza Pine Nuts Trade Desk</b>
-      </div>
-      <i>↗</i>
-    </a>
-  </section>
-
-  <!-- OFFICES -->
-  <section class="offices-section">
-    <div class="section-shell">
-      <div class="section-heading">
-        <p class="eyebrow" data-i18n="officeEyebrow">CONTACT · OFFICE · PARTNERSHIP</p>
-        <h2 data-i18n="officeTitle">Office Address</h2>
-      </div>
-      <div id="officeGrid" class="office-grid"></div>
-    </div>
-  </section>
-</main>
-
-<!-- ====== GATEWAY VIEW ====== -->
-<section id="gatewayView" class="full-view" aria-hidden="true">
-  <div class="view-topbar">
-    <button id="gatewayBack">← <span data-i18n="back">Back</span></button>
-    <b>ROYAL CHILGHOZA <span>PINE NUTS</span></b>
-    <select id="gatewayLanguage" aria-label="Language"></select>
-  </div>
-  <div class="gateway-hero">
-    <p class="eyebrow" id="gatewayEyebrow">PRIMARY GATEWAY</p>
-    <h1 id="gatewayTitleText"></h1>
-    <p id="gatewayDescription"></p>
-  </div>
-  <div class="hub-grid-page" id="hubGridPage"></div>
-</section>
-
-<!-- ====== HUB VIEW ====== -->
-<section id="hubView" class="full-view" aria-hidden="true">
-  <div class="view-topbar">
-    <button id="hubBack">← <span data-i18n="back">Back</span></button>
-    <b>ROYAL CHILGHOZA <span>PINE NUTS</span></b>
-    <select id="hubLanguage" aria-label="Language"></select>
-  </div>
-  <article class="hub-page">
-    <p class="eyebrow" id="hubNo"></p>
-    <h1 id="hubTitleText"></h1>
-    <p class="hub-lead" id="hubDescription"></p>
-    <div class="hub-columns">
-      <div class="hub-content glass-card">
-        <h3 data-i18n="hubContent">Knowledge Hub</h3>
-        <p data-i18n="hubBody">This full mini-website page is ready for Admin content, articles, market information, research records and detailed descriptions.</p>
-        <a id="hubWhatsapp" class="btn btn-gold" target="_blank" data-i18n="whatsappTrade">WhatsApp Trade</a>
-      </div>
-      <div class="hub-media glass-card">
-        <h3 data-i18n="mediaTitle">Images · Videos · PDFs</h3>
-        <div id="hubMedia" data-i18n="mediaEmpty">Dynamic media will appear here after upload.</div>
-      </div>
-    </div>
-  </article>
-</section>
-
-<!-- ====== MOBILE DRAWER ====== -->
-<div class="mobile-drawer" id="mobileDrawer">
-  <button id="menuClose">×</button>
-  <a href="#top" data-i18n="navHome">Home</a>
-  <a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a>
-  <a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a>
-  <a href="#gallery" data-i18n="navGallery">Gallery</a>
-</div>
-
-<!-- ====== ADMIN DIALOG ====== -->
-<dialog id="adminDialog">
-  <div class="admin-panel admin-wide">
-    <button id="adminClose">×</button>
-    <p class="eyebrow">ADMIN PORTAL</p>
-    <h2>Royal Management Center</h2>
-    <p id="adminStatus">Secure Admin Mode enables management tools and changes Royal AI into an Admin Assistant.</p>
-
-    <!-- LOGIN -->
-    <div id="adminLoginBox">
-      <input id="adminToken" placeholder="Admin token" type="password">
-      <button id="adminLogin" class="btn btn-gold">Open Admin Mode</button>
-    </div>
-
-    <!-- TOOLS -->
-    <div id="adminTools" hidden>
-      
-      <!-- THEME CUSTOMIZER (Photoshop Style) -->
-      <h3>🎨 Theme Customizer (Live Preview)</h3>
-      <p class="admin-note">Adjust Hue, Saturation, Brightness, Font Size, and Font Family for each element.</p>
-      
-      <div class="theme-grid">
-        <!-- Background -->
-        <div class="theme-group">
-          <label>Background</label>
-          <div class="slider-group">
-            <label>Hue <input type="range" id="bgHue" min="0" max="360" value="150" data-target="--bg-hue"></label>
-            <label>Saturation <input type="range" id="bgSat" min="0" max="200" value="100" data-target="--bg-sat"></label>
-            <label>Brightness <input type="range" id="bgBright" min="20" max="100" value="30" data-target="--bg-bright"></label>
-          </div>
-        </div>
-        <!-- Gold Accent -->
-        <div class="theme-group">
-          <label>Royal Gold</label>
-          <div class="slider-group">
-            <label>Hue <input type="range" id="goldHue" min="0" max="360" value="45" data-target="--gold-hue"></label>
-            <label>Saturation <input type="range" id="goldSat" min="0" max="200" value="150" data-target="--gold-sat"></label>
-            <label>Brightness <input type="range" id="goldBright" min="30" max="100" value="75" data-target="--gold-bright"></label>
-          </div>
-        </div>
-        <!-- Text -->
-        <div class="theme-group">
-          <label>Body Text</label>
-          <div class="slider-group">
-            <label>Hue <input type="range" id="textHue" min="0" max="360" value="40" data-target="--text-hue"></label>
-            <label>Saturation <input type="range" id="textSat" min="0" max="100" value="10" data-target="--text-sat"></label>
-            <label>Brightness <input type="range" id="textBright" min="50" max="100" value="95" data-target="--text-bright"></label>
-          </div>
-        </div>
-        <!-- Heading -->
-        <div class="theme-group">
-          <label>Headings</label>
-          <div class="slider-group">
-            <label>Hue <input type="range" id="headingHue" min="0" max="360" value="40" data-target="--heading-hue"></label>
-            <label>Saturation <input type="range" id="headingSat" min="0" max="100" value="15" data-target="--heading-sat"></label>
-            <label>Brightness <input type="range" id="headingBright" min="50" max="100" value="95" data-target="--heading-bright"></label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Font Size & Family -->
-      <div class="font-controls">
-        <div class="font-group">
-          <label>Heading Font Size <input type="range" id="headingSize" min="0.8" max="2.0" step="0.05" value="1.0" data-target="--heading-scale"></label>
-          <label>Body Font Size <input type="range" id="bodySize" min="0.8" max="1.5" step="0.05" value="1.0" data-target="--body-scale"></label>
-          <label>Small Text Size <input type="range" id="smallSize" min="0.6" max="1.2" step="0.05" value="1.0" data-target="--small-scale"></label>
-        </div>
-        <div class="font-group">
-          <label>Heading Font Family 
-            <select id="headingFont">
-              <option value="Georgia, serif">Georgia (Serif)</option>
-              <option value="'Times New Roman', serif">Times New Roman</option>
-              <option value="Arial, sans-serif">Arial (Sans-serif)</option>
-              <option value="'Segoe UI', sans-serif">Segoe UI</option>
+        <div class="header-actions">
+            <select aria-label="Language">
+                <option>English</option>
+                <option>اردو</option>
+                <option>中文</option>
             </select>
-          </label>
-          <label>Body Font Family 
-            <select id="bodyFont">
-              <option value="Arial, sans-serif">Arial (Sans-serif)</option>
-              <option value="'Segoe UI', sans-serif">Segoe UI</option>
-              <option value="Georgia, serif">Georgia (Serif)</option>
-              <option value="'Times New Roman', serif">Times New Roman</option>
-            </select>
-          </label>
+            <button class="admin-trigger" id="adminOpen">⚙ Admin</button>
+            <button class="menu-trigger" id="menuToggle">☰</button>
         </div>
-      </div>
+    </header>
 
-      <div class="admin-actions">
-        <button id="themeSave" class="btn btn-gold">💾 Save Theme</button>
-        <button id="themeReset" class="btn btn-glass">↺ Reset Default</button>
-      </div>
-
-      <!-- MEDIA MANAGEMENT -->
-      <h3>📁 Media Management (R2)</h3>
-      <div class="admin-actions">
-        <input id="mediaFile" type="file" accept="image/*,video/*,application/pdf">
-        <select id="mediaFolder">
-          <option>gallery</option>
-          <option>hubs</option>
-          <option>videos</option>
-          <option>pdfs</option>
-        </select>
-        <button id="mediaUpload" class="btn btn-gold">⬆ Upload to R2</button>
-      </div>
-      <p id="mediaStatus" class="admin-note"></p>
-
-      <!-- HUB MANAGEMENT (CRUD) - SIMPLIFIED FOR DEMO -->
-      <h3>📂 Hub Management</h3>
-      <p class="admin-note">Create, Edit, Delete, or Reorder Hubs (coming in next phase with KV/D1).</p>
-      <div class="admin-actions">
-        <button id="createHubBtn" class="btn btn-gold">+ Create New Hub</button>
-        <button id="editHubBtn" class="btn btn-glass">✎ Edit Selected</button>
-        <button id="deleteHubBtn" class="btn btn-glass" style="border-color:#c0392b;">🗑 Delete Selected</button>
-      </div>
+    <!-- ========== MOBILE DRAWER ========== -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <button id="closeDrawer">✕</button>
+        <a href="#home">Home</a>
+        <a href="#trade">Trade</a>
+        <a href="#knowledge">Knowledge</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
     </div>
-  </div>
-</dialog>
 
-<script src="app.js"></script>
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="eyebrow">PAKISTAN · ORIGIN · GLOBAL</p>
+            <h1>
+                Royal<br>
+                <span class="gold">Chilghoza</span>
+                Pine Nuts
+            </h1>
+            <p>
+                From the Chilghoza forests of Pakistan to the world — connecting premium quality,
+                authentic origin, responsible supply chains and deep knowledge.
+            </p>
+            <div class="hero-actions">
+                <a href="#trade" class="btn btn-gold">Explore Trade →</a>
+                <a href="#knowledge" class="btn btn-glass">Research & Knowledge</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== GATEWAY CARDS (Trade & Knowledge) ========== -->
+    <section class="section-shell" id="trade">
+        <div class="section-heading">
+            <h2>Chilghoza <span class="gold">Pine Nuts</span></h2>
+            <p>Premium quality • Worldwide export →</p>
+        </div>
+        <div class="gateway-grid">
+            <!-- Card 1: Global Trade -->
+            <div class="glass-card gateway-card" data-view="trade">
+                <div class="gateway-icon">🌍</div>
+                <h2>Global Trade</h2>
+                <p>USA • China • Central Asia • Middle East</p>
+                <p style="margin-top: 10px; color: var(--gold2);">Export & Logistics • Product & Quality • Buyers & Pricing • Supply Chain</p>
+                <div style="margin-top: 20px;"><a href="#" class="btn btn-gold" style="padding: 10px 22px;">View Details →</a></div>
+            </div>
+            <!-- Card 2: Research & Knowledge -->
+            <div class="glass-card gateway-card" data-view="knowledge">
+                <div class="gateway-icon">🔬</div>
+                <h2>Research & Knowledge</h2>
+                <p>Science • Origin • Forests • Quality</p>
+                <p style="margin-top: 10px; color: var(--gold2);">Chilghoza Forests • Global Environment • Organic Claims • Traceability</p>
+                <div style="margin-top: 20px;"><a href="#" class="btn btn-gold" style="padding: 10px 22px;">Explore Science →</a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== GALLERY ========== -->
+    <section class="section-shell" id="gallery" style="padding-top: 20px;">
+        <div class="section-heading">
+            <h2>From Forest <span class="gold">to Table</span></h2>
+            <p>Our journey in images — harvest, kernels, products, and the pristine Chilghoza forests.</p>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="01-chilghoza-lot.jpg" alt="Chilghoza lot" loading="lazy">
+                <figcaption><span>Harvest</span> Freshly collected cones</figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="02-chilghoza-cones.jpg" alt="Cones" loading="lazy">
+                <figcaption><span>Forest</span> Chilghoza cones</figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="03-chilghoza-kernel.jpg" alt="Kernels" loading="lazy">
+                <figcaption><span>Quality</span> Premium kernels</figcaption>
+            </figure>
+            <figure class="gallery-item">
+                <img src="04-chilghoza-harvest.jpg" alt="Harvest" loading="lazy">
+                <figcaption><span>Tradition</span> Harvesting in the wild</figcaption>
+            </figure>
+            <!-- مزید تصاویر چاہیں تو شامل کریں -->
+        </div>
+    </section>
+
+    <!-- ========== AI PANEL ========== -->
+    <section class="section-shell" style="padding-top: 20px;">
+        <div class="glass-card ai-panel">
+            <div class="ai-orb"><span>✦</span></div>
+            <div>
+                <h2 style="margin:0;">Chilghoza <span class="gold">AI</span></h2>
+                <span class="ai-mode">Knowledge Assistant</span>
+                <div class="ai-messages" id="aiMessages">
+                    <p>Ask me anything about Chilghoza pine nuts — origin, quality, trade, or sustainability.</p>
+                </div>
+                <form id="aiForm">
+                    <input type="text" id="aiInput" placeholder="Type your question..." aria-label="AI question">
+                    <button type="submit" class="btn btn-gold">Ask</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHATSAPP GATEWAY ========== -->
+    <section class="section-shell" style="padding-top: 0;">
+        <a href="#" class="whatsapp-gateway">
+            <span>📞</span>
+            <div>
+                <small>CONTACT US</small>
+                <b>Chat on WhatsApp</b>
+                <span style="font-size:0.8rem; opacity:0.8;">+92 300 1234567</span>
+            </div>
+            <i>→</i>
+        </a>
+    </section>
+
+    <!-- ========== OFFICES (اختیاری) ========== -->
+    <section class="offices-section" style="padding: 40px 0;">
+        <div class="section-shell" style="padding: 0;">
+            <div class="section-heading">
+                <h2>Our <span class="gold">Presence</span></h2>
+                <p>Global offices and partners</p>
+            </div>
+            <div class="office-grid">
+                <div class="office-card"><span>🇵🇰</span><h3>Pakistan</h3><p>Headquarters, Chilghoza forests</p></div>
+                <div class="office-card"><span>🇺🇸</span><h3>USA</h3><p>New York · Import & distribution</p></div>
+                <div class="office-card"><span>🇨🇳</span><h3>China</h3><p>Beijing · Trade & logistics</p></div>
+                <div class="office-card"><span>🇦🇪</span><h3>UAE</h3><p>Dubai · Middle East hub</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FULL VIEW (HUB PAGES) ========== -->
+    <!-- یہ ڈیفالٹ طور پر چھپا ہوا ہے، جب گیٹ وے کارڈ پر کلک ہو تو کھلے گا -->
+    <div class="full-view" id="fullView">
+        <div class="view-topbar">
+            <button id="closeFullView">← Back</button>
+            <span id="viewTitle">Title</span>
+            <select><option>English</option></select>
+        </div>
+        <div class="hub-page" id="hubPage">
+            <!-- مواد جاوا اسکرپٹ کے ذریعے ڈالا جائے گا -->
+        </div>
+    </div>
+
+    <!-- ========== ADMIN DIALOG ========== -->
+    <dialog id="adminDialog">
+        <div class="admin-panel">
+            <button id="adminClose" style="position:absolute;right:20px;top:15px;background:none;border:0;color:var(--gold2);font-size:2rem;cursor:pointer;">✕</button>
+            <h2>Admin Panel</h2>
+            <p style="color:var(--muted);">Manage content (demo)</p>
+            <input type="text" placeholder="Product name">
+            <input type="text" placeholder="Price">
+            <button class="btn btn-gold" style="width:100%;">Save Changes</button>
+        </div>
+    </dialog>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        (function() {
+            // ---- Mobile Drawer ----
+            const menuToggle = document.getElementById('menuToggle');
+            const drawer = document.getElementById('mobileDrawer');
+            const closeDrawer = document.getElementById('closeDrawer');
+            function toggleDrawer() { drawer.classList.toggle('open'); }
+            menuToggle.addEventListener('click', toggleDrawer);
+            closeDrawer.addEventListener('click', toggleDrawer);
+            // Close drawer on link click
+            drawer.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleDrawer));
+
+            // ---- Admin Dialog ----
+            const adminOpen = document.getElementById('adminOpen');
+            const adminDialog = document.getElementById('adminDialog');
+            const adminClose = document.getElementById('adminClose');
+            adminOpen.addEventListener('click', () => adminDialog.showModal());
+            adminClose.addEventListener('click', () => adminDialog.close());
+            adminDialog.addEventListener('click', (e) => { if (e.target === adminDialog) adminDialog.close(); });
+
+            // ---- Gateway Cards -> Open Full View ----
+            const fullView = document.getElementById('fullView');
+            const closeFullView = document.getElementById('closeFullView');
+            const viewTitle = document.getElementById('viewTitle');
+            const hubPage = document.getElementById('hubPage');
+
+            // ڈیٹا: ٹریڈ اور نالج کے لیے کارڈز
+            const hubData = {
+                trade: {
+                    title: 'Global Trade',
+                    items: [
+                        { title: '01 Global Markets', desc: 'USA · China · Central Asia · Middle East' },
+                        { title: '02 Export & Logistics', desc: 'Packaging · documentation · shipping · customs' },
+                        { title: '03 Product & Quality', desc: 'Kernels · in-shell · roasting · grades · specifications' },
+                        { title: '04 Buyers & Pricing', desc: 'Buyer requirements · offers · quotations · market intelligence' },
+                        { title: '05 Supply Chain & Traceability', desc: 'Forest → collector → processing → packing → export' }
+                    ]
+                },
+                knowledge: {
+                    title: 'Research & Knowledge',
+                    items: [
+                        { title: '01 Chilghoza Forests', desc: 'Forest ecology · regeneration · harvesting · conservation' },
+                        { title: '02 Global Environment & Climate', desc: 'Biodiversity · carbon · ecosystem services · climate resilience' },
+                        { title: '03 Organic & Natural Product Claims', desc: 'Evidence · standards · chain of custody · responsible declarations' },
+                        { title: '04 Supply Chain & Traceability', desc: 'Product properties · lot identity · origin · handling · documentation' }
+                    ]
+                }
+            };
+
+            function openFullView(viewKey) {
+                const data = hubData[viewKey];
+                if (!data) return;
+                viewTitle.textContent = data.title;
+                // Build hub cards
+                let html = `<h1>${data.title}</h1>
+                            <p class="hub-lead">Explore our expertise in ${data.title.toLowerCase()}.</p>
+                            <div class="hub-grid-page">`;
+                data.items.forEach(item => {
+                    html += `<div class="hub-card">
+                                <span>${item.title.split(' ')[0]}</span>
+                                <h2>${item.title}</h2>
+                                <p>${item.desc}</p>
+                                <b>→</b>
+                            </div>`;
+                });
+                html += `</div>`;
+                hubPage.innerHTML = html;
+                fullView.classList.add('open');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // ہر گیٹ وے کارڈ پر کلک ایونٹ
+            document.querySelectorAll('.gateway-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // اگر کلک کسی لنک یا بٹن پر ہو تو اسے روکیں نہیں، ورنہ کھولیں
+                    if (e.target.closest('a, .btn')) return;
+                    const view = this.dataset.view;
+                    if (view) openFullView(view);
+                });
+                // لنک پر کلک کرنے پر بھی کام کرے
+                card.querySelector('a')?.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const view = this.closest('.gateway-card').dataset.view;
+                    if (view) openFullView(view);
+                });
+            });
+
+            // Close full view
+            closeFullView.addEventListener('click', () => {
+                fullView.classList.remove('open');
+            });
+
+            // ---- AI Form (simulated) ----
+            const aiForm = document.getElementById('aiForm');
+            const aiInput = document.getElementById('aiInput');
+            const aiMessages = document.getElementById('aiMessages');
+            aiForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const q = aiInput.value.trim();
+                if (!q) return;
+                // Add user message
+                const userP = document.createElement('p');
+                userP.innerHTML = `<strong>You:</strong> ${q}`;
+                aiMessages.appendChild(userP);
+                // Simulate AI response
+                const responses = [
+                    "Chilghoza pine nuts are rich in healthy fats and proteins.",
+                    "Our supply chain is fully traceable from forest to export.",
+                    "We comply with international quality standards.",
+                    "The forests are sustainably managed with local communities."
+                ];
+                const reply = responses[Math.floor(Math.random() * responses.length)];
+                const botP = document.createElement('p');
+                botP.innerHTML = `<strong>AI:</strong> ${reply}`;
+                aiMessages.appendChild(botP);
+                aiInput.value = '';
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+            });
+
+        })();
+    </script>
+
 </body>
 </html>
