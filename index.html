@@ -3,529 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Royal Chilgoza Ecosystem | Premium Pine Nuts from Pakistan</title>
-  <meta name="description" content="Royal Chilgoza Ecosystem - Premium Chilgoza Pine Nuts from Pakistan. Global Trade & Scientific Research Hub." />
-
-  <style>
-    :root {
-      --bg-dark: #0b1a12;
-      --bg-card: #12261c;
-      --gold: #d4af37;
-      --gold-light: #f0d78c;
-      --text-main: #f5f5f0;
-      --text-muted: #b8c5b0;
-      --border: rgba(212, 175, 55, 0.25);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--bg-dark);
-      color: var(--text-main);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ========== HEADER ========== */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(11, 26, 18, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--gold);
-    }
-
-    .logo span {
-      display: block;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-      margin-top: 2px;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .btn {
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all 0.3s ease;
-    }
-
-    .btn-admin {
-      background: var(--gold);
-      color: #0b1a12;
-    }
-
-    .btn-wa {
-      background: #25d366;
-      color: white;
-    }
-
-    .lang-select {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-    }
-
-    /* ========== HERO ========== */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 5% 80px;
-      background: 
-        linear-gradient(rgba(11, 26, 18, 0.85), rgba(11, 26, 18, 0.92)),
-        url('08-chilghoza-forest.jpg') center/cover no-repeat;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      z-index: 2;
-    }
-
-    .profile-img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 4px solid var(--gold);
-      object-fit: cover;
-      margin-bottom: 25px;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-    }
-
-    .hero-tag {
-      color: var(--gold);
-      font-size: 0.9rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 span {
-      color: var(--gold);
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 620px;
-      margin: 0 auto 30px;
-    }
-
-    /* ========== MAIN FOLDERS ========== */
-    .main-folders {
-      padding: 80px 5%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-    }
-
-    .folder-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 35px 30px;
-      transition: all 0.35s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .folder-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--gold);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    }
-
-    .folder-card .icon {
-      font-size: 2.2rem;
-      margin-bottom: 18px;
-    }
-
-    .folder-card h3 {
-      font-size: 0.85rem;
-      color: var(--gold);
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-    }
-
-    .folder-card h2 {
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-    }
-
-    .folder-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .folder-card .arrow {
-      margin-top: 20px;
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    /* ========== GALLERY ========== */
-    .gallery {
-      padding: 60px 5% 90px;
-      max-width: 1300px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      text-align: center;
-      margin-bottom: 45px;
-    }
-
-    .section-title h2 {
-      font-size: 2rem;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .section-title p {
-      color: var(--text-muted);
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
-    }
-
-    .gallery-item {
-      background: var(--bg-card);
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transition: transform 0.3s ease;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.03);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-item .caption {
-      padding: 16px;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    /* ========== AI ASSISTANT ========== */
-    .ai-section {
-      padding: 70px 5%;
-      background: linear-gradient(180deg, #0f2218, #0b1a12);
-    }
-
-    .ai-box {
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--bg-card);
-      border: 1px solid var(--gold);
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .ai-box h2 {
-      color: var(--gold);
-      margin-bottom: 12px;
-      font-size: 1.7rem;
-    }
-
-    .ai-box p {
-      color: var(--text-muted);
-      margin-bottom: 25px;
-    }
-
-    .ai-input {
-      display: flex;
-      gap: 12px;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .ai-input input {
-      flex: 1;
-      padding: 14px 20px;
-      border-radius: 30px;
-      border: 1px solid var(--border);
-      background: #0b1a12;
-      color: white;
-      font-size: 1rem;
-    }
-
-    .ai-input button {
-      padding: 14px 28px;
-      border-radius: 30px;
-      background: var(--gold);
-      color: #0b1a12;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* ========== WHATSAPP ========== */
-    .wa-section {
-      padding: 60px 5%;
-      text-align: center;
-    }
-
-    .wa-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: #25d366;
-      color: white;
-      padding: 16px 36px;
-      border-radius: 50px;
-      font-size: 1.15rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform 0.3s ease;
-    }
-
-    .wa-btn:hover {
-      transform: scale(1.05);
-    }
-
-    /* ========== ADDRESS ========== */
-    .address-section {
-      padding: 70px 5% 100px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .address-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 25px;
-      margin-top: 40px;
-    }
-
-    .address-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 25px;
-    }
-
-    .address-card h4 {
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-
-    .address-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ========== FOOTER ========== */
-    footer {
-      text-align: center;
-      padding: 30px;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 2rem; }
-      .ai-input { flex-direction: column; }
-      .header-actions { gap: 8px; }
-      .btn { padding: 7px 14px; font-size: 0.8rem; }
-    }
-  </style>
+  <title>Royal Chilghoza Pine Nuts | Global Ecosystem</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      ROYAL CHILGOZA
-      <span>GLOBAL ECOSYSTEM</span>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-admin">Admin</button>
-      <button class="btn btn-wa">WA</button>
-      <select class="lang-select">
-        <option>English</option>
-        <option>中文</option>
-        <option>العربية</option>
-        <option>پښتو</option>
-        <option>Русский</option>
-      </select>
-    </div>
-  </header>
+  <!-- Background Hero Overlay Container -->
+  <div class="hero-wrapper">
+    <!-- Top Navigation Header -->
+    <header>
+      <div class="logo">
+        ROYAL CHILGHOZA
+        <span>PINE NUTS</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-admin" id="adminBtn">Admin</button>
+        <button class="btn btn-wa" onclick="window.open('https://wa.me/920000000000','_blank')">WA</button>
+        <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+          <option value="en">🌐 English</option>
+          <option value="zh">中文</option>
+          <option value="ar">العربية</option>
+          <option value="ps">پښتو</option>
+          <option value="ru">Русский</option>
+        </select>
+      </div>
+    </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <img src="profile.jpg" alt="Founder" class="profile-img" />
-      <div class="hero-tag">Pakistan • International Trade & Research</div>
-      <h1>Royal Chilgoza <span>Ecosystem</span></h1>
-      <p>From the ancient Chilgoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and deep knowledge.</p>
-    </div>
-  </section>
+    <!-- Main Hero Text Section -->
+    <section class="hero-content">
+      <p class="tagline" id="tagline">PAKISTAN • ORIGIN • GLOBAL</p>
+      <h1 id="mainHeading">Royal Chilghoza<br><span class="gold-text">Pine Nuts</span></h1>
+      <p class="hero-desc" id="heroDesc">
+        From the Chilghoza forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains, and deep knowledge.
+      </p>
 
-  <!-- TWO MAIN FOLDERS -->
-  <section class="main-folders">
-    <div class="folder-card" onclick="location.href='global-trade.html'">
-      <div class="icon">🌍</div>
-      <h3>BUSINESS & COMMERCE</h3>
-      <h2>Global Trade</h2>
-      <p>10 comprehensive international trade directories with individual media, AI & WhatsApp connectivity.</p>
-      <div class="arrow">Explore →</div>
+      <!-- Main Portals Grid (Inside Background Image View) -->
+      <div class="portals-container">
+        <div class="portal-card" onclick="openCategory('trade')">
+          <div class="portal-icon">🌰</div>
+          <span class="portal-sub">CHILGHOZA PINE NUTS</span>
+          <h2 id="tradeTitle">GLOBAL TRADE</h2>
+          <p id="tradeDesc">Premium quality • Worldwide export →</p>
+        </div>
+
+        <div class="portal-card" onclick="openCategory('research')">
+          <div class="portal-icon">🔬</div>
+          <span class="portal-sub">CHILGHOZA</span>
+          <h2 id="researchTitle">RESEARCH & KNOWLEDGE</h2>
+          <p id="researchDesc">Science • Origin • Forests • Quality →</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Profile & Gallery Section -->
+  <section class="main-body-section">
+    <div class="profile-container">
+      <img src="profile.jpg" alt="Syed Azeem Shah" class="profile-img" />
+      <h3>Syed Azeem Shah</h3>
+      <p>Founder & Managing Director</p>
     </div>
 
-    <div class="folder-card" onclick="location.href='research.html'">
-      <div class="icon">🌲</div>
-      <h3>SCIENCE & ECOLOGY</h3>
-      <h2>Research & Knowledge</h2>
-      <p>10 detailed research folders on origin, forestry, botany, nutrition & sustainability.</p>
-      <div class="arrow">Explore →</div>
-    </div>
-  </section>
-
-  <!-- PROJECT GALLERY -->
-  <section class="gallery">
     <div class="section-title">
-      <h2>Chilgoza Journey</h2>
-      <p>From forest to the world</p>
+      <h2 id="galleryTitle">Project Gallery</h2>
+      <p id="gallerySub">Authentic forest harvesting, processing & premium pine nut display</p>
     </div>
+
     <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="01-chilghoza-lot.jpg" alt="Chilgoza Lot" />
-        <div class="caption">Premium Chilgoza lots ready for export</div>
+      <div class="gallery-card">
+        <img src="01-chilghoza-lot.jpg" alt="Chilghoza Lot" />
+        <div class="caption">Premium Grade Chilghoza Lot</div>
       </div>
-      <div class="gallery-item">
-        <img src="02-chilghoza-cones.jpg" alt="Chilgoza Cones" />
-        <div class="caption">Fresh Chilgoza cones from high-altitude forests</div>
+      <div class="gallery-card">
+        <img src="02-chilghoza-cones.jpg" alt="Chilghoza Cones" />
+        <div class="caption">Fresh Natural Pine Cones</div>
       </div>
-      <div class="gallery-item">
-        <img src="03-chilghoza-kernel.jpg" alt="Kernel" />
-        <div class="caption">Hand-selected premium kernels</div>
+      <div class="gallery-card">
+        <img src="03-chilghoza-kernel.jpg" alt="Chilghoza Kernel" />
+        <div class="caption">Hand-Selected Shelled Kernels</div>
       </div>
-      <div class="gallery-item">
-        <img src="04-chilghoza-harvest.jpg" alt="Harvest" />
-        <div class="caption">Sustainable harvesting in progress</div>
+      <div class="gallery-card">
+        <img src="04-chilghoza-harvest.jpg" alt="Harvesting" />
+        <div class="caption">Traditional Sustainable Harvesting</div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-card">
         <img src="05-chilghoza-raw-kernels.jpg" alt="Raw Kernels" />
-        <div class="caption">Raw natural kernels – pure & authentic</div>
+        <div class="caption">Organic Raw Kernels</div>
       </div>
-      <div class="gallery-item">
+      <div class="gallery-card">
         <img src="06-chilghoza-cone-closeup.jpg" alt="Cone Closeup" />
-        <div class="caption">Close-up of mature Chilgoza cone</div>
+        <div class="caption">Detailed Botanical Structure</div>
       </div>
-      <div class="gallery-item">
-        <img src="07-chilghoza-products-display.jpg" alt="Products" />
-        <div class="caption">Finished premium products display</div>
+      <div class="gallery-card">
+        <img src="07-chilghoza-products-display.jpg" alt="Products Display" />
+        <div class="caption">Export Ready Value-Added Packaging</div>
       </div>
-      <div class="gallery-item">
-        <img src="08-chilghoza-forest.jpg" alt="Forest" />
-        <div class="caption">Native Chilgoza forests of Pakistan</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROYAL AI ASSISTANT -->
-  <section class="ai-section">
-    <div class="ai-box">
-      <h2>🤖 Royal AI Assistant</h2>
-      <p>Ask anything about Chilgoza export, origin, forestry, quality or trade specifications</p>
-      <div class="ai-input">
-        <input type="text" placeholder="Ask Royal AI anything..." />
-        <button>Ask</button>
+      <div class="gallery-card">
+        <img src="08-chilghoza-forest.jpg" alt="Chilghoza Forest" />
+        <div class="caption">Native High-Altitude Pine Forests</div>
       </div>
     </div>
   </section>
 
-  <!-- WHATSAPP -->
-  <section class="wa-section">
-    <a href="https://wa.me/920000000000" class="wa-btn" target="_blank">
-      💬 Chat on WhatsApp Now
-    </a>
-  </section>
-
-  <!-- ADDRESS -->
-  <section class="address-section">
-    <div class="section-title">
-      <h2>Our Offices</h2>
-      <p>Connecting Pakistan to the world</p>
+  <!-- Modal for Hubs -->
+  <div class="modal-overlay" id="hubModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <div id="modalBody"></div>
     </div>
-    <div class="address-grid">
-      <div class="address-card">
-        <h4>Head Office – Islamabad</h4>
-        <p>Street Address Line 1<br>Islamabad, Pakistan<br>+92 300 0000000</p>
-      </div>
-      <div class="address-card">
-        <h4>Regional Office – Quetta</h4>
-        <p>Street Address Line 1<br>Quetta, Balochistan<br>+92 300 0000000</p>
-      </div>
-      <div class="address-card">
-        <h4>Trade Office – Karachi</h4>
-        <p>Street Address Line 1<br>Karachi, Pakistan<br>+92 300 0000000</p>
-      </div>
-      <div class="address-card">
-        <h4>Northern Office – Peshawar</h4>
-        <p>Street Address Line 1<br>Peshawar, KPK<br>+92 300 0000000</p>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <footer>
-    © 2026 Royal Chilgoza Ecosystem • All Rights Reserved
+    <div class="addresses-grid">
+      <div class="address-box">
+        <h4>Chilas Head Office</h4>
+        <p>Main Market, Chilas, Diamer, Gilgit-Baltistan, Pakistan</p>
+      </div>
+      <div class="address-box">
+        <h4>Rawalpindi Office</h4>
+        <p>Trade Center, Islamabad-Rawalpindi Region, Pakistan</p>
+      </div>
+      <div class="address-box">
+        <h4>Export & Logistics Unit</h4>
+        <p>Dry Port Industrial Zone, Pakistan</p>
+      </div>
+      <div class="address-box">
+        <h4>International Trade Contact</h4>
+        <p>Direct WhatsApp / Email Ecosystem Support</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Royal Chilghoza Ecosystem • All Rights Reserved
+    </div>
   </footer>
 
+  <script src="app.js"></script>
 </body>
 </html>
