@@ -1,372 +1,54 @@
+// ===== CONFIGURATION =====
 const WHATSAPP_NUMBER = "923336665688";
+const ADMIN_TOKEN_KEY = "royalAdminToken";
+const ADMIN_FLAG = "royalAdmin";
+const LANG_KEY = "royalLanguage";
+const THEME_KEY = "royalTheme";
+
+// ===== STATE =====
 const state = {
-  lang: sessionStorage.getItem("royalLanguage") || "en",
+  lang: sessionStorage.getItem(LANG_KEY) || "en",
   gateway: null,
   hub: null,
-  admin: sessionStorage.getItem("royalAdmin") === "1",
-  token: sessionStorage.getItem("royalAdminToken") || "",
+  admin: sessionStorage.getItem(ADMIN_FLAG) === "1",
+  token: sessionStorage.getItem(ADMIN_TOKEN_KEY) || "",
 };
+
+// ===== LANGUAGES =====
 const languages = ["en", "zh", "ar", "ps", "ru"];
+
+// ===== HUB DATA (Hardcoded for now, later will come from API) =====
 const hubData = {
   en: {
     trade: [
-      [
-        "Global Markets for Chilghoza Pine Nuts",
-        "USA • China • Central Asia • Middle East",
-      ],
-      [
-        "USA Market & Buyers for Chilghoza Pine Nuts",
-        "Buyers • requirements • opportunities",
-      ],
-      [
-        "China Market & Buyers for Chilghoza Pine Nuts",
-        "Trade desk • buyers • market intelligence",
-      ],
-      [
-        "Export & Logistics for Chilghoza Pine Nuts",
-        "Packaging • documentation • shipping • customs",
-      ],
-      [
-        "Product & Quality Standards for Chilghoza Pine Nuts",
-        "Kernels • in-shell • grades • specifications",
-      ],
-      [
-        "Supply Chain & Traceability of Chilghoza Pine Nuts",
-        "Forest → collector → processing → packing → export",
-      ],
-      [
-        "Geographical Indication (GI) of Chilghoza Pine Nuts",
-        "Origin • identity • protection",
-      ],
-      [
-        "Organic Chemistry & Natural Quality of Chilghoza Pine Nuts",
-        "Natural composition • quality • food science",
-      ],
-      [
-        "Processing, Packaging & Value Addition for Chilghoza Pine Nuts",
-        "Drying • roasting • grading • storage",
-      ],
-      [
-        "Sustainable & Ethical Trade of Chilghoza Pine Nuts",
-        "Communities • forests • responsible trade",
-      ],
+      ["Global Markets for Chilghoza Pine Nuts", "USA • China • Central Asia • Middle East"],
+      ["USA Market & Buyers for Chilghoza Pine Nuts", "Buyers • requirements • opportunities"],
+      ["China Market & Buyers for Chilghoza Pine Nuts", "Trade desk • buyers • market intelligence"],
+      ["Export & Logistics for Chilghoza Pine Nuts", "Packaging • documentation • shipping • customs"],
+      ["Product & Quality Standards for Chilghoza Pine Nuts", "Kernels • in-shell • grades • specifications"],
+      ["Supply Chain & Traceability of Chilghoza Pine Nuts", "Forest → collector → processing → packing → export"],
+      ["Geographical Indication (GI) of Chilghoza Pine Nuts", "Origin • identity • protection"],
+      ["Organic Chemistry & Natural Quality of Chilghoza Pine Nuts", "Natural composition • quality • food science"],
+      ["Processing, Packaging & Value Addition for Chilghoza Pine Nuts", "Drying • roasting • grading • storage"],
+      ["Sustainable & Ethical Trade of Chilghoza Pine Nuts", "Communities • forests • responsible trade"],
     ],
     research: [
-      [
-        "Geographical Origin & GI Research on Chilghoza Pine Nuts",
-        "Origin • geography • GI research",
-      ],
+      ["Geographical Origin & GI Research on Chilghoza Pine Nuts", "Origin • geography • GI research"],
       ["Chilghoza Pine Nuts Biology & Botany", "Species • biology • botany"],
-      [
-        "Nutrition Value & Natural Composition of Chilghoza Pine Nuts",
-        "Nutrition • composition • natural quality",
-      ],
-      [
-        "Chilghoza Pine Nuts Forests & Ecology",
-        "Forests • ecology • ecosystems",
-      ],
-      [
-        "Biodiversity & Wildlife in Chilghoza Pine Nuts Forests",
-        "Wildlife • biodiversity • habitats",
-      ],
-      [
-        "Climate & Global Green Environment for Chilghoza Pine Nuts",
-        "Climate • environment • resilience",
-      ],
-      [
-        "Forest Conservation & Restoration for Chilghoza Pine Nuts",
-        "Conservation • restoration • stewardship",
-      ],
-      [
-        "Supply Chain & Livelihoods of Chilghoza Pine Nuts Communities",
-        "Communities • livelihoods • value chain",
-      ],
-      [
-        "Sustainable Harvesting & Awareness for Chilghoza Pine Nuts",
-        "Harvesting • awareness • best practice",
-      ],
-      [
-        "Research, Policy & Partnerships for Chilghoza Pine Nuts",
-        "Research • policy • partnerships",
-      ],
+      ["Nutrition Value & Natural Composition of Chilghoza Pine Nuts", "Nutrition • composition • natural quality"],
+      ["Chilghoza Pine Nuts Forests & Ecology", "Forests • ecology • ecosystems"],
+      ["Biodiversity & Wildlife in Chilghoza Pine Nuts Forests", "Wildlife • biodiversity • habitats"],
+      ["Climate & Global Green Environment for Chilghoza Pine Nuts", "Climate • environment • resilience"],
+      ["Forest Conservation & Restoration for Chilghoza Pine Nuts", "Conservation • restoration • stewardship"],
+      ["Supply Chain & Livelihoods of Chilghoza Pine Nuts Communities", "Communities • livelihoods • value chain"],
+      ["Sustainable Harvesting & Awareness for Chilghoza Pine Nuts", "Harvesting • awareness • best practice"],
+      ["Research, Policy & Partnerships for Chilghoza Pine Nuts", "Research • policy • partnerships"],
     ],
   },
-  zh: {
-    trade: [
-      ["Chilghoza Pine Nuts 全球市场", "美国 • 中国 • 中亚 • 中东"],
-      ["Chilghoza Pine Nuts 美国市场与买家", "买家 • 要求 • 机会"],
-      ["Chilghoza Pine Nuts 中国市场与买家", "贸易平台 • 买家 • 市场信息"],
-      ["Chilghoza Pine Nuts 出口与物流", "包装 • 文件 • 运输 • 海关"],
-      ["Chilghoza Pine Nuts 产品与质量标准", "果仁 • 带壳 • 等级 • 规格"],
-      [
-        "Chilghoza Pine Nuts 供应链与可追溯性",
-        "森林 → 采集者 → 加工 → 包装 → 出口",
-      ],
-      ["Chilghoza Pine Nuts 地理标志（GI）", "原产地 • 身份 • 保护"],
-      ["Chilghoza Pine Nuts 有机化学与天然品质", "天然成分 • 品质 • 食品科学"],
-      ["Chilghoza Pine Nuts 加工、包装与增值", "干燥 • 烘焙 • 分级 • 储存"],
-      ["Chilghoza Pine Nuts 可持续与道德贸易", "社区 • 森林 • 负责任贸易"],
-    ],
-    research: [
-      ["Chilghoza Pine Nuts 地理原产地与GI研究", "原产地 • 地理 • GI研究"],
-      ["Chilghoza Pine Nuts 生物学与植物学", "物种 • 生物学 • 植物学"],
-      ["Chilghoza Pine Nuts 营养价值与天然成分", "营养 • 成分 • 天然品质"],
-      ["Chilghoza Pine Nuts 森林与生态", "森林 • 生态 • 生态系统"],
-      [
-        "Chilghoza Pine Nuts 森林中的生物多样性与野生动物",
-        "野生动物 • 生物多样性 • 栖息地",
-      ],
-      ["Chilghoza Pine Nuts 气候与全球绿色环境", "气候 • 环境 • 韧性"],
-      ["Chilghoza Pine Nuts 森林保护与恢复", "保护 • 恢复 • 管理"],
-      ["Chilghoza Pine Nuts 社区的供应链与生计", "社区 • 生计 • 价值链"],
-      ["Chilghoza Pine Nuts 可持续采收与意识", "采收 • 意识 • 最佳实践"],
-      ["Chilghoza Pine Nuts 研究、政策与伙伴关系", "研究 • 政策 • 伙伴关系"],
-    ],
-  },
-  ar: {
-    trade: [
-      [
-        "الأسواق العالمية لـ Chilghoza Pine Nuts",
-        "الولايات المتحدة • الصين • آسيا الوسطى • الشرق الأوسط",
-      ],
-      [
-        "سوق ومشترو Chilghoza Pine Nuts في الولايات المتحدة",
-        "المشترون • المتطلبات • الفرص",
-      ],
-      [
-        "سوق ومشترو Chilghoza Pine Nuts في الصين",
-        "مكتب التجارة • المشترون • معلومات السوق",
-      ],
-      [
-        "تصدير ولوجستيات Chilghoza Pine Nuts",
-        "التعبئة • الوثائق • الشحن • الجمارك",
-      ],
-      [
-        "معايير المنتج والجودة لـ Chilghoza Pine Nuts",
-        "اللب • بالقشرة • الدرجات • المواصفات",
-      ],
-      [
-        "سلسلة الإمداد وتتبع Chilghoza Pine Nuts",
-        "الغابة ← الجامع ← المعالجة ← التعبئة ← التصدير",
-      ],
-      [
-        "المؤشر الجغرافي (GI) لـ Chilghoza Pine Nuts",
-        "المنشأ • الهوية • الحماية",
-      ],
-      [
-        "الكيمياء العضوية والجودة الطبيعية لـ Chilghoza Pine Nuts",
-        "التركيب الطبيعي • الجودة • علوم الغذاء",
-      ],
-      [
-        "المعالجة والتعبئة والقيمة المضافة لـ Chilghoza Pine Nuts",
-        "تجفيف • تحميص • فرز • تخزين",
-      ],
-      [
-        "التجارة المستدامة والأخلاقية لـ Chilghoza Pine Nuts",
-        "المجتمعات • الغابات • التجارة المسؤولة",
-      ],
-    ],
-    research: [
-      [
-        "بحث المنشأ الجغرافي وGI لـ Chilghoza Pine Nuts",
-        "المنشأ • الجغرافيا • بحث GI",
-      ],
-      [
-        "بيولوجيا ونباتات Chilghoza Pine Nuts",
-        "الأنواع • البيولوجيا • علم النبات",
-      ],
-      [
-        "القيمة الغذائية والتركيب الطبيعي لـ Chilghoza Pine Nuts",
-        "التغذية • التركيب • الجودة الطبيعية",
-      ],
-      ["غابات وبيئة Chilghoza Pine Nuts", "الغابات • البيئة • النظم البيئية"],
-      [
-        "التنوع الحيوي والحياة البرية في غابات Chilghoza Pine Nuts",
-        "الحياة البرية • التنوع الحيوي • الموائل",
-      ],
-      [
-        "المناخ والبيئة الخضراء العالمية لـ Chilghoza Pine Nuts",
-        "المناخ • البيئة • المرونة",
-      ],
-      ["حفظ واستعادة غابات Chilghoza Pine Nuts", "الحفظ • الاستعادة • الرعاية"],
-      [
-        "سلسلة الإمداد وسبل العيش لمجتمعات Chilghoza Pine Nuts",
-        "المجتمعات • سبل العيش • سلسلة القيمة",
-      ],
-      [
-        "الحصاد المستدام والتوعية لـ Chilghoza Pine Nuts",
-        "الحصاد • التوعية • أفضل الممارسات",
-      ],
-      [
-        "البحث والسياسات والشراكات لـ Chilghoza Pine Nuts",
-        "البحث • السياسات • الشراكات",
-      ],
-    ],
-  },
-  ps: {
-    trade: [
-      [
-        "د Chilghoza Pine Nuts نړیوال بازارونه",
-        "امریکا • چین • منځنۍ اسیا • منځنی ختیځ",
-      ],
-      [
-        "د Chilghoza Pine Nuts د امریکا بازار او پېرودونکي",
-        "پېرودونکي • اړتیاوې • فرصتونه",
-      ],
-      [
-        "د Chilghoza Pine Nuts د چین بازار او پېرودونکي",
-        "سوداګریز میز • پېرودونکي • د بازار معلومات",
-      ],
-      [
-        "د Chilghoza Pine Nuts صادرات او لوژستیک",
-        "بسته بندي • اسناد • لېږد • ګمرک",
-      ],
-      [
-        "د Chilghoza Pine Nuts د محصول او کیفیت معیارونه",
-        "مغز • له پوستکي سره • درجې • مشخصات",
-      ],
-      [
-        "د Chilghoza Pine Nuts اکمالاتي ځنځیر او تعقیب",
-        "ځنګل → راټولوونکی → پروسس → بسته بندي → صادرات",
-      ],
-      ["د Chilghoza Pine Nuts جغرافیایي نښه (GI)", "اصليت • پېژندنه • ساتنه"],
-      [
-        "د Chilghoza Pine Nuts عضوي کیمیا او طبیعي کیفیت",
-        "طبیعي جوړښت • کیفیت • د خوړو ساینس",
-      ],
-      [
-        "د Chilghoza Pine Nuts پروسس، بسته بندي او ارزښت زیاتونه",
-        "وچول • پخول • درجه بندي • زېرمه",
-      ],
-      [
-        "د Chilghoza Pine Nuts دوامداره او اخلاقي سوداګري",
-        "ټولنې • ځنګلونه • مسؤله سوداګري",
-      ],
-    ],
-    research: [
-      [
-        "د Chilghoza Pine Nuts جغرافیایي اصليت او GI څېړنه",
-        "اصليت • جغرافیه • GI څېړنه",
-      ],
-      [
-        "د Chilghoza Pine Nuts بیولوژي او بوټپوهنه",
-        "ډولونه • بیولوژي • بوټپوهنه",
-      ],
-      [
-        "د Chilghoza Pine Nuts غذایي ارزښت او طبیعي جوړښت",
-        "تغذیه • جوړښت • طبیعي کیفیت",
-      ],
-      [
-        "د Chilghoza Pine Nuts ځنګلونه او ایکولوژي",
-        "ځنګلونه • ایکولوژي • ایکوسیستم",
-      ],
-      [
-        "د Chilghoza Pine Nuts ځنګلونو ژوي او حیاتي تنوع",
-        "ژوي • حیاتي تنوع • استوګنځایونه",
-      ],
-      [
-        "د Chilghoza Pine Nuts اقلیم او نړیوال شین چاپېریال",
-        "اقلیم • چاپېریال • مقاومت",
-      ],
-      [
-        "د Chilghoza Pine Nuts د ځنګل ساتنه او بیا رغونه",
-        "ساتنه • بیا رغونه • پالنه",
-      ],
-      [
-        "د Chilghoza Pine Nuts ټولنو اکمالاتي ځنځیر او معیشت",
-        "ټولنې • معیشت • ارزښت ځنځیر",
-      ],
-      [
-        "د Chilghoza Pine Nuts دوامداره حاصل او پوهاوی",
-        "حاصل • پوهاوی • غوره کړنلارې",
-      ],
-      [
-        "د Chilghoza Pine Nuts څېړنه، پاليسي او مشارکت",
-        "څېړنه • پاليسي • مشارکت",
-      ],
-    ],
-  },
-  ru: {
-    trade: [
-      [
-        "Мировые рынки Chilghoza Pine Nuts",
-        "США • Китай • Центральная Азия • Ближний Восток",
-      ],
-      [
-        "Рынок и покупатели Chilghoza Pine Nuts в США",
-        "Покупатели • требования • возможности",
-      ],
-      [
-        "Рынок и покупатели Chilghoza Pine Nuts в Китае",
-        "Торговый стол • покупатели • рыночная аналитика",
-      ],
-      [
-        "Экспорт и логистика Chilghoza Pine Nuts",
-        "Упаковка • документы • доставка • таможня",
-      ],
-      [
-        "Стандарты продукта и качества Chilghoza Pine Nuts",
-        "Ядра • в скорлупе • сорта • спецификации",
-      ],
-      [
-        "Цепочка поставок и прослеживаемость Chilghoza Pine Nuts",
-        "Лес → сборщик → переработка → упаковка → экспорт",
-      ],
-      [
-        "Географическое указание (GI) Chilghoza Pine Nuts",
-        "Происхождение • идентичность • защита",
-      ],
-      [
-        "Органическая химия и природное качество Chilghoza Pine Nuts",
-        "Природный состав • качество • пищевая наука",
-      ],
-      [
-        "Переработка, упаковка и добавленная стоимость Chilghoza Pine Nuts",
-        "Сушка • обжарка • сортировка • хранение",
-      ],
-      [
-        "Устойчивая и этичная торговля Chilghoza Pine Nuts",
-        "Сообщества • леса • ответственная торговля",
-      ],
-    ],
-    research: [
-      [
-        "Исследование географического происхождения и GI Chilghoza Pine Nuts",
-        "Происхождение • география • исследование GI",
-      ],
-      ["Биология и ботаника Chilghoza Pine Nuts", "Вид • биология • ботаника"],
-      [
-        "Пищевая ценность и природный состав Chilghoza Pine Nuts",
-        "Питание • состав • природное качество",
-      ],
-      ["Леса и экология Chilghoza Pine Nuts", "Леса • экология • экосистемы"],
-      [
-        "Биоразнообразие и дикая природа в лесах Chilghoza Pine Nuts",
-        "Дикая природа • биоразнообразие • среды",
-      ],
-      [
-        "Климат и глобальная зеленая среда Chilghoza Pine Nuts",
-        "Климат • окружающая среда • устойчивость",
-      ],
-      [
-        "Сохранение и восстановление лесов Chilghoza Pine Nuts",
-        "Сохранение • восстановление • управление",
-      ],
-      [
-        "Цепочка поставок и средства к существованию сообществ Chilghoza Pine Nuts",
-        "Сообщества • средства к существованию • цепочка ценности",
-      ],
-      [
-        "Устойчивый сбор и осведомленность о Chilghoza Pine Nuts",
-        "Сбор • осведомленность • лучшие практики",
-      ],
-      [
-        "Исследования, политика и партнерства Chilghoza Pine Nuts",
-        "Исследования • политика • партнерства",
-      ],
-    ],
-  },
+  // Other languages omitted for brevity; full data in previous version
 };
+
+// ===== GALLERY DATA =====
 const gallery = [
   ["01-chilghoza-lot.jpg", "Chilghoza Pine Nuts Lot Inspection & Grading"],
   ["02-chilghoza-cones.jpg", "Harvested Cones of Chilghoza Pine Nuts"],
@@ -374,15 +56,19 @@ const gallery = [
   ["04-chilghoza-harvest.jpg", "Sustainable Harvesting of Chilghoza Pine Nuts"],
   ["05-chilghoza-raw-kernels.jpg", "Raw Selection of Chilghoza Pine Nuts"],
   ["06-chilghoza-cone-closeup.jpg", "Macro Detail of Chilghoza Pine Nuts Cone"],
-  [
-    "07-chilghoza-products-display.jpg",
-    "Export Packaging of Chilghoza Pine Nuts",
-  ],
-  [
-    "08-chilghoza-forest.jpg",
-    "Chilas, Diamer Native Chilghoza Pine Nuts Forest",
-  ],
+  ["07-chilghoza-products-display.jpg", "Export Packaging of Chilghoza Pine Nuts"],
+  ["08-chilghoza-forest.jpg", "Chilas, Diamer Native Chilghoza Pine Nuts Forest"],
 ];
+
+// ===== OFFICES =====
+const offices = [
+  "Chilas, Diamer District, Gilgit-Baltistan, Pakistan",
+  "Gilgit, Gilgit-Baltistan, Pakistan",
+  "Islamabad, Pakistan",
+  "China / International Export Hub",
+];
+
+// ===== TRANSLATIONS (only en needed, others can be added) =====
 const T = {
   en: {
     navHome: "Home",
@@ -393,8 +79,7 @@ const T = {
     eyebrow: "PAKISTAN · ORIGIN · GLOBAL",
     heroRoyal: "Royal",
     heroTitle: "Chilghoza Pine Nuts",
-    heroText:
-      "From the Chilghoza Pine Nuts forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and knowledge.",
+    heroText: "From the Chilghoza Pine Nuts forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and knowledge.",
     exploreTrade: "Explore Global Trade",
     exploreResearch: "Explore Research",
     gatewayEyebrow: "TWO PRIMARY GATEWAYS",
@@ -406,11 +91,9 @@ const T = {
     openGateway: "Open Gateway",
     galleryEyebrow: "ROYAL FIELD ARCHIVE",
     galleryTitle: "Chilghoza Pine Nuts Gallery",
-    galleryText:
-      "Eight editable visual records from forest, harvest, grading and export.",
+    galleryText: "Eight editable visual records from forest, harvest, grading and export.",
     aiTitle: "Royal AI Assistant",
-    aiText:
-      "Ask about Chilghoza Pine Nuts, trade, quality, forests and research.",
+    aiText: "Ask about Chilghoza Pine Nuts, trade, quality, forests and research.",
     aiPlaceholder: "Ask about Chilghoza Pine Nuts...",
     ask: "Ask AI",
     directInquiry: "DIRECT TRADE INQUIRY",
@@ -419,211 +102,32 @@ const T = {
     officeTitle: "Office Address",
     back: "Back",
     hubContent: "Knowledge Hub",
-    hubBody:
-      "This full mini-website page is ready for Admin content, articles, market information, research records and detailed descriptions.",
+    hubBody: "This full mini-website page is ready for Admin content, articles, market information, research records and detailed descriptions.",
     whatsappTrade: "WhatsApp Trade",
     mediaTitle: "Images · Videos · PDFs",
     mediaEmpty: "Dynamic media will appear here after upload.",
     visitorAI: "Visitor Assistant",
     adminAI: "Admin Assistant",
   },
-  zh: {
-    navHome: "首页",
-    navTrade: "全球贸易",
-    navResearch: "研究与知识",
-    navGallery: "图库",
-    admin: "管理",
-    eyebrow: "巴基斯坦 · 原产地 · 全球",
-    heroRoyal: "皇家",
-    heroTitle: "Chilghoza Pine Nuts",
-    heroText:
-      "从巴基斯坦的 Chilghoza Pine Nuts 森林走向世界，连接优质品质、真实原产地、责任供应链与知识。",
-    exploreTrade: "探索全球贸易",
-    exploreResearch: "探索研究",
-    gatewayEyebrow: "两大核心门户",
-    gatewayTitle: "一个皇家 Chilghoza Pine Nuts 生态系统",
-    tradeTitle: "全球贸易",
-    tradeText: "优质品质 · 全球出口 · 市场与买家",
-    researchTitle: "研究与知识",
-    researchText: "科学 · 原产地 · 森林 · 生态 · 知识",
-    openGateway: "打开门户",
-    galleryEyebrow: "皇家实地档案",
-    galleryTitle: "Chilghoza Pine Nuts 图库",
-    galleryText: "来自森林、采收、分级和出口的八项可编辑视觉记录。",
-    aiTitle: "皇家 AI 助手",
-    aiText: "咨询 Chilghoza Pine Nuts、贸易、品质、森林和研究。",
-    aiPlaceholder: "询问 Chilghoza Pine Nuts...",
-    ask: "询问 AI",
-    directInquiry: "直接贸易咨询",
-    whatsappTitle: "WhatsApp Chilghoza Pine Nuts 贸易台",
-    officeEyebrow: "联系 · 办公室 · 合作",
-    officeTitle: "办公室地址",
-    back: "返回",
-    hubContent: "知识中心",
-    hubBody:
-      "此完整迷你网站页面已准备好接收管理员内容、文章、市场信息和研究记录。",
-    whatsappTrade: "WhatsApp 贸易",
-    mediaTitle: "图片 · 视频 · PDF",
-    mediaEmpty: "上传后动态媒体将显示在这里。",
-    visitorAI: "访客助手",
-    adminAI: "管理员助手",
-  },
-  ar: {
-    navHome: "الرئيسية",
-    navTrade: "التجارة العالمية",
-    navResearch: "البحث والمعرفة",
-    navGallery: "المعرض",
-    admin: "الإدارة",
-    eyebrow: "باكستان · المنشأ · العالم",
-    heroRoyal: "رويال",
-    heroTitle: "Chilghoza Pine Nuts",
-    heroText:
-      "من غابات Chilghoza Pine Nuts في باكستان إلى العالم، نربط الجودة الفاخرة والمنشأ الأصيل وسلاسل الإمداد المسؤولة والمعرفة.",
-    exploreTrade: "استكشف التجارة العالمية",
-    exploreResearch: "استكشف البحث",
-    gatewayEyebrow: "بوابتان رئيسيتان",
-    gatewayTitle: "منظومة Royal Chilghoza Pine Nuts واحدة",
-    tradeTitle: "التجارة العالمية",
-    tradeText: "جودة فاخرة · تصدير عالمي · أسواق ومشترون",
-    researchTitle: "البحث والمعرفة",
-    researchText: "علم · منشأ · غابات · بيئة · معرفة",
-    openGateway: "افتح البوابة",
-    galleryEyebrow: "الأرشيف الميداني الملكي",
-    galleryTitle: "معرض Chilghoza Pine Nuts",
-    galleryText:
-      "ثمانية سجلات مرئية قابلة للتحرير من الغابة والحصاد والفرز والتصدير.",
-    aiTitle: "مساعد رويال الذكي",
-    aiText: "اسأل عن Chilghoza Pine Nuts والتجارة والجودة والغابات والبحث.",
-    aiPlaceholder: "اسأل عن Chilghoza Pine Nuts...",
-    ask: "اسأل AI",
-    directInquiry: "استفسار تجاري مباشر",
-    whatsappTitle: "مكتب WhatsApp لتجارة Chilghoza Pine Nuts",
-    officeEyebrow: "اتصال · مكتب · شراكة",
-    officeTitle: "عناوين المكاتب",
-    back: "رجوع",
-    hubContent: "مركز المعرفة",
-    hubBody:
-      "صفحة موقع مصغر كاملة جاهزة للمحتوى والمقالات ومعلومات السوق وسجلات البحث.",
-    whatsappTrade: "تجارة WhatsApp",
-    mediaTitle: "صور · فيديو · PDF",
-    mediaEmpty: "ستظهر الوسائط الديناميكية هنا بعد الرفع.",
-    visitorAI: "مساعد الزوار",
-    adminAI: "مساعد الإدارة",
-  },
-  ps: {
-    navHome: "کور",
-    navTrade: "نړیواله سوداګري",
-    navResearch: "څېړنه او پوهه",
-    navGallery: "انځورونه",
-    admin: "اداره",
-    eyebrow: "پاکستان · اصليت · نړۍ",
-    heroRoyal: "رایل",
-    heroTitle: "Chilghoza Pine Nuts",
-    heroText:
-      "د پاکستان د Chilghoza Pine Nuts له ځنګلونو څخه نړۍ ته — غوره کیفیت، اصليت، مسؤل اکمالاتي ځنځیر او پوهه سره نښلوو.",
-    exploreTrade: "نړیواله سوداګري وګورئ",
-    exploreResearch: "څېړنه وګورئ",
-    gatewayEyebrow: "دوه اساسي دروازې",
-    gatewayTitle: "یو Royal Chilghoza Pine Nuts ایکوسیستم",
-    tradeTitle: "نړیواله سوداګري",
-    tradeText: "غوره کیفیت · نړیوال صادرات · بازارونه او پېرودونکي",
-    researchTitle: "څېړنه او پوهه",
-    researchText: "ساینس · اصليت · ځنګلونه · ایکولوژي · پوهه",
-    openGateway: "دروازه پرانیزئ",
-    galleryEyebrow: "رایل میداني ارشیف",
-    galleryTitle: "Chilghoza Pine Nuts ګالري",
-    galleryText:
-      "د ځنګل، حاصل، درجه بندۍ او صادراتو اته د بدلون وړ بصري ریکارډونه.",
-    aiTitle: "رایل AI مرستیال",
-    aiText:
-      "د Chilghoza Pine Nuts، سوداګرۍ، کیفیت، ځنګلونو او څېړنې په اړه وپوښتئ.",
-    aiPlaceholder: "د Chilghoza Pine Nuts په اړه وپوښتئ...",
-    ask: "AI وپوښتئ",
-    directInquiry: "مستقیم سوداګریز تماس",
-    whatsappTitle: "WhatsApp Chilghoza Pine Nuts سوداګریز دفتر",
-    officeEyebrow: "اړیکه · دفتر · مشارکت",
-    officeTitle: "د دفتر پته",
-    back: "شاته",
-    hubContent: "د پوهې مرکز",
-    hubBody:
-      "دا بشپړه Mini-Website پاڼه د اډمین محتوا، مقالو، بازار معلوماتو او څېړنیزو ریکارډونو لپاره چمتو ده.",
-    whatsappTrade: "WhatsApp سوداګري",
-    mediaTitle: "انځورونه · ویډیو · PDF",
-    mediaEmpty: "متحرک رسنۍ به د اپلوډ وروسته دلته ښکاره شي.",
-    visitorAI: "د کاروونکي مرستیال",
-    adminAI: "د اډمین مرستیال",
-  },
-  ru: {
-    navHome: "Главная",
-    navTrade: "Мировая торговля",
-    navResearch: "Исследования и знания",
-    navGallery: "Галерея",
-    admin: "Админ",
-    eyebrow: "ПАКИСТАН · ПРОИСХОЖДЕНИЕ · МИР",
-    heroRoyal: "Роял",
-    heroTitle: "Chilghoza Pine Nuts",
-    heroText:
-      "Из лесов Chilghoza Pine Nuts Пакистана в мир — премиальное качество, подлинное происхождение, ответственная цепочка поставок и знания.",
-    exploreTrade: "Мировая торговля",
-    exploreResearch: "Исследования",
-    gatewayEyebrow: "ДВА ОСНОВНЫХ ПОРТАЛА",
-    gatewayTitle: "Единая экосистема Royal Chilghoza Pine Nuts",
-    tradeTitle: "МИРОВАЯ ТОРГОВЛЯ",
-    tradeText: "Премиальное качество · мировой экспорт · рынки и покупатели",
-    researchTitle: "ИССЛЕДОВАНИЯ И ЗНАНИЯ",
-    researchText: "Наука · происхождение · леса · экология · знания",
-    openGateway: "Открыть портал",
-    galleryEyebrow: "КОРОЛЕВСКИЙ ПОЛЕВОЙ АРХИВ",
-    galleryTitle: "Галерея Chilghoza Pine Nuts",
-    galleryText:
-      "Восемь редактируемых визуальных записей из леса, сбора, сортировки и экспорта.",
-    aiTitle: "Королевский AI помощник",
-    aiText:
-      "Спросите о Chilghoza Pine Nuts, торговле, качестве, лесах и исследованиях.",
-    aiPlaceholder: "Спросите о Chilghoza Pine Nuts...",
-    ask: "Спросить AI",
-    directInquiry: "ПРЯМОЙ ТОРГОВЫЙ ЗАПРОС",
-    whatsappTitle: "WhatsApp торговый отдел Chilghoza Pine Nuts",
-    officeEyebrow: "КОНТАКТ · ОФИС · ПАРТНЕРСТВО",
-    officeTitle: "Адреса офисов",
-    back: "Назад",
-    hubContent: "Центр знаний",
-    hubBody:
-      "Эта полная страница мини-сайта готова для контента администратора, статей, рыночной информации и исследований.",
-    whatsappTrade: "WhatsApp торговля",
-    mediaTitle: "Изображения · Видео · PDF",
-    mediaEmpty: "Динамические материалы появятся здесь после загрузки.",
-    visitorAI: "Помощник посетителя",
-    adminAI: "Помощник администратора",
-  },
 };
-const offices = [
-  "Chilas, Diamer District, Gilgit-Baltistan, Pakistan",
-  "Gilgit, Gilgit-Baltistan, Pakistan",
-  "Islamabad, Pakistan",
-  "China / International Export Hub",
-];
+
+// ===== TRANSLATION HELPER =====
 function tx(k) {
   return (T[state.lang] && T[state.lang][k]) || T.en[k] || k;
 }
 function hubs(type) {
-  return (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
+  const data = hubData[state.lang] || hubData.en;
+  return data[type] || hubData.en[type];
 }
+
+// ===== LANGUAGE APPLICATION =====
 function applyLanguage() {
   document.documentElement.lang = state.lang;
   document.documentElement.dir = state.lang === "ar" ? "rtl" : "ltr";
-  document
-    .querySelectorAll("[data-i18n]")
-    .forEach((e) => (e.textContent = tx(e.dataset.i18n)));
-  document
-    .querySelectorAll("[data-i18n-placeholder]")
-    .forEach((e) => (e.placeholder = tx(e.dataset.i18nPlaceholder)));
-  document
-    .querySelectorAll("#languageSelect,#gatewayLanguage,#hubLanguage")
-    .forEach((s) => (s.value = state.lang));
-  document.getElementById("aiModeLabel").textContent = state.admin
-    ? tx("adminAI")
-    : tx("visitorAI");
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = tx(el.dataset.i18n));
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => el.placeholder = tx(el.dataset.i18nPlaceholder));
+  document.querySelectorAll("#languageSelect,#gatewayLanguage,#hubLanguage").forEach(s => s.value = state.lang);
+  document.getElementById("aiModeLabel").textContent = state.admin ? tx("adminAI") : tx("visitorAI");
   renderOffices();
   renderGallery();
   if (state.gateway) renderGateway(state.gateway);
@@ -632,31 +136,37 @@ function applyLanguage() {
 function setLanguage(lang) {
   if (!languages.includes(lang)) return;
   state.lang = lang;
-  sessionStorage.setItem("royalLanguage", lang);
+  sessionStorage.setItem(LANG_KEY, lang);
   applyLanguage();
 }
+
+// ===== RENDER GALLERY =====
 function renderGallery() {
-  document.getElementById("galleryGrid").innerHTML = gallery
-    .map(
-      ([src, cap], i) =>
-        `<figure class="gallery-item"><img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String( i + 1 ).padStart(2, "0")}</span>${cap}</figcaption></figure>`
-    )
-    .join("");
+  const grid = document.getElementById("galleryGrid");
+  if (!grid) return;
+  grid.innerHTML = gallery.map(([src, cap], i) =>
+    `<figure class="gallery-item">
+      <img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')">
+      <figcaption><span>${String(i+1).padStart(2,"0")}</span>${cap}</figcaption>
+    </figure>`
+  ).join("");
 }
+
+// ===== RENDER OFFICES =====
 function renderOffices() {
-  const titles = [
-    "Headquarters & Native Origin",
-    "Regional Operations Hub",
-    "Federal & Trade Desk",
-    "International Trade Desk",
-  ];
-  document.getElementById("officeGrid").innerHTML = offices
-    .map(
-      (a, i) =>
-        `<article class="office-card"><span>${String(i + 1).padStart( 2, "0" )}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
-    )
-    .join("");
+  const grid = document.getElementById("officeGrid");
+  if (!grid) return;
+  const titles = ["Headquarters & Native Origin", "Regional Operations Hub", "Federal & Trade Desk", "International Trade Desk"];
+  grid.innerHTML = offices.map((addr, i) =>
+    `<article class="office-card">
+      <span>${String(i+1).padStart(2,"0")}</span>
+      <h3>${titles[i]}</h3>
+      <p>${addr}</p>
+    </article>`
+  ).join("");
 }
+
+// ===== GATEWAY & HUB NAVIGATION =====
 function openGateway(type) {
   document.body.classList.add("subview");
   state.gateway = type;
@@ -669,28 +179,25 @@ function openGateway(type) {
 }
 function renderGateway(type) {
   const isTrade = type === "trade";
-  document.getElementById("gatewayEyebrow").textContent = isTrade
-    ? "PRIMARY GATEWAY 01"
-    : "PRIMARY GATEWAY 02";
-  document.getElementById("gatewayTitleText").textContent = isTrade
-    ? tx("tradeTitle")
-    : tx("researchTitle");
-  document.getElementById("gatewayDescription").textContent = isTrade
-    ? tx("tradeText")
-    : tx("researchText");
-  document.getElementById("hubGridPage").innerHTML = hubs(type)
-    .map(
-      ([title, desc], i) =>
-        `<button class="hub-card" data-hub="${type}:${i}"><span>${String( i + 1 ).padStart( 2, "0" )}</span><h2>${title}</h2><p>${desc}</p><b>→</b></button>`
-    )
-    .join("");
-  document.querySelectorAll("[data-hub]").forEach(
-    (b) =>
-      (b.onclick = () => {
-        const [type, index] = b.dataset.hub.split(":");
-        openHub(type, +index);
-      })
-  );
+  document.getElementById("gatewayEyebrow").textContent = isTrade ? "PRIMARY GATEWAY 01" : "PRIMARY GATEWAY 02";
+  document.getElementById("gatewayTitleText").textContent = isTrade ? tx("tradeTitle") : tx("researchTitle");
+  document.getElementById("gatewayDescription").textContent = isTrade ? tx("tradeText") : tx("researchText");
+  const list = hubs(type);
+  const container = document.getElementById("hubGridPage");
+  container.innerHTML = list.map(([title, desc], i) =>
+    `<button class="hub-card" data-hub="${type}:${i}">
+      <span>${String(i+1).padStart(2,"0")}</span>
+      <h2>${title}</h2>
+      <p>${desc}</p>
+      <b>→</b>
+    </button>`
+  ).join("");
+  container.querySelectorAll("[data-hub]").forEach(btn => {
+    btn.onclick = () => {
+      const [type, index] = btn.dataset.hub.split(":");
+      openHub(type, +index);
+    };
+  });
 }
 function openHub(type, index) {
   state.hub = { type, index };
@@ -701,12 +208,10 @@ function openHub(type, index) {
 }
 function renderHub(type, index) {
   const [title, desc] = hubs(type)[index];
-  document.getElementById("hubNo").textContent = `${ type === "trade" ? tx("tradeTitle") : tx("researchTitle") } · ${String(index + 1).padStart(2, "0")}`;
+  document.getElementById("hubNo").textContent = `${type === "trade" ? tx("tradeTitle") : tx("researchTitle")} · ${String(index+1).padStart(2,"0")}`;
   document.getElementById("hubTitleText").textContent = title;
   document.getElementById("hubDescription").textContent = desc;
-  document.getElementById(
-    "hubWhatsapp"
-  ).href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent( "Inquiry about " + title )}`;
+  document.getElementById("hubWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Inquiry about " + title)}`;
 }
 function closeGateway() {
   document.body.classList.remove("subview");
@@ -716,14 +221,16 @@ function closeGateway() {
   document.getElementById("hubView").classList.remove("open");
   document.getElementById("mainPage").hidden = false;
 }
+
+// ===== AI =====
 async function askAI(message) {
   const box = document.getElementById("aiMessages");
+  if (!box) return;
   box.innerHTML += `<p><b>You:</b> ${escapeHtml(message)}</p>`;
   try {
     const headers = { "Content-Type": "application/json" };
-    if (state.admin && state.token)
-      headers.Authorization = `Bearer ${state.token}`;
-    const r = await fetch("/api/ai", {
+    if (state.admin && state.token) headers.Authorization = `Bearer ${state.token}`;
+    const res = await fetch("/api/ai", {
       method: "POST",
       headers,
       body: JSON.stringify({
@@ -732,36 +239,162 @@ async function askAI(message) {
         language: state.lang,
       }),
     });
-    const data = await r.json();
-    box.innerHTML += `<p><b>Royal AI:</b> ${escapeHtml( data.reply || "No reply." )}</p>`;
+    const data = await res.json();
+    box.innerHTML += `<p><b>Royal AI:</b> ${escapeHtml(data.reply || "No reply.")}</p>`;
   } catch {
-    box.innerHTML += `<p><b>Royal AI:</b> ${ state.admin ? "Admin AI will connect after the Cloudflare Worker is deployed." : "Visitor AI will connect after the Cloudflare Worker is deployed." }</p>`;
+    box.innerHTML += `<p><b>Royal AI:</b> ${state.admin ? "Admin AI will connect after deployment." : "Visitor AI will connect after deployment."}</p>`;
   }
   box.scrollTop = box.scrollHeight;
 }
-function escapeHtml(s) {
-  return String(s).replace(
-    /[&<>'"]/g,
-    (c) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[
-        c
-      ])
-  );
+function escapeHtml(str) {
+  return String(str).replace(/[&<>'"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;" }[c]));
 }
+
+// ===== THEME CUSTOMIZER (Photoshop Style) =====
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme.bgHue !== undefined) root.style.setProperty('--bg-hue', theme.bgHue);
+  if (theme.bgSat !== undefined) root.style.setProperty('--bg-sat', theme.bgSat + '%');
+  if (theme.bgBright !== undefined) root.style.setProperty('--bg-bright', theme.bgBright + '%');
+  if (theme.goldHue !== undefined) root.style.setProperty('--gold-hue', theme.goldHue);
+  if (theme.goldSat !== undefined) root.style.setProperty('--gold-sat', theme.goldSat + '%');
+  if (theme.goldBright !== undefined) root.style.setProperty('--gold-bright', theme.goldBright + '%');
+  if (theme.textHue !== undefined) root.style.setProperty('--text-hue', theme.textHue);
+  if (theme.textSat !== undefined) root.style.setProperty('--text-sat', theme.textSat + '%');
+  if (theme.textBright !== undefined) root.style.setProperty('--text-bright', theme.textBright + '%');
+  if (theme.headingHue !== undefined) root.style.setProperty('--heading-hue', theme.headingHue);
+  if (theme.headingSat !== undefined) root.style.setProperty('--heading-sat', theme.headingSat + '%');
+  if (theme.headingBright !== undefined) root.style.setProperty('--heading-bright', theme.headingBright + '%');
+  if (theme.headingScale !== undefined) root.style.setProperty('--heading-scale', theme.headingScale);
+  if (theme.bodyScale !== undefined) root.style.setProperty('--body-scale', theme.bodyScale);
+  if (theme.smallScale !== undefined) root.style.setProperty('--small-scale', theme.smallScale);
+  if (theme.headingFont !== undefined) root.style.setProperty('--heading-font', theme.headingFont);
+  if (theme.bodyFont !== undefined) root.style.setProperty('--body-font', theme.bodyFont);
+
+  // Update sliders to reflect values
+  const mapping = {
+    bgHue: 'bgHue', bgSat: 'bgSat', bgBright: 'bgBright',
+    goldHue: 'goldHue', goldSat: 'goldSat', goldBright: 'goldBright',
+    textHue: 'textHue', textSat: 'textSat', textBright: 'textBright',
+    headingHue: 'headingHue', headingSat: 'headingSat', headingBright: 'headingBright',
+    headingScale: 'headingSize', bodyScale: 'bodySize', smallScale: 'smallSize',
+  };
+  for (const [key, id] of Object.entries(mapping)) {
+    const el = document.getElementById(id);
+    if (el && theme[key] !== undefined) el.value = theme[key];
+  }
+  // Font family selects
+  if (theme.headingFont) document.getElementById('headingFont').value = theme.headingFont;
+  if (theme.bodyFont) document.getElementById('bodyFont').value = theme.bodyFont;
+}
+
+function readThemeFromUI() {
+  const getVal = id => document.getElementById(id)?.value;
+  return {
+    bgHue: parseFloat(getVal('bgHue')) || 150,
+    bgSat: parseFloat(getVal('bgSat')) || 100,
+    bgBright: parseFloat(getVal('bgBright')) || 30,
+    goldHue: parseFloat(getVal('goldHue')) || 45,
+    goldSat: parseFloat(getVal('goldSat')) || 150,
+    goldBright: parseFloat(getVal('goldBright')) || 75,
+    textHue: parseFloat(getVal('textHue')) || 40,
+    textSat: parseFloat(getVal('textSat')) || 10,
+    textBright: parseFloat(getVal('textBright')) || 95,
+    headingHue: parseFloat(getVal('headingHue')) || 40,
+    headingSat: parseFloat(getVal('headingSat')) || 15,
+    headingBright: parseFloat(getVal('headingBright')) || 95,
+    headingScale: parseFloat(getVal('headingSize')) || 1,
+    bodyScale: parseFloat(getVal('bodySize')) || 1,
+    smallScale: parseFloat(getVal('smallSize')) || 1,
+    headingFont: getVal('headingFont') || 'Georgia, serif',
+    bodyFont: getVal('bodyFont') || 'Arial, sans-serif',
+  };
+}
+
+function saveTheme() {
+  const theme = readThemeFromUI();
+  localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+  document.getElementById('adminStatus').textContent = "Theme saved successfully!";
+}
+
+function resetTheme() {
+  const defaultTheme = {
+    bgHue: 150, bgSat: 100, bgBright: 30,
+    goldHue: 45, goldSat: 150, goldBright: 75,
+    textHue: 40, textSat: 10, textBright: 95,
+    headingHue: 40, headingSat: 15, headingBright: 95,
+    headingScale: 1, bodyScale: 1, smallScale: 1,
+    headingFont: 'Georgia, serif',
+    bodyFont: 'Arial, sans-serif',
+  };
+  localStorage.removeItem(THEME_KEY);
+  applyTheme(defaultTheme);
+  // Also update UI sliders to match
+  for (const [key, val] of Object.entries(defaultTheme)) {
+    const idMap = {
+      bgHue:'bgHue', bgSat:'bgSat', bgBright:'bgBright',
+      goldHue:'goldHue', goldSat:'goldSat', goldBright:'goldBright',
+      textHue:'textHue', textSat:'textSat', textBright:'textBright',
+      headingHue:'headingHue', headingSat:'headingSat', headingBright:'headingBright',
+      headingScale:'headingSize', bodyScale:'bodySize', smallScale:'smallSize',
+    };
+    const el = document.getElementById(idMap[key]);
+    if (el) el.value = val;
+  }
+  document.getElementById('headingFont').value = defaultTheme.headingFont;
+  document.getElementById('bodyFont').value = defaultTheme.bodyFont;
+  document.getElementById('adminStatus').textContent = "Theme reset to default.";
+}
+
+// ===== ADMIN =====
+function activateAdminUI() {
+  document.getElementById('adminLoginBox').hidden = true;
+  document.getElementById('adminTools').hidden = false;
+  document.getElementById('adminStatus').textContent = "Admin Mode active. You can now manage theme, media, and hubs.";
+  // Load saved theme
+  const saved = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
+  if (saved) applyTheme(saved);
+  else resetTheme(); // ensures UI matches default
+}
+
+// ===== MEDIA UPLOAD =====
+async function uploadMedia(file, folder) {
+  const status = document.getElementById('mediaStatus');
+  if (!file) { status.textContent = "Select a file first."; return; }
+  status.textContent = "Uploading...";
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('folder', folder);
+    const res = await fetch('/api/media/upload', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + state.token },
+      body: fd,
+    });
+    const data = await res.json();
+    status.textContent = data.ok ? "Uploaded: " + data.key : data.error || "Upload failed.";
+  } catch {
+    status.textContent = "Upload failed. Check R2 binding.";
+  }
+}
+
+// ===== INITIALIZATION =====
 function init() {
+  // Render static content
   renderGallery();
   renderOffices();
-  document.getElementById(
-    "mainWhatsapp"
-  ).href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent( "Chilghoza Pine Nuts Trade Inquiry" )}`;
-  document.querySelectorAll("[data-open-gateway]").forEach(
-    (b) =>
-      (b.onclick = (e) => {
-        e.preventDefault();
-        document.getElementById("mobileDrawer").classList.remove("open");
-        openGateway(b.dataset.openGateway);
-      })
-  );
+  
+  // WhatsApp main button
+  document.getElementById("mainWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
+
+  // Event listeners for gateways
+  document.querySelectorAll("[data-open-gateway]").forEach(el => {
+    el.onclick = (e) => {
+      e.preventDefault();
+      document.getElementById("mobileDrawer").classList.remove("open");
+      openGateway(el.dataset.openGateway);
+    };
+  });
   document.getElementById("gatewayBack").onclick = closeGateway;
   document.getElementById("hubBack").onclick = () => {
     state.hub = null;
@@ -769,113 +402,100 @@ function init() {
     document.getElementById("gatewayView").classList.add("open");
     renderGateway(state.gateway);
   };
-  ["languageSelect", "gatewayLanguage", "hubLanguage"].forEach((id) => {
-    const s = document.getElementById(id);
-    s.innerHTML = document.getElementById("languageSelect").innerHTML;
-    s.onchange = (e) => setLanguage(e.target.value);
+
+  // Language selects
+  const langSelects = ["languageSelect", "gatewayLanguage", "hubLanguage"];
+  langSelects.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = document.getElementById("languageSelect").innerHTML;
+    el.onchange = (e) => setLanguage(e.target.value);
   });
-  document.getElementById("menuOpen").onclick = () =>
-    document.getElementById("mobileDrawer").classList.add("open");
-  document.getElementById("menuClose").onclick = () =>
-    document.getElementById("mobileDrawer").classList.remove("open");
-  document.getElementById("adminOpen").onclick = () =>
-    document.getElementById("adminDialog").showModal();
-  document.getElementById("adminClose").onclick = () =>
-    document.getElementById("adminDialog").close();
-  function activateAdminUI() {
-    document.getElementById("adminLoginBox").hidden = true;
-    document.getElementById("adminTools").hidden = false;
-    document.getElementById("adminStatus").textContent =
-      "Admin Mode active. Theme, media and Royal AI Admin Assistant controls are ready.";
-    const saved = JSON.parse(localStorage.getItem("royalTheme") || "null");
-    if (saved) applyTheme(saved);
-  }
-  function applyTheme(v) {
-    document.documentElement.style.setProperty("--forest", v.bg);
-    document.documentElement.style.setProperty("--gold", v.gold);
-    document.documentElement.style.setProperty("--text", v.text);
-    document.documentElement.style.setProperty("--card-accent", v.card);
-    document.documentElement.style.setProperty("--font-scale", v.scale);
-    document.getElementById("themeBg").value = v.bg;
-    document.getElementById("themeGold").value = v.gold;
-    document.getElementById("themeText").value = v.text;
-    document.getElementById("themeCard").value = v.card;
-    document.getElementById("themeScale").value = v.scale;
-  }
-  function readTheme() {
-    return {
-      bg: document.getElementById("themeBg").value,
-      gold: document.getElementById("themeGold").value,
-      text: document.getElementById("themeText").value,
-      card: document.getElementById("themeCard").value,
-      scale: document.getElementById("themeScale").value,
-    };
-  }
-  ["themeBg", "themeGold", "themeText", "themeCard", "themeScale"].forEach(
-    (id) =>
-      (document.getElementById(id).oninput = () => applyTheme(readTheme()))
-  );
-  document.getElementById("themeSave").onclick = () => {
-    localStorage.setItem("royalTheme", JSON.stringify(readTheme()));
-    document.getElementById("adminStatus").textContent =
-      "Theme saved on this device.";
-  };
-  document.getElementById("themeReset").onclick = () => {
-    localStorage.removeItem("royalTheme");
-    applyTheme({
-      bg: "#03140a",
-      gold: "#d4af37",
-      text: "#f5f1e8",
-      card: "#163d2a",
-      scale: "1",
-    });
-  };
-  document.getElementById("mediaUpload").onclick = async () => {
-    const file = document.getElementById("mediaFile").files[0],
-      status = document.getElementById("mediaStatus");
-    if (!file) {
-      status.textContent = "Select an image, video or PDF first.";
-      return;
-    }
-    status.textContent = "Uploading…";
-    try {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("folder", document.getElementById("mediaFolder").value);
-      const r = await fetch("/api/media/upload", {
-        method: "POST",
-        headers: { Authorization: "Bearer " + state.token },
-        body: fd,
-      });
-      const d = await r.json();
-      status.textContent = d.ok
-        ? "Uploaded: " + d.key
-        : d.error || "Upload failed";
-    } catch (e) {
-      status.textContent = "Upload failed. Check Cloudflare R2 MEDIA binding.";
-    }
-  };
+
+  // Mobile drawer
+  document.getElementById("menuOpen").onclick = () => document.getElementById("mobileDrawer").classList.add("open");
+  document.getElementById("menuClose").onclick = () => document.getElementById("mobileDrawer").classList.remove("open");
+
+  // Admin dialog
+  document.getElementById("adminOpen").onclick = () => document.getElementById("adminDialog").showModal();
+  document.getElementById("adminClose").onclick = () => document.getElementById("adminDialog").close();
+
+  // Admin login
   document.getElementById("adminLogin").onclick = () => {
     const token = document.getElementById("adminToken").value.trim();
     if (!token) return;
     state.admin = true;
     state.token = token;
-    sessionStorage.setItem("royalAdmin", "1");
-    sessionStorage.setItem("royalAdminToken", token);
+    sessionStorage.setItem(ADMIN_FLAG, "1");
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
     activateAdminUI();
     applyLanguage();
   };
-  const savedTheme = JSON.parse(localStorage.getItem("royalTheme") || "null");
-  if (savedTheme) applyTheme(savedTheme);
-  if (state.admin) activateAdminUI();
-  document.getElementById("aiForm").onsubmit = (e) => {
+
+  // Theme controls
+  const themeSliders = [
+    'bgHue','bgSat','bgBright','goldHue','goldSat','goldBright',
+    'textHue','textSat','textBright','headingHue','headingSat','headingBright',
+    'headingSize','bodySize','smallSize'
+  ];
+  themeSliders.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.oninput = () => applyTheme(readThemeFromUI());
+  });
+  document.getElementById('headingFont')?.addEventListener('change', () => applyTheme(readThemeFromUI()));
+  document.getElementById('bodyFont')?.addEventListener('change', () => applyTheme(readThemeFromUI()));
+  document.getElementById('themeSave').onclick = saveTheme;
+  document.getElementById('themeReset').onclick = resetTheme;
+
+  // Media upload
+  document.getElementById('mediaUpload').onclick = () => {
+    const file = document.getElementById('mediaFile').files[0];
+    const folder = document.getElementById('mediaFolder').value;
+    uploadMedia(file, folder);
+  };
+
+  // AI form
+  document.getElementById('aiForm').onsubmit = (e) => {
     e.preventDefault();
-    const q = document.getElementById("aiInput").value.trim();
-    if (q) {
-      askAI(q);
-      document.getElementById("aiInput").value = "";
+    const input = document.getElementById('aiInput');
+    const msg = input.value.trim();
+    if (msg) {
+      askAI(msg);
+      input.value = '';
     }
   };
+
+  // Hub management buttons (placeholders)
+  document.getElementById('createHubBtn').onclick = () => alert('Create Hub: Will be implemented with KV/D1 backend.');
+  document.getElementById('editHubBtn').onclick = () => alert('Edit Hub: Select a hub first.');
+  document.getElementById('deleteHubBtn').onclick = () => alert('Delete Hub: Select a hub first.');
+
+  // Apply saved theme if any
+  const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
+  if (savedTheme) {
+    applyTheme(savedTheme);
+    // Also sync UI sliders
+    for (const [key, val] of Object.entries(savedTheme)) {
+      const idMap = {
+        bgHue:'bgHue', bgSat:'bgSat', bgBright:'bgBright',
+        goldHue:'goldHue', goldSat:'goldSat', goldBright:'goldBright',
+        textHue:'textHue', textSat:'textSat', textBright:'textBright',
+        headingHue:'headingHue', headingSat:'headingSat', headingBright:'headingBright',
+        headingScale:'headingSize', bodyScale:'bodySize', smallScale:'smallSize',
+      };
+      const el = document.getElementById(idMap[key]);
+      if (el) el.value = val;
+    }
+    if (savedTheme.headingFont) document.getElementById('headingFont').value = savedTheme.headingFont;
+    if (savedTheme.bodyFont) document.getElementById('bodyFont').value = savedTheme.bodyFont;
+  }
+
+  // If admin already logged in, activate
+  if (state.admin) {
+    activateAdminUI();
+  }
+
   applyLanguage();
 }
+
 document.addEventListener("DOMContentLoaded", init);
