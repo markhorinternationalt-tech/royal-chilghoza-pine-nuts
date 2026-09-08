@@ -21,7 +21,10 @@ html {
 }
 body {
   margin: 0;
-  background: radial-gradient(circle at 50% -10%, #12402a, var(--forest) 46%);
+  background:
+    linear-gradient(rgba(3, 20, 10, 0.90), rgba(3, 20, 10, 0.94)),
+    url("001.jpg") center top / cover fixed no-repeat,
+    var(--forest);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
@@ -162,7 +165,7 @@ body {
   position: absolute;
   inset: 0;
   background: url("001.jpg") center/cover no-repeat;
-  filter: brightness(0.48) saturate(0.9);
+  filter: brightness(0.34) saturate(0.72); opacity: 0.82;
   transform: scale(1.03);
 }
 .hero-bg:after {
@@ -734,7 +737,9 @@ dialog::backdrop {
     padding: 0 16px;
   }
   .profile-frame {
-    display: none;
+    display: block;
+    width: 42px;
+    height: 42px;
   }
   .brand-copy b {
     font-size: 1rem;
@@ -881,3 +886,20 @@ body.subview {
   cursor: pointer;
 }
 .drawer-admin-access:hover { color: var(--gold2); border-color: var(--line); }
+
+
+/* v1 image placement: hero photo continues as a very dim Deep Forest background */
+#mainPage {
+  position: relative;
+  background: linear-gradient(rgba(3,20,10,.74), rgba(3,20,10,.88));
+}
+.gateway-section, .gallery-section, .ai-section, .contact-section {
+  position: relative;
+}
+@media (max-width: 620px) {
+  .profile-frame {
+    display: block;
+    width: 42px;
+    height: 42px;
+  }
+}
