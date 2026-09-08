@@ -30,3 +30,8 @@ Download the ZIP, extract it on your phone, then upload/replace the four code fi
 
 SAFE RULE:
 Do not touch main. Work only on upgrade-v1.
+
+CLOUDFLARE WRANGLER FIX:
+This package includes wrangler.jsonc.
+Keep all files together in the repository root (no assets folder).
+Cloudflare deploy command can remain: npx wrangler versions upload
