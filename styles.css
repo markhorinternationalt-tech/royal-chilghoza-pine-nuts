@@ -85,7 +85,7 @@ body {
   border-radius: 50%;
 }
 .profile-frame.image-missing:after {
-  content: "â—ˆ";
+  content: "◈";
   display: grid;
   place-items: center;
   width: 100%;
