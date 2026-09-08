@@ -864,3 +864,20 @@ body.subview {
     text-align: center;
   }
 }
+
+/* Hidden management access: available only at the end of the opened menu */
+.drawer-admin-access {
+  position: static !important;
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: 13px 14px;
+  border: 1px solid rgba(212,175,55,.18);
+  border-radius: 12px;
+  background: rgba(212,175,55,.05);
+  color: rgba(242,215,122,.72);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.drawer-admin-access:hover { color: var(--gold2); border-color: var(--line); }
