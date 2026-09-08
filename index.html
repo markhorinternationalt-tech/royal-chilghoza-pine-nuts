@@ -1,35 +1,249 @@
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#03140a">
 <meta name="description" content="Royal Chilghoza Pine Nuts — Global Trade and Research & Knowledge Ecosystem.">
 <meta name="keywords" content="Chilghoza Pine Nuts, Pine Nuts, Pakistan, Global Trade, Research, Export, Forests">
-<title>Royal Chilghoza Pine Nuts</title><link rel="stylesheet" href="styles.css">
+<title>Royal Chilghoza Pine Nuts</title>
+<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+
+<div class="ambient ambient-a"></div>
+<div class="ambient ambient-b"></div>
+
 <header class="site-header" id="top">
+
   <a class="brand" href="#top" aria-label="Royal Chilghoza Pine Nuts home">
-    <span class="profile-frame"><img src="Profile Picture CEO (1).jpg" alt="Syed Azeem Shah profile" onerror="this.closest('.profile-frame').classList.add('image-missing')"></span>
-    <span class="brand-copy"><b>ROYAL CHILGHOZA</b><small>PINE NUTS</small></span>
+
+    <span class="profile-frame">
+      <img
+        src="Royal%20profile%20PIC.jpg"
+        alt="Royal Profile Picture"
+        onerror="this.closest('.profile-frame').classList.add('image-missing')"
+      >
+    </span>
+
+    <span class="brand-copy">
+      <b>ROYAL CHILGHOZA</b>
+      <small>PINE NUTS</small>
+    </span>
+
   </a>
-  <nav class="desktop-nav"><a href="#top" data-i18n="navHome">Home</a><a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a><a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a><a href="#gallery" data-i18n="navGallery">Gallery</a><a href="#contact">WhatsApp</a></nav>
-  <div class="header-actions"><select id="languageSelect" aria-label="Language"><option value="en">🌐 English</option><option value="zh">🌐 中文</option><option value="ar">🌐 العربية</option><option value="ps">🌐 پښتو</option><option value="ru">🌐 Русский</option></select><button id="menuOpen" class="menu-trigger" aria-label="Open menu">☰</button></div>
+
+  <nav class="desktop-nav">
+    <a href="#top" data-i18n="navHome">Home</a>
+    <a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a>
+    <a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a>
+    <a href="#gallery" data-i18n="navGallery">Gallery</a>
+    <a href="#contact">WhatsApp</a>
+  </nav>
+
+  <div class="header-actions">
+
+    <select id="languageSelect" aria-label="Language">
+      <option value="en">🌐 English</option>
+      <option value="zh">🌐 中文</option>
+      <option value="ar">🌐 العربية</option>
+      <option value="ps">🌐 پښتو</option>
+      <option value="ru">🌐 Русский</option>
+    </select>
+
+    <button id="menuOpen" class="menu-trigger" aria-label="Open menu">
+      ☰
+    </button>
+
+  </div>
+
 </header>
 
-<main id="mainPage">
-<section class="hero"><div class="hero-bg"></div><div class="hero-overlay"></div><div class="hero-content"><p class="eyebrow" data-i18n="eyebrow">PAKISTAN · ORIGIN · GLOBAL</p><h1><span data-i18n="heroRoyal">Royal</span> <span class="gold" data-i18n="heroTitle">Chilghoza Pine Nuts</span></h1><p data-i18n="heroText">From the Chilghoza Pine Nuts forests of Pakistan to the world — connecting premium quality, authentic origin, responsible supply chains and knowledge.</p><div class="hero-actions"><button class="btn btn-gold" data-open-gateway="trade" data-i18n="exploreTrade">Explore Global Trade</button><button class="btn btn-glass" data-open-gateway="research" data-i18n="exploreResearch">Explore Research</button></div></div></section>
-<section class="section-shell gateway-section" id="gateways"><div class="section-heading"><p class="eyebrow" data-i18n="gatewayEyebrow">TWO PRIMARY GATEWAYS</p><h2 data-i18n="gatewayTitle">One Royal Chilghoza Pine Nuts Ecosystem</h2></div><div class="gateway-grid"><article class="gateway-card glass-card"><div class="gateway-icon">◈</div><p class="eyebrow">01 · CHILGHOZA PINE NUTS</p><h2 data-i18n="tradeTitle">GLOBAL TRADE</h2><p data-i18n="tradeText">Premium quality · Worldwide export · Markets and buyers</p><button class="btn btn-gold" data-open-gateway="trade" data-i18n="openGateway">Open Gateway</button></article><article class="gateway-card glass-card"><div class="gateway-icon">✦</div><p class="eyebrow">02 · CHILGHOZA PINE NUTS</p><h2 data-i18n="researchTitle">RESEARCH & KNOWLEDGE</h2><p data-i18n="researchText">Science · Origin · Forests · Ecology · Knowledge</p><button class="btn btn-gold" data-open-gateway="research" data-i18n="openGateway">Open Gateway</button></article></div></section>
-<section class="section-shell gallery-section" id="gallery"><div class="section-heading"><p class="eyebrow" data-i18n="galleryEyebrow">ROYAL FIELD ARCHIVE</p><h2 data-i18n="galleryTitle">Chilghoza Pine Nuts Gallery</h2><p data-i18n="galleryText">Eight editable visual records from forest, harvest, grading and export.</p></div><div class="gallery-grid" id="galleryGrid"></div></section>
-<section class="section-shell ai-section"><div class="ai-panel glass-card"><div class="ai-orb"><span>AI</span></div><div><p class="eyebrow">ROYAL AI · CLOUDFLARE WORKERS AI</p><h2 data-i18n="aiTitle">Royal AI Assistant</h2><p data-i18n="aiText">Ask about Chilghoza Pine Nuts, trade, quality, forests and research.</p><div class="ai-mode" id="aiModeLabel">Visitor Assistant</div><form id="aiForm"><input id="aiInput" data-i18n-placeholder="aiPlaceholder" placeholder="Ask about Chilghoza Pine Nuts..."><button class="btn btn-gold" data-i18n="ask">Ask AI</button></form><div id="aiMessages" class="ai-messages" aria-live="polite"></div></div></div></section>
-<section class="section-shell contact-section" id="contact"><a id="mainWhatsapp" class="whatsapp-gateway" target="_blank" rel="noopener"><span>◉</span><div><small data-i18n="directInquiry">DIRECT TRADE INQUIRY</small><b data-i18n="whatsappTitle">WhatsApp Chilghoza Pine Nuts Trade Desk</b></div><i>↗</i></a></section>
-<section class="offices-section"><div class="section-shell"><div class="section-heading"><p class="eyebrow" data-i18n="officeEyebrow">CONTACT · OFFICE · PARTNERSHIP</p><h2 data-i18n="officeTitle">Office Address</h2></div><div id="officeGrid" class="office-grid"></div></div></section>
-</main>
 
-<section id="gatewayView" class="full-view" aria-hidden="true"><div class="view-topbar"><button id="gatewayBack">← <span data-i18n="back">Back</span></button><b>ROYAL CHILGHOZA <span>PINE NUTS</span></b><select id="gatewayLanguage" aria-label="Language"></select></div><div class="gateway-hero"><p class="eyebrow" id="gatewayEyebrow">PRIMARY GATEWAY</p><h1 id="gatewayTitleText"></h1><p id="gatewayDescription"></p></div><div class="hub-grid-page" id="hubGridPage"></div></section>
-<section id="hubView" class="full-view" aria-hidden="true"><div class="view-topbar"><button id="hubBack">← <span data-i18n="back">Back</span></button><b>ROYAL CHILGHOZA <span>PINE NUTS</span></b><select id="hubLanguage" aria-label="Language"></select></div><article class="hub-page"><p class="eyebrow" id="hubNo"></p><h1 id="hubTitleText"></h1><p class="hub-lead" id="hubDescription"></p><div class="hub-columns"><div class="hub-content glass-card"><h3 data-i18n="hubContent">Knowledge Hub</h3><p data-i18n="hubBody">This full mini-website page is ready for Admin content, articles, market information, research records and detailed descriptions.</p><a id="hubWhatsapp" class="btn btn-gold" target="_blank" data-i18n="whatsappTrade">WhatsApp Trade</a></div><div class="hub-media glass-card"><h3 data-i18n="mediaTitle">Images · Videos · PDFs</h3><div id="hubMedia" data-i18n="mediaEmpty">Dynamic media will appear here after upload.</div></div></div></article></section>
-<div class="mobile-drawer" id="mobileDrawer"><button id="menuClose" aria-label="Close menu">×</button><a href="#top" data-i18n="navHome">Home</a><a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a><a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a><a href="#gallery" data-i18n="navGallery">Gallery</a><button id="adminOpen" class="drawer-admin-access" type="button">Management Access</button></div>
-<dialog id="adminDialog"><div class="admin-panel admin-wide"><button id="adminClose">×</button><p class="eyebrow">ADMIN PORTAL</p><h2>Royal Management Center</h2><p id="adminStatus">Secure Admin Mode enables management tools and changes Royal AI into an Admin Assistant.</p><div id="adminLoginBox"><input id="adminToken" placeholder="Admin token"><button id="adminLogin" class="btn btn-gold">Open Admin Mode</button></div><div id="adminTools" hidden><h3>Theme Customizer</h3><p class="admin-note">Live controls for the Royal Chilghoza Pine Nuts interface.</p><div class="theme-grid"><label>Background<input id="themeBg" type="color" value="#03140a"></label><label>Royal Gold<input id="themeGold" type="color" value="#d4af37"></label><label>Body Text<input id="themeText" type="color" value="#f5f1e8"></label><label>Card Highlight<input id="themeCard" type="color" value="#163d2a"></label><label>Font Scale<input id="themeScale" type="range" min="0.85" max="1.2" step="0.01" value="1"></label></div><div class="admin-actions"><button id="themeSave" class="btn btn-gold">Save Theme</button><button id="themeReset" class="btn btn-glass">Reset Theme</button></div><h3>Media Management</h3><div class="admin-actions"><input id="mediaFile" type="file" accept="image/*,video/*,application/pdf"><select id="mediaFolder"><option>gallery</option><option>hubs</option><option>videos</option><option>pdfs</option></select><button id="mediaUpload" class="btn btn-gold">Upload to R2</button></div><p id="mediaStatus" class="admin-note"></p></div></div></dialog>
-<script src="app.js"></script>
-</body></html>
+<main id="mainPage">
+
+<section class="hero">
+
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <p class="eyebrow" data-i18n="eyebrow">
+      PAKISTAN · ORIGIN · GLOBAL
+    </p>
+
+    <h1>
+      <span data-i18n="heroRoyal">Royal</span>
+      <span class="gold" data-i18n="heroTitle">
+        Chilghoza Pine Nuts
+      </span>
+    </h1>
+
+    <p data-i18n="heroText">
+      From the Chilghoza Pine Nuts forests of Pakistan to the world —
+      connecting premium quality, authentic origin, responsible supply
+      chains and knowledge.
+    </p>
+
+    <div class="hero-actions">
+
+      <button class="btn btn-gold"
+        data-open-gateway="trade"
+        data-i18n="exploreTrade">
+        Explore Global Trade
+      </button>
+
+      <button class="btn btn-glass"
+        data-open-gateway="research"
+        data-i18n="exploreResearch">
+        Explore Research
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section-shell gateway-section" id="gateways">
+
+  <div class="section-heading">
+
+    <p class="eyebrow" data-i18n="gatewayEyebrow">
+      TWO PRIMARY GATEWAYS
+    </p>
+
+    <h2 data-i18n="gatewayTitle">
+      One Royal Chilghoza Pine Nuts Ecosystem
+    </h2>
+
+  </div>
+
+
+  <div class="gateway-grid">
+
+    <article class="gateway-card glass-card">
+
+      <div class="gateway-icon">◈</div>
+
+      <p class="eyebrow">
+        01 · CHILGHOZA PINE NUTS
+      </p>
+
+      <h2 data-i18n="tradeTitle">
+        GLOBAL TRADE
+      </h2>
+
+      <p data-i18n="tradeText">
+        Premium quality · Worldwide export · Markets and buyers
+      </p>
+
+      <button
+        class="btn btn-gold"
+        data-open-gateway="trade"
+        data-i18n="openGateway">
+        Open Gateway
+      </button>
+
+    </article>
+
+
+    <article class="gateway-card glass-card">
+
+      <div class="gateway-icon">✦</div>
+
+      <p class="eyebrow">
+        02 · CHILGHOZA PINE NUTS
+      </p>
+
+      <h2 data-i18n="researchTitle">
+        RESEARCH & KNOWLEDGE
+      </h2>
+
+      <p data-i18n="researchText">
+        Science · Origin · Forests · Ecology · Knowledge
+      </p>
+
+      <button
+        class="btn btn-gold"
+        data-open-gateway="research"
+        data-i18n="openGateway">
+        Open Gateway
+      </button>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<section class="section-shell gallery-section" id="gallery">
+
+  <div class="section-heading">
+
+    <p class="eyebrow" data-i18n="galleryEyebrow">
+      ROYAL FIELD ARCHIVE
+    </p>
+
+    <h2 data-i18n="galleryTitle">
+      Chilghoza Pine Nuts Gallery
+    </h2>
+
+    <p data-i18n="galleryText">
+      Eight editable visual records from forest, harvest, grading and export.
+    </p>
+
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+</section>
+
+
+<section class="section-shell ai-section">
+
+  <div class="ai-panel glass-card">
+
+    <div class="ai-orb">
+      <span>AI</span>
+    </div>
+
+    <div>
+
+      <p class="eyebrow">
+        ROYAL AI · CLOUDFLARE WORKERS AI
+      </p>
+
+      <h2 data-i18n="aiTitle">
+        Royal AI Assistant
+      </h2>
+
+      <p data-i18n="aiText">
+        Ask about Chilghoza Pine Nuts, trade, quality,
+        forests and research.
+      </p>
+
+      <div class="ai-mode" id="aiModeLabel">
+        Visitor Assistant
+      </div>
+
+      <form id="aiForm">
+
+        <input
+          id="aiInput"
+          data-i18n-placeholder="aiPlaceholder"
+          placeholder="Ask about Chilghoza Pine Nuts..."
+        >
+
+        <button class="btn btn-gold" data-i18n="ask">
+          Ask AI
+        </button>
+
+      </form>
+
+      <div
+        id="
