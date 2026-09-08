@@ -903,3 +903,21 @@ body.subview {
     height: 42px;
   }
 }
+/* Royal Profile Picture Fix */
+.profile-frame {
+  display: block !important;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.profile-frame img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50%;
+}
