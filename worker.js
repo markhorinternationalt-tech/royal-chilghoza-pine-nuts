@@ -1,14 +1,19 @@
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url),
-      cors = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-      };
-    if (request.method === "OPTIONS")
+    const url = new URL(request.url);
+    const cors = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+    };
+
+    // ---- Preflight ----
+    if (request.method === "OPTIONS") {
       return new Response(null, { headers: cors });
-    if (url.pathname === "/api/health")
+    }
+
+    // ---- API Routes ----
+    if (url.pathname === "/api/health") {
       return json(
         {
           ok: true,
@@ -18,15 +23,14 @@ export default {
         },
         cors
       );
+    }
+
     if (url.pathname === "/api/ai" && request.method === "POST") {
-      const {
-        message = "",
-        mode = "visitor",
-        language = "en",
-      } = await request.json();
-      if (mode === "admin" && !authorized(request, env))
+      const { message = "", mode = "visitor", language = "en" } = await request.json();
+      if (mode === "admin" && !authorized(request, env)) {
         return json({ reply: "Admin authorization required." }, cors, 401);
-      if (!env.AI)
+      }
+      if (!env.AI) {
         return json(
           {
             reply:
@@ -34,6 +38,7 @@ export default {
           },
           cors
         );
+      }
       const system =
         mode === "admin"
           ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudflare R2, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
@@ -49,41 +54,47 @@ export default {
       });
       return json({ reply: result.response || "No response." }, cors);
     }
+
     if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
-      if (!env.MEDIA)
+      if (!env.MEDIA) {
         return new Response("R2 binding MEDIA missing", {
           status: 503,
           headers: cors,
         });
-      const key = decodeURIComponent(url.pathname.slice("/api/media/".length)),
-        obj = await env.MEDIA.get(key);
-      if (!obj)
+      }
+      const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
+      const obj = await env.MEDIA.get(key);
+      if (!obj) {
         return new Response("Not found", { status: 404, headers: cors });
+      }
       return new Response(obj.body, {
         headers: {
           ...cors,
-          "Content-Type":
-            obj.httpMetadata?.contentType || "application/octet-stream",
+          "Content-Type": obj.httpMetadata?.contentType || "application/octet-stream",
           "Cache-Control": "public, max-age=86400",
         },
       });
     }
+
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
-      if (!authorized(request, env))
+      if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
-      if (!env.MEDIA)
+      }
+      if (!env.MEDIA) {
         return new Response("R2 binding MEDIA missing", {
           status: 503,
           headers: cors,
         });
-      const form = await request.formData(),
-        file = form.get("file"),
-        folder = String(form.get("folder") || "uploads").replace(
-          /[^a-zA-Z0-9/_-]/g,
-          ""
-        );
-      if (!(file instanceof File))
+      }
+      const form = await request.formData();
+      const file = form.get("file");
+      const folder = String(form.get("folder") || "uploads").replace(
+        /[^a-zA-Z0-9/_-]/g,
+        ""
+      );
+      if (!(file instanceof File)) {
         return new Response("file required", { status: 400, headers: cors });
+      }
       const key = `${folder}/${Date.now()}-${file.name}`;
       await env.MEDIA.put(key, file.stream(), {
         httpMetadata: {
@@ -96,30 +107,100 @@ export default {
         cors
       );
     }
+
     if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
-      if (!authorized(request, env))
+      if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
-      if (!env.MEDIA)
+      }
+      if (!env.MEDIA) {
         return new Response("R2 binding MEDIA missing", {
           status: 503,
           headers: cors,
         });
+      }
       const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
       await env.MEDIA.delete(key);
       return json({ ok: true }, cors);
     }
-    if (url.pathname === "/api/admin/status")
+
+    if (url.pathname === "/api/admin/status") {
       return json({ admin: authorized(request, env) }, cors);
-    return new Response("Royal Chilghoza Pine Nuts Worker", { headers: cors });
+    }
+
+    // ---- Static Assets (Serve from GitHub Raw) ----
+    // محیطی متغیر: GITHUB_RAW_BASE
+    // مثال: https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/
+    const githubBase = env.GITHUB_RAW_BASE || "https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/";
+    
+    // اگر درخواست روٹ (/) ہے تو index.html بھیجیں
+    let path = url.pathname;
+    if (path === "/") path = "/index.html";
+
+    // صرف اسٹیٹک فائلوں کے لیے (تصاویر، CSS، JS، HTML)
+    const staticExtensions = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json)$/i;
+    if (staticExtensions.test(path)) {
+      const rawUrl = githubBase + path.slice(1); // leading slash ہٹائیں
+      try {
+        const response = await fetch(rawUrl, {
+          headers: {
+            "User-Agent": "Cloudflare-Worker",
+          },
+        });
+        if (!response.ok) {
+          return new Response(`Static file not found: ${path}`, {
+            status: 404,
+            headers: cors,
+          });
+        }
+        // Content-Type کا اندازہ لگائیں
+        const contentType = getContentType(path);
+        const body = await response.arrayBuffer();
+        return new Response(body, {
+          headers: {
+            ...cors,
+            "Content-Type": contentType,
+            "Cache-Control": "public, max-age=86400",
+          },
+        });
+      } catch (err) {
+        return new Response(`Error fetching static file: ${err.message}`, {
+          status: 500,
+          headers: cors,
+        });
+      }
+    }
+
+    // اگر کوئی اور راستہ ہو تو 404
+    return new Response("Not Found", { status: 404, headers: cors });
   },
 };
+
 function authorized(request, env) {
   const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
   return !!env.ADMIN_TOKEN && token === env.ADMIN_TOKEN;
 }
+
 function json(data, cors, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: { ...cors, "Content-Type": "application/json;charset=UTF-8" },
   });
+}
+
+function getContentType(path) {
+  const ext = path.split('.').pop().toLowerCase();
+  const map = {
+    'html': 'text/html;charset=UTF-8',
+    'css': 'text/css;charset=UTF-8',
+    'js': 'application/javascript;charset=UTF-8',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'gif': 'image/gif',
+    'webp': 'image/webp',
+    'svg': 'image/svg+xml',
+    'ico': 'image/x-icon',
+    'json': 'application/json;charset=UTF-8',
+  };
+  return map[ext] || 'application/octet-stream';
 }
