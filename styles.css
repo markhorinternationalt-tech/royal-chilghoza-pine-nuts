@@ -937,3 +937,194 @@ body.subview {
   box-shadow:0 0 20px rgba(212,175,55,.12);
   flex-shrink:0;
 }
+
+/* =========================================
+   PREMIUM ROYAL FOUNDER PROFILE
+========================================= */
+
+.royal-profile-section {
+  padding: 70px 20px;
+}
+
+.royal-profile-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 38px 24px;
+  text-align: center;
+}
+
+/* PROFILE IMAGE AREA */
+
+.royal-profile-image-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DOUBLE ROYAL RING */
+
+.royal-profile-ring {
+  width: 160px;
+  height: 160px;
+  padding: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  border: 2px solid #d4af37;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212,175,55,.25),
+      rgba(3,20,10,.9)
+    );
+
+  box-shadow:
+    0 0 0 6px rgba(212,175,55,.10),
+    0 0 25px rgba(212,175,55,.25),
+    0 15px 40px rgba(0,0,0,.45);
+}
+
+/* ACTUAL PHOTO */
+
+.royal-profile-image {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block;
+
+  object-fit: cover !important;
+  object-position: center !important;
+
+  border-radius: 50% !important;
+
+  transform: scale(1.08);
+
+  transition: transform .4s ease;
+}
+
+.royal-profile-ring:hover
+.royal-profile-image {
+  transform: scale(1.14);
+}
+
+/* ROYAL CROWN BADGE */
+
+.royal-profile-crown {
+  position: absolute;
+
+  right: 4px;
+  bottom: 8px;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #d4af37;
+
+  font-size: 23px;
+
+  background: #071b10;
+
+  border: 2px solid #d4af37;
+
+  box-shadow:
+    0 0 18px rgba(212,175,55,.35);
+}
+
+/* PROFILE CONTENT */
+
+.royal-profile-content {
+  max-width: 620px;
+}
+
+.royal-profile-content h2 {
+  margin-top: 8px;
+}
+
+.royal-profile-role {
+  color: #d4af37;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.royal-profile-line {
+  width: 70px;
+  height: 2px;
+  margin: 20px auto;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #d4af37,
+    transparent
+  );
+}
+
+.royal-profile-tags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+.royal-profile-tags span {
+  padding: 7px 12px;
+
+  border: 1px solid rgba(212,175,55,.25);
+
+  border-radius: 30px;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  color: #d4af37;
+
+  background: rgba(212,175,55,.06);
+}
+
+
+/* DESKTOP ROYAL PROFILE */
+
+@media (min-width: 768px) {
+
+  .royal-profile-shell {
+    flex-direction: row;
+    text-align: left;
+
+    padding: 45px;
+  }
+
+  .royal-profile-image-wrap {
+    width: 210px;
+    height: 210px;
+  }
+
+  .royal-profile-ring {
+    width: 190px;
+    height: 190px;
+  }
+
+  .royal-profile-line {
+    margin-left: 0;
+  }
+
+  .royal-profile-tags {
+    justify-content: flex-start;
+  }
+
+}
