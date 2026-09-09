@@ -921,3 +921,19 @@ body.subview {
   object-position: center !important;
   border-radius: 50%;
 }
+
+/* ROYAL LOGO */
+.royal-logo{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(212,175,55,.45);
+  border-radius:50%;
+  color:#d4af37;
+  font-size:22px;
+  background:radial-gradient(circle,rgba(212,175,55,.12),rgba(0,0,0,.05));
+  box-shadow:0 0 20px rgba(212,175,55,.12);
+  flex-shrink:0;
+}
