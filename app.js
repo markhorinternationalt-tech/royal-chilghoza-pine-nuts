@@ -672,9 +672,17 @@ function renderOffices() {
 }
 function renderGateway(type) {
   const isTrade = type === "trade";
+  const gwLabels = {
+    en: ["PRIMARY GATEWAY 01", "PRIMARY GATEWAY 02"],
+    zh: ["主要门户 01", "主要门户 02"],
+    ar: ["البوابة الرئيسية 01", "البوابة الرئيسية 02"],
+    ps: ["لومړنۍ دروازه 01", "لومړنۍ دروازه 02"],
+    ru: ["ОСНОВНОЙ ПОРТАЛ 01", "ОСНОВНОЙ ПОРТАЛ 02"]
+  };
+  const labels = gwLabels[state.lang] || gwLabels.en;
   document.getElementById("gatewayEyebrow").textContent = isTrade
-    ? "PRIMARY GATEWAY 01"
-    : "PRIMARY GATEWAY 02";
+    ? labels[0]
+    : labels[1];
   document.getElementById("gatewayTitleText").textContent = isTrade
     ? tx("tradeTitle")
     : tx("researchTitle");
