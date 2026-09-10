@@ -1894,3 +1894,100 @@ dialog::backdrop {
 /* =========================================================
    END — Premium Luxury Stylesheet
 ========================================================= */
+/* =========================================================
+   ROYAL THEME CUSTOMIZER (iro.js)
+========================================================= */
+
+.royal-theme-customizer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.theme-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(3, 20, 10, 0.5);
+}
+
+.theme-label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.theme-label > span:first-child {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.theme-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.theme-picker {
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+}
+
+/* Typography rows */
+.typo-row {
+  margin: 14px 0;
+}
+
+.typo-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.typo-row select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #071a10;
+  color: var(--text);
+  font-family: var(--body-font);
+  cursor: pointer;
+}
+
+.typo-row select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.typo-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--gold);
+}
+
+.typo-row b {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+@media (max-width: 620px) {
+  .theme-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .theme-picker {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+  }
+}
