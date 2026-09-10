@@ -1128,3 +1128,816 @@ padding: 30px 20px 70px;
   }
 
 }
+
+/* =========================================================
+   ROYAL CHILGHOZA PINE NUTS
+   FINAL HERO + MOBILE GAP + TITLE IMPROVEMENT
+   SAFE OVERRIDE VERSION
+========================================================= */
+
+
+/* =========================================================
+   1. MAIN HERO - REMOVE UNNECESSARY EMPTY SPACE
+========================================================= */
+
+.hero {
+  min-height: auto !important;
+  padding: 100px 0 85px !important;
+  display: flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   2. HERO CONTENT
+========================================================= */
+
+.hero-content {
+  width: min(760px, calc(100% - 40px));
+  margin-left: clamp(20px, 8vw, 110px);
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   3. ROYAL TITLE DESIGN
+========================================================= */
+
+.hero h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+
+  font-size: clamp(3.5rem, 7vw, 6.7rem);
+
+  line-height: 0.92;
+
+  margin: 0 0 28px;
+
+  color: #d4af37;
+
+  text-shadow:
+    0 0 18px rgba(212,175,55,.10),
+    0 10px 35px rgba(0,0,0,.45);
+}
+
+
+/* CHILGHOZA PINE NUTS */
+
+.hero h1 .gold {
+
+  display: block;
+
+  color: #f2d77a;
+
+  text-shadow:
+    0 0 30px rgba(212,175,55,.18);
+
+}
+
+
+/* =========================================================
+   4. EYEBROW
+========================================================= */
+
+.hero .eyebrow {
+
+  color: #d7c28a;
+
+  font-size: 0.72rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.28em;
+
+  margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   5. HERO DESCRIPTION
+========================================================= */
+
+.hero p:not(.eyebrow) {
+
+  font-size: 1.08rem;
+
+  line-height: 1.8;
+
+  color: #e2e2dc;
+
+  max-width: 640px;
+
+  margin-bottom: 0;
+
+}
+
+
+/* =========================================================
+   6. BUTTON AREA
+========================================================= */
+
+.hero-actions {
+
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+
+  margin-top: 30px;
+
+}
+
+
+/* =========================================================
+   7. PROFILE SECTION - REMOVE TOP EMPTY LOOK
+========================================================= */
+
+.royal-profile-section {
+
+  padding-top: 45px !important;
+
+  padding-bottom: 70px;
+
+}
+
+
+/* =========================================================
+   8. PROFILE CARD
+========================================================= */
+
+.royal-profile-shell {
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 42px 28px;
+
+  border: 1px solid rgba(212,175,55,.22);
+
+  border-radius: 28px;
+
+  background:
+
+    linear-gradient(
+      135deg,
+      rgba(18,53,35,.92),
+      rgba(5,25,15,.96)
+    );
+
+  box-shadow:
+
+    0 25px 70px rgba(0,0,0,.32),
+
+    inset 0 1px 0 rgba(255,255,255,.03);
+
+}
+
+
+/* =========================================================
+   9. PROFILE IMAGE WRAPPER
+========================================================= */
+
+.royal-profile-image-wrap {
+
+  position: relative;
+
+  width: 190px;
+
+  height: 190px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+/* =========================================================
+   10. PROFILE GOLD RING
+========================================================= */
+
+.royal-profile-ring {
+
+  width: 170px;
+
+  height: 170px;
+
+  padding: 5px;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  border: 2px solid #d4af37;
+
+  background:
+
+    radial-gradient(
+
+      circle,
+
+      rgba(212,175,55,.22),
+
+      rgba(3,20,10,.9)
+
+    );
+
+  box-shadow:
+
+    0 0 0 6px rgba(212,175,55,.08),
+
+    0 0 30px rgba(212,175,55,.20),
+
+    0 18px 45px rgba(0,0,0,.45);
+
+}
+
+
+/* =========================================================
+   11. PROFILE IMAGE
+========================================================= */
+
+.royal-profile-image {
+
+  width: 100% !important;
+
+  height: 100% !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+
+  object-position: center !important;
+
+  border-radius: 50% !important;
+
+  transform: scale(1.05);
+
+  transition: transform .4s ease;
+
+}
+
+
+.royal-profile-ring:hover .royal-profile-image {
+
+  transform: scale(1.10);
+
+}
+
+
+/* =========================================================
+   12. ROYAL CROWN BADGE
+========================================================= */
+
+.royal-profile-crown {
+
+  position: absolute;
+
+  right: 5px;
+
+  bottom: 10px;
+
+  width: 52px;
+
+  height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #d4af37;
+
+  font-size: 24px;
+
+  background:
+
+    radial-gradient(
+
+      circle,
+
+      #123525,
+
+      #061b10
+
+    );
+
+  border: 2px solid #d4af37;
+
+  box-shadow:
+
+    0 0 20px rgba(212,175,55,.30),
+
+    0 8px 22px rgba(0,0,0,.45);
+
+}
+
+
+/* =========================================================
+   13. PROFILE CONTENT
+========================================================= */
+
+.royal-profile-content {
+
+  max-width: 650px;
+
+}
+
+
+.royal-profile-content h2 {
+
+  margin-top: 10px;
+
+  font-size: clamp(2rem, 4vw, 3.4rem);
+
+  color: #f4f1e9;
+
+}
+
+
+/* =========================================================
+   14. PROFILE ROLE
+========================================================= */
+
+.royal-profile-role {
+
+  color: #d4af37;
+
+  font-weight: 700;
+
+  margin-top: 10px;
+
+  font-size: 1.2rem;
+
+}
+
+
+/* =========================================================
+   15. PROFILE DIVIDER
+========================================================= */
+
+.royal-profile-line {
+
+  width: 90px;
+
+  height: 2px;
+
+  margin: 20px auto;
+
+  background:
+
+    linear-gradient(
+
+      90deg,
+
+      transparent,
+
+      #d4af37,
+
+      transparent
+
+    );
+
+}
+
+
+/* =========================================================
+   16. PROFILE TAGS
+========================================================= */
+
+.royal-profile-tags {
+
+  display: flex;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 22px;
+
+}
+
+
+.royal-profile-tags span {
+
+  padding: 8px 13px;
+
+  border:
+
+    1px solid rgba(212,175,55,.25);
+
+  border-radius: 30px;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  color: #d4af37;
+
+  background:
+
+    rgba(212,175,55,.06);
+
+}
+
+
+/* =========================================================
+   17. MOBILE VERSION
+========================================================= */
+
+@media (max-width: 620px) {
+
+
+  /* ---------------------------------------------
+     HEADER
+  --------------------------------------------- */
+
+  .site-header {
+
+    height: 72px;
+
+    padding: 0 16px;
+
+  }
+
+
+  /* ---------------------------------------------
+     HERO
+     IMPORTANT:
+     THIS FIXES THE EMPTY SPACE
+  --------------------------------------------- */
+
+  .hero {
+
+    min-height: auto !important;
+
+    padding:
+
+      55px 0 50px !important;
+
+    align-items: flex-start;
+
+  }
+
+
+  /* ---------------------------------------------
+     HERO CONTENT
+  --------------------------------------------- */
+
+  .hero-content {
+
+    width: calc(100% - 44px);
+
+    margin:
+
+      0 auto !important;
+
+    text-align: center;
+
+  }
+
+
+  /* ---------------------------------------------
+     EYEBROW
+  --------------------------------------------- */
+
+  .hero .eyebrow {
+
+    font-size: 0.66rem;
+
+    letter-spacing: 0.24em;
+
+    margin-bottom: 18px;
+
+  }
+
+
+  /* ---------------------------------------------
+     ROYAL TITLE
+  --------------------------------------------- */
+
+  .hero h1 {
+
+    font-size:
+
+      clamp(
+
+        3.8rem,
+
+        16vw,
+
+        5.4rem
+
+      );
+
+    line-height: .88;
+
+    margin-bottom: 26px;
+
+    color: #d4af37;
+
+  }
+
+
+  /* ---------------------------------------------
+     CHILGHOZA PINE NUTS
+  --------------------------------------------- */
+
+  .hero h1 .gold {
+
+    color: #f2d77a;
+
+    display: block;
+
+  }
+
+
+  /* ---------------------------------------------
+     DESCRIPTION
+  --------------------------------------------- */
+
+  .hero p:not(.eyebrow) {
+
+    font-size: 1rem;
+
+    line-height: 1.75;
+
+    margin:
+
+      0 auto;
+
+    max-width: 100%;
+
+  }
+
+
+  /* ---------------------------------------------
+     BUTTONS
+  --------------------------------------------- */
+
+  .hero-actions {
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 28px;
+
+  }
+
+
+  .hero-actions .btn {
+
+    flex: 1;
+
+    min-width: 0;
+
+    padding:
+
+      15px 10px;
+
+    font-size: .92rem;
+
+  }
+
+
+  /* ---------------------------------------------
+     PROFILE SECTION
+  --------------------------------------------- */
+
+  .royal-profile-section {
+
+    padding:
+
+      38px 16px 55px !important;
+
+  }
+
+
+  /* ---------------------------------------------
+     PROFILE CARD
+  --------------------------------------------- */
+
+  .royal-profile-shell {
+
+    padding:
+
+      35px 18px;
+
+    gap: 24px;
+
+    border-radius: 24px;
+
+  }
+
+
+  /* ---------------------------------------------
+     PROFILE IMAGE AREA
+  --------------------------------------------- */
+
+  .royal-profile-image-wrap {
+
+    width: 180px;
+
+    height: 180px;
+
+  }
+
+
+  .royal-profile-ring {
+
+    width: 160px;
+
+    height: 160px;
+
+  }
+
+
+  /* ---------------------------------------------
+     PROFILE NAME
+  --------------------------------------------- */
+
+  .royal-profile-content h2 {
+
+    font-size: 2rem;
+
+    line-height: 1.2;
+
+  }
+
+
+  /* ---------------------------------------------
+     PROFILE ROLE
+  --------------------------------------------- */
+
+  .royal-profile-role {
+
+    font-size: 1.05rem;
+
+  }
+
+
+}
+
+
+/* =========================================================
+   18. VERY SMALL MOBILE SCREENS
+========================================================= */
+
+@media (max-width: 390px) {
+
+
+  .hero {
+
+    padding:
+
+      48px 0 45px !important;
+
+  }
+
+
+  .hero h1 {
+
+    font-size:
+
+      3.4rem;
+
+  }
+
+
+  .hero-actions {
+
+    flex-direction:
+
+      column;
+
+  }
+
+
+  .hero-actions .btn {
+
+    width: 100%;
+
+  }
+
+
+}
+
+
+/* =========================================================
+   19. DESKTOP PROFILE
+========================================================= */
+
+@media (min-width: 768px) {
+
+
+  .royal-profile-shell {
+
+    flex-direction: row;
+
+    text-align: left;
+
+    padding: 48px;
+
+  }
+
+
+  .royal-profile-image-wrap {
+
+    width: 220px;
+
+    height: 220px;
+
+  }
+
+
+  .royal-profile-ring {
+
+    width: 195px;
+
+    height: 195px;
+
+  }
+
+
+  .royal-profile-line {
+
+    margin-left: 0;
+
+    margin-right: 0;
+
+  }
+
+
+  .royal-profile-tags {
+
+    justify-content: flex-start;
+
+  }
+
+
+}
+
+
+/* =========================================================
+   20. HERO BACKGROUND CONTINUITY
+========================================================= */
+
+.hero-bg {
+
+  filter:
+
+    brightness(.30)
+
+    saturate(.78) !important;
+
+  opacity: .86 !important;
+
+}
+
+
+.hero-bg:after {
+
+  background:
+
+    linear-gradient(
+
+      90deg,
+
+      rgba(3,20,10,.96),
+
+      rgba(3,20,10,.72) 52%,
+
+      rgba(3,20,10,.42)
+
+    ),
+
+    linear-gradient(
+
+      0deg,
+
+      rgba(3,20,10,.78),
+
+      transparent 55%
+
+    ) !important;
+
+}
+
+
+/* =========================================================
+   END
+========================================================= */
