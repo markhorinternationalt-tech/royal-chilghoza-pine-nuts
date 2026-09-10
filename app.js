@@ -644,12 +644,14 @@ function renderGallery() {
     .join("");
 }
 function renderOffices() {
-  const titles = [
-    "Headquarters & Native Origin",
-    "Regional Operations Hub",
-    "Federal & Trade Desk",
-    "International Trade Desk",
-  ];
+  const officeTitles = {
+    en: ["Headquarters & Native Origin", "Regional Operations Hub", "Federal & Trade Desk", "International Trade Desk"],
+    zh: ["总部与原产地", "区域运营中心", "联邦与贸易办公室", "国际贸易办公室"],
+    ar: ["المقر الرئيسي والمنشأ الأصلي", "مركز العمليات الإقليمي", "مكتب التجارة الفيدرالي", "مكتب التجارة الدولية"],
+    ps: ["مرکزي دفتر او اصلي اصليت", "سیمه ییز عملیاتي مرکز", "فدرالي او سوداګریز دفتر", "نړیوال سوداګریز دفتر"],
+    ru: ["Штаб-квартира и родное происхождение", "Региональный операционный центр", "Федеральный торговый офис", "Международный торговый офис"]
+  };
+  const titles = officeTitles[state.lang] || officeTitles.en;
   document.getElementById("officeGrid").innerHTML = offices
     .map(
       (a, i) =>
