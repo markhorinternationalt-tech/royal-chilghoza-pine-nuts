@@ -491,10 +491,242 @@ function escapeHtml(s) {
   );
 }
 
+/* =========================================================
+   THEME CUSTOMIZER — iro.js Integration
+========================================================= */
+
+const THEME_KEY = "royalThemeV2";
+let pickers = {};
+
+function initColorPickers() {
+  if (typeof iro === "undefined") {
+    console.warn("iro.js not loaded");
+    return;
+  }
+  
+  const saved = JSON.parse(localStorage.getItem(THEME_KEY) || "null") || {};
+  const defaults = {
+    bg: saved.bg || "#03140A",
+    gold: saved.gold || "#D4AF37",
+    text: saved.text || "#F4F1E9",
+    heading: saved.heading || "#F4F1E9"
+  };
+
+  pickers.bg = new iro.ColorPicker("#pickerBg", {
+    width: 130,
+    color: defaults.bg,
+    borderWidth: 1,
+    borderColor: "rgba(212,175,55,0.3)",
+    layout: [
+      { component: iro.ui.Wheel },
+      { component: iro.ui.Slider, options: { sliderType: "value" } }
+    ]
+  });
+
+  pickers.gold = new iro.ColorPicker("#pickerGold", {
+    width: 130,
+    color: defaults.gold,
+    borderWidth: 1,
+    borderColor: "rgba(212,175,55,0.3)",
+    layout: [
+      { component: iro.ui.Wheel },
+      { component: iro.ui.Slider, options: { sliderType: "value" } }
+    ]
+  });
+
+  pickers.text = new iro.ColorPicker("#pickerText", {
+    width: 130,
+    color: defaults.text,
+    borderWidth: 1,
+    borderColor: "rgba(212,175,55,0.3)",
+    layout: [
+      { component: iro.ui.Wheel },
+      { component: iro.ui.Slider, options: { sliderType: "value" } }
+    ]
+  });
+
+  pickers.heading = new iro.ColorPicker("#pickerHeading", {
+    width: 130,
+    color: defaults.heading,
+    borderWidth: 1,
+    borderColor: "rgba(212,175,55,0.3)",
+    layout: [
+      { component: iro.ui.Wheel },
+      { component: iro.ui.Slider, options: { sliderType: "value" } }
+    ]
+  });
+
+  // Listen for color changes
+  pickers.bg.on("color:change", (color) => {
+    document.getElementById("hexBg").textContent = color.hexString.toUpperCase();
+    document.documentElement.style.setProperty("--forest", color.hexString);
+    autoSaveTheme();
+  });
+
+  pickers.gold.on("color:change", (color) => {
+    document.getElementById("hexGold").textContent = color.hexString.toUpperCase();
+    document.documentElement.style.setProperty("--gold", color.hexString);
+    autoSaveTheme();
+  });
+
+  pickers.text.on("color:change", (color) => {
+    document.getElementById("hexText").textContent = color.hexString.toUpperCase();
+    document.documentElement.style.setProperty("--text", color.hexString);
+    autoSaveTheme();
+  });
+
+  pickers.heading.on("color:change", (color) => {
+    document.getElementById("hexHeading").textContent = color.hexString.toUpperCase();
+    document.documentElement.style.setProperty("--cream", color.hexString);
+    autoSaveTheme();
+  });
+
+  // Load saved typography
+  loadTypography(saved);
+}
+
+function loadTypography(saved) {
+  const baseFont = document.getElementById("baseFont");
+  const headingScale = document.getElementById("headingScale");
+  const headingFont = document.getElementById("headingFont");
+  const bodyFont = document.getElementById("bodyFont");
+
+  if (!baseFont) return;
+
+  const baseSize = saved.baseFont || 16;
+  const headScale = saved.headingScale || 1;
+  
+  baseFont.value = baseSize;
+  headingScale.value = headScale;
+  document.getElementById("baseFontVal").textContent = baseSize + "px";
+  document.getElementById("headingScaleVal").textContent = headScale + "x";
+  
+  document.documentElement.style.setProperty("--font-scale", baseSize / 16);
+  
+  if (saved.headingFont) {
+    headingFont.value = saved.headingFont;
+    document.documentElement.style.setProperty("--heading-font", saved.headingFont);
+  }
+  if (saved.bodyFont) {
+    bodyFont.value = saved.bodyFont;
+    document.documentElement.style.setProperty("--body-font", saved.bodyFont);
+  }
+}
+
+function readThemeFromUI() {
+  return {
+    bg: pickers.bg ? pickers.bg.color.hexString : "#03140A",
+    gold: pickers.gold ? pickers.gold.color.hexString : "#D4AF37",
+    text: pickers.text ? pickers.text.color.hexString : "#F4F1E9",
+    heading: pickers.heading ? pickers.heading.color.hexString : "#F4F1E9",
+    baseFont: parseFloat(document.getElementById("baseFont")?.value) || 16,
+    headingScale: parseFloat(document.getElementById("headingScale")?.value) || 1,
+    headingFont: document.getElementById("headingFont")?.value || "'Playfair Display', Georgia, serif",
+    bodyFont: document.getElementById("bodyFont")?.value || "'Inter', Arial, sans-serif"
+  };
+}
+
+function autoSaveTheme() {
+  try {
+    const theme = readThemeFromUI();
+    localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+  } catch (e) {}
+}
+
+function applyFullTheme(theme) {
+  if (!theme) return;
+  const root = document.documentElement;
+  if (theme.bg) root.style.setProperty("--forest", theme.bg);
+  if (theme.gold) root.style.setProperty("--gold", theme.gold);
+  if (theme.text) root.style.setProperty("--text", theme.text);
+  if (theme.heading) root.style.setProperty("--cream", theme.heading);
+  if (theme.baseFont) root.style.setProperty("--font-scale", theme.baseFont / 16);
+  if (theme.headingFont) root.style.setProperty("--heading-font", theme.headingFont);
+  if (theme.bodyFont) root.style.setProperty("--body-font", theme.bodyFont);
+  
+  // Update hex labels if pickers exist
+  if (document.getElementById("hexBg") && theme.bg) document.getElementById("hexBg").textContent = theme.bg.toUpperCase();
+  if (document.getElementById("hexGold") && theme.gold) document.getElementById("hexGold").textContent = theme.gold.toUpperCase();
+  if (document.getElementById("hexText") && theme.text) document.getElementById("hexText").textContent = theme.text.toUpperCase();
+  if (document.getElementById("hexHeading") && theme.heading) document.getElementById("hexHeading").textContent = theme.heading.toUpperCase();
+}
+
+function initThemeControls() {
+  const baseFont = document.getElementById("baseFont");
+  const headingScale = document.getElementById("headingScale");
+  const headingFont = document.getElementById("headingFont");
+  const bodyFont = document.getElementById("bodyFont");
+
+  if (baseFont) {
+    baseFont.addEventListener("input", () => {
+      const val = parseFloat(baseFont.value);
+      document.getElementById("baseFontVal").textContent = val + "px";
+      document.documentElement.style.setProperty("--font-scale", val / 16);
+      autoSaveTheme();
+    });
+  }
+
+  if (headingScale) {
+    headingScale.addEventListener("input", () => {
+      const val = parseFloat(headingScale.value);
+      document.getElementById("headingScaleVal").textContent = val + "x";
+      autoSaveTheme();
+    });
+  }
+
+  if (headingFont) {
+    headingFont.addEventListener("change", () => {
+      document.documentElement.style.setProperty("--heading-font", headingFont.value);
+      autoSaveTheme();
+    });
+  }
+
+  if (bodyFont) {
+    bodyFont.addEventListener("change", () => {
+      document.documentElement.style.setProperty("--body-font", bodyFont.value);
+      autoSaveTheme();
+    });
+  }
+
+  // Save Theme button
+  const saveBtn = document.getElementById("themeSave");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      autoSaveTheme();
+      const status = document.getElementById("adminStatus");
+      if (status) status.textContent = "✅ Theme saved successfully!";
+    });
+  }
+
+  // Reset Theme button
+  const resetBtn = document.getElementById("themeReset");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem(THEME_KEY);
+      const defaults = { bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9" };
+      applyFullTheme(defaults);
+      if (pickers.bg) pickers.bg.color.hexString = defaults.bg;
+      if (pickers.gold) pickers.gold.color.hexString = defaults.gold;
+      if (pickers.text) pickers.text.color.hexString = defaults.text;
+      if (pickers.heading) pickers.heading.color.hexString = defaults.heading;
+      if (baseFont) { baseFont.value = 16; document.getElementById("baseFontVal").textContent = "16px"; }
+      if (headingScale) { headingScale.value = 1; document.getElementById("headingScaleVal").textContent = "1.0x"; }
+      document.documentElement.style.setProperty("--font-scale", 1);
+      const status = document.getElementById("adminStatus");
+      if (status) status.textContent = "↺ Theme reset to default.";
+    });
+  }
+}
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
 function init() {
   renderGallery();
   renderOffices();
   document.getElementById("mainWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
+
   document.querySelectorAll("[data-open-gateway]").forEach((b) =>
     (b.onclick = (e) => {
       e.preventDefault();
@@ -511,6 +743,7 @@ function init() {
   };
   ["languageSelect", "gatewayLanguage", "hubLanguage"].forEach((id) => {
     const s = document.getElementById(id);
+    if (!s) return;
     s.innerHTML = document.getElementById("languageSelect").innerHTML;
     s.onchange = (e) => setLanguage(e.target.value);
   });
@@ -528,41 +761,12 @@ function init() {
     document.getElementById("adminTools").hidden = false;
     document.getElementById("adminStatus").textContent =
       "Admin Mode active. Theme, media and Royal AI Admin Assistant controls are ready.";
-    const saved = JSON.parse(localStorage.getItem("royalTheme") || "null");
-    if (saved) applyTheme(saved);
+    setTimeout(() => {
+      initColorPickers();
+      initThemeControls();
+    }, 100);
   }
-  function applyTheme(v) {
-    document.documentElement.style.setProperty("--forest", v.bg);
-    document.documentElement.style.setProperty("--gold", v.gold);
-    document.documentElement.style.setProperty("--text", v.text);
-    document.documentElement.style.setProperty("--card-accent", v.card);
-    document.documentElement.style.setProperty("--font-scale", v.scale);
-    document.getElementById("themeBg").value = v.bg;
-    document.getElementById("themeGold").value = v.gold;
-    document.getElementById("themeText").value = v.text;
-    document.getElementById("themeCard").value = v.card;
-    document.getElementById("themeScale").value = v.scale;
-  }
-  function readTheme() {
-    return {
-      bg: document.getElementById("themeBg").value,
-      gold: document.getElementById("themeGold").value,
-      text: document.getElementById("themeText").value,
-      card: document.getElementById("themeCard").value,
-      scale: document.getElementById("themeScale").value,
-    };
-  }
-  ["themeBg", "themeGold", "themeText", "themeCard", "themeScale"].forEach((id) =>
-    (document.getElementById(id).oninput = () => applyTheme(readTheme()))
-  );
-  document.getElementById("themeSave").onclick = () => {
-    localStorage.setItem("royalTheme", JSON.stringify(readTheme()));
-    document.getElementById("adminStatus").textContent = "Theme saved on this device.";
-  };
-  document.getElementById("themeReset").onclick = () => {
-    localStorage.removeItem("royalTheme");
-    applyTheme({ bg: "#03140a", gold: "#d4af37", text: "#f5f1e8", card: "#163d2a", scale: "1" });
-  };
+
   document.getElementById("mediaUpload").onclick = async () => {
     const file = document.getElementById("mediaFile").files[0];
     const status = document.getElementById("mediaStatus");
@@ -593,16 +797,16 @@ function init() {
     activateAdminUI();
     applyLanguage();
   };
-  const savedTheme = JSON.parse(localStorage.getItem("royalTheme") || "null");
-  if (savedTheme) applyTheme(savedTheme);
+
+  // Load saved theme on page load
+  const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
+  if (savedTheme) applyFullTheme(savedTheme);
+
   if (state.admin) activateAdminUI();
   document.getElementById("aiForm").onsubmit = (e) => {
     e.preventDefault();
     const q = document.getElementById("aiInput").value.trim();
-    if (q) {
-      askAI(q);
-      document.getElementById("aiInput").value = "";
-    }
+    if (q) { askAI(q); document.getElementById("aiInput").value = ""; }
   };
   applyLanguage();
 }
