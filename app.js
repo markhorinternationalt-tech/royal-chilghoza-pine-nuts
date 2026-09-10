@@ -643,6 +643,17 @@ function renderGallery() {
     )
     .join("");
 }
+
+function openGateway(type) {
+  document.body.classList.add("subview");
+  state.gateway = type;
+  state.hub = null;
+  document.getElementById("mainPage").hidden = true;
+  document.getElementById("hubView").classList.remove("open");
+  document.getElementById("gatewayView").classList.add("open");
+  renderGateway(type);
+  window.scrollTo(0, 0);
+}
 function renderOffices() {
   const officeTitles = {
     en: ["Headquarters & Native Origin", "Regional Operations Hub", "Federal & Trade Desk", "International Trade Desk"],
@@ -658,16 +669,6 @@ function renderOffices() {
         `<article class="office-card"><span>${String(i + 1).padStart( 2, "0" )}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
     )
     .join("");
-}
-function openGateway(type) {
-  document.body.classList.add("subview");
-  state.gateway = type;
-  state.hub = null;
-  document.getElementById("mainPage").hidden = true;
-  document.getElementById("hubView").classList.remove("open");
-  document.getElementById("gatewayView").classList.add("open");
-  renderGateway(type);
-  window.scrollTo(0, 0);
 }
 function renderGateway(type) {
   const isTrade = type === "trade";
