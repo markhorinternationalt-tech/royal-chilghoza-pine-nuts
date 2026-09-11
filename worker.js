@@ -218,9 +218,19 @@ export default {
     }
 
     // ---- Admin Status ----
-    if (url.pathname === "/api/admin/status") {
-      return json({ admin: authorized(request, env) }, cors);
-    }
+if (url.pathname === "/api/admin/status") {
+  return json({ admin: authorized(request, env) }, cors);
+}
+
+// ---- Static Assets (Cloudflare ASSETS binding) ----
+if (env.ASSETS) {
+  try {
+    const assetResp = await env.ASSETS.fetch(request);
+    if (assetResp.status !== 404) return assetResp;
+  } catch (e) { /* fall through */ }
+}
+
+// ---- Fallback: GitHub Raw ----
 
     // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
