@@ -222,17 +222,9 @@ export default {
       return json({ admin: authorized(request, env) }, cors);
     }
 
-    // ---- Static Assets ----
-    if (env.ASSETS) {
-      try {
-        const assetResp = await env.ASSETS.fetch(request);
-        if (assetResp.status !== 404) return assetResp;
-      } catch (e) { /* fall through */ }
-    }
-
     // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
-      || "https://raw.githubusercontent.com/markhorinternationalt-tech/royal-chilghoza-pine-nuts/main/";
+      || "https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/";
 
     let path = url.pathname;
     if (path === "/") path = "/index.html";
