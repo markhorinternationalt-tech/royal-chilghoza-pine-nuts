@@ -391,11 +391,11 @@ function setLanguage(lang) {
   applyLanguage();
 }
 
-// ✅ FIXED: gallery images now load from src/ folder
+// ✅ تصاویر اب روٹ پر ہیں (کوئی src/ نہیں)
 function renderGallery() {
   document.getElementById("galleryGrid").innerHTML = gallery
     .map(([src, cap], i) =>
-      `<figure class="gallery-item"><img src="src/${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption></figure>`
+      `<figure class="gallery-item"><img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption></figure>`
     ).join("");
 }
 
@@ -808,8 +808,13 @@ function init() {
   document.getElementById("menuClose").onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
 
-  const adminBtn = document.getElementById("adminOpen");
-  if (adminBtn) adminBtn.onclick = () => document.getElementById("adminDialog").showModal();
+  // ✅ یہاں دو Admin بٹنوں کو سنبھالا گیا ہے (ڈیسک ٹاپ اور موبائل)
+  document.querySelectorAll("#adminOpen").forEach((btn) => {
+    btn.onclick = () => {
+      document.getElementById("mobileDrawer").classList.remove("open");
+      document.getElementById("adminDialog").showModal();
+    };
+  });
   document.getElementById("adminClose").onclick = () =>
     document.getElementById("adminDialog").close();
 
