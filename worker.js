@@ -218,23 +218,21 @@ export default {
     }
 
     // ---- Admin Status ----
-if (url.pathname === "/api/admin/status") {
-  return json({ admin: authorized(request, env) }, cors);
-}
+    if (url.pathname === "/api/admin/status") {
+      return json({ admin: authorized(request, env) }, cors);
+    }
 
-// ---- Static Assets (Cloudflare ASSETS binding) ----
-if (env.ASSETS) {
-  try {
-    const assetResp = await env.ASSETS.fetch(request);
-    if (assetResp.status !== 404) return assetResp;
-  } catch (e) { /* fall through */ }
-}
-
-// ---- Fallback: GitHub Raw ----
+    // ---- Static Assets (Cloudflare ASSETS binding) ----
+    if (env.ASSETS) {
+      try {
+        const assetResp = await env.ASSETS.fetch(request);
+        if (assetResp.status !== 404) return assetResp;
+      } catch (e) { /* fall through */ }
+    }
 
     // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
-      || "https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/";
+      || "https://raw.githubusercontent.com/markhor/royal-chilghoza-pine-nuts/upgrade-v1/";
 
     let path = url.pathname;
     if (path === "/") path = "/index.html";
