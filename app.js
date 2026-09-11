@@ -499,10 +499,7 @@ const THEME_KEY = "royalThemeV2";
 let pickers = {};
 
 function initColorPickers() {
-  if (typeof iro === "undefined") {
-    console.warn("iro.js not loaded");
-    return;
-  }
+  if (typeof iro === "undefined") { console.warn("iro.js not loaded"); return; }
   
   const saved = JSON.parse(localStorage.getItem(THEME_KEY) || "null") || {};
   const defaults = {
@@ -513,75 +510,43 @@ function initColorPickers() {
   };
 
   pickers.bg = new iro.ColorPicker("#pickerBg", {
-    width: 130,
-    color: defaults.bg,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.3)",
-    layout: [
-      { component: iro.ui.Wheel },
-      { component: iro.ui.Slider, options: { sliderType: "value" } }
-    ]
+    width: 130, color: defaults.bg, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+    layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
   });
-
   pickers.gold = new iro.ColorPicker("#pickerGold", {
-    width: 130,
-    color: defaults.gold,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.3)",
-    layout: [
-      { component: iro.ui.Wheel },
-      { component: iro.ui.Slider, options: { sliderType: "value" } }
-    ]
+    width: 130, color: defaults.gold, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+    layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
   });
-
   pickers.text = new iro.ColorPicker("#pickerText", {
-    width: 130,
-    color: defaults.text,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.3)",
-    layout: [
-      { component: iro.ui.Wheel },
-      { component: iro.ui.Slider, options: { sliderType: "value" } }
-    ]
+    width: 130, color: defaults.text, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+    layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
   });
-
   pickers.heading = new iro.ColorPicker("#pickerHeading", {
-    width: 130,
-    color: defaults.heading,
-    borderWidth: 1,
-    borderColor: "rgba(212,175,55,0.3)",
-    layout: [
-      { component: iro.ui.Wheel },
-      { component: iro.ui.Slider, options: { sliderType: "value" } }
-    ]
+    width: 130, color: defaults.heading, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+    layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
   });
 
-  // Listen for color changes
   pickers.bg.on("color:change", (color) => {
     document.getElementById("hexBg").textContent = color.hexString.toUpperCase();
     document.documentElement.style.setProperty("--forest", color.hexString);
     autoSaveTheme();
   });
-
   pickers.gold.on("color:change", (color) => {
     document.getElementById("hexGold").textContent = color.hexString.toUpperCase();
     document.documentElement.style.setProperty("--gold", color.hexString);
     autoSaveTheme();
   });
-
   pickers.text.on("color:change", (color) => {
     document.getElementById("hexText").textContent = color.hexString.toUpperCase();
     document.documentElement.style.setProperty("--text", color.hexString);
     autoSaveTheme();
   });
-
   pickers.heading.on("color:change", (color) => {
     document.getElementById("hexHeading").textContent = color.hexString.toUpperCase();
     document.documentElement.style.setProperty("--cream", color.hexString);
     autoSaveTheme();
   });
 
-  // Load saved typography
   loadTypography(saved);
 }
 
@@ -590,7 +555,6 @@ function loadTypography(saved) {
   const headingScale = document.getElementById("headingScale");
   const headingFont = document.getElementById("headingFont");
   const bodyFont = document.getElementById("bodyFont");
-
   if (!baseFont) return;
 
   const baseSize = saved.baseFont || 16;
@@ -600,7 +564,6 @@ function loadTypography(saved) {
   headingScale.value = headScale;
   document.getElementById("baseFontVal").textContent = baseSize + "px";
   document.getElementById("headingScaleVal").textContent = headScale + "x";
-  
   document.documentElement.style.setProperty("--font-scale", baseSize / 16);
   
   if (saved.headingFont) {
@@ -627,10 +590,7 @@ function readThemeFromUI() {
 }
 
 function autoSaveTheme() {
-  try {
-    const theme = readThemeFromUI();
-    localStorage.setItem(THEME_KEY, JSON.stringify(theme));
-  } catch (e) {}
+  try { localStorage.setItem(THEME_KEY, JSON.stringify(readThemeFromUI())); } catch (e) {}
 }
 
 function applyFullTheme(theme) {
@@ -644,7 +604,6 @@ function applyFullTheme(theme) {
   if (theme.headingFont) root.style.setProperty("--heading-font", theme.headingFont);
   if (theme.bodyFont) root.style.setProperty("--body-font", theme.bodyFont);
   
-  // Update hex labels if pickers exist
   if (document.getElementById("hexBg") && theme.bg) document.getElementById("hexBg").textContent = theme.bg.toUpperCase();
   if (document.getElementById("hexGold") && theme.gold) document.getElementById("hexGold").textContent = theme.gold.toUpperCase();
   if (document.getElementById("hexText") && theme.text) document.getElementById("hexText").textContent = theme.text.toUpperCase();
@@ -657,66 +616,162 @@ function initThemeControls() {
   const headingFont = document.getElementById("headingFont");
   const bodyFont = document.getElementById("bodyFont");
 
-  if (baseFont) {
-    baseFont.addEventListener("input", () => {
-      const val = parseFloat(baseFont.value);
-      document.getElementById("baseFontVal").textContent = val + "px";
-      document.documentElement.style.setProperty("--font-scale", val / 16);
-      autoSaveTheme();
-    });
-  }
+  if (baseFont) baseFont.addEventListener("input", () => {
+    const val = parseFloat(baseFont.value);
+    document.getElementById("baseFontVal").textContent = val + "px";
+    document.documentElement.style.setProperty("--font-scale", val / 16);
+    autoSaveTheme();
+  });
+  if (headingScale) headingScale.addEventListener("input", () => {
+    const val = parseFloat(headingScale.value);
+    document.getElementById("headingScaleVal").textContent = val + "x";
+    autoSaveTheme();
+  });
+  if (headingFont) headingFont.addEventListener("change", () => {
+    document.documentElement.style.setProperty("--heading-font", headingFont.value);
+    autoSaveTheme();
+  });
+  if (bodyFont) bodyFont.addEventListener("change", () => {
+    document.documentElement.style.setProperty("--body-font", bodyFont.value);
+    autoSaveTheme();
+  });
 
-  if (headingScale) {
-    headingScale.addEventListener("input", () => {
-      const val = parseFloat(headingScale.value);
-      document.getElementById("headingScaleVal").textContent = val + "x";
-      autoSaveTheme();
-    });
-  }
-
-  if (headingFont) {
-    headingFont.addEventListener("change", () => {
-      document.documentElement.style.setProperty("--heading-font", headingFont.value);
-      autoSaveTheme();
-    });
-  }
-
-  if (bodyFont) {
-    bodyFont.addEventListener("change", () => {
-      document.documentElement.style.setProperty("--body-font", bodyFont.value);
-      autoSaveTheme();
-    });
-  }
-
-  // Save Theme button
   const saveBtn = document.getElementById("themeSave");
-  if (saveBtn) {
-    saveBtn.addEventListener("click", () => {
-      autoSaveTheme();
-      const status = document.getElementById("adminStatus");
-      if (status) status.textContent = "✅ Theme saved successfully!";
-    });
-  }
+  if (saveBtn) saveBtn.addEventListener("click", () => {
+    autoSaveTheme();
+    const status = document.getElementById("adminStatus");
+    if (status) status.textContent = "✅ Theme saved successfully!";
+  });
 
-  // Reset Theme button
   const resetBtn = document.getElementById("themeReset");
-  if (resetBtn) {
-    resetBtn.addEventListener("click", () => {
-      localStorage.removeItem(THEME_KEY);
-      const defaults = { bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9" };
-      applyFullTheme(defaults);
-      if (pickers.bg) pickers.bg.color.hexString = defaults.bg;
-      if (pickers.gold) pickers.gold.color.hexString = defaults.gold;
-      if (pickers.text) pickers.text.color.hexString = defaults.text;
-      if (pickers.heading) pickers.heading.color.hexString = defaults.heading;
-      if (baseFont) { baseFont.value = 16; document.getElementById("baseFontVal").textContent = "16px"; }
-      if (headingScale) { headingScale.value = 1; document.getElementById("headingScaleVal").textContent = "1.0x"; }
-      document.documentElement.style.setProperty("--font-scale", 1);
-      const status = document.getElementById("adminStatus");
-      if (status) status.textContent = "↺ Theme reset to default.";
-    });
+  if (resetBtn) resetBtn.addEventListener("click", () => {
+    localStorage.removeItem(THEME_KEY);
+    const defaults = { bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9" };
+    applyFullTheme(defaults);
+    if (pickers.bg) pickers.bg.color.hexString = defaults.bg;
+    if (pickers.gold) pickers.gold.color.hexString = defaults.gold;
+    if (pickers.text) pickers.text.color.hexString = defaults.text;
+    if (pickers.heading) pickers.heading.color.hexString = defaults.heading;
+    if (baseFont) { baseFont.value = 16; document.getElementById("baseFontVal").textContent = "16px"; }
+    if (headingScale) { headingScale.value = 1; document.getElementById("headingScaleVal").textContent = "1.0x"; }
+    document.documentElement.style.setProperty("--font-scale", 1);
+    const status = document.getElementById("adminStatus");
+    if (status) status.textContent = "↺ Theme reset to default.";
+  });
+}
+
+/* =========================================================
+   MEDIA MANAGEMENT
+========================================================= */
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+  return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+}
+
+function getMediaIcon(name) {
+  const ext = (name.split(".").pop() || "").toLowerCase();
+  if (["jpg","jpeg","png","gif","webp","svg"].includes(ext)) return "🖼️";
+  if (["mp4","webm","mov","avi"].includes(ext)) return "🎬";
+  if (ext === "pdf") return "📄";
+  return "📎";
+}
+
+function renderMediaList(files) {
+  const container = document.getElementById("mediaListContainer");
+  if (!container) return;
+  
+  if (!files || files.length === 0) {
+    container.innerHTML = `<div class="media-empty">No files uploaded yet.</div>`;
+    return;
+  }
+  
+  container.innerHTML = files.map(file => {
+    const icon = getMediaIcon(file.name);
+    const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file.name);
+    const thumbHtml = isImage
+      ? `<img class="media-thumb" src="${file.url}" alt="${file.name}" loading="lazy">`
+      : `<div class="media-thumb">${icon}</div>`;
+    
+    return `
+      <div class="media-item">
+        ${thumbHtml}
+        <div class="media-info">
+          <span class="media-name" title="${file.key}">${file.name}</span>
+          <span class="media-meta">${formatSize(file.size)} • ${file.key.split("/")[0]}</span>
+        </div>
+        <div class="media-actions">
+          <button class="media-btn" onclick="window.open('${file.url}', '_blank')">👁 View</button>
+          <button class="media-btn" onclick="copyMediaUrl('${file.url}')">📋 Copy</button>
+          <button class="media-btn danger" onclick="deleteMedia('${file.key.replace(/'/g, "\\'")}')">🗑</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+async function loadMediaList() {
+  const status = document.getElementById("mediaStatus");
+  const container = document.getElementById("mediaListContainer");
+  if (status) status.textContent = "Loading files...";
+  if (container) container.innerHTML = `<div class="media-empty">Loading...</div>`;
+  
+  try {
+    const folder = document.getElementById("mediaFolder")?.value || "";
+    const r = await fetch("/api/media/list?folder=" + encodeURIComponent(folder));
+    const data = await r.json();
+    if (data.ok) {
+      renderMediaList(data.files);
+      if (status) status.textContent = `✅ Found ${data.files.length} file(s).`;
+    } else {
+      if (status) status.textContent = "Error: " + (data.error || "Failed to load");
+      if (container) container.innerHTML = `<div class="media-empty">Error loading files.</div>`;
+    }
+  } catch (err) {
+    if (status) status.textContent = "Error: " + err.message;
+    if (container) container.innerHTML = `<div class="media-empty">Error loading files.</div>`;
   }
 }
+
+async function deleteMedia(key) {
+  if (!confirm(`Delete "${key}"?\nThis cannot be undone.`)) return;
+  
+  const status = document.getElementById("mediaStatus");
+  if (status) status.textContent = "Deleting...";
+  
+  try {
+    const r = await fetch("/api/media/" + encodeURIComponent(key), {
+      method: "DELETE",
+      headers: { Authorization: "Bearer " + state.token }
+    });
+    const data = await r.json();
+    if (data.ok) {
+      if (status) status.textContent = "✅ Deleted: " + key;
+      loadMediaList();
+    } else {
+      if (status) status.textContent = "Delete failed.";
+    }
+  } catch (err) {
+    if (status) status.textContent = "Delete error: " + err.message;
+  }
+}
+
+function copyMediaUrl(url) {
+  const fullUrl = window.location.origin + url;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      const status = document.getElementById("mediaStatus");
+      if (status) status.textContent = "✅ URL copied: " + fullUrl;
+    });
+  } else {
+    prompt("Copy this URL:", fullUrl);
+  }
+}
+
+// Make these global so onclick can find them
+window.deleteMedia = deleteMedia;
+window.copyMediaUrl = copyMediaUrl;
 
 /* =========================================================
    INITIALIZATION
@@ -782,11 +837,16 @@ function init() {
         body: fd,
       });
       const d = await r.json();
-      status.textContent = d.ok ? "Uploaded: " + d.key : d.error || "Upload failed";
+      status.textContent = d.ok ? "✅ Uploaded: " + d.key : d.error || "Upload failed";
+      if (d.ok) loadMediaList();
     } catch (e) {
       status.textContent = "Upload failed. Check Cloudflare R2 MEDIA binding.";
     }
   };
+
+  const loadBtn = document.getElementById("loadMediaBtn");
+  if (loadBtn) loadBtn.onclick = loadMediaList;
+
   document.getElementById("adminLogin").onclick = () => {
     const token = document.getElementById("adminToken").value.trim();
     if (!token) return;
@@ -798,7 +858,6 @@ function init() {
     applyLanguage();
   };
 
-  // Load saved theme on page load
   const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
   if (savedTheme) applyFullTheme(savedTheme);
 
