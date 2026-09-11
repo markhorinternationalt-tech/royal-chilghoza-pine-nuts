@@ -10,5 +10,10 @@
       "binding": "ROYAL_KV",
       "id": "74317e4d2e174dee813653e8878fed6d"
     }
-  ]
+  ],
+  "vars": {
+    "GITHUB_RAW_BASE": "https://raw.githubusercontent.com/markhor/royal-chilghoza-pine-nuts/upgrade-v1/",
+    "CLOUDINARY_CLOUD_NAME": "agnhxdu4",
+    "CLOUDINARY_API_KEY": "118953582795868"
+  }
 }
