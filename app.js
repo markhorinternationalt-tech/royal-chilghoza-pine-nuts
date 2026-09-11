@@ -391,7 +391,6 @@ function setLanguage(lang) {
   applyLanguage();
 }
 
-// ✅ تصاویر اب روٹ پر ہیں (کوئی src/ نہیں)
 function renderGallery() {
   document.getElementById("galleryGrid").innerHTML = gallery
     .map(([src, cap], i) =>
@@ -663,7 +662,7 @@ function initThemeControls() {
 }
 
 /* =========================================================
-   MEDIA MANAGEMENT
+   MEDIA MANAGEMENT — Cloudinary
 ========================================================= */
 
 function formatSize(bytes) {
@@ -691,7 +690,7 @@ function renderMediaList(files) {
   
   container.innerHTML = files.map(file => {
     const icon = getMediaIcon(file.name);
-    const isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file.name);
+    const isImage = file.resource_type === "image";
     const thumbHtml = isImage
       ? `<img class="media-thumb" src="${file.url}" alt="${file.name}" loading="lazy">`
       : `<div class="media-thumb">${icon}</div>`;
@@ -700,13 +699,13 @@ function renderMediaList(files) {
       <div class="media-item">
         ${thumbHtml}
         <div class="media-info">
-          <span class="media-name" title="${file.key}">${file.name}</span>
-          <span class="media-meta">${formatSize(file.size)} • ${file.key.split("/")[0]}</span>
+          <span class="media-name" title="${file.public_id}">${file.name}</span>
+          <span class="media-meta">${formatSize(file.size)} • ${file.resource_type} • ${file.folder || "root"}</span>
         </div>
         <div class="media-actions">
           <button class="media-btn" onclick="window.open('${file.url}', '_blank')">👁 View</button>
           <button class="media-btn" onclick="copyMediaUrl('${file.url}')">📋 Copy</button>
-          <button class="media-btn danger" onclick="deleteMedia('${file.key.replace(/'/g, "\\'")}')">🗑</button>
+          <button class="media-btn danger" onclick="deleteMedia('${file.public_id.replace(/'/g, "\\'")}', '${file.resource_type}')">🗑</button>
         </div>
       </div>
     `;
@@ -736,20 +735,20 @@ async function loadMediaList() {
   }
 }
 
-async function deleteMedia(key) {
-  if (!confirm(`Delete "${key}"?\nThis cannot be undone.`)) return;
+async function deleteMedia(publicId, resourceType) {
+  if (!confirm(`Delete "${publicId}"?\nThis cannot be undone.`)) return;
   
   const status = document.getElementById("mediaStatus");
   if (status) status.textContent = "Deleting...";
   
   try {
-    const r = await fetch("/api/media/" + encodeURIComponent(key), {
+    const r = await fetch("/api/media/" + encodeURIComponent(publicId) + "?type=" + resourceType, {
       method: "DELETE",
       headers: { Authorization: "Bearer " + state.token }
     });
     const data = await r.json();
     if (data.ok) {
-      if (status) status.textContent = "✅ Deleted: " + key;
+      if (status) status.textContent = "✅ Deleted: " + publicId;
       loadMediaList();
     } else {
       if (status) status.textContent = "Delete failed.";
@@ -760,14 +759,13 @@ async function deleteMedia(key) {
 }
 
 function copyMediaUrl(url) {
-  const fullUrl = window.location.origin + url;
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(fullUrl).then(() => {
+    navigator.clipboard.writeText(url).then(() => {
       const status = document.getElementById("mediaStatus");
-      if (status) status.textContent = "✅ URL copied: " + fullUrl;
+      if (status) status.textContent = "✅ URL copied: " + url;
     });
   } else {
-    prompt("Copy this URL:", fullUrl);
+    prompt("Copy this URL:", url);
   }
 }
 
@@ -808,7 +806,6 @@ function init() {
   document.getElementById("menuClose").onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
 
-  // ✅ یہاں دو Admin بٹنوں کو سنبھالا گیا ہے (ڈیسک ٹاپ اور موبائل)
   document.querySelectorAll("#adminOpen").forEach((btn) => {
     btn.onclick = () => {
       document.getElementById("mobileDrawer").classList.remove("open");
@@ -822,15 +819,17 @@ function init() {
     document.getElementById("adminLoginBox").hidden = true;
     document.getElementById("adminTools").hidden = false;
     document.getElementById("adminStatus").textContent =
-      "Admin Mode active. Theme, media and Royal AI Admin Assistant controls are ready.";
+      "Admin Mode active. Cloudinary media manager and Royal AI Admin Assistant are ready.";
     setTimeout(() => {
       initColorPickers();
       initThemeControls();
     }, 100);
   }
 
+  // Upload with description support
   document.getElementById("mediaUpload").onclick = async () => {
-    const file = document.getElementById("mediaFile").files[0];
+    const fileInput = document.getElementById("mediaFile");
+    const file = fileInput.files[0];
     const status = document.getElementById("mediaStatus");
     if (!file) { status.textContent = "Select an image, video or PDF first."; return; }
     status.textContent = "Uploading…";
@@ -838,16 +837,26 @@ function init() {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("folder", document.getElementById("mediaFolder").value);
+      const descEl = document.getElementById("mediaDescription");
+      const titleEl = document.getElementById("mediaTitle");
+      if (descEl && descEl.value) fd.append("description", descEl.value);
+      if (titleEl && titleEl.value) fd.append("title", titleEl.value);
+
       const r = await fetch("/api/media/upload", {
         method: "POST",
         headers: { Authorization: "Bearer " + state.token },
         body: fd,
       });
       const d = await r.json();
-      status.textContent = d.ok ? "✅ Uploaded: " + d.key : d.error || "Upload failed";
-      if (d.ok) loadMediaList();
+      status.textContent = d.ok ? "✅ Uploaded: " + d.key : (d.error || "Upload failed");
+      if (d.ok) {
+        fileInput.value = "";
+        if (descEl) descEl.value = "";
+        if (titleEl) titleEl.value = "";
+        loadMediaList();
+      }
     } catch (e) {
-      status.textContent = "Upload failed. Check Cloudflare R2 MEDIA binding.";
+      status.textContent = "Upload failed: " + e.message;
     }
   };
 
