@@ -1,5 +1,14 @@
 {
   "name": "royal-chilghoza-pine-nuts",
   "main": "worker.js",
-  "compatibility_date": "2026-09-08"
+  "compatibility_date": "2026-09-08",
+  "ai": {
+    "binding": "AI"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "ROYAL_KV",
+      "id": "74317e4d2e174dee813653e8878fed6d"
+    }
+  ]
 }
