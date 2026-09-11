@@ -7,60 +7,71 @@ export default {
       "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
     };
 
-    // ---- Preflight ----
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: cors });
     }
 
-    // ---- API Routes ----
+    // ---- Health Check ----
     if (url.pathname === "/api/health") {
-      return json(
-        {
-          ok: true,
-          service: "Royal Chilghoza Pine Nuts Worker",
-          ai: !!env.AI,
-          r2: !!env.MEDIA,
-        },
-        cors
-      );
+      return json({
+        ok: true,
+        service: "Royal Chilghoza Pine Nuts Worker",
+        ai: !!env.AI,
+        r2: !!env.MEDIA,
+      }, cors);
     }
 
+    // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
       const { message = "", mode = "visitor", language = "en" } = await request.json();
       if (mode === "admin" && !authorized(request, env)) {
         return json({ reply: "Admin authorization required." }, cors, 401);
       }
       if (!env.AI) {
-        return json(
-          {
-            reply:
-              "Royal AI is ready in the interface. Configure the Cloudflare Workers AI binding to activate live AI responses.",
-          },
-          cors
-        );
+        return json({
+          reply: "Royal AI is ready in the interface. Configure the Cloudflare Workers AI binding to activate live AI responses."
+        }, cors);
       }
-      const system =
-        mode === "admin"
-          ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudflare R2, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
-          : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
+      const system = mode === "admin"
+        ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudflare R2, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
+        : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
       const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
         messages: [
-          {
-            role: "system",
-            content: `${system} Reply in the requested interface language code: ${language}.`,
-          },
-          { role: "user", content: message },
-        ],
+          { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+          { role: "user", content: message }
+        ]
       });
       return json({ reply: result.response || "No response." }, cors);
     }
 
+    // ---- Media: List all files (NEW) ----
+    if (url.pathname === "/api/media/list" && request.method === "GET") {
+      if (!env.MEDIA) {
+        return json({ ok: false, error: "R2 binding MEDIA missing" }, cors, 503);
+      }
+      const folder = url.searchParams.get("folder") || "";
+      try {
+        const listed = await env.MEDIA.list({
+          prefix: folder ? folder + "/" : "",
+          limit: 200
+        });
+        const files = listed.objects.map(obj => ({
+          key: obj.key,
+          name: obj.key.split("/").pop(),
+          size: obj.size,
+          uploaded: obj.uploaded,
+          url: `/api/media/${encodeURIComponent(obj.key)}`
+        }));
+        return json({ ok: true, files }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- Media: Get single file ----
     if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
       if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", {
-          status: 503,
-          headers: cors,
-        });
+        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
       }
       const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
       const obj = await env.MEDIA.get(key);
@@ -76,22 +87,17 @@ export default {
       });
     }
 
+    // ---- Media: Upload ----
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
       if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
       }
       if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", {
-          status: 503,
-          headers: cors,
-        });
+        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
       }
       const form = await request.formData();
       const file = form.get("file");
-      const folder = String(form.get("folder") || "uploads").replace(
-        /[^a-zA-Z0-9/_-]/g,
-        ""
-      );
+      const folder = String(form.get("folder") || "uploads").replace(/[^a-zA-Z0-9/_-]/g, "");
       if (!(file instanceof File)) {
         return new Response("file required", { status: 400, headers: cors });
       }
@@ -102,75 +108,50 @@ export default {
           contentDisposition: `inline; filename="${file.name}"`,
         },
       });
-      return json(
-        { ok: true, key, url: `/api/media/${encodeURIComponent(key)}` },
-        cors
-      );
+      return json({ ok: true, key, url: `/api/media/${encodeURIComponent(key)}` }, cors);
     }
 
+    // ---- Media: Delete ----
     if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
       if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
       }
       if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", {
-          status: 503,
-          headers: cors,
-        });
+        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
       }
       const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
       await env.MEDIA.delete(key);
       return json({ ok: true }, cors);
     }
 
+    // ---- Admin Status ----
     if (url.pathname === "/api/admin/status") {
       return json({ admin: authorized(request, env) }, cors);
     }
 
-    // ---- Static Assets (Serve from GitHub Raw) ----
-    // محیطی متغیر: GITHUB_RAW_BASE
-    // مثال: https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/
+    // ---- Static Assets ----
     const githubBase = env.GITHUB_RAW_BASE || "https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/";
-    
-    // اگر درخواست روٹ (/) ہے تو index.html بھیجیں
     let path = url.pathname;
     if (path === "/") path = "/index.html";
 
-    // صرف اسٹیٹک فائلوں کے لیے (تصاویر، CSS، JS، HTML)
     const staticExtensions = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json)$/i;
     if (staticExtensions.test(path)) {
-      const rawUrl = githubBase + path.slice(1); // leading slash ہٹائیں
+      const rawUrl = githubBase + path.slice(1);
       try {
-        const response = await fetch(rawUrl, {
-          headers: {
-            "User-Agent": "Cloudflare-Worker",
-          },
-        });
+        const response = await fetch(rawUrl, { headers: { "User-Agent": "Cloudflare-Worker" } });
         if (!response.ok) {
-          return new Response(`Static file not found: ${path}`, {
-            status: 404,
-            headers: cors,
-          });
+          return new Response(`Static file not found: ${path}`, { status: 404, headers: cors });
         }
-        // Content-Type کا اندازہ لگائیں
         const contentType = getContentType(path);
         const body = await response.arrayBuffer();
         return new Response(body, {
-          headers: {
-            ...cors,
-            "Content-Type": contentType,
-            "Cache-Control": "public, max-age=86400",
-          },
+          headers: { ...cors, "Content-Type": contentType, "Cache-Control": "public, max-age=86400" },
         });
       } catch (err) {
-        return new Response(`Error fetching static file: ${err.message}`, {
-          status: 500,
-          headers: cors,
-        });
+        return new Response(`Error: ${err.message}`, { status: 500, headers: cors });
       }
     }
 
-    // اگر کوئی اور راستہ ہو تو 404
     return new Response("Not Found", { status: 404, headers: cors });
   },
 };
