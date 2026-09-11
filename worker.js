@@ -1,3 +1,12 @@
+// =========================================================
+// ROYAL CHILGHOZA PINE NUTS — CLOUDFLARE WORKER
+// With Cloudinary Integration (25GB Free Storage)
+// =========================================================
+
+const CLOUDINARY_CLOUD_NAME = "agnhxdu4";
+const CLOUDINARY_API_KEY = "118953582795868";
+const CLOUDINARY_API_SECRET = "bHpg060YsexAgpP4cTVTs227Io0";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -17,7 +26,7 @@ export default {
         ok: true,
         service: "Royal Chilghoza Pine Nuts Worker",
         ai: !!env.AI,
-        r2: !!env.MEDIA,
+        cloudinary: true,
       }, cors);
     }
 
@@ -33,7 +42,7 @@ export default {
         }, cors);
       }
       const system = mode === "admin"
-        ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudflare R2, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
+        ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
         : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
       const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
         messages: [
@@ -44,130 +53,168 @@ export default {
       return json({ reply: result.response || "No response." }, cors);
     }
 
-    // ---- Media: List all files ----
-    if (url.pathname === "/api/media/list" && request.method === "GET") {
-      if (!env.MEDIA) {
-        return json({ ok: false, error: "R2 binding MEDIA missing" }, cors, 503);
-      }
-      const folder = url.searchParams.get("folder") || "";
-      try {
-        const listed = await env.MEDIA.list({
-          prefix: folder ? folder + "/" : "",
-          limit: 200
-        });
-        const files = listed.objects
-          .filter(obj => !obj.key.endsWith("/.keep")) // hide placeholder
-          .map(obj => ({
-            key: obj.key,
-            name: obj.key.split("/").pop(),
-            size: obj.size,
-            uploaded: obj.uploaded,
-            url: `/api/media/${encodeURIComponent(obj.key)}`
-          }));
-        return json({ ok: true, files }, cors);
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
-    }
-
-    // ---- Media: List all folders ----
-    if (url.pathname === "/api/media/folders" && request.method === "GET") {
-      if (!env.MEDIA) {
-        return json({ ok: false, error: "R2 binding MEDIA missing" }, cors, 503);
-      }
-      try {
-        const listed = await env.MEDIA.list({ limit: 1000 });
-        const folders = new Set();
-        listed.objects.forEach(obj => {
-          const parts = obj.key.split("/");
-          if (parts.length > 1 && parts[0]) folders.add(parts[0]);
-        });
-        return json({ ok: true, folders: Array.from(folders).sort() }, cors);
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
-    }
-
-    // ---- Media: Create Folder ----
-    if (url.pathname === "/api/media/folder" && request.method === "POST") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
-      if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
-      }
-      let body;
-      try {
-        body = await request.json();
-      } catch {
-        return json({ ok: false, error: "Invalid JSON" }, cors, 400);
-      }
-      const folderName = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
-      if (!folderName) {
-        return json({ ok: false, error: "Invalid folder name" }, cors, 400);
-      }
-      // R2 has no real folders — create a small placeholder file
-      const key = `${folderName}/.keep`;
-      await env.MEDIA.put(key, "folder placeholder", {
-        httpMetadata: { contentType: "text/plain" }
-      });
-      return json({ ok: true, folder: folderName }, cors);
-    }
-
-    // ---- Media: Get single file ----
-    if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
-      if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
-      }
-      const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
-      const obj = await env.MEDIA.get(key);
-      if (!obj) {
-        return new Response("Not found", { status: 404, headers: cors });
-      }
-      return new Response(obj.body, {
-        headers: {
-          ...cors,
-          "Content-Type": obj.httpMetadata?.contentType || "application/octet-stream",
-          "Cache-Control": "public, max-age=86400",
-        },
-      });
-    }
-
-    // ---- Media: Upload ----
+    // ---- Cloudinary: Upload ----
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
       if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
       }
-      if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
+      try {
+        const form = await request.formData();
+        const file = form.get("file");
+        const folder = String(form.get("folder") || "general").replace(/[^a-zA-Z0-9/_-]/g, "");
+        const description = String(form.get("description") || "");
+        const title = String(form.get("title") || "");
+
+        if (!(file instanceof File)) {
+          return new Response("file required", { status: 400, headers: cors });
+        }
+
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        let resourceType = "image";
+        if (["mp4", "webm", "mov", "avi"].includes(ext)) resourceType = "video";
+        else if (["pdf", "doc", "docx"].includes(ext)) resourceType = "raw";
+
+        const timestamp = Math.floor(Date.now() / 1000);
+        const folderPath = `royal-chilghoza/${folder}`;
+
+        const signatureParams = `folder=${folderPath}&timestamp=${timestamp}`;
+        const signature = await sha1(signatureParams + CLOUDINARY_API_SECRET);
+
+        const uploadForm = new FormData();
+        uploadForm.append("file", file);
+        uploadForm.append("api_key", CLOUDINARY_API_KEY);
+        uploadForm.append("timestamp", timestamp.toString());
+        uploadForm.append("folder", folderPath);
+        uploadForm.append("signature", signature);
+        if (description) uploadForm.append("context", `description=${description}`);
+        if (title) uploadForm.append("display_name", title);
+
+        const cloudResp = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`,
+          { method: "POST", body: uploadForm }
+        );
+        const cloudData = await cloudResp.json();
+
+        if (!cloudResp.ok) {
+          return json({ ok: false, error: cloudData.error?.message || "Cloudinary upload failed" }, cors, 500);
+        }
+
+        return json({
+          ok: true,
+          key: cloudData.public_id,
+          url: cloudData.secure_url,
+          public_id: cloudData.public_id,
+          format: cloudData.format,
+          bytes: cloudData.bytes,
+          created_at: cloudData.created_at,
+        }, cors);
+
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
       }
-      const form = await request.formData();
-      const file = form.get("file");
-      const folder = String(form.get("folder") || "uploads").replace(/[^a-zA-Z0-9/_-]/g, "");
-      if (!(file instanceof File)) {
-        return new Response("file required", { status: 400, headers: cors });
-      }
-      const key = `${folder}/${Date.now()}-${file.name}`;
-      await env.MEDIA.put(key, file.stream(), {
-        httpMetadata: {
-          contentType: file.type,
-          contentDisposition: `inline; filename="${file.name}"`,
-        },
-      });
-      return json({ ok: true, key, url: `/api/media/${encodeURIComponent(key)}` }, cors);
     }
 
-    // ---- Media: Delete ----
+    // ---- Cloudinary: List files ----
+    if (url.pathname === "/api/media/list" && request.method === "GET") {
+      try {
+        const folder = url.searchParams.get("folder") || "";
+        const prefix = folder ? `royal-chilghoza/${folder}` : "royal-chilghoza";
+
+        const [imagesResp, videosResp, rawResp] = await Promise.all([
+          cloudinaryAdminFetch("image", prefix),
+          cloudinaryAdminFetch("video", prefix),
+          cloudinaryAdminFetch("raw", prefix),
+        ]);
+
+        const images = (imagesResp.resources || []).map(r => formatCloudResource(r, "image"));
+        const videos = (videosResp.resources || []).map(r => formatCloudResource(r, "video"));
+        const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
+
+        const files = [...images, ...videos, ...raws];
+
+        return json({ ok: true, files }, cors);
+
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- Cloudinary: List folders ----
+    if (url.pathname === "/api/media/folders" && request.method === "GET") {
+      try {
+        const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
+        const resp = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza`,
+          { headers: { Authorization: `Basic ${auth}` } }
+        );
+        const data = await resp.json();
+        const folders = (data.folders || []).map(f => f.name);
+        return json({ ok: true, folders }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- Cloudinary: Create Folder ----
+    if (url.pathname === "/api/media/folder" && request.method === "POST") {
+      if (!authorized(request, env)) {
+        return new Response("Unauthorized", { status: 401, headers: cors });
+      }
+      try {
+        const body = await request.json();
+        const name = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
+        if (!name) return json({ ok: false, error: "Invalid folder name" }, cors, 400);
+
+        const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
+        const resp = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza/${name}`,
+          { method: "POST", headers: { Authorization: `Basic ${auth}` } }
+        );
+        const data = await resp.json();
+        if (!resp.ok) return json({ ok: false, error: data.error?.message || "Failed" }, cors, 500);
+        return json({ ok: true, folder: name }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- Cloudinary: Delete ----
     if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
       if (!authorized(request, env)) {
         return new Response("Unauthorized", { status: 401, headers: cors });
       }
-      if (!env.MEDIA) {
-        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
+      try {
+        const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
+        const resourceType = url.searchParams.get("type") || "image";
+        const timestamp = Math.floor(Date.now() / 1000);
+        const signature = await sha1(`public_id=${publicId}&timestamp=${timestamp}` + CLOUDINARY_API_SECRET);
+
+        const delForm = new FormData();
+        delForm.append("public_id", publicId);
+        delForm.append("api_key", CLOUDINARY_API_KEY);
+        delForm.append("timestamp", timestamp.toString());
+        delForm.append("signature", signature);
+
+        const resp = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/destroy`,
+          { method: "POST", body: delForm }
+        );
+        const data = await resp.json();
+        return json({ ok: data.result === "ok", result: data.result }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
       }
-      const key = decodeURIComponent(url.pathname.slice("/api/media/".length));
-      await env.MEDIA.delete(key);
-      return json({ ok: true }, cors);
+    }
+
+    // ---- Cloudinary: Get single file (redirect) ----
+    if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
+      const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
+      const type = url.searchParams.get("type") || "image";
+      const ext = url.searchParams.get("format") || "jpg";
+      return Response.redirect(
+        `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/${type}/upload/${publicId}.${ext}`,
+        302
+      );
     }
 
     // ---- Admin Status ----
@@ -176,19 +223,14 @@ export default {
     }
 
     // ---- Static Assets ----
-    // پہلے Cloudflare Assets سے کوشش کریں، پھر GitHub سے
     if (env.ASSETS) {
       try {
         const assetResp = await env.ASSETS.fetch(request);
-        if (assetResp.status !== 404) {
-          return assetResp;
-        }
-      } catch (e) {
-        // fall through to GitHub
-      }
+        if (assetResp.status !== 404) return assetResp;
+      } catch (e) { /* fall through */ }
     }
 
-    // ---- Fallback: Static Assets from GitHub ----
+    // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
       || "https://raw.githubusercontent.com/markhorinternationalt-tech/royal-chilghoza-pine-nuts/main/";
 
@@ -222,6 +264,40 @@ export default {
     return new Response("Not Found", { status: 404, headers: cors });
   },
 };
+
+// =========================================================
+// HELPERS
+// =========================================================
+
+async function cloudinaryAdminFetch(resourceType, prefix) {
+  const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
+  const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?prefix=${encodeURIComponent(prefix)}&max_results=100`;
+  const resp = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
+  if (!resp.ok) return { resources: [] };
+  return await resp.json();
+}
+
+function formatCloudResource(r, type) {
+  return {
+    key: r.public_id,
+    name: r.public_id.split("/").pop() + "." + (r.format || ""),
+    size: r.bytes,
+    uploaded: r.created_at,
+    url: r.secure_url,
+    public_id: r.public_id,
+    format: r.format,
+    resource_type: type,
+    folder: r.folder || "",
+  };
+}
+
+async function sha1(str) {
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-1", buf);
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 function authorized(request, env) {
   const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
