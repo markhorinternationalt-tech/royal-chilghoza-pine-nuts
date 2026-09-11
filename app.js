@@ -376,7 +376,8 @@ function applyLanguage() {
   document.querySelectorAll("[data-i18n]").forEach((e) => (e.textContent = tx(e.dataset.i18n)));
   document.querySelectorAll("[data-i18n-placeholder]").forEach((e) => (e.placeholder = tx(e.dataset.i18nPlaceholder)));
   document.querySelectorAll("#languageSelect,#gatewayLanguage,#hubLanguage").forEach((s) => (s.value = state.lang));
-  document.getElementById("aiModeLabel").textContent = state.admin ? tx("adminAI") : tx("visitorAI");
+  const aiModeLabel = document.getElementById("aiModeLabel");
+  if (aiModeLabel) aiModeLabel.textContent = state.admin ? tx("adminAI") : tx("visitorAI");
   renderOffices();
   renderGallery();
   if (state.gateway) renderGateway(state.gateway);
@@ -390,10 +391,11 @@ function setLanguage(lang) {
   applyLanguage();
 }
 
+// ✅ FIXED: gallery images now load from src/ folder
 function renderGallery() {
   document.getElementById("galleryGrid").innerHTML = gallery
     .map(([src, cap], i) =>
-      `<figure class="gallery-item"><img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption></figure>`
+      `<figure class="gallery-item"><img src="src/${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption></figure>`
     ).join("");
 }
 
@@ -769,7 +771,6 @@ function copyMediaUrl(url) {
   }
 }
 
-// Make these global so onclick can find them
 window.deleteMedia = deleteMedia;
 window.copyMediaUrl = copyMediaUrl;
 
@@ -806,8 +807,9 @@ function init() {
     document.getElementById("mobileDrawer").classList.add("open");
   document.getElementById("menuClose").onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
-  document.getElementById("adminOpen").onclick = () =>
-    document.getElementById("adminDialog").showModal();
+
+  const adminBtn = document.getElementById("adminOpen");
+  if (adminBtn) adminBtn.onclick = () => document.getElementById("adminDialog").showModal();
   document.getElementById("adminClose").onclick = () =>
     document.getElementById("adminDialog").close();
 
