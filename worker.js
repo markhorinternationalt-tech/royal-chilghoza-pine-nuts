@@ -44,7 +44,7 @@ export default {
       return json({ reply: result.response || "No response." }, cors);
     }
 
-    // ---- Media: List all files (NEW) ----
+    // ---- Media: List all files ----
     if (url.pathname === "/api/media/list" && request.method === "GET") {
       if (!env.MEDIA) {
         return json({ ok: false, error: "R2 binding MEDIA missing" }, cors, 503);
@@ -129,23 +129,32 @@ export default {
       return json({ admin: authorized(request, env) }, cors);
     }
 
-    // ---- Static Assets ----
-    const githubBase = env.GITHUB_RAW_BASE || "https://raw.githubusercontent.com/markhor/markhorinternational-test/upgrade-v1/";
+    // ---- Static Assets from GitHub ----
+    // ✅ درست شدہ URL — آپ کے اصل GitHub repo کی طرف اشارہ کرتا ہے
+    const githubBase = env.GITHUB_RAW_BASE
+      || "https://raw.githubusercontent.com/markhorinternationalt-tech/royal-chilghoza-pine-nuts/main/";
+
     let path = url.pathname;
     if (path === "/") path = "/index.html";
 
-    const staticExtensions = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json)$/i;
+    const staticExtensions = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json|woff|woff2|ttf)$/i;
     if (staticExtensions.test(path)) {
       const rawUrl = githubBase + path.slice(1);
       try {
-        const response = await fetch(rawUrl, { headers: { "User-Agent": "Cloudflare-Worker" } });
+        const response = await fetch(rawUrl, {
+          headers: { "User-Agent": "Cloudflare-Worker" }
+        });
         if (!response.ok) {
           return new Response(`Static file not found: ${path}`, { status: 404, headers: cors });
         }
         const contentType = getContentType(path);
         const body = await response.arrayBuffer();
         return new Response(body, {
-          headers: { ...cors, "Content-Type": contentType, "Cache-Control": "public, max-age=86400" },
+          headers: {
+            ...cors,
+            "Content-Type": contentType,
+            "Cache-Control": "public, max-age=3600",
+          },
         });
       } catch (err) {
         return new Response(`Error: ${err.message}`, { status: 500, headers: cors });
@@ -182,6 +191,9 @@ function getContentType(path) {
     'svg': 'image/svg+xml',
     'ico': 'image/x-icon',
     'json': 'application/json;charset=UTF-8',
+    'woff': 'font/woff',
+    'woff2': 'font/woff2',
+    'ttf': 'font/ttf',
   };
   return map[ext] || 'application/octet-stream';
 }
