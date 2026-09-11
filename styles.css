@@ -261,7 +261,6 @@ body.subview .site-header {
   align-items: center;
 }
 
-/* Language Switcher — FAO style, compact */
 .header-actions select,
 .view-topbar select {
   border: 1px solid var(--line);
@@ -319,6 +318,27 @@ body.subview .site-header {
   background: rgba(212, 175, 55, 0.06);
 }
 
+/* ✅ Admin Trigger — Desktop Button */
+.admin-trigger {
+  border: 1px solid var(--line);
+  background: rgba(212, 175, 55, 0.06);
+  color: var(--gold2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: var(--body-font);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.admin-trigger:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--gold2);
+}
+
 
 /* =========================================================
    10. HERO — Premium Luxury
@@ -334,12 +354,13 @@ body.subview .site-header {
   border-bottom: 1px solid var(--line-soft);
 }
 
+/* ✅ FIXED: image path is now src/001.jpg */
 .hero-bg {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(var(--forest), var(--forest)),
-    url("001.jpg") center / cover no-repeat;
+    url("src/001.jpg") center / cover no-repeat;
   background-blend-mode: multiply;
   opacity: 0.35;
   filter: brightness(0.6) saturate(0.7);
@@ -1438,6 +1459,22 @@ dialog::backdrop {
   transform: scale(1.06);
 }
 
+/* ✅ Profile image fallback */
+.royal-profile-image.profile-image-failed {
+  display: none;
+}
+
+.royal-profile-ring:has(.profile-image-failed):after {
+  content: "♛";
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 3rem;
+  color: var(--gold);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15), transparent);
+}
+
 .royal-profile-crown {
   position: absolute;
   right: 4px;
@@ -1612,7 +1649,6 @@ dialog::backdrop {
     letter-spacing: 0.32em;
   }
 
-  /* Language Switcher — Compact */
   .header-actions select {
     max-width: 100px;
     font-size: 0.72rem;
@@ -1621,12 +1657,16 @@ dialog::backdrop {
     background-position: right 6px center;
   }
 
+  /* ✅ Admin button hidden on mobile (use drawer instead) */
+  .admin-trigger {
+    display: none;
+  }
+
   .menu-trigger {
     padding: 7px 11px;
     font-size: 1rem;
   }
 
-  /* HERO */
   .hero {
     padding: 60px 0 55px;
     align-items: flex-start;
@@ -1670,7 +1710,6 @@ dialog::backdrop {
     font-size: 0.82rem;
   }
 
-  /* SECTIONS */
   .section-shell {
     width: calc(100% - 32px);
     padding: 56px 0;
@@ -1684,7 +1723,6 @@ dialog::backdrop {
     font-size: 0.92rem;
   }
 
-  /* GATEWAY */
   .gateway-card {
     padding: 28px 24px;
     min-height: auto;
@@ -1700,7 +1738,6 @@ dialog::backdrop {
     font-size: 0.9rem;
   }
 
-  /* GALLERY */
   .gallery-grid,
   .hub-grid-page,
   .office-grid {
@@ -1711,7 +1748,6 @@ dialog::backdrop {
     min-height: 260px;
   }
 
-  /* AI */
   .ai-panel {
     grid-template-columns: 1fr;
     padding: 28px 24px;
@@ -1734,7 +1770,6 @@ dialog::backdrop {
     width: 100%;
   }
 
-  /* WHATSAPP */
   .whatsapp-gateway {
     padding: 22px 20px;
     gap: 14px;
@@ -1757,7 +1792,6 @@ dialog::backdrop {
     font-size: 1.4rem;
   }
 
-  /* HUB */
   .hub-card {
     padding: 26px 24px;
     min-height: auto;
@@ -1788,7 +1822,6 @@ dialog::backdrop {
     padding: 24px;
   }
 
-  /* VIEW TOPBAR */
   .view-topbar {
     height: 68px;
     padding: 0 14px;
@@ -1815,7 +1848,6 @@ dialog::backdrop {
     padding: 70px 0 40px;
   }
 
-  /* PROFILE */
   .royal-profile-section {
     padding: 40px 16px 60px;
   }
@@ -1850,7 +1882,6 @@ dialog::backdrop {
     font-size: 0.92rem;
   }
 
-  /* THEME / ADMIN */
   .theme-grid {
     grid-template-columns: 1fr;
   }
@@ -1895,9 +1926,6 @@ dialog::backdrop {
 }
 
 
-/* =========================================================
-   END — Premium Luxury Stylesheet
-========================================================= */
 /* =========================================================
    ROYAL THEME CUSTOMIZER (iro.js)
 ========================================================= */
@@ -1945,7 +1973,6 @@ dialog::backdrop {
   flex-shrink: 0;
 }
 
-/* Typography rows */
 .typo-row {
   margin: 14px 0;
 }
@@ -1995,6 +2022,8 @@ dialog::backdrop {
     justify-content: center;
   }
 }
+
+
 /* =========================================================
    MEDIA MANAGER — File List
 ========================================================= */
@@ -2101,3 +2130,8 @@ dialog::backdrop {
   border: 1px dashed var(--line);
   border-radius: 10px;
 }
+
+
+/* =========================================================
+   END — Premium Luxury Stylesheet
+========================================================= */
