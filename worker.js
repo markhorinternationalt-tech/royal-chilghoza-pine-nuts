@@ -55,17 +55,63 @@ export default {
           prefix: folder ? folder + "/" : "",
           limit: 200
         });
-        const files = listed.objects.map(obj => ({
-          key: obj.key,
-          name: obj.key.split("/").pop(),
-          size: obj.size,
-          uploaded: obj.uploaded,
-          url: `/api/media/${encodeURIComponent(obj.key)}`
-        }));
+        const files = listed.objects
+          .filter(obj => !obj.key.endsWith("/.keep")) // hide placeholder
+          .map(obj => ({
+            key: obj.key,
+            name: obj.key.split("/").pop(),
+            size: obj.size,
+            uploaded: obj.uploaded,
+            url: `/api/media/${encodeURIComponent(obj.key)}`
+          }));
         return json({ ok: true, files }, cors);
       } catch (err) {
         return json({ ok: false, error: err.message }, cors, 500);
       }
+    }
+
+    // ---- Media: List all folders ----
+    if (url.pathname === "/api/media/folders" && request.method === "GET") {
+      if (!env.MEDIA) {
+        return json({ ok: false, error: "R2 binding MEDIA missing" }, cors, 503);
+      }
+      try {
+        const listed = await env.MEDIA.list({ limit: 1000 });
+        const folders = new Set();
+        listed.objects.forEach(obj => {
+          const parts = obj.key.split("/");
+          if (parts.length > 1 && parts[0]) folders.add(parts[0]);
+        });
+        return json({ ok: true, folders: Array.from(folders).sort() }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- Media: Create Folder ----
+    if (url.pathname === "/api/media/folder" && request.method === "POST") {
+      if (!authorized(request, env)) {
+        return new Response("Unauthorized", { status: 401, headers: cors });
+      }
+      if (!env.MEDIA) {
+        return new Response("R2 binding MEDIA missing", { status: 503, headers: cors });
+      }
+      let body;
+      try {
+        body = await request.json();
+      } catch {
+        return json({ ok: false, error: "Invalid JSON" }, cors, 400);
+      }
+      const folderName = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
+      if (!folderName) {
+        return json({ ok: false, error: "Invalid folder name" }, cors, 400);
+      }
+      // R2 has no real folders — create a small placeholder file
+      const key = `${folderName}/.keep`;
+      await env.MEDIA.put(key, "folder placeholder", {
+        httpMetadata: { contentType: "text/plain" }
+      });
+      return json({ ok: true, folder: folderName }, cors);
     }
 
     // ---- Media: Get single file ----
@@ -129,8 +175,20 @@ export default {
       return json({ admin: authorized(request, env) }, cors);
     }
 
-    // ---- Static Assets from GitHub ----
-    // ✅ درست شدہ URL — آپ کے اصل GitHub repo کی طرف اشارہ کرتا ہے
+    // ---- Static Assets ----
+    // پہلے Cloudflare Assets سے کوشش کریں، پھر GitHub سے
+    if (env.ASSETS) {
+      try {
+        const assetResp = await env.ASSETS.fetch(request);
+        if (assetResp.status !== 404) {
+          return assetResp;
+        }
+      } catch (e) {
+        // fall through to GitHub
+      }
+    }
+
+    // ---- Fallback: Static Assets from GitHub ----
     const githubBase = env.GITHUB_RAW_BASE
       || "https://raw.githubusercontent.com/markhorinternationalt-tech/royal-chilghoza-pine-nuts/main/";
 
