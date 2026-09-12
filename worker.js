@@ -184,8 +184,6 @@ export default {
         const form = await request.formData();
         const file = form.get("file");
         const folder = String(form.get("folder") || "general").replace(/[^a-zA-Z0-9/_-]/g, "");
-        const description = String(form.get("description") || "");
-        const title = String(form.get("title") || "");
 
         if (!(file instanceof File)) {
           return new Response("file required", { status: 400, headers: cors });
@@ -199,6 +197,7 @@ export default {
         const timestamp = Math.floor(Date.now() / 1000);
         const folderPath = `royal-chilghoza/${folder}`;
 
+        // Signature calculation — includes ONLY signed params
         const signatureParams = `folder=${folderPath}&timestamp=${timestamp}`;
         const signature = await sha1(signatureParams + CLOUDINARY_API_SECRET);
 
@@ -208,8 +207,6 @@ export default {
         uploadForm.append("timestamp", timestamp.toString());
         uploadForm.append("folder", folderPath);
         uploadForm.append("signature", signature);
-        if (description) uploadForm.append("context", `description=${description}`);
-        if (title) uploadForm.append("display_name", title);
 
         const cloudResp = await fetch(
           `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`,
