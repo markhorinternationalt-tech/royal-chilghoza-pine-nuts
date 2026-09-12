@@ -51,7 +51,7 @@ export default {
           : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
 
         const messages = [
-          { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+          { role: "system", content: `${system} IMPORTANT: Reply in the SAME language the user writes in (Urdu → Urdu, English → English, Chinese → Chinese, Arabic → Arabic, Pashto → Pashto, Russian → Russian). If the user's language is unclear, use interface language code: ${language}.` },
           { role: "user", content: message }
         ];
 
