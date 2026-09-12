@@ -6,7 +6,7 @@ const state = {
   admin: sessionStorage.getItem("royalAdmin") === "1",
   token: sessionStorage.getItem("royalAdminToken") || "",
 };
-const languages = ["en", "zh", "ar", "ps", "ru"];
+const languages = ["en", "zh", "ar", "ps", "ru", "ur"];
 
 const hubData = {
   en: {
@@ -137,6 +137,32 @@ const hubData = {
       ["Цепочка поставок и средства к существованию сообществ Chilghoza Pine Nuts", "Сообщества • средства к существованию • цепочка ценности"],
       ["Устойчивый сбор и осведомленность о Chilghoza Pine Nuts", "Сбор • осведомленность • лучшие практики"],
       ["Исследования, политика и партнерства Chilghoza Pine Nuts", "Исследования • политика • партнерства"],
+    ],
+  },
+  ur: {
+    trade: [
+      ["Chilghoza Pine Nuts کی عالمی منڈیاں", "امریکہ • چین • وسطی ایشیا • مشرق وسطیٰ"],
+      ["Chilghoza Pine Nuts کے لیے امریکی منڈی اور خریدار", "خریدار • تقاضے • مواقع"],
+      ["Chilghoza Pine Nuts کے لیے چینی منڈی اور خریدار", "تجارتی ڈیسک • خریدار • مارکیٹ انٹیلیجنس"],
+      ["Chilghoza Pine Nuts کی برآمد اور لاجسٹکس", "پیکنگ • دستاویزات • شپنگ • کسٹم"],
+      ["Chilghoza Pine Nuts کے مصنوعات اور معیار کے معیارات", "مغز • چھلکے والے • درجے • وضاحتیں"],
+      ["Chilghoza Pine Nuts کی سپلائی چین اور سراغ لگانا", "جنگل → جمع کرنے والا → پروسیسنگ → پیکنگ → برآمد"],
+      ["Chilghoza Pine Nuts کا جغرافیائی اشارہ (GI)", "اصل • شناخت • تحفظ"],
+      ["Chilghoza Pine Nuts کی نامیاتی کیمسٹری اور قدرتی معیار", "قدرتی مرکب • معیار • فوڈ سائنس"],
+      ["Chilghoza Pine Nuts کی پروسیسنگ، پیکنگ اور ویلیو ایڈیشن", "خشک کرنا • بھوننا • درجہ بندی • ذخیرہ"],
+      ["Chilghoza Pine Nuts کی پائیدار اور اخلاقی تجارت", "کمیونٹیز • جنگلات • ذمہ دار تجارت"],
+    ],
+    research: [
+      ["Chilghoza Pine Nuts کے جغرافیائی اصل اور GI تحقیق", "اصل • جغرافیہ • GI تحقیق"],
+      ["Chilghoza Pine Nuts کی حیاتیات اور نباتیات", "انواع • حیاتیات • نباتیات"],
+      ["Chilghoza Pine Nuts کی غذائی قدر اور قدرتی مرکب", "غذائیت • مرکب • قدرتی معیار"],
+      ["Chilghoza Pine Nuts کے جنگلات اور ماحولیات", "جنگلات • ماحولیات • ماحولیاتی نظام"],
+      ["Chilghoza Pine Nuts کے جنگلات میں حیاتیاتی تنوع اور جنگلی حیات", "جنگلی حیات • حیاتیاتی تنوع • مسکن"],
+      ["Chilghoza Pine Nuts کے لیے آب و ہوا اور عالمی سبز ماحول", "آب و ہوا • ماحول • لچک"],
+      ["Chilghoza Pine Nuts کے جنگلات کا تحفظ اور بحالی", "تحفظ • بحالی • نگرانی"],
+      ["Chilghoza Pine Nuts کمیونٹیز کی سپلائی چین اور معاش", "کمیونٹیز • معاش • ویلیو چین"],
+      ["Chilghoza Pine Nuts کی پائیدار کٹائی اور آگاہی", "کٹائی • آگاہی • بہترین عمل"],
+      ["Chilghoza Pine Nuts کی تحقیق، پالیسی اور شراکت داری", "تحقیق • پالیسی • شراکت داری"],
     ],
   },
 };
@@ -358,8 +384,57 @@ const T = {
     office3Title: "Федеральный торговый офис",
     office4Title: "Международный торговый офис",
   },
+  ur: {
+    navHome: "ہوم",
+    navTrade: "عالمی تجارت",
+    navResearch: "تحقیق اور علم",
+    navGallery: "گیلری",
+    admin: "ایڈمن",
+    eyebrow: "پاکستان · اصل · عالمی",
+    heroRoyal: "رائل",
+    heroTitle: "Chilghoza Pine Nuts",
+    heroText: "پاکستان کے Chilghoza Pine Nuts کے جنگلات سے دنیا تک — بہترین معیار، مستند اصل، ذمہ دار سپلائی چین اور علم کو جوڑنا۔",
+    exploreTrade: "عالمی تجارت دیکھیں",
+    exploreResearch: "تحقیق دیکھیں",
+    gatewayEyebrow: "دو بنیادی دروازے",
+    gatewayTitle: "ایک رائل Chilghoza Pine Nuts ماحولیاتی نظام",
+    tradeTitle: "عالمی تجارت",
+    tradeText: "بہترین معیار · دنیا بھر میں برآمد · منڈیاں اور خریدار",
+    researchTitle: "تحقیق اور علم",
+    researchText: "سائنس · اصل · جنگلات · ماحولیات · علم",
+    openGateway: "دروازہ کھولیں",
+    galleryEyebrow: "رائل فیلڈ آرکائیو",
+    galleryTitle: "Chilghoza Pine Nuts گیلری",
+    galleryText: "جنگل، کٹائی، درجہ بندی اور برآمد سے آٹھ قابل ترمیم بصری ریکارڈ۔",
+    aiTitle: "رائل AI اسسٹنٹ",
+    aiText: "Chilghoza Pine Nuts، تجارت، معیار، جنگلات اور تحقیق کے بارے میں پوچھیں۔",
+    aiPlaceholder: "Chilghoza Pine Nuts کے بارے میں پوچھیں...",
+    ask: "AI سے پوچھیں",
+    directInquiry: "براہ راست تجارتی استفسار",
+    whatsappTitle: "WhatsApp Chilghoza Pine Nuts تجارتی ڈیسک",
+    officeEyebrow: "رابطہ · دفتر · شراکت داری",
+    officeTitle: "دفتر کا پتہ",
+    back: "واپس",
+    hubContent: "نالج ہب",
+    hubBody: "یہ مکمل منی ویب سائٹ صفحہ ایڈمن مواد، مضامین، مارکیٹ کی معلومات، تحقیقی ریکارڈ اور تفصیلی وضاحتوں کے لیے تیار ہے۔",
+    whatsappTrade: "WhatsApp تجارت",
+    mediaTitle: "تصاویر · ویڈیوز · PDFs",
+    mediaEmpty: "اپ لوڈ کے بعد متحرک میڈیا یہاں ظاہر ہوگا۔",
+    visitorAI: "وزیٹر اسسٹنٹ",
+    adminAI: "ایڈمن اسسٹنٹ",
+    profileEyebrow: "رائل قیادت · پاکستان · اصل · عالمی",
+    profileRole: "بانی اور سی ای او",
+    profileDescription: "پاکستان کے پہاڑوں اور جنگلات سے دنیا تک — مستند اصل، بہترین معیار، عالمی تجارت اور علم کے درمیان ایک قابل اعتماد ربط قائم کرنا۔",
+    profileTag1: "پاکستان",
+    profileTag2: "اصل",
+    profileTag3: "عالمی تجارت",
+    profileTag4: "علم",
+    office1Title: "ہیڈ کوارٹر اور آبائی اصل",
+    office2Title: "علاقائی آپریشنز ہب",
+    office3Title: "وفاقی اور تجارتی ڈیسک",
+    office4Title: "بین الاقوامی تجارتی ڈیسک",
+  },
 };
-
 /* =========================================================
    STATE DATA (KV-driven)
 ========================================================= */
@@ -377,6 +452,7 @@ let heroImageUrl = "001.jpg";
 let profileImageUrl = "royal-profile-pic.jpg";
 let gatewayTradeData = { title: null, text: null };
 let gatewayResearchData = { title: null, text: null };
+let customHubData = null; // Admin-modified hubs (KV-driven)
 
 /* =========================================================
    KV HELPERS
@@ -417,20 +493,37 @@ async function saveToKV(key, value) {
 function tx(k) {
   return (T[state.lang] && T[state.lang][k]) || T.en[k] || k;
 }
+
 function hubs(type) {
+  if (customHubData && customHubData[state.lang] && Array.isArray(customHubData[state.lang][type])) {
+    return customHubData[state.lang][type];
+  }
   return (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
+}
+
+function ensureCustomHub(type) {
+  if (!customHubData) customHubData = {};
+  if (!customHubData[state.lang]) customHubData[state.lang] = {};
+  if (!Array.isArray(customHubData[state.lang][type])) {
+    const defaults = (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
+    customHubData[state.lang][type] = JSON.parse(JSON.stringify(defaults));
+  }
+  return customHubData[state.lang][type];
+}
+
+async function saveHubsKV() {
+  return await saveToKV("hubs_data", customHubData);
 }
 
 function applyLanguage() {
   document.documentElement.lang = state.lang;
-  document.documentElement.dir = state.lang === "ar" ? "rtl" : "ltr";
+  document.documentElement.dir = (state.lang === "ar" || state.lang === "ur") ? "rtl" : "ltr";
   document.querySelectorAll("[data-i18n]").forEach((e) => (e.textContent = tx(e.dataset.i18n)));
   document.querySelectorAll("[data-i18n-placeholder]").forEach((e) => (e.placeholder = tx(e.dataset.i18nPlaceholder)));
   document.querySelectorAll("#languageSelect,#gatewayLanguage,#hubLanguage").forEach((s) => (s.value = state.lang));
   const aiModeLabel = document.getElementById("aiModeLabel");
   if (aiModeLabel) aiModeLabel.textContent = state.admin ? tx("adminAI") : tx("visitorAI");
 
-  // Apply custom gateway titles if loaded
   applyGatewayContent();
   renderOffices();
   renderGallery();
@@ -468,7 +561,6 @@ function renderGallery() {
     </figure>`
   ).join("");
 
-  // Attach edit handlers for gallery
   document.querySelectorAll("[data-edit-gallery]").forEach((btn) => {
     btn.onclick = (e) => {
       e.stopPropagation();
@@ -482,15 +574,58 @@ function renderOffices() {
   const titles = [tx("office1Title"), tx("office2Title"), tx("office3Title"), tx("office4Title")];
   const grid = document.getElementById("officeGrid");
   if (!grid) return;
-  grid.innerHTML = offices.map((a, i) =>
-    `<article class="office-card"><span>${String(i + 1).padStart(2, "0")}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
-  ).join("");
 
-  // Fill admin inputs
+  grid.innerHTML = offices.map((a, i) => `
+    <article class="office-card">
+      <button class="edit-btn" data-edit-office="${i}" type="button" title="Edit Office">✏️</button>
+      <span>${String(i + 1).padStart(2, "0")}</span>
+      <h3>${titles[i]}</h3>
+      <p>${a}</p>
+    </article>
+  `).join("");
+
   for (let i = 0; i < 4; i++) {
     const el = document.getElementById("office" + (i + 1) + "Input");
     if (el) el.value = offices[i] || "";
   }
+
+  document.querySelectorAll("[data-edit-office]").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      editOffice(+btn.dataset.editOffice);
+    };
+  });
+}
+
+function editOffice(index) {
+  const titles = [tx("office1Title"), tx("office2Title"), tx("office3Title"), tx("office4Title")];
+  const current = offices[index] || "";
+
+  openEditModal(
+    `✏️ Edit Office #${index + 1} — ${titles[index]}`,
+    `
+    <label>Office Address:</label>
+    <textarea id="editOfficeAddr" rows="3">${escapeHtml(current)}</textarea>
+    `,
+    async () => {
+      const newAddr = document.getElementById("editOfficeAddr").value.trim();
+      if (!newAddr) { setEditStatus("❌ Address required", "error"); return; }
+
+      const newOffices = [...offices];
+      newOffices[index] = newAddr;
+
+      setEditStatus("Saving...", "");
+      const ok = await saveToKV("offices", newOffices);
+      if (ok) {
+        offices = newOffices;
+        renderOffices();
+        setEditStatus("✅ Office saved!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed.", "error");
+      }
+    }
+  );
 }
 
 function openGateway(type) {
@@ -511,22 +646,90 @@ function renderGateway(type) {
     zh: ["主要门户 01", "主要门户 02"],
     ar: ["البوابة الرئيسية 01", "البوابة الرئيسية 02"],
     ps: ["لومړنۍ دروازه 01", "لومړنۍ دروازه 02"],
-    ru: ["ОСНОВНОЙ ПОРТАЛ 01", "ОСНОВНОЙ ПОРТАЛ 02"]
+    ru: ["ОСНОВНОЙ ПОРТАЛ 01", "ОСНОВНОЙ ПОРТАЛ 02"],
+    ur: ["بنیادی دروازہ 01", "بنیادی دروازہ 02"]
   };
   const labels = gwLabels[state.lang] || gwLabels.en;
   document.getElementById("gatewayEyebrow").textContent = isTrade ? labels[0] : labels[1];
   document.getElementById("gatewayTitleText").textContent = isTrade ? tx("tradeTitle") : tx("researchTitle");
   document.getElementById("gatewayDescription").textContent = isTrade ? tx("tradeText") : tx("researchText");
-  document.getElementById("hubGridPage").innerHTML = hubs(type)
-    .map(([title, desc], i) =>
-      `<button class="hub-card" data-hub="${type}:${i}"><span>${String(i + 1).padStart(2, "0")}</span><h2>${title}</h2><p>${desc}</p><b>→</b></button>`
-    ).join("");
+
+  const list = hubs(type);
+
+  const hubCardsHtml = list.map(([title, desc], i) => {
+    const adminBtns = state.admin ? `
+      <div class="hub-card-actions">
+        <button class="hub-action-btn" data-hub-edit="${type}:${i}" title="Edit Hub" type="button">✏️</button>
+        ${i > 0 ? `<button class="hub-action-btn" data-hub-up="${type}:${i}" title="Move Up" type="button">⬆</button>` : ""}
+        ${i < list.length - 1 ? `<button class="hub-action-btn" data-hub-down="${type}:${i}" title="Move Down" type="button">⬇</button>` : ""}
+        <button class="hub-action-btn danger" data-hub-delete="${type}:${i}" title="Delete Hub" type="button">🗑</button>
+      </div>
+    ` : "";
+
+    return `
+      <div class="hub-card-wrapper">
+        <button class="hub-card" data-hub="${type}:${i}" type="button">
+          <span>${String(i + 1).padStart(2, "0")}</span>
+          <h2>${title}</h2>
+          <p>${desc}</p>
+          <b>→</b>
+        </button>
+        ${adminBtns}
+      </div>
+    `;
+  }).join("");
+
+  const createBtnHtml = state.admin ? `
+    <button class="create-hub-btn" data-create-hub="${type}" type="button">
+      <span>➕</span>
+      <b>${isTrade ? "Create New Trade Hub" : "Create New Research Hub"}</b>
+      <small>Add a new knowledge hub to this gateway</small>
+    </button>
+  ` : "";
+
+  document.getElementById("hubGridPage").innerHTML = hubCardsHtml + createBtnHtml;
+
   document.querySelectorAll("[data-hub]").forEach((b) =>
     (b.onclick = () => {
-      const [type, index] = b.dataset.hub.split(":");
-      openHub(type, +index);
+      const [t, index] = b.dataset.hub.split(":");
+      openHub(t, +index);
     })
   );
+
+  if (state.admin) {
+    document.querySelectorAll("[data-hub-edit]").forEach((b) =>
+      (b.onclick = (e) => {
+        e.stopPropagation();
+        const [t, i] = b.dataset.hubEdit.split(":");
+        editHub(t, +i);
+      })
+    );
+    document.querySelectorAll("[data-hub-delete]").forEach((b) =>
+      (b.onclick = (e) => {
+        e.stopPropagation();
+        const [t, i] = b.dataset.hubDelete.split(":");
+        deleteHub(t, +i);
+      })
+    );
+    document.querySelectorAll("[data-hub-up]").forEach((b) =>
+      (b.onclick = (e) => {
+        e.stopPropagation();
+        const [t, i] = b.dataset.hubUp.split(":");
+        moveHub(t, +i, -1);
+      })
+    );
+    document.querySelectorAll("[data-hub-down]").forEach((b) =>
+      (b.onclick = (e) => {
+        e.stopPropagation();
+        const [t, i] = b.dataset.hubDown.split(":");
+        moveHub(t, +i, 1);
+      })
+    );
+    const createEl = document.querySelector("[data-create-hub]");
+    if (createEl) {
+      createEl.onclick = () => createHub(createEl.dataset.createHub);
+    }
+  }
 }
 
 function openHub(type, index) {
@@ -538,7 +741,9 @@ function openHub(type, index) {
 }
 
 function renderHub(type, index) {
-  const [title, desc] = hubs(type)[index];
+  const list = hubs(type);
+  const item = list[index] || ["", ""];
+  const [title, desc] = item;
   document.getElementById("hubNo").textContent = `${type === "trade" ? tx("tradeTitle") : tx("researchTitle")} · ${String(index + 1).padStart(2, "0")}`;
   document.getElementById("hubTitleText").textContent = title;
   document.getElementById("hubDescription").textContent = desc;
@@ -558,6 +763,105 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>'"]/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c])
   );
+}
+
+/* =========================================================
+   HUB CRUD — Create / Edit / Delete / Reorder
+========================================================= */
+
+function createHub(type) {
+  const typeLabel = type === "trade" ? tx("tradeTitle") : tx("researchTitle");
+  openEditModal(
+    `🆕 Create New Hub — ${typeLabel}`,
+    `
+    <label>Hub Title: <span style="color:#ff6b6b">*</span></label>
+    <input type="text" id="newHubTitle" placeholder="Enter hub title...">
+    <label>Short Description:</label>
+    <textarea id="newHubDesc" rows="2" placeholder="Short subtitle for this hub..."></textarea>
+    `,
+    async () => {
+      const title = document.getElementById("newHubTitle").value.trim();
+      const desc = document.getElementById("newHubDesc").value.trim();
+      if (!title) { setEditStatus("❌ Title required", "error"); return; }
+
+      const list = ensureCustomHub(type);
+      list.push([title, desc]);
+
+      setEditStatus("Saving...", "");
+      const ok = await saveHubsKV();
+      if (ok) {
+        renderGateway(type);
+        setEditStatus("✅ Hub created successfully!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed. Login again.", "error");
+      }
+    }
+  );
+}
+
+function editHub(type, index) {
+  const list = hubs(type);
+  const [currentTitle, currentDesc] = list[index] || ["", ""];
+  const typeLabel = type === "trade" ? tx("tradeTitle") : tx("researchTitle");
+
+  openEditModal(
+    `✏️ Edit Hub — ${typeLabel} #${index + 1}`,
+    `
+    <label>Hub Title: <span style="color:#ff6b6b">*</span></label>
+    <input type="text" id="editHubTitle" value="${escapeHtml(currentTitle)}">
+    <label>Short Description:</label>
+    <textarea id="editHubDesc" rows="2">${escapeHtml(currentDesc)}</textarea>
+    `,
+    async () => {
+      const newTitle = document.getElementById("editHubTitle").value.trim();
+      const newDesc = document.getElementById("editHubDesc").value.trim();
+      if (!newTitle) { setEditStatus("❌ Title required", "error"); return; }
+
+      const list2 = ensureCustomHub(type);
+      list2[index] = [newTitle, newDesc];
+
+      setEditStatus("Saving...", "");
+      const ok = await saveHubsKV();
+      if (ok) {
+        renderGateway(type);
+        setEditStatus("✅ Hub updated!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed.", "error");
+      }
+    }
+  );
+}
+
+async function deleteHub(type, index) {
+  const list = hubs(type);
+  const [title] = list[index] || ["", ""];
+
+  if (!confirm(`🗑 Delete hub "${title}"?\n\nThis action cannot be undone.`)) return;
+
+  const list2 = ensureCustomHub(type);
+  list2.splice(index, 1);
+
+  const ok = await saveHubsKV();
+  if (ok) {
+    renderGateway(type);
+  } else {
+    alert("❌ Delete failed. Login again.");
+  }
+}
+
+async function moveHub(type, index, direction) {
+  const list = ensureCustomHub(type);
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= list.length) return;
+
+  [list[index], list[newIndex]] = [list[newIndex], list[index]];
+
+  const ok = await saveHubsKV();
+  if (ok) {
+    renderGateway(type);
+  }
 }
 
 /* =========================================================
@@ -1121,27 +1425,23 @@ function editGalleryItem(index) {
 ========================================================= */
 
 async function loadAllKVContent() {
-  // Hero
   const heroVal = await getFromKV("hero_image");
   if (heroVal) {
     heroImageUrl = typeof heroVal === "string" ? heroVal : heroVal;
     applyHeroImage();
   }
 
-  // Profile
   const profileVal = await getFromKV("profile_image");
   if (profileVal) {
     profileImageUrl = typeof profileVal === "string" ? profileVal : profileVal;
     applyProfileImage();
   }
 
-  // Gateway Trade
   const gt = await getFromKV("gateway_trade_title");
   const gx = await getFromKV("gateway_trade_text");
   if (gt) gatewayTradeData.title = gt;
   if (gx) gatewayTradeData.text = gx;
 
-  // Gateway Research
   const rt = await getFromKV("gateway_research_title");
   const rx = await getFromKV("gateway_research_text");
   if (rt) gatewayResearchData.title = rt;
@@ -1149,21 +1449,23 @@ async function loadAllKVContent() {
 
   applyGatewayContent();
 
-  // Gallery
   const gal = await getFromKV("gallery_data");
   if (gal && Array.isArray(gal) && gal.length === 8) {
     galleryItems = gal;
     renderGallery();
   }
 
-  // Offices
   const off = await getFromKV("offices");
   if (off && Array.isArray(off) && off.length === 4) {
     offices = off;
     renderOffices();
   } else if (state.admin && state.token) {
-    // Save defaults
     await saveToKV("offices", DEFAULT_OFFICES);
+  }
+
+  const customHubs = await getFromKV("hubs_data");
+  if (customHubs && typeof customHubs === "object" && !Array.isArray(customHubs)) {
+    customHubData = customHubs;
   }
 }
 
@@ -1175,7 +1477,7 @@ function activateAdminUI() {
   document.getElementById("adminLoginBox").hidden = true;
   document.getElementById("adminTools").hidden = false;
   document.getElementById("adminStatus").textContent =
-    "Admin Mode active. Click ✏️ buttons to edit. Theme, media, offices and AI are ready.";
+    "Admin Mode active. Click ✏️ buttons to edit. Theme, media, offices, hubs and AI are ready.";
   document.body.classList.add("admin-mode");
 
   setTimeout(() => {
@@ -1202,7 +1504,6 @@ function init() {
   renderGallery();
   renderOffices();
 
-  // Setup edit buttons
   const editHeroBtn = document.getElementById("editHeroBtn");
   if (editHeroBtn) editHeroBtn.onclick = editHeroImage;
 
@@ -1215,7 +1516,6 @@ function init() {
   const editGatewayResearchBtn = document.getElementById("editGatewayResearchBtn");
   if (editGatewayResearchBtn) editGatewayResearchBtn.onclick = () => editGateway("research");
 
-  // Edit modal controls
   const editModalClose = document.getElementById("editModalClose");
   if (editModalClose) editModalClose.onclick = closeEditModal;
 
@@ -1229,13 +1529,11 @@ function init() {
     };
   }
 
-  // WhatsApp
   const mainWhatsapp = document.getElementById("mainWhatsapp");
   if (mainWhatsapp) {
     mainWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
   }
 
-  // Gateway buttons
   document.querySelectorAll("[data-open-gateway]").forEach((b) =>
     (b.onclick = (e) => {
       e.preventDefault();
@@ -1252,7 +1550,6 @@ function init() {
     renderGateway(state.gateway);
   };
 
-  // Language selects
   ["languageSelect", "gatewayLanguage", "hubLanguage"].forEach((id) => {
     const s = document.getElementById(id);
     if (!s) return;
@@ -1260,13 +1557,11 @@ function init() {
     s.onchange = (e) => setLanguage(e.target.value);
   });
 
-  // Mobile menu
   document.getElementById("menuOpen").onclick = () =>
     document.getElementById("mobileDrawer").classList.add("open");
   document.getElementById("menuClose").onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
 
-  // Admin buttons
   const adminOpen = document.getElementById("adminOpen");
   if (adminOpen) adminOpen.onclick = () => document.getElementById("adminDialog").showModal();
 
@@ -1281,7 +1576,6 @@ function init() {
   document.getElementById("adminClose").onclick = () =>
     document.getElementById("adminDialog").close();
 
-  // Admin login
   document.getElementById("adminLogin").onclick = () => {
     const token = document.getElementById("adminToken").value.trim();
     if (!token) return;
@@ -1293,7 +1587,6 @@ function init() {
     applyLanguage();
   };
 
-  // Admin logout
   const logoutBtn = document.getElementById("adminLogout");
   if (logoutBtn) {
     logoutBtn.onclick = () => {
@@ -1307,7 +1600,6 @@ function init() {
     };
   }
 
-  // Media upload
   const mediaUpload = document.getElementById("mediaUpload");
   if (mediaUpload) {
     mediaUpload.onclick = async () => {
@@ -1347,7 +1639,6 @@ function init() {
   const loadMediaBtn = document.getElementById("loadMediaBtn");
   if (loadMediaBtn) loadMediaBtn.onclick = loadMediaList;
 
-  // Office save/reset
   const saveAddressesBtn = document.getElementById("saveAddresses");
   if (saveAddressesBtn) {
     saveAddressesBtn.addEventListener("click", async () => {
@@ -1387,7 +1678,6 @@ function init() {
     });
   }
 
-  // Create Cloudinary folder
   const createFolderBtn = document.getElementById("createFolderBtn");
   if (createFolderBtn) {
     createFolderBtn.onclick = async () => {
@@ -1412,7 +1702,6 @@ function init() {
     };
   }
 
-  // AI form
   const aiForm = document.getElementById("aiForm");
   if (aiForm) {
     aiForm.onsubmit = (e) => {
@@ -1422,13 +1711,11 @@ function init() {
     };
   }
 
-  // Load saved theme
   const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
   if (savedTheme) applyFullTheme(savedTheme);
 
   if (state.admin) activateAdminUI();
 
-  // Load KV content
   loadAllKVContent();
 
   applyLanguage();
