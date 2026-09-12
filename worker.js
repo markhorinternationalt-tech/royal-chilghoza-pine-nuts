@@ -50,36 +50,40 @@ export default {
           ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
           : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
 
-        // کوشش 1: جدید ماڈل
-        let result;
-        try {
-          result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-            messages: [
-              { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
-              { role: "user", content: message }
-            ]
-          });
-        } catch (e1) {
-          // کوشش 2: متبادل ماڈل
+        const messages = [
+          { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+          { role: "user", content: message }
+        ];
+
+        // نیا ماڈلز کی فہرست (پرانا ہٹا دیا گیا)
+        const models = [
+          "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+          "@cf/meta/llama-4-scout-17b-16e-instruct",
+          "@cf/meta/llama-3.1-8b-instruct"
+        ];
+
+        let result = null;
+        let lastError = null;
+
+        for (const model of models) {
           try {
-            result = await env.AI.run("@cf/meta/llama-3-8b-instruct", {
-              messages: [
-                { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
-                { role: "user", content: message }
-              ]
-            });
-          } catch (e2) {
-            // کوشش 3: بنیادی ماڈل
-            result = await env.AI.run("@cf/meta/llama-2-7b-chat-int8", {
-              messages: [
-                { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
-                { role: "user", content: message }
-              ]
-            });
+            result = await env.AI.run(model, { messages });
+            if (result && (result.response || result.result)) {
+              break;
+            }
+          } catch (e) {
+            lastError = e;
+            result = null;
           }
         }
 
-        const reply = (result && (result.response || result.result)) || "No response.";
+        if (!result) {
+          return json({
+            reply: "AI Error: " + (lastError?.message || "تمام ماڈلز ناکام ہو گئے")
+          }, cors, 500);
+        }
+
+        const reply = result.response || result.result || "No response.";
         return json({ reply }, cors);
 
       } catch (err) {
