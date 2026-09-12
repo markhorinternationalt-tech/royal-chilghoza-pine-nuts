@@ -1203,7 +1203,19 @@ async function renderHubMedia(type, index) {
   const container = document.getElementById("hubMedia");
   if (!container) return;
 
+  const parentCard = container.closest(".hub-media");
   const arr = await loadHubMedia(type, index);
+
+  // =========================================================
+  // UPDATED: Hide entire media section from visitors if empty
+  // =========================================================
+  if (arr.length === 0 && !state.admin) {
+    if (parentCard) parentCard.style.display = "none";
+    return;
+  }
+
+  // Show parent card if it was hidden
+  if (parentCard) parentCard.style.display = "";
 
   const uploadBtn = state.admin
     ? `<button class="btn btn-gold hubMediaUploadBtn" id="hubMediaUploadBtn" type="button">➕ Upload Media</button>`
