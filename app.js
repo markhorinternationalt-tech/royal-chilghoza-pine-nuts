@@ -141,7 +141,7 @@ const hubData = {
   },
 };
 
-const gallery = [
+const DEFAULT_GALLERY = [
   ["01-chilghoza-lot.jpg", "Chilghoza Pine Nuts Lot Inspection & Grading"],
   ["02-chilghoza-cones.jpg", "Harvested Cones of Chilghoza Pine Nuts"],
   ["03-chilghoza-kernel.jpg", "Premium Shelled Kernels of Chilghoza Pine Nuts"],
@@ -361,7 +361,7 @@ const T = {
 };
 
 /* =========================================================
-   OFFICES — KV INTEGRATION (NEW)
+   STATE DATA (KV-driven)
 ========================================================= */
 
 const DEFAULT_OFFICES = [
@@ -372,28 +372,28 @@ const DEFAULT_OFFICES = [
 ];
 
 let offices = [...DEFAULT_OFFICES];
+let galleryItems = [...DEFAULT_GALLERY];
+let heroImageUrl = "001.jpg";
+let profileImageUrl = "royal-profile-pic.jpg";
+let gatewayTradeData = { title: null, text: null };
+let gatewayResearchData = { title: null, text: null };
 
-async function loadOfficesFromKV() {
+/* =========================================================
+   KV HELPERS
+========================================================= */
+
+async function getFromKV(key) {
   try {
-    const r = await fetch("/api/kv/get/offices");
-    if (r.ok) {
-      const data = await r.json();
-      if (data.ok && Array.isArray(data.value) && data.value.length === 4) {
-        offices = data.value;
-        renderOffices();
-        return;
-      }
-    }
-    // اگر KV میں نہیں ہے تو ڈیفالٹ محفوظ کر دیں (صرف admin موڈ میں)
-    if (state.admin && state.token) {
-      await saveOfficesToKV(DEFAULT_OFFICES);
-    }
+    const r = await fetch("/api/kv/get/" + encodeURIComponent(key));
+    if (!r.ok) return null;
+    const data = await r.json();
+    return data.ok ? data.value : null;
   } catch (e) {
-    console.warn("Offices KV load failed:", e);
+    return null;
   }
 }
 
-async function saveOfficesToKV(newOffices) {
+async function saveToKV(key, value) {
   try {
     const r = await fetch("/api/kv/set", {
       method: "POST",
@@ -401,18 +401,25 @@ async function saveOfficesToKV(newOffices) {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + state.token,
       },
-      body: JSON.stringify({ key: "offices", value: newOffices }),
+      body: JSON.stringify({ key, value }),
     });
     const data = await r.json();
     return data.ok;
   } catch (e) {
-    console.warn("Offices KV save failed:", e);
     return false;
   }
 }
 
-function tx(k) { return (T[state.lang] && T[state.lang][k]) || T.en[k] || k; }
-function hubs(type) { return (hubData[state.lang] || hubData.en)[type] || hubData.en[type]; }
+/* =========================================================
+   CORE FUNCTIONS
+========================================================= */
+
+function tx(k) {
+  return (T[state.lang] && T[state.lang][k]) || T.en[k] || k;
+}
+function hubs(type) {
+  return (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
+}
 
 function applyLanguage() {
   document.documentElement.lang = state.lang;
@@ -422,10 +429,25 @@ function applyLanguage() {
   document.querySelectorAll("#languageSelect,#gatewayLanguage,#hubLanguage").forEach((s) => (s.value = state.lang));
   const aiModeLabel = document.getElementById("aiModeLabel");
   if (aiModeLabel) aiModeLabel.textContent = state.admin ? tx("adminAI") : tx("visitorAI");
+
+  // Apply custom gateway titles if loaded
+  applyGatewayContent();
   renderOffices();
   renderGallery();
   if (state.gateway) renderGateway(state.gateway);
   if (state.hub) renderHub(state.hub.type, state.hub.index);
+}
+
+function applyGatewayContent() {
+  const tradeTitleEl = document.querySelector('[data-i18n="tradeTitle"]');
+  const tradeTextEl = document.querySelector('[data-i18n="tradeText"]');
+  const researchTitleEl = document.querySelector('[data-i18n="researchTitle"]');
+  const researchTextEl = document.querySelector('[data-i18n="researchText"]');
+
+  if (gatewayTradeData.title && tradeTitleEl) tradeTitleEl.textContent = gatewayTradeData.title;
+  if (gatewayTradeData.text && tradeTextEl) tradeTextEl.textContent = gatewayTradeData.text;
+  if (gatewayResearchData.title && researchTitleEl) researchTitleEl.textContent = gatewayResearchData.title;
+  if (gatewayResearchData.text && researchTextEl) researchTextEl.textContent = gatewayResearchData.text;
 }
 
 function setLanguage(lang) {
@@ -436,20 +458,35 @@ function setLanguage(lang) {
 }
 
 function renderGallery() {
-  document.getElementById("galleryGrid").innerHTML = gallery
-    .map(([src, cap], i) =>
-      `<figure class="gallery-item"><img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')"><figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption></figure>`
-    ).join("");
+  const grid = document.getElementById("galleryGrid");
+  if (!grid) return;
+  grid.innerHTML = galleryItems.map(([src, cap], i) =>
+    `<figure class="gallery-item" data-gallery-index="${i}">
+      <img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')">
+      <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${cap}</figcaption>
+      <button class="edit-btn" data-edit-gallery="${i}" type="button" title="Edit Image">✏️</button>
+    </figure>`
+  ).join("");
+
+  // Attach edit handlers for gallery
+  document.querySelectorAll("[data-edit-gallery]").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const idx = +btn.dataset.editGallery;
+      editGalleryItem(idx);
+    };
+  });
 }
 
 function renderOffices() {
   const titles = [tx("office1Title"), tx("office2Title"), tx("office3Title"), tx("office4Title")];
-  document.getElementById("officeGrid").innerHTML = offices
-    .map((a, i) =>
-      `<article class="office-card"><span>${String(i + 1).padStart(2, "0")}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
-    ).join("");
+  const grid = document.getElementById("officeGrid");
+  if (!grid) return;
+  grid.innerHTML = offices.map((a, i) =>
+    `<article class="office-card"><span>${String(i + 1).padStart(2, "0")}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
+  ).join("");
 
-  // Admin input fields بھریں
+  // Fill admin inputs
   for (let i = 0; i < 4; i++) {
     const el = document.getElementById("office" + (i + 1) + "Input");
     if (el) el.value = offices[i] || "";
@@ -517,8 +554,19 @@ function closeGateway() {
   document.getElementById("mainPage").hidden = false;
 }
 
+function escapeHtml(s) {
+  return String(s).replace(/[&<>'"]/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c])
+  );
+}
+
+/* =========================================================
+   AI ASSISTANT
+========================================================= */
+
 async function askAI(message) {
   const box = document.getElementById("aiMessages");
+  if (!box) return;
   box.innerHTML += `<p><b>You:</b> ${escapeHtml(message)}</p>`;
   try {
     const headers = { "Content-Type": "application/json" };
@@ -529,27 +577,19 @@ async function askAI(message) {
       body: JSON.stringify({ message, mode: state.admin ? "admin" : "visitor", language: state.lang }),
     });
     const data = await r.json();
-    // ✅ اصل response دکھائیں (چاہے error ہو)
     if (data.reply) {
-      box.innerHTML += `<p><b>Royal AI:</b> ${escapeHtml(data.reply)}</p>`;
+      box.innerHTML += `<p><b>Royal AI:</b> <span dir="auto">${escapeHtml(data.reply)}</span></p>`;
     } else {
-      box.innerHTML += `<p><b>Royal AI:</b> <span style="color:#ff6b6b">Error: ${escapeHtml(JSON.stringify(data))}</span></p>`;
+      box.innerHTML += `<p><b>Royal AI:</b> <span dir="auto" style="color:#ff6b6b">Error: ${escapeHtml(JSON.stringify(data))}</span></p>`;
     }
   } catch (err) {
-    // ✅ اصل error message دکھائیں
-    box.innerHTML += `<p><b>Royal AI:</b> <span style="color:#ff6b6b">Fetch Error: ${escapeHtml(err.message)}</span></p>`;
+    box.innerHTML += `<p><b>Royal AI:</b> <span dir="auto" style="color:#ff6b6b">Fetch Error: ${escapeHtml(err.message)}</span></p>`;
   }
   box.scrollTop = box.scrollHeight;
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>'"]/g, (c) =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[c])
-  );
-}
-
 /* =========================================================
-   THEME CUSTOMIZER — iro.js Integration
+   THEME CUSTOMIZER
 ========================================================= */
 
 const THEME_KEY = "royalThemeV2";
@@ -557,7 +597,7 @@ let pickers = {};
 
 function initColorPickers() {
   if (typeof iro === "undefined") { console.warn("iro.js not loaded"); return; }
-  
+
   const saved = JSON.parse(localStorage.getItem(THEME_KEY) || "null") || {};
   const defaults = {
     bg: saved.bg || "#03140A",
@@ -616,13 +656,13 @@ function loadTypography(saved) {
 
   const baseSize = saved.baseFont || 16;
   const headScale = saved.headingScale || 1;
-  
+
   baseFont.value = baseSize;
   headingScale.value = headScale;
   document.getElementById("baseFontVal").textContent = baseSize + "px";
   document.getElementById("headingScaleVal").textContent = headScale + "x";
   document.documentElement.style.setProperty("--font-scale", baseSize / 16);
-  
+
   if (saved.headingFont) {
     headingFont.value = saved.headingFont;
     document.documentElement.style.setProperty("--heading-font", saved.headingFont);
@@ -660,7 +700,7 @@ function applyFullTheme(theme) {
   if (theme.baseFont) root.style.setProperty("--font-scale", theme.baseFont / 16);
   if (theme.headingFont) root.style.setProperty("--heading-font", theme.headingFont);
   if (theme.bodyFont) root.style.setProperty("--body-font", theme.bodyFont);
-  
+
   if (document.getElementById("hexBg") && theme.bg) document.getElementById("hexBg").textContent = theme.bg.toUpperCase();
   if (document.getElementById("hexGold") && theme.gold) document.getElementById("hexGold").textContent = theme.gold.toUpperCase();
   if (document.getElementById("hexText") && theme.text) document.getElementById("hexText").textContent = theme.text.toUpperCase();
@@ -738,29 +778,29 @@ function getMediaIcon(name) {
 function renderMediaList(files) {
   const container = document.getElementById("mediaListContainer");
   if (!container) return;
-  
+
   if (!files || files.length === 0) {
     container.innerHTML = `<div class="media-empty">No files uploaded yet.</div>`;
     return;
   }
-  
+
   container.innerHTML = files.map(file => {
     const icon = getMediaIcon(file.name);
     const isImage = file.resource_type === "image";
     const thumbHtml = isImage
       ? `<img class="media-thumb" src="${file.url}" alt="${file.name}" loading="lazy">`
       : `<div class="media-thumb">${icon}</div>`;
-    
+
     return `
       <div class="media-item">
         ${thumbHtml}
         <div class="media-info">
           <span class="media-name" title="${file.public_id}">${file.name}</span>
-          <span class="media-meta">${formatSize(file.size)} • ${file.resource_type} • ${file.folder || "root"}</span>
+          <span class="media-meta">${formatSize(file.size)} • ${file.resource_type}</span>
         </div>
         <div class="media-actions">
-          <button class="media-btn" onclick="window.open('${file.url}', '_blank')">👁 View</button>
-          <button class="media-btn" onclick="copyMediaUrl('${file.url}')">📋 Copy</button>
+          <button class="media-btn" onclick="window.open('${file.url}', '_blank')">👁</button>
+          <button class="media-btn" onclick="copyMediaUrl('${file.url}')">📋</button>
           <button class="media-btn danger" onclick="deleteMedia('${file.public_id.replace(/'/g, "\\'")}', '${file.resource_type}')">🗑</button>
         </div>
       </div>
@@ -773,7 +813,7 @@ async function loadMediaList() {
   const container = document.getElementById("mediaListContainer");
   if (status) status.textContent = "Loading files...";
   if (container) container.innerHTML = `<div class="media-empty">Loading...</div>`;
-  
+
   try {
     const folder = document.getElementById("mediaFolder")?.value || "";
     const r = await fetch("/api/media/list?folder=" + encodeURIComponent(folder));
@@ -782,21 +822,18 @@ async function loadMediaList() {
       renderMediaList(data.files);
       if (status) status.textContent = `✅ Found ${data.files.length} file(s).`;
     } else {
-      if (status) status.textContent = "Error: " + (data.error || "Failed to load");
-      if (container) container.innerHTML = `<div class="media-empty">Error loading files.</div>`;
+      if (status) status.textContent = "Error: " + (data.error || "Failed");
+      if (container) container.innerHTML = `<div class="media-empty">Error.</div>`;
     }
   } catch (err) {
     if (status) status.textContent = "Error: " + err.message;
-    if (container) container.innerHTML = `<div class="media-empty">Error loading files.</div>`;
   }
 }
 
 async function deleteMedia(publicId, resourceType) {
-  if (!confirm(`Delete "${publicId}"?\nThis cannot be undone.`)) return;
-  
+  if (!confirm(`Delete "${publicId}"?`)) return;
   const status = document.getElementById("mediaStatus");
   if (status) status.textContent = "Deleting...";
-  
   try {
     const r = await fetch("/api/media/" + encodeURIComponent(publicId) + "?type=" + resourceType, {
       method: "DELETE",
@@ -820,13 +857,342 @@ function copyMediaUrl(url) {
       const status = document.getElementById("mediaStatus");
       if (status) status.textContent = "✅ URL copied: " + url;
     });
-  } else {
-    prompt("Copy this URL:", url);
   }
 }
 
 window.deleteMedia = deleteMedia;
 window.copyMediaUrl = copyMediaUrl;
+
+/* =========================================================
+   EDIT MODAL SYSTEM
+========================================================= */
+
+let currentEditSaveHandler = null;
+
+function openEditModal(title, bodyHtml, onSave) {
+  const modal = document.getElementById("editModal");
+  if (!modal) return;
+  document.getElementById("editModalTitle").textContent = title;
+  document.getElementById("editModalBody").innerHTML = bodyHtml;
+  document.getElementById("editModalStatus").textContent = "";
+  document.getElementById("editModalStatus").className = "edit-status";
+  currentEditSaveHandler = onSave;
+  modal.showModal();
+}
+
+function closeEditModal() {
+  const modal = document.getElementById("editModal");
+  if (modal) modal.close();
+  currentEditSaveHandler = null;
+}
+
+function setEditStatus(msg, type = "") {
+  const el = document.getElementById("editModalStatus");
+  if (el) {
+    el.textContent = msg;
+    el.className = "edit-status " + type;
+  }
+}
+
+async function uploadToCloudinary(file, folder = "edits") {
+  if (!file) return null;
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("folder", folder);
+  const r = await fetch("/api/media/upload", {
+    method: "POST",
+    headers: { Authorization: "Bearer " + state.token },
+    body: fd,
+  });
+  const data = await r.json();
+  return data.ok ? data.url : null;
+}
+
+/* =========================================================
+   EDIT: HERO IMAGE
+========================================================= */
+
+function editHeroImage() {
+  openEditModal("🖼️ Edit Hero Image", `
+    <label>Current Hero Image:</label>
+    <img src="${heroImageUrl}" class="edit-modal-preview" alt="Hero">
+    <label>Upload New Hero Image:</label>
+    <input type="file" id="editHeroFile" accept="image/*">
+    <label>OR Paste Image URL:</label>
+    <input type="text" id="editHeroUrl" placeholder="https://..." value="${heroImageUrl}">
+  `, async () => {
+    const fileInput = document.getElementById("editHeroFile");
+    const urlInput = document.getElementById("editHeroUrl");
+    let newUrl = urlInput.value.trim();
+
+    if (fileInput.files[0]) {
+      setEditStatus("Uploading...", "");
+      const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "hero");
+      if (uploadedUrl) {
+        newUrl = uploadedUrl;
+      } else {
+        setEditStatus("❌ Upload failed", "error");
+        return;
+      }
+    }
+
+    if (!newUrl) {
+      setEditStatus("❌ No image URL provided", "error");
+      return;
+    }
+
+    setEditStatus("Saving...", "");
+    const ok = await saveToKV("hero_image", newUrl);
+    if (ok) {
+      heroImageUrl = newUrl;
+      applyHeroImage();
+      setEditStatus("✅ Hero image saved!", "success");
+      setTimeout(closeEditModal, 1000);
+    } else {
+      setEditStatus("❌ Save failed", "error");
+    }
+  });
+}
+
+function applyHeroImage() {
+  const heroBg = document.getElementById("heroBg");
+  if (heroBg) {
+    heroBg.style.background = `url("${heroImageUrl}") center / cover no-repeat`;
+    heroBg.style.backgroundColor = "var(--forest)";
+    heroBg.style.backgroundBlendMode = "luminosity";
+    heroBg.style.opacity = "0.85";
+    heroBg.style.filter = "brightness(0.55) saturate(1.1) contrast(1.05)";
+    heroBg.style.transform = "scale(1.05)";
+  }
+}
+
+/* =========================================================
+   EDIT: PROFILE PICTURE
+========================================================= */
+
+function editProfileImage() {
+  openEditModal("👤 Edit Profile Picture", `
+    <label>Current Profile Picture:</label>
+    <img src="${profileImageUrl}" class="edit-modal-preview" alt="Profile" style="border-radius:50%;width:160px;height:160px;max-height:160px;margin:10px auto;display:block;">
+    <label>Upload New Profile Picture:</label>
+    <input type="file" id="editProfileFile" accept="image/*">
+    <label>OR Paste Image URL:</label>
+    <input type="text" id="editProfileUrl" placeholder="https://..." value="${profileImageUrl}">
+  `, async () => {
+    const fileInput = document.getElementById("editProfileFile");
+    const urlInput = document.getElementById("editProfileUrl");
+    let newUrl = urlInput.value.trim();
+
+    if (fileInput.files[0]) {
+      setEditStatus("Uploading...", "");
+      const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "profile");
+      if (uploadedUrl) newUrl = uploadedUrl;
+      else { setEditStatus("❌ Upload failed", "error"); return; }
+    }
+
+    if (!newUrl) { setEditStatus("❌ No URL", "error"); return; }
+
+    setEditStatus("Saving...", "");
+    const ok = await saveToKV("profile_image", newUrl);
+    if (ok) {
+      profileImageUrl = newUrl;
+      applyProfileImage();
+      setEditStatus("✅ Profile picture saved!", "success");
+      setTimeout(closeEditModal, 1000);
+    } else {
+      setEditStatus("❌ Save failed", "error");
+    }
+  });
+}
+
+function applyProfileImage() {
+  const img = document.getElementById("profileImage");
+  if (img) img.src = profileImageUrl;
+}
+
+/* =========================================================
+   EDIT: GATEWAY (Trade / Research)
+========================================================= */
+
+function editGateway(type) {
+  const isTrade = type === "trade";
+  const currentTitle = isTrade
+    ? (gatewayTradeData.title || tx("tradeTitle"))
+    : (gatewayResearchData.title || tx("researchTitle"));
+  const currentText = isTrade
+    ? (gatewayTradeData.text || tx("tradeText"))
+    : (gatewayResearchData.text || tx("researchText"));
+
+  openEditModal(
+    isTrade ? "🌍 Edit Global Trade" : "📚 Edit Research & Knowledge",
+    `
+    <label>Title:</label>
+    <input type="text" id="editGatewayTitle" value="${escapeHtml(currentTitle)}">
+    <label>Description:</label>
+    <textarea id="editGatewayText" rows="3">${escapeHtml(currentText)}</textarea>
+  `,
+    async () => {
+      const newTitle = document.getElementById("editGatewayTitle").value.trim();
+      const newText = document.getElementById("editGatewayText").value.trim();
+
+      if (!newTitle || !newText) {
+        setEditStatus("❌ Both fields required", "error");
+        return;
+      }
+
+      setEditStatus("Saving...", "");
+      const keyTitle = isTrade ? "gateway_trade_title" : "gateway_research_title";
+      const keyText = isTrade ? "gateway_trade_text" : "gateway_research_text";
+
+      const ok1 = await saveToKV(keyTitle, newTitle);
+      const ok2 = await saveToKV(keyText, newText);
+
+      if (ok1 && ok2) {
+        if (isTrade) {
+          gatewayTradeData = { title: newTitle, text: newText };
+        } else {
+          gatewayResearchData = { title: newTitle, text: newText };
+        }
+        applyGatewayContent();
+        setEditStatus("✅ Saved!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed", "error");
+      }
+    }
+  );
+}
+
+/* =========================================================
+   EDIT: GALLERY ITEM
+========================================================= */
+
+function editGalleryItem(index) {
+  const [currentSrc, currentCap] = galleryItems[index] || ["", ""];
+
+  openEditModal(
+    `🖼️ Edit Gallery Image #${index + 1}`,
+    `
+    <label>Current Image:</label>
+    <img src="${currentSrc}" class="edit-modal-preview" alt="Gallery">
+    <label>Caption:</label>
+    <input type="text" id="editGalleryCap" value="${escapeHtml(currentCap)}">
+    <label>Upload New Image (optional):</label>
+    <input type="file" id="editGalleryFile" accept="image/*">
+    <label>OR Paste Image URL:</label>
+    <input type="text" id="editGalleryUrl" placeholder="https://..." value="${currentSrc}">
+  `,
+    async () => {
+      const capInput = document.getElementById("editGalleryCap");
+      const fileInput = document.getElementById("editGalleryFile");
+      const urlInput = document.getElementById("editGalleryUrl");
+
+      const newCap = capInput.value.trim();
+      let newSrc = urlInput.value.trim();
+
+      if (!newCap) { setEditStatus("❌ Caption required", "error"); return; }
+
+      if (fileInput.files[0]) {
+        setEditStatus("Uploading...", "");
+        const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "gallery");
+        if (uploadedUrl) newSrc = uploadedUrl;
+        else { setEditStatus("❌ Upload failed", "error"); return; }
+      }
+
+      if (!newSrc) { setEditStatus("❌ No image", "error"); return; }
+
+      setEditStatus("Saving...", "");
+      galleryItems[index] = [newSrc, newCap];
+      const ok = await saveToKV("gallery_data", galleryItems);
+
+      if (ok) {
+        renderGallery();
+        setEditStatus("✅ Gallery image saved!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed", "error");
+      }
+    }
+  );
+}
+
+/* =========================================================
+   LOAD ALL KV CONTENT
+========================================================= */
+
+async function loadAllKVContent() {
+  // Hero
+  const heroVal = await getFromKV("hero_image");
+  if (heroVal) {
+    heroImageUrl = typeof heroVal === "string" ? heroVal : heroVal;
+    applyHeroImage();
+  }
+
+  // Profile
+  const profileVal = await getFromKV("profile_image");
+  if (profileVal) {
+    profileImageUrl = typeof profileVal === "string" ? profileVal : profileVal;
+    applyProfileImage();
+  }
+
+  // Gateway Trade
+  const gt = await getFromKV("gateway_trade_title");
+  const gx = await getFromKV("gateway_trade_text");
+  if (gt) gatewayTradeData.title = gt;
+  if (gx) gatewayTradeData.text = gx;
+
+  // Gateway Research
+  const rt = await getFromKV("gateway_research_title");
+  const rx = await getFromKV("gateway_research_text");
+  if (rt) gatewayResearchData.title = rt;
+  if (rx) gatewayResearchData.text = rx;
+
+  applyGatewayContent();
+
+  // Gallery
+  const gal = await getFromKV("gallery_data");
+  if (gal && Array.isArray(gal) && gal.length === 8) {
+    galleryItems = gal;
+    renderGallery();
+  }
+
+  // Offices
+  const off = await getFromKV("offices");
+  if (off && Array.isArray(off) && off.length === 4) {
+    offices = off;
+    renderOffices();
+  } else if (state.admin && state.token) {
+    // Save defaults
+    await saveToKV("offices", DEFAULT_OFFICES);
+  }
+}
+
+/* =========================================================
+   ADMIN MODE
+========================================================= */
+
+function activateAdminUI() {
+  document.getElementById("adminLoginBox").hidden = true;
+  document.getElementById("adminTools").hidden = false;
+  document.getElementById("adminStatus").textContent =
+    "Admin Mode active. Click ✏️ buttons to edit. Theme, media, offices and AI are ready.";
+  document.body.classList.add("admin-mode");
+
+  setTimeout(() => {
+    initColorPickers();
+    initThemeControls();
+    renderOffices();
+    renderGallery();
+  }, 100);
+}
+
+function deactivateAdminUI() {
+  document.body.classList.remove("admin-mode");
+  document.getElementById("adminLoginBox").hidden = false;
+  document.getElementById("adminTools").hidden = true;
+  document.getElementById("adminStatus").textContent =
+    "Secure Admin Mode enables management tools and changes Royal AI into an Admin Assistant.";
+}
 
 /* =========================================================
    INITIALIZATION
@@ -835,10 +1201,41 @@ window.copyMediaUrl = copyMediaUrl;
 function init() {
   renderGallery();
   renderOffices();
-  loadOfficesFromKV();
 
-  document.getElementById("mainWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
+  // Setup edit buttons
+  const editHeroBtn = document.getElementById("editHeroBtn");
+  if (editHeroBtn) editHeroBtn.onclick = editHeroImage;
 
+  const editProfileBtn = document.getElementById("editProfileBtn");
+  if (editProfileBtn) editProfileBtn.onclick = editProfileImage;
+
+  const editGatewayTradeBtn = document.getElementById("editGatewayTradeBtn");
+  if (editGatewayTradeBtn) editGatewayTradeBtn.onclick = () => editGateway("trade");
+
+  const editGatewayResearchBtn = document.getElementById("editGatewayResearchBtn");
+  if (editGatewayResearchBtn) editGatewayResearchBtn.onclick = () => editGateway("research");
+
+  // Edit modal controls
+  const editModalClose = document.getElementById("editModalClose");
+  if (editModalClose) editModalClose.onclick = closeEditModal;
+
+  const editModalCancel = document.getElementById("editModalCancel");
+  if (editModalCancel) editModalCancel.onclick = closeEditModal;
+
+  const editModalSave = document.getElementById("editModalSave");
+  if (editModalSave) {
+    editModalSave.onclick = async () => {
+      if (currentEditSaveHandler) await currentEditSaveHandler();
+    };
+  }
+
+  // WhatsApp
+  const mainWhatsapp = document.getElementById("mainWhatsapp");
+  if (mainWhatsapp) {
+    mainWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
+  }
+
+  // Gateway buttons
   document.querySelectorAll("[data-open-gateway]").forEach((b) =>
     (b.onclick = (e) => {
       e.preventDefault();
@@ -846,6 +1243,7 @@ function init() {
       openGateway(b.dataset.openGateway);
     })
   );
+
   document.getElementById("gatewayBack").onclick = closeGateway;
   document.getElementById("hubBack").onclick = () => {
     state.hub = null;
@@ -853,75 +1251,37 @@ function init() {
     document.getElementById("gatewayView").classList.add("open");
     renderGateway(state.gateway);
   };
+
+  // Language selects
   ["languageSelect", "gatewayLanguage", "hubLanguage"].forEach((id) => {
     const s = document.getElementById(id);
     if (!s) return;
     s.innerHTML = document.getElementById("languageSelect").innerHTML;
     s.onchange = (e) => setLanguage(e.target.value);
   });
+
+  // Mobile menu
   document.getElementById("menuOpen").onclick = () =>
     document.getElementById("mobileDrawer").classList.add("open");
   document.getElementById("menuClose").onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
 
-  document.querySelectorAll("#adminOpen").forEach((btn) => {
-    btn.onclick = () => {
+  // Admin buttons
+  const adminOpen = document.getElementById("adminOpen");
+  if (adminOpen) adminOpen.onclick = () => document.getElementById("adminDialog").showModal();
+
+  const adminOpenMobile = document.getElementById("adminOpenMobile");
+  if (adminOpenMobile) {
+    adminOpenMobile.onclick = () => {
       document.getElementById("mobileDrawer").classList.remove("open");
       document.getElementById("adminDialog").showModal();
     };
-  });
+  }
+
   document.getElementById("adminClose").onclick = () =>
     document.getElementById("adminDialog").close();
 
-  function activateAdminUI() {
-    document.getElementById("adminLoginBox").hidden = true;
-    document.getElementById("adminTools").hidden = false;
-    document.getElementById("adminStatus").textContent =
-      "Admin Mode active. Cloudinary media manager and Royal AI Admin Assistant are ready.";
-    setTimeout(() => {
-      initColorPickers();
-      initThemeControls();
-      renderOffices(); // admin inputs بھریں
-    }, 100);
-  }
-
-  // Upload with description support
-  document.getElementById("mediaUpload").onclick = async () => {
-    const fileInput = document.getElementById("mediaFile");
-    const file = fileInput.files[0];
-    const status = document.getElementById("mediaStatus");
-    if (!file) { status.textContent = "Select an image, video or PDF first."; return; }
-    status.textContent = "Uploading…";
-    try {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("folder", document.getElementById("mediaFolder").value);
-      const descEl = document.getElementById("mediaDescription");
-      const titleEl = document.getElementById("mediaTitle");
-      if (descEl && descEl.value) fd.append("description", descEl.value);
-      if (titleEl && titleEl.value) fd.append("title", titleEl.value);
-
-      const r = await fetch("/api/media/upload", {
-        method: "POST",
-        headers: { Authorization: "Bearer " + state.token },
-        body: fd,
-      });
-      const d = await r.json();
-      status.textContent = d.ok ? "✅ Uploaded: " + d.key : (d.error || "Upload failed");
-      if (d.ok) {
-        fileInput.value = "";
-        if (descEl) descEl.value = "";
-        if (titleEl) titleEl.value = "";
-        loadMediaList();
-      }
-    } catch (e) {
-      status.textContent = "Upload failed: " + e.message;
-    }
-  };
-
-  const loadBtn = document.getElementById("loadMediaBtn");
-  if (loadBtn) loadBtn.onclick = loadMediaList;
-
+  // Admin login
   document.getElementById("adminLogin").onclick = () => {
     const token = document.getElementById("adminToken").value.trim();
     if (!token) return;
@@ -933,7 +1293,61 @@ function init() {
     applyLanguage();
   };
 
-  /* ---- Office Address Save Button ---- */
+  // Admin logout
+  const logoutBtn = document.getElementById("adminLogout");
+  if (logoutBtn) {
+    logoutBtn.onclick = () => {
+      if (!confirm("Logout from Admin Mode?")) return;
+      state.admin = false;
+      state.token = "";
+      sessionStorage.removeItem("royalAdmin");
+      sessionStorage.removeItem("royalAdminToken");
+      deactivateAdminUI();
+      applyLanguage();
+    };
+  }
+
+  // Media upload
+  const mediaUpload = document.getElementById("mediaUpload");
+  if (mediaUpload) {
+    mediaUpload.onclick = async () => {
+      const fileInput = document.getElementById("mediaFile");
+      const file = fileInput.files[0];
+      const status = document.getElementById("mediaStatus");
+      if (!file) { status.textContent = "Select a file first."; return; }
+      status.textContent = "Uploading…";
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        fd.append("folder", document.getElementById("mediaFolder").value);
+        const descEl = document.getElementById("mediaDescription");
+        const titleEl = document.getElementById("mediaTitle");
+        if (descEl && descEl.value) fd.append("description", descEl.value);
+        if (titleEl && titleEl.value) fd.append("title", titleEl.value);
+
+        const r = await fetch("/api/media/upload", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + state.token },
+          body: fd,
+        });
+        const d = await r.json();
+        status.textContent = d.ok ? "✅ Uploaded: " + d.key : (d.error || "Upload failed");
+        if (d.ok) {
+          fileInput.value = "";
+          if (descEl) descEl.value = "";
+          if (titleEl) titleEl.value = "";
+          loadMediaList();
+        }
+      } catch (e) {
+        status.textContent = "Upload failed: " + e.message;
+      }
+    };
+  }
+
+  const loadMediaBtn = document.getElementById("loadMediaBtn");
+  if (loadMediaBtn) loadMediaBtn.onclick = loadMediaList;
+
+  // Office save/reset
   const saveAddressesBtn = document.getElementById("saveAddresses");
   if (saveAddressesBtn) {
     saveAddressesBtn.addEventListener("click", async () => {
@@ -948,44 +1362,75 @@ function init() {
       }
       const status = document.getElementById("adminStatus");
       if (status) status.textContent = "Saving offices...";
-      const ok = await saveOfficesToKV(newOffices);
+      const ok = await saveToKV("offices", newOffices);
       if (ok) {
         offices = newOffices;
         renderOffices();
-        if (status) status.textContent = "✅ Offices saved successfully!";
+        if (status) status.textContent = "✅ Offices saved!";
       } else {
-        if (status) status.textContent = "❌ Save failed. Check login.";
+        if (status) status.textContent = "❌ Save failed. Login again.";
       }
     });
   }
 
-  /* ---- Office Address Reset Button ---- */
   const resetAddressesBtn = document.getElementById("resetAddresses");
   if (resetAddressesBtn) {
     resetAddressesBtn.addEventListener("click", async () => {
-      if (!confirm("Reset all offices to default?")) return;
-      const status = document.getElementById("adminStatus");
-      if (status) status.textContent = "Resetting...";
-      const ok = await saveOfficesToKV(DEFAULT_OFFICES);
+      if (!confirm("Reset all offices?")) return;
+      const ok = await saveToKV("offices", DEFAULT_OFFICES);
       if (ok) {
         offices = [...DEFAULT_OFFICES];
         renderOffices();
-        if (status) status.textContent = "↻ Offices reset to default.";
-      } else {
-        if (status) status.textContent = "❌ Reset failed.";
+        const status = document.getElementById("adminStatus");
+        if (status) status.textContent = "↻ Offices reset.";
       }
     });
   }
 
+  // Create Cloudinary folder
+  const createFolderBtn = document.getElementById("createFolderBtn");
+  if (createFolderBtn) {
+    createFolderBtn.onclick = async () => {
+      const name = document.getElementById("newFolderName").value.trim();
+      const status = document.getElementById("folderStatus");
+      if (!name) { status.textContent = "❌ Enter folder name"; return; }
+      status.textContent = "Creating...";
+      try {
+        const r = await fetch("/api/media/folder", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + state.token,
+          },
+          body: JSON.stringify({ folder: name }),
+        });
+        const d = await r.json();
+        status.textContent = d.ok ? "✅ Folder created: " + d.folder : "❌ " + (d.error || "Failed");
+      } catch (e) {
+        status.textContent = "❌ Error: " + e.message;
+      }
+    };
+  }
+
+  // AI form
+  const aiForm = document.getElementById("aiForm");
+  if (aiForm) {
+    aiForm.onsubmit = (e) => {
+      e.preventDefault();
+      const q = document.getElementById("aiInput").value.trim();
+      if (q) { askAI(q); document.getElementById("aiInput").value = ""; }
+    };
+  }
+
+  // Load saved theme
   const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
   if (savedTheme) applyFullTheme(savedTheme);
 
   if (state.admin) activateAdminUI();
-  document.getElementById("aiForm").onsubmit = (e) => {
-    e.preventDefault();
-    const q = document.getElementById("aiInput").value.trim();
-    if (q) { askAI(q); document.getElementById("aiInput").value = ""; }
-  };
+
+  // Load KV content
+  loadAllKVContent();
+
   applyLanguage();
 }
 
