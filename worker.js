@@ -1,6 +1,6 @@
 // =========================================================
 // ROYAL CHILGHOZA PINE NUTS — CLOUDFLARE WORKER
-// With Cloudinary Integration (25GB Free Storage)
+// With Cloudinary + KV Storage
 // =========================================================
 
 const CLOUDINARY_CLOUD_NAME = "agnhxdu4";
@@ -26,6 +26,7 @@ export default {
         ok: true,
         service: "Royal Chilghoza Pine Nuts Worker",
         ai: !!env.AI,
+        kv: !!env.ROYAL_KV,
         cloudinary: true,
       }, cors);
     }
@@ -52,6 +53,88 @@ export default {
       });
       return json({ reply: result.response || "No response." }, cors);
     }
+
+    // =========================================================
+    // KV STORAGE APIs (NEW)
+    // =========================================================
+
+    // ---- KV: Get value ----
+    if (url.pathname.startsWith("/api/kv/get/") && request.method === "GET") {
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors, 503);
+      }
+      try {
+        const key = decodeURIComponent(url.pathname.slice("/api/kv/get/".length));
+        const value = await env.ROYAL_KV.get(key);
+        if (value === null) {
+          return json({ ok: false, error: "Not found", key }, cors, 404);
+        }
+        try {
+          return json({ ok: true, key, value: JSON.parse(value) }, cors);
+        } catch (e) {
+          return json({ ok: true, key, value }, cors);
+        }
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- KV: Set value ----
+    if (url.pathname === "/api/kv/set" && request.method === "POST") {
+      if (!authorized(request, env)) {
+        return new Response("Unauthorized", { status: 401, headers: cors });
+      }
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors, 503);
+      }
+      try {
+        const body = await request.json();
+        const { key, value } = body;
+        if (!key) return json({ ok: false, error: "key required" }, cors, 400);
+        const toStore = typeof value === "string" ? value : JSON.stringify(value);
+        await env.ROYAL_KV.put(key, toStore);
+        return json({ ok: true, key }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- KV: Delete value ----
+    if (url.pathname.startsWith("/api/kv/delete/") && request.method === "DELETE") {
+      if (!authorized(request, env)) {
+        return new Response("Unauthorized", { status: 401, headers: cors });
+      }
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors, 503);
+      }
+      try {
+        const key = decodeURIComponent(url.pathname.slice("/api/kv/delete/".length));
+        await env.ROYAL_KV.delete(key);
+        return json({ ok: true, key }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // ---- KV: List all keys ----
+    if (url.pathname === "/api/kv/list" && request.method === "GET") {
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors, 503);
+      }
+      try {
+        const list = await env.ROYAL_KV.list({ limit: 1000 });
+        return json({
+          ok: true,
+          keys: list.keys.map(k => ({ name: k.name, expiration: k.expiration }))
+        }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors, 500);
+      }
+    }
+
+    // =========================================================
+    // CLOUDINARY — Media Management
+    // =========================================================
 
     // ---- Cloudinary: Upload ----
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
@@ -216,6 +299,10 @@ export default {
         302
       );
     }
+
+    // =========================================================
+    // ADMIN & STATIC
+    // =========================================================
 
     // ---- Admin Status ----
     if (url.pathname === "/api/admin/status") {
