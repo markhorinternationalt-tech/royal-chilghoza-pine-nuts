@@ -1792,3 +1792,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
     padding: 5px 9px;
   }
 }
+/* Force Font Scale — Permanent Protection */
+html {
+  font-size: calc(16px * clamp(0.9, var(--font-scale, 1), 1.1)) !important;
+}
