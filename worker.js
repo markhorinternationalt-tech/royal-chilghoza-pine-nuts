@@ -33,29 +33,64 @@ export default {
 
     // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
-      const { message = "", mode = "visitor", language = "en" } = await request.json();
-      if (mode === "admin" && !authorized(request, env)) {
-        return json({ reply: "Admin authorization required." }, cors, 401);
-      }
-      if (!env.AI) {
+      try {
+        const { message = "", mode = "visitor", language = "en" } = await request.json();
+
+        if (mode === "admin" && !authorized(request, env)) {
+          return json({ reply: "Admin authorization required." }, cors, 401);
+        }
+
+        if (!env.AI) {
+          return json({
+            reply: "Royal AI is ready in the interface. Configure the Cloudflare Workers AI binding to activate live AI responses."
+          }, cors);
+        }
+
+        const system = mode === "admin"
+          ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
+          : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
+
+        // کوشش 1: جدید ماڈل
+        let result;
+        try {
+          result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+            messages: [
+              { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+              { role: "user", content: message }
+            ]
+          });
+        } catch (e1) {
+          // کوشش 2: متبادل ماڈل
+          try {
+            result = await env.AI.run("@cf/meta/llama-3-8b-instruct", {
+              messages: [
+                { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+                { role: "user", content: message }
+              ]
+            });
+          } catch (e2) {
+            // کوشش 3: بنیادی ماڈل
+            result = await env.AI.run("@cf/meta/llama-2-7b-chat-int8", {
+              messages: [
+                { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
+                { role: "user", content: message }
+              ]
+            });
+          }
+        }
+
+        const reply = (result && (result.response || result.result)) || "No response.";
+        return json({ reply }, cors);
+
+      } catch (err) {
         return json({
-          reply: "Royal AI is ready in the interface. Configure the Cloudflare Workers AI binding to activate live AI responses."
-        }, cors);
+          reply: "AI Error: " + (err.message || "Unknown error")
+        }, cors, 500);
       }
-      const system = mode === "admin"
-        ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
-        : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
-      const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-        messages: [
-          { role: "system", content: `${system} Reply in the requested interface language code: ${language}.` },
-          { role: "user", content: message }
-        ]
-      });
-      return json({ reply: result.response || "No response." }, cors);
     }
 
     // =========================================================
-    // KV STORAGE APIs (NEW)
+    // KV STORAGE APIs
     // =========================================================
 
     // ---- KV: Get value ----
