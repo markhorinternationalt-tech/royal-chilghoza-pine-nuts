@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -10,18 +9,11 @@
 <title>Royal Chilghoza Pine Nuts</title>
 <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-
 <div class="ambient ambient-a"></div>
 <div class="ambient ambient-b"></div>
 
-<!-- =========================
-     ROYAL HEADER
-========================= -->
-
 <header class="site-header" id="top">
-
 <a class="brand" href="#top" aria-label="Royal Chilghoza Pine Nuts home">
 <span class="royal-logo" aria-hidden="true">♛</span>
 <span class="brand-copy">
@@ -29,7 +21,6 @@
 <small>PINE NUTS</small>
 </span>
 </a>
-
 <nav class="desktop-nav">
 <a href="#top" data-i18n="navHome">Home</a>
 <a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a>
@@ -37,9 +28,7 @@
 <a href="#gallery" data-i18n="navGallery">Gallery</a>
 <a href="#contact">WhatsApp</a>
 </nav>
-
 <div class="header-actions">
-
 <select id="languageSelect" aria-label="Language">
 <option value="en">🌐 English</option>
 <option value="zh">🌐 中文</option>
@@ -47,29 +36,18 @@
 <option value="ps">🌐 پښتو</option>
 <option value="ru">🌐 Русский</option>
 </select>
-
-<!-- ✅ ڈیسک ٹاپ کے لیے ایڈمن بٹن -->
 <button id="adminOpen" class="admin-trigger" type="button" aria-label="Open admin panel">⚙ Admin</button>
-
 <button id="menuOpen" class="menu-trigger" aria-label="Open menu">☰</button>
-
 </div>
-
 </header>
-
-<!-- =========================
-     MAIN PAGE
-========================= -->
 
 <main id="mainPage">
 
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero">
-<div class="hero-bg"></div>
+<!-- HERO -->
+<section class="hero" id="heroSection">
+<div class="hero-bg" id="heroBg"></div>
 <div class="hero-overlay"></div>
+<button class="edit-btn" id="editHeroBtn" type="button" title="Edit Hero Image">✏️</button>
 <div class="hero-content">
 <p class="eyebrow" data-i18n="eyebrow">PAKISTAN · ORIGIN · GLOBAL</p>
 <h1>
@@ -84,26 +62,16 @@
 </div>
 </section>
 
-<!-- =========================
-     ROYAL LEADERSHIP
-========================= -->
-
+<!-- ROYAL LEADERSHIP -->
 <section class="royal-profile-section">
 <div class="royal-profile-shell glass-card">
-
 <div class="royal-profile-image-wrap">
 <div class="royal-profile-ring">
-<!-- ✅ پروفائل تصویر — آپ کے GitHub کے مطابق درست نام -->
-<img
-class="royal-profile-image"
-src="royal-profile-pic.jpg"
-alt="Syed Azeem Shah - Founder and CEO"
-onerror="this.classList.add('profile-image-failed')"
->
+<img class="royal-profile-image" id="profileImage" src="royal-profile-pic.jpg" alt="Syed Azeem Shah - Founder and CEO" onerror="this.classList.add('profile-image-failed')">
 </div>
 <div class="royal-profile-crown">♛</div>
+<button class="edit-btn" id="editProfileBtn" type="button" title="Edit Profile Picture">✏️</button>
 </div>
-
 <div class="royal-profile-content">
 <p class="eyebrow royal-profile-eyebrow" data-i18n="profileEyebrow">ROYAL LEADERSHIP · PAKISTAN · ORIGIN · GLOBAL</p>
 <h2>Syed Azeem Shah</h2>
@@ -117,48 +85,39 @@ onerror="this.classList.add('profile-image-failed')"
 <span data-i18n="profileTag4">KNOWLEDGE</span>
 </div>
 </div>
-
 </div>
 </section>
 
-<!-- =========================
-     TWO PRIMARY GATEWAYS
-========================= -->
-
+<!-- GATEWAYS -->
 <section class="section-shell gateway-section" id="gateways">
-
 <div class="section-heading">
 <p class="eyebrow" data-i18n="gatewayEyebrow">TWO PRIMARY GATEWAYS</p>
 <h2 data-i18n="gatewayTitle">One Royal Chilghoza Pine Nuts Ecosystem</h2>
 </div>
-
 <div class="gateway-grid">
 
-<!-- GLOBAL TRADE -->
-<article class="gateway-card glass-card">
+<article class="gateway-card glass-card" id="gatewayCardTrade">
+<button class="edit-btn" id="editGatewayTradeBtn" type="button" title="Edit Global Trade">✏️</button>
 <div class="gateway-icon">◈</div>
 <p class="eyebrow">01 · CHILGHOZA PINE NUTS</p>
-<h2 data-i18n="tradeTitle">GLOBAL TRADE</h2>
-<p data-i18n="tradeText">Premium quality · Worldwide export · Markets and buyers</p>
+<h2 data-i18n="tradeTitle" class="gateway-title">GLOBAL TRADE</h2>
+<p data-i18n="tradeText" class="gateway-text">Premium quality · Worldwide export · Markets and buyers</p>
 <button class="btn btn-gold" data-open-gateway="trade" data-i18n="openGateway">Open Gateway</button>
 </article>
 
-<!-- RESEARCH -->
-<article class="gateway-card glass-card">
+<article class="gateway-card glass-card" id="gatewayCardResearch">
+<button class="edit-btn" id="editGatewayResearchBtn" type="button" title="Edit Research & Knowledge">✏️</button>
 <div class="gateway-icon">✦</div>
 <p class="eyebrow">02 · CHILGHOZA PINE NUTS</p>
-<h2 data-i18n="researchTitle">RESEARCH & KNOWLEDGE</h2>
-<p data-i18n="researchText">Science · Origin · Forests · Ecology · Knowledge</p>
+<h2 data-i18n="researchTitle" class="gateway-title">RESEARCH & KNOWLEDGE</h2>
+<p data-i18n="researchText" class="gateway-text">Science · Origin · Forests · Ecology · Knowledge</p>
 <button class="btn btn-gold" data-open-gateway="research" data-i18n="openGateway">Open Gateway</button>
 </article>
 
 </div>
 </section>
 
-<!-- =========================
-     GALLERY
-========================= -->
-
+<!-- GALLERY -->
 <section class="section-shell gallery-section" id="gallery">
 <div class="section-heading">
 <p class="eyebrow" data-i18n="galleryEyebrow">ROYAL FIELD ARCHIVE</p>
@@ -168,10 +127,7 @@ onerror="this.classList.add('profile-image-failed')"
 <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
-<!-- =========================
-     ROYAL AI
-========================= -->
-
+<!-- AI -->
 <section class="section-shell ai-section">
 <div class="ai-panel glass-card">
 <div class="ai-orb"><span>AI</span></div>
@@ -189,10 +145,7 @@ onerror="this.classList.add('profile-image-failed')"
 </div>
 </section>
 
-<!-- =========================
-     WHATSAPP
-========================= -->
-
+<!-- WHATSAPP -->
 <section class="section-shell contact-section" id="contact">
 <a id="mainWhatsapp" class="whatsapp-gateway" target="_blank" rel="noopener">
 <span>◉</span>
@@ -204,10 +157,7 @@ onerror="this.classList.add('profile-image-failed')"
 </a>
 </section>
 
-<!-- =========================
-     OFFICE ADDRESS
-========================= -->
-
+<!-- OFFICES -->
 <section class="offices-section">
 <div class="section-shell">
 <div class="section-heading">
@@ -220,10 +170,7 @@ onerror="this.classList.add('profile-image-failed')"
 
 </main>
 
-<!-- =========================
-     GATEWAY VIEW
-========================= -->
-
+<!-- GATEWAY VIEW -->
 <section id="gatewayView" class="full-view" aria-hidden="true">
 <div class="view-topbar">
 <button id="gatewayBack">← <span data-i18n="back">Back</span></button>
@@ -238,10 +185,7 @@ onerror="this.classList.add('profile-image-failed')"
 <div class="hub-grid-page" id="hubGridPage"></div>
 </section>
 
-<!-- =========================
-     HUB VIEW
-========================= -->
-
+<!-- HUB VIEW -->
 <section id="hubView" class="full-view" aria-hidden="true">
 <div class="view-topbar">
 <button id="hubBack">← <span data-i18n="back">Back</span></button>
@@ -266,24 +210,17 @@ onerror="this.classList.add('profile-image-failed')"
 </article>
 </section>
 
-<!-- =========================
-     MOBILE MENU
-========================= -->
-
+<!-- MOBILE DRAWER -->
 <div class="mobile-drawer" id="mobileDrawer">
 <button id="menuClose" aria-label="Close menu">×</button>
 <a href="#top" data-i18n="navHome">Home</a>
 <a href="#gateways" data-open-gateway="trade" data-i18n="navTrade">Global Trade</a>
 <a href="#gateways" data-open-gateway="research" data-i18n="navResearch">Research & Knowledge</a>
 <a href="#gallery" data-i18n="navGallery">Gallery</a>
-<!-- ✅ موبائل کے لیے ایڈمن بٹن -->
-<button id="adminOpen" class="drawer-admin-access" type="button">Management Access</button>
+<button id="adminOpenMobile" class="drawer-admin-access" type="button">Management Access</button>
 </div>
 
-<!-- =========================
-     ADMIN PANEL
-========================= -->
-
+<!-- ADMIN DIALOG -->
 <dialog id="adminDialog">
 <div class="admin-panel admin-wide">
 <button id="adminClose">×</button>
@@ -298,8 +235,7 @@ onerror="this.classList.add('profile-image-failed')"
 
 <div id="adminTools" hidden>
 
-<!-- THEME -->
-<h3>Theme Customizer</h3>
+<h3>🎨 Theme Customizer</h3>
 <p class="admin-note">Live controls for the Royal Chilghoza Pine Nuts interface.</p>
 
 <div class="royal-theme-customizer">
@@ -382,17 +318,16 @@ Heading Scale: <b id="headingScaleVal">1.0x</b>
 <button id="themeReset" class="btn btn-glass">Reset Theme</button>
 </div>
 
-<!-- MEDIA — CLOUDINARY -->
 <h3>📸 Media Management (Cloudinary)</h3>
-<p class="admin-note">Upload images, videos, and PDFs to Cloudinary — free 25 GB storage. Add a title and description for each file.</p>
+<p class="admin-note">Upload images, videos, and PDFs to Cloudinary — free 25 GB storage.</p>
 
 <div class="admin-actions">
 <input id="mediaFile" type="file" accept="image/*,video/*,application/pdf">
 </div>
 
-<input id="mediaTitle" class="admin-input" placeholder="Title (e.g. Chilghoza Premium Kernels)" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
+<input id="mediaTitle" class="admin-input" placeholder="Title (e.g. Chilghoza Premium Kernels)">
 
-<textarea id="mediaDescription" placeholder="Description (e.g. Premium quality Chilghoza Pine Nuts from Gilgit-Baltistan, Pakistan — export grade)" rows="3" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;resize:vertical;"></textarea>
+<textarea id="mediaDescription" class="admin-input" placeholder="Description..." rows="3"></textarea>
 
 <div class="admin-actions">
 <select id="mediaFolder">
@@ -417,51 +352,62 @@ Heading Scale: <b id="headingScaleVal">1.0x</b>
 <div id="mediaListContainer" class="media-list"></div>
 </div>
 
-<!-- ADDRESS MANAGEMENT -->
 <h3>📍 Office Address Management</h3>
 <p class="admin-note">Edit the 4 office addresses shown on the website.</p>
 
-<input id="office1Input" class="admin-input" placeholder="Office 1 (Headquarters & Native Origin)" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
-
-<input id="office2Input" class="admin-input" placeholder="Office 2 (Regional Operations Hub)" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
-
-<input id="office3Input" class="admin-input" placeholder="Office 3 (Federal & Trade Desk)" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
-
-<input id="office4Input" class="admin-input" placeholder="Office 4 (International Trade Desk)" style="width:100%;padding:12px 14px;margin:8px 0;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
+<input id="office1Input" class="admin-input" placeholder="Office 1 (Headquarters & Native Origin)">
+<input id="office2Input" class="admin-input" placeholder="Office 2 (Regional Operations Hub)">
+<input id="office3Input" class="admin-input" placeholder="Office 3 (Federal & Trade Desk)">
+<input id="office4Input" class="admin-input" placeholder="Office 4 (International Trade Desk)">
 
 <div class="admin-actions">
 <button id="saveAddresses" class="btn btn-gold">💾 Save Addresses</button>
 <button id="resetAddresses" class="btn btn-glass">↺ Reset</button>
 </div>
 
-<!-- FOLDER MANAGEMENT -->
 <h3>📁 Create Cloudinary Folder</h3>
 <p class="admin-note">Create a new folder to organize media files on Cloudinary.</p>
 
 <div class="admin-actions">
-<input id="newFolderName" class="admin-input" placeholder="e.g. 2026-harvest" style="flex:1;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
+<input id="newFolderName" class="admin-input" placeholder="e.g. 2026-harvest" style="flex:1;">
 <button id="createFolderBtn" class="btn btn-gold">📁 Create Folder</button>
 </div>
 
 <p id="folderStatus" class="admin-note"></p>
 
-<!-- AI HELP -->
 <h3>🤖 AI Admin Assistant</h3>
-<p class="admin-note">Ask the Royal AI Assistant for help with admin tasks, content ideas, translations, or Cloudinary.</p>
+<p class="admin-note">Ask the Royal AI Assistant for help with admin tasks.</p>
 
 <div id="adminAiMessages" class="ai-messages" style="margin-bottom:10px;max-height:200px;overflow-y:auto;padding:10px;border:1px dashed var(--line);border-radius:10px;"></div>
 
 <form id="adminAiForm" style="display:flex;gap:8px;">
-<input id="adminAiInput" class="admin-input" placeholder="Ask AI about admin tasks..." style="flex:1;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:rgba(3,20,10,0.7);color:var(--text);font-family:var(--body-font);font-size:0.9rem;">
+<input id="adminAiInput" class="admin-input" placeholder="Ask AI about admin tasks..." style="flex:1;">
 <button type="submit" class="btn btn-gold">Ask</button>
 </form>
+
+<div class="admin-actions" style="margin-top:30px;border-top:1px solid var(--line);padding-top:16px;">
+<button id="adminLogout" class="btn btn-glass" style="width:100%;">🚪 Logout from Admin Mode</button>
+</div>
 
 </div>
 </div>
 </dialog>
 
+<!-- EDIT MODAL -->
+<dialog id="editModal">
+<div class="edit-modal-panel">
+<button class="modal-close" id="editModalClose" type="button">×</button>
+<h3 id="editModalTitle">Edit</h3>
+<div id="editModalBody"></div>
+<div class="modal-actions">
+<button id="editModalSave" class="btn btn-gold">💾 Save</button>
+<button id="editModalCancel" class="btn btn-glass">Cancel</button>
+</div>
+<p class="edit-status" id="editModalStatus"></p>
+</div>
+</dialog>
+
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.2/dist/iro.min.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
