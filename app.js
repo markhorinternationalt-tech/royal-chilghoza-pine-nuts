@@ -529,9 +529,15 @@ async function askAI(message) {
       body: JSON.stringify({ message, mode: state.admin ? "admin" : "visitor", language: state.lang }),
     });
     const data = await r.json();
-    box.innerHTML += `<p><b>Royal AI:</b> ${escapeHtml(data.reply || "No reply.")}</p>`;
-  } catch {
-    box.innerHTML += `<p><b>Royal AI:</b> ${state.admin ? "Admin AI will connect after the Cloudflare Worker is deployed." : "Visitor AI will connect after the Cloudflare Worker is deployed."}</p>`;
+    // ✅ اصل response دکھائیں (چاہے error ہو)
+    if (data.reply) {
+      box.innerHTML += `<p><b>Royal AI:</b> ${escapeHtml(data.reply)}</p>`;
+    } else {
+      box.innerHTML += `<p><b>Royal AI:</b> <span style="color:#ff6b6b">Error: ${escapeHtml(JSON.stringify(data))}</span></p>`;
+    }
+  } catch (err) {
+    // ✅ اصل error message دکھائیں
+    box.innerHTML += `<p><b>Royal AI:</b> <span style="color:#ff6b6b">Fetch Error: ${escapeHtml(err.message)}</span></p>`;
   }
   box.scrollTop = box.scrollHeight;
 }
