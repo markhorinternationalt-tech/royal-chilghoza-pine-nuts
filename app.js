@@ -360,12 +360,56 @@ const T = {
   },
 };
 
-const offices = [
+/* =========================================================
+   OFFICES — KV INTEGRATION (NEW)
+========================================================= */
+
+const DEFAULT_OFFICES = [
   "Chilas, Diamer District, Gilgit-Baltistan, Pakistan",
   "Gilgit, Gilgit-Baltistan, Pakistan",
   "Islamabad, Pakistan",
   "China / International Export Hub",
 ];
+
+let offices = [...DEFAULT_OFFICES];
+
+async function loadOfficesFromKV() {
+  try {
+    const r = await fetch("/api/kv/get/offices");
+    if (r.ok) {
+      const data = await r.json();
+      if (data.ok && Array.isArray(data.value) && data.value.length === 4) {
+        offices = data.value;
+        renderOffices();
+        return;
+      }
+    }
+    // اگر KV میں نہیں ہے تو ڈیفالٹ محفوظ کر دیں (صرف admin موڈ میں)
+    if (state.admin && state.token) {
+      await saveOfficesToKV(DEFAULT_OFFICES);
+    }
+  } catch (e) {
+    console.warn("Offices KV load failed:", e);
+  }
+}
+
+async function saveOfficesToKV(newOffices) {
+  try {
+    const r = await fetch("/api/kv/set", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + state.token,
+      },
+      body: JSON.stringify({ key: "offices", value: newOffices }),
+    });
+    const data = await r.json();
+    return data.ok;
+  } catch (e) {
+    console.warn("Offices KV save failed:", e);
+    return false;
+  }
+}
 
 function tx(k) { return (T[state.lang] && T[state.lang][k]) || T.en[k] || k; }
 function hubs(type) { return (hubData[state.lang] || hubData.en)[type] || hubData.en[type]; }
@@ -404,6 +448,12 @@ function renderOffices() {
     .map((a, i) =>
       `<article class="office-card"><span>${String(i + 1).padStart(2, "0")}</span><h3>${titles[i]}</h3><p>${a}</p></article>`
     ).join("");
+
+  // Admin input fields بھریں
+  for (let i = 0; i < 4; i++) {
+    const el = document.getElementById("office" + (i + 1) + "Input");
+    if (el) el.value = offices[i] || "";
+  }
 }
 
 function openGateway(type) {
@@ -779,6 +829,8 @@ window.copyMediaUrl = copyMediaUrl;
 function init() {
   renderGallery();
   renderOffices();
+  loadOfficesFromKV();
+
   document.getElementById("mainWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Chilghoza Pine Nuts Trade Inquiry")}`;
 
   document.querySelectorAll("[data-open-gateway]").forEach((b) =>
@@ -823,6 +875,7 @@ function init() {
     setTimeout(() => {
       initColorPickers();
       initThemeControls();
+      renderOffices(); // admin inputs بھریں
     }, 100);
   }
 
@@ -873,6 +926,50 @@ function init() {
     activateAdminUI();
     applyLanguage();
   };
+
+  /* ---- Office Address Save Button ---- */
+  const saveAddressesBtn = document.getElementById("saveAddresses");
+  if (saveAddressesBtn) {
+    saveAddressesBtn.addEventListener("click", async () => {
+      const newOffices = [];
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById("office" + i + "Input");
+        newOffices.push(el ? el.value.trim() : "");
+      }
+      if (newOffices.some(o => !o)) {
+        alert("تمام 4 دفاتر کے ایڈریس بھریں۔");
+        return;
+      }
+      const status = document.getElementById("adminStatus");
+      if (status) status.textContent = "Saving offices...";
+      const ok = await saveOfficesToKV(newOffices);
+      if (ok) {
+        offices = newOffices;
+        renderOffices();
+        if (status) status.textContent = "✅ Offices saved successfully!";
+      } else {
+        if (status) status.textContent = "❌ Save failed. Check login.";
+      }
+    });
+  }
+
+  /* ---- Office Address Reset Button ---- */
+  const resetAddressesBtn = document.getElementById("resetAddresses");
+  if (resetAddressesBtn) {
+    resetAddressesBtn.addEventListener("click", async () => {
+      if (!confirm("Reset all offices to default?")) return;
+      const status = document.getElementById("adminStatus");
+      if (status) status.textContent = "Resetting...";
+      const ok = await saveOfficesToKV(DEFAULT_OFFICES);
+      if (ok) {
+        offices = [...DEFAULT_OFFICES];
+        renderOffices();
+        if (status) status.textContent = "↻ Offices reset to default.";
+      } else {
+        if (status) status.textContent = "❌ Reset failed.";
+      }
+    });
+  }
 
   const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
   if (savedTheme) applyFullTheme(savedTheme);
