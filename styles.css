@@ -394,6 +394,24 @@ body.subview .site-header { display: none; }
   isolation: isolate;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+/* =========================================================
+   GATEWAY TITLE COLOR — FALLBACK FIX
+========================================================= */
+
+.gateway-card h2 {
+  color: var(--cream) !important;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gateway-card h2 {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f1e8 40%, #d4c9a8 80%, #a89572 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.15));
+  }
+}
 .gateway-card:before {
   content: "";
   position: absolute;
