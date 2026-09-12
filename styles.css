@@ -1469,3 +1469,153 @@ body.admin-mode .edit-btn {
 .gallery-item {
   position: relative;
 }
+
+/* =========================================================
+   HUB CRUD — Action Buttons & Create New Hub
+========================================================= */
+
+.hub-card-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.hub-card-wrapper .hub-card {
+  width: 100%;
+  flex: 1;
+}
+
+.hub-card-actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: none;
+  gap: 6px;
+  z-index: 20;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: calc(100% - 28px);
+}
+
+body.admin-mode .hub-card-actions {
+  display: flex;
+}
+
+.hub-action-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+  color: #0a1810;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0;
+  line-height: 1;
+  font-family: var(--body-font);
+}
+
+.hub-action-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.6);
+}
+
+.hub-action-btn.danger {
+  background: linear-gradient(135deg, #ff8080, #d63030);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(214, 48, 48, 0.4);
+}
+
+.hub-action-btn.danger:hover {
+  box-shadow: 0 6px 22px rgba(214, 48, 48, 0.6);
+}
+
+/* Create New Hub Button */
+.create-hub-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 34px 24px;
+  min-height: 230px;
+  border: 2px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 20px;
+  background: rgba(212, 175, 55, 0.03);
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--body-font);
+  text-align: center;
+  width: 100%;
+}
+
+.create-hub-btn:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+}
+
+.create-hub-btn span {
+  font-size: 2.4rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.create-hub-btn b {
+  font-family: var(--heading-font);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.create-hub-btn small {
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+/* Office card edit button position */
+.office-card {
+  position: relative;
+}
+
+.office-card .edit-btn {
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, var(--gold2), var(--gold));
+}
+
+/* Mobile tweaks */
+@media (max-width: 620px) {
+  .hub-card-actions {
+    top: 10px;
+    right: 10px;
+    gap: 5px;
+  }
+  .hub-action-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+  .create-hub-btn {
+    padding: 28px 20px;
+    min-height: 180px;
+  }
+  .create-hub-btn b {
+    font-size: 1.1rem;
+  }
+  .create-hub-btn span {
+    font-size: 2rem;
+  }
+}
