@@ -385,17 +385,12 @@ const T = {
     office4Title: "Международный торговый офис",
   },
   ur: {
-    navHome: "ہوم",
-    navTrade: "عالمی تجارت",
-    navResearch: "تحقیق اور علم",
-    navGallery: "گیلری",
-    admin: "ایڈمن",
+    navHome: "ہوم", navTrade: "عالمی تجارت", navResearch: "تحقیق اور علم",
+    navGallery: "گیلری", admin: "ایڈمن",
     eyebrow: "پاکستان · اصل · عالمی",
-    heroRoyal: "رائل",
-    heroTitle: "Chilghoza Pine Nuts",
+    heroRoyal: "رائل", heroTitle: "Chilghoza Pine Nuts",
     heroText: "پاکستان کے Chilghoza Pine Nuts کے جنگلات سے دنیا تک — بہترین معیار، مستند اصل، ذمہ دار سپلائی چین اور علم کو جوڑنا۔",
-    exploreTrade: "عالمی تجارت دیکھیں",
-    exploreResearch: "تحقیق دیکھیں",
+    exploreTrade: "عالمی تجارت دیکھیں", exploreResearch: "تحقیق دیکھیں",
     gatewayEyebrow: "دو بنیادی دروازے",
     gatewayTitle: "ایک رائل Chilghoza Pine Nuts ماحولیاتی نظام",
     tradeTitle: "عالمی تجارت",
@@ -408,8 +403,7 @@ const T = {
     galleryText: "جنگل، کٹائی، درجہ بندی اور برآمد سے آٹھ قابل ترمیم بصری ریکارڈ۔",
     aiTitle: "رائل AI اسسٹنٹ",
     aiText: "Chilghoza Pine Nuts، تجارت، معیار، جنگلات اور تحقیق کے بارے میں پوچھیں۔",
-    aiPlaceholder: "Chilghoza Pine Nuts کے بارے میں پوچھیں...",
-    ask: "AI سے پوچھیں",
+    aiPlaceholder: "Chilghoza Pine Nuts کے بارے میں پوچھیں...", ask: "AI سے پوچھیں",
     directInquiry: "براہ راست تجارتی استفسار",
     whatsappTitle: "WhatsApp Chilghoza Pine Nuts تجارتی ڈیسک",
     officeEyebrow: "رابطہ · دفتر · شراکت داری",
@@ -420,24 +414,27 @@ const T = {
     whatsappTrade: "WhatsApp تجارت",
     mediaTitle: "تصاویر · ویڈیوز · PDFs",
     mediaEmpty: "اپ لوڈ کے بعد متحرک میڈیا یہاں ظاہر ہوگا۔",
-    visitorAI: "وزیٹر اسسٹنٹ",
-    adminAI: "ایڈمن اسسٹنٹ",
+    visitorAI: "وزیٹر اسسٹنٹ", adminAI: "ایڈمن اسسٹنٹ",
     profileEyebrow: "رائل قیادت · پاکستان · اصل · عالمی",
     profileRole: "بانی اور سی ای او",
     profileDescription: "پاکستان کے پہاڑوں اور جنگلات سے دنیا تک — مستند اصل، بہترین معیار، عالمی تجارت اور علم کے درمیان ایک قابل اعتماد ربط قائم کرنا۔",
-    profileTag1: "پاکستان",
-    profileTag2: "اصل",
-    profileTag3: "عالمی تجارت",
-    profileTag4: "علم",
+    profileTag1: "پاکستان", profileTag2: "اصل",
+    profileTag3: "عالمی تجارت", profileTag4: "علم",
     office1Title: "ہیڈ کوارٹر اور آبائی اصل",
     office2Title: "علاقائی آپریشنز ہب",
     office3Title: "وفاقی اور تجارتی ڈیسک",
     office4Title: "بین الاقوامی تجارتی ڈیسک",
   },
 };
+
 /* =========================================================
    STATE DATA (KV-driven)
 ========================================================= */
+
+const DEFAULT_GATEWAYS = [
+  { id: "trade", icon: "◈", builtin: true, published: true },
+  { id: "research", icon: "✦", builtin: true, published: true }
+];
 
 const DEFAULT_OFFICES = [
   "Chilas, Diamer District, Gilgit-Baltistan, Pakistan",
@@ -452,7 +449,9 @@ let heroImageUrl = "001.jpg";
 let profileImageUrl = "royal-profile-pic.jpg";
 let gatewayTradeData = { title: null, text: null };
 let gatewayResearchData = { title: null, text: null };
-let customHubData = null; // Admin-modified hubs (KV-driven)
+let customHubData = null;
+let gateways = null;
+let hubMediaCache = {};
 
 /* =========================================================
    KV HELPERS
@@ -498,15 +497,17 @@ function hubs(type) {
   if (customHubData && customHubData[state.lang] && Array.isArray(customHubData[state.lang][type])) {
     return customHubData[state.lang][type];
   }
-  return (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
+  const defaults = (hubData[state.lang] || hubData.en)[type];
+  if (defaults) return defaults;
+  return [];
 }
 
 function ensureCustomHub(type) {
   if (!customHubData) customHubData = {};
   if (!customHubData[state.lang]) customHubData[state.lang] = {};
   if (!Array.isArray(customHubData[state.lang][type])) {
-    const defaults = (hubData[state.lang] || hubData.en)[type] || hubData.en[type];
-    customHubData[state.lang][type] = JSON.parse(JSON.stringify(defaults));
+    const defaults = (hubData[state.lang] || hubData.en)[type];
+    customHubData[state.lang][type] = defaults ? JSON.parse(JSON.stringify(defaults)) : [];
   }
   return customHubData[state.lang][type];
 }
@@ -515,7 +516,41 @@ async function saveHubsKV() {
   return await saveToKV("hubs_data", customHubData);
 }
 
+function getGateways() {
+  if (Array.isArray(gateways) && gateways.length > 0) return gateways;
+  return JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+}
+
+function getVisibleGateways() {
+  const all = getGateways();
+  if (state.admin) return all;
+  return all.filter(gw => gw.published !== false);
+}
+
+function getGatewayTitle(gw) {
+  if (gw.builtin && gw.id === "trade") return gatewayTradeData.title || tx("tradeTitle");
+  if (gw.builtin && gw.id === "research") return gatewayResearchData.title || tx("researchTitle");
+  if (gw.title && typeof gw.title === "object") {
+    return gw.title[state.lang] || gw.title.en || gw.title.ur || "Gateway";
+  }
+  return "Gateway";
+}
+
+function getGatewayText(gw) {
+  if (gw.builtin && gw.id === "trade") return gatewayTradeData.text || tx("tradeText");
+  if (gw.builtin && gw.id === "research") return gatewayResearchData.text || tx("researchText");
+  if (gw.text && typeof gw.text === "object") {
+    return gw.text[state.lang] || gw.text.en || gw.text.ur || "";
+  }
+  return "";
+}
+
+async function saveGatewaysKV() {
+  return await saveToKV("gateways_data", gateways);
+}
+
 function applyLanguage() {
+  hubMediaCache = {};
   document.documentElement.lang = state.lang;
   document.documentElement.dir = (state.lang === "ar" || state.lang === "ur") ? "rtl" : "ltr";
   document.querySelectorAll("[data-i18n]").forEach((e) => (e.textContent = tx(e.dataset.i18n)));
@@ -525,6 +560,7 @@ function applyLanguage() {
   if (aiModeLabel) aiModeLabel.textContent = state.admin ? tx("adminAI") : tx("visitorAI");
 
   applyGatewayContent();
+  renderGateways();
   renderOffices();
   renderGallery();
   if (state.gateway) renderGateway(state.gateway);
@@ -569,6 +605,292 @@ function renderGallery() {
     };
   });
 }
+
+/* =========================================================
+   RENDER GATEWAYS — Main Page Dynamic
+========================================================= */
+
+function renderGateways() {
+  const grid = document.getElementById("gatewayGrid");
+  if (!grid) return;
+
+  const allGateways = getGateways();
+  const visibleGateways = getVisibleGateways();
+  const listToRender = state.admin ? allGateways : visibleGateways;
+
+  if (listToRender.length === 0) {
+    grid.innerHTML = `<p style="text-align:center;color:var(--muted);padding:40px;">No gateways available yet.</p>`;
+    return;
+  }
+
+  const html = listToRender.map((gw) => {
+    const realIndex = allGateways.findIndex(g => g.id === gw.id);
+    const title = getGatewayTitle(gw);
+    const text = getGatewayText(gw);
+    const icon = gw.icon || "◆";
+    const isHidden = gw.published === false;
+
+    const adminBtns = state.admin ? `
+      <div class="gateway-card-actions">
+        <button class="hub-action-btn" data-gw-edit="${realIndex}" title="Edit" type="button">✏️</button>
+        ${realIndex > 0 ? `<button class="hub-action-btn" data-gw-up="${realIndex}" title="Move Up" type="button">⬆</button>` : ""}
+        ${realIndex < allGateways.length - 1 ? `<button class="hub-action-btn" data-gw-down="${realIndex}" title="Move Down" type="button">⬇</button>` : ""}
+        ${!gw.builtin ? `<button class="hub-action-btn danger" data-gw-delete="${realIndex}" title="Delete" type="button">🗑</button>` : ""}
+      </div>
+    ` : "";
+
+    const hiddenBadge = (state.admin && isHidden) ? `
+      <div class="gateway-hidden-badge">🌫 HIDDEN from visitors</div>
+    ` : "";
+
+    return `
+      <article class="gateway-card glass-card ${isHidden ? 'gateway-hidden' : ''}" style="position:relative;">
+        ${adminBtns}
+        ${hiddenBadge}
+        <div class="gateway-icon">${icon}</div>
+        <p class="eyebrow">${String(realIndex + 1).padStart(2, "0")} · CHILGHOZA PINE NUTS</p>
+        <h2 class="gateway-title">${escapeHtml(title)}</h2>
+        <p class="gateway-text">${escapeHtml(text)}</p>
+        <button class="btn btn-gold" data-open-gateway="${gw.id}" type="button">${tx("openGateway")}</button>
+      </article>
+    `;
+  }).join("");
+
+  const createBtn = state.admin ? `
+    <button class="create-hub-btn" data-create-gateway type="button">
+      <span>➕</span>
+      <b>Create New Gateway</b>
+      <small>Add a new gateway to the main page</small>
+    </button>
+  ` : "";
+
+  grid.innerHTML = html + createBtn;
+
+  grid.querySelectorAll("[data-open-gateway]").forEach((b) =>
+    (b.onclick = (e) => {
+      e.preventDefault();
+      openGateway(b.dataset.openGateway);
+    })
+  );
+
+  if (state.admin) {
+    grid.querySelectorAll("[data-gw-edit]").forEach((b) =>
+      (b.onclick = (e) => { e.preventDefault(); e.stopPropagation(); editGatewayItem(+b.dataset.gwEdit); })
+    );
+    grid.querySelectorAll("[data-gw-up]").forEach((b) =>
+      (b.onclick = (e) => { e.preventDefault(); e.stopPropagation(); moveGateway(+b.dataset.gwUp, -1); })
+    );
+    grid.querySelectorAll("[data-gw-down]").forEach((b) =>
+      (b.onclick = (e) => { e.preventDefault(); e.stopPropagation(); moveGateway(+b.dataset.gwDown, 1); })
+    );
+    grid.querySelectorAll("[data-gw-delete]").forEach((b) =>
+      (b.onclick = (e) => { e.preventDefault(); e.stopPropagation(); deleteGatewayItem(+b.dataset.gwDelete); })
+    );
+    const cb = grid.querySelector("[data-create-gateway]");
+    if (cb) cb.onclick = createNewGateway;
+  }
+}
+
+/* =========================================================
+   GATEWAY CRUD
+========================================================= */
+
+function createNewGateway() {
+  const currentLang = state.lang;
+  const langLabel = currentLang.toUpperCase();
+
+  openEditModal(
+    "🆕 Create New Gateway",
+    `
+    <label>Icon (emoji or symbol):</label>
+    <input type="text" id="newGwIcon" placeholder="◆" value="🆕" maxlength="4">
+
+    <label>Gateway Title (${langLabel}): <span style="color:#ff6b6b">*</span></label>
+    <input type="text" id="newGwTitle" placeholder="New Gateway 1">
+
+    <label>Gateway Description (${langLabel}):</label>
+    <textarea id="newGwText" rows="2" placeholder="Short description..."></textarea>
+
+    <label style="margin-top:18px;">Visibility:</label>
+    <div class="gw-visibility-options">
+      <label class="gw-radio"><input type="radio" name="newGwVis" value="hide" checked> 🌫 <b>Hide</b> from visitors (Draft)</label>
+      <label class="gw-radio"><input type="radio" name="newGwVis" value="show"> 👁 <b>Show</b> to everyone</label>
+    </div>
+
+    <p class="admin-note" style="margin-top:14px;">💡 You can add hubs after creating. The gateway remains hidden until you publish it.</p>
+    `,
+    async () => {
+      const icon = document.getElementById("newGwIcon").value.trim() || "🆕";
+      const title = document.getElementById("newGwTitle").value.trim();
+      const text = document.getElementById("newGwText").value.trim();
+      const vis = document.querySelector('input[name="newGwVis"]:checked').value;
+      const published = vis === "show";
+
+      if (!title) { setEditStatus("❌ Title required", "error"); return; }
+
+      const newId = "gw_" + Date.now();
+
+      if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+
+      gateways.push({
+        id: newId,
+        icon: icon,
+        builtin: false,
+        published: published,
+        title: { [currentLang]: title, en: currentLang === "en" ? title : "" },
+        text: { [currentLang]: text, en: currentLang === "en" ? text : "" }
+      });
+
+      if (!customHubData) customHubData = {};
+      if (!customHubData[currentLang]) customHubData[currentLang] = {};
+      customHubData[currentLang][newId] = [];
+
+      setEditStatus("Saving...", "");
+      const ok1 = await saveGatewaysKV();
+      const ok2 = await saveHubsKV();
+
+      if (ok1 && ok2) {
+        renderGateways();
+        setEditStatus("✅ Gateway created! " + (published ? "(Visible)" : "(Hidden)"), "success");
+        setTimeout(closeEditModal, 1200);
+      } else {
+        setEditStatus("❌ Save failed.", "error");
+      }
+    }
+  );
+}
+
+function editGatewayItem(index) {
+  const allGateways = getGateways();
+  const gw = allGateways[index];
+  if (!gw) return;
+
+  const currentTitle = getGatewayTitle(gw);
+  const currentText = getGatewayText(gw);
+  const currentIcon = gw.icon || "◆";
+  const isPublished = gw.published !== false;
+
+  openEditModal(
+    `✏️ Edit Gateway #${index + 1}`,
+    `
+    <label>Icon:</label>
+    <input type="text" id="editGwIcon" value="${escapeHtml(currentIcon)}" maxlength="4">
+
+    <label>Gateway Title (${state.lang.toUpperCase()}):</label>
+    <input type="text" id="editGwTitle" value="${escapeHtml(currentTitle)}">
+
+    <label>Gateway Description (${state.lang.toUpperCase()}):</label>
+    <textarea id="editGwText" rows="2">${escapeHtml(currentText)}</textarea>
+
+    <label style="margin-top:18px;">Visibility:</label>
+    <div class="gw-visibility-options">
+      <label class="gw-radio"><input type="radio" name="editGwVis" value="hide" ${!isPublished ? 'checked' : ''}> 🌫 <b>Hide</b> from visitors (Draft)</label>
+      <label class="gw-radio"><input type="radio" name="editGwVis" value="show" ${isPublished ? 'checked' : ''}> 👁 <b>Show</b> to everyone</label>
+    </div>
+    `,
+    async () => {
+      const newIcon = document.getElementById("editGwIcon").value.trim() || "◆";
+      const newTitle = document.getElementById("editGwTitle").value.trim();
+      const newText = document.getElementById("editGwText").value.trim();
+      const vis = document.querySelector('input[name="editGwVis"]:checked').value;
+      const published = vis === "show";
+
+      if (!newTitle) { setEditStatus("❌ Title required", "error"); return; }
+
+      setEditStatus("Saving...", "");
+
+      if (gw.builtin && gw.id === "trade") {
+        const ok1 = await saveToKV("gateway_trade_title", newTitle);
+        const ok2 = await saveToKV("gateway_trade_text", newText);
+        if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+        const realGw = gateways.find(g => g.id === "trade");
+        if (realGw) { realGw.published = published; realGw.icon = newIcon; }
+        const ok3 = await saveGatewaysKV();
+        if (ok1 && ok2 && ok3) {
+          gatewayTradeData = { title: newTitle, text: newText };
+        } else { setEditStatus("❌ Save failed.", "error"); return; }
+      } else if (gw.builtin && gw.id === "research") {
+        const ok1 = await saveToKV("gateway_research_title", newTitle);
+        const ok2 = await saveToKV("gateway_research_text", newText);
+        if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+        const realGw = gateways.find(g => g.id === "research");
+        if (realGw) { realGw.published = published; realGw.icon = newIcon; }
+        const ok3 = await saveGatewaysKV();
+        if (ok1 && ok2 && ok3) {
+          gatewayResearchData = { title: newTitle, text: newText };
+        } else { setEditStatus("❌ Save failed.", "error"); return; }
+      } else {
+        if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+        const realGw = gateways.find(g => g.id === gw.id);
+        if (realGw) {
+          realGw.icon = newIcon;
+          realGw.published = published;
+          if (!realGw.title) realGw.title = {};
+          if (!realGw.text) realGw.text = {};
+          realGw.title[state.lang] = newTitle;
+          realGw.text[state.lang] = newText;
+          const ok = await saveGatewaysKV();
+          if (!ok) { setEditStatus("❌ Save failed.", "error"); return; }
+        }
+      }
+
+      renderGateways();
+      setEditStatus("✅ Saved!", "success");
+      setTimeout(closeEditModal, 1000);
+    }
+  );
+}
+
+async function deleteGatewayItem(index) {
+  const allGateways = getGateways();
+  const gw = allGateways[index];
+  if (!gw) return;
+
+  if (gw.builtin) {
+    alert("❌ Default gateways (Global Trade, Research & Knowledge) cannot be deleted.");
+    return;
+  }
+
+  const title = getGatewayTitle(gw);
+  if (!confirm(`🗑 Delete gateway "${title}"?\n\nAll hubs inside it will also be removed.\n\nThis action cannot be undone.`)) return;
+
+  if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+  gateways.splice(index, 1);
+
+  if (customHubData) {
+    Object.keys(customHubData).forEach(lang => {
+      if (customHubData[lang] && customHubData[lang][gw.id]) {
+        delete customHubData[lang][gw.id];
+      }
+    });
+  }
+
+  const ok1 = await saveGatewaysKV();
+  const ok2 = await saveHubsKV();
+
+  if (ok1 && ok2) {
+    renderGateways();
+  } else {
+    alert("❌ Delete failed.");
+  }
+}
+
+async function moveGateway(index, direction) {
+  if (!gateways) gateways = JSON.parse(JSON.stringify(DEFAULT_GATEWAYS));
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= gateways.length) return;
+
+  [gateways[index], gateways[newIndex]] = [gateways[newIndex], gateways[index]];
+
+  const ok = await saveGatewaysKV();
+  if (ok) {
+    renderGateways();
+  }
+}
+
+/* =========================================================
+   OFFICES
+========================================================= */
 
 function renderOffices() {
   const titles = [tx("office1Title"), tx("office2Title"), tx("office3Title"), tx("office4Title")];
@@ -628,6 +950,10 @@ function editOffice(index) {
   );
 }
 
+/* =========================================================
+   GATEWAY / HUB NAVIGATION
+========================================================= */
+
 function openGateway(type) {
   document.body.classList.add("subview");
   state.gateway = type;
@@ -640,23 +966,26 @@ function openGateway(type) {
 }
 
 function renderGateway(type) {
-  const isTrade = type === "trade";
+  const allGateways = getGateways();
+  const gw = allGateways.find(g => g.id === type);
+  const gwTitle = gw ? getGatewayTitle(gw) : "Gateway";
+  const gwText = gw ? getGatewayText(gw) : "";
+
   const gwLabels = {
-    en: ["PRIMARY GATEWAY 01", "PRIMARY GATEWAY 02"],
-    zh: ["主要门户 01", "主要门户 02"],
-    ar: ["البوابة الرئيسية 01", "البوابة الرئيسية 02"],
-    ps: ["لومړنۍ دروازه 01", "لومړنۍ دروازه 02"],
-    ru: ["ОСНОВНОЙ ПОРТАЛ 01", "ОСНОВНОЙ ПОРТАЛ 02"],
-    ur: ["بنیادی دروازہ 01", "بنیادی دروازہ 02"]
+    en: "PRIMARY GATEWAY",
+    zh: "主要门户",
+    ar: "البوابة الرئيسية",
+    ps: "لومړنۍ دروازه",
+    ru: "ОСНОВНОЙ ПОРТАЛ",
+    ur: "بنیادی دروازہ"
   };
-  const labels = gwLabels[state.lang] || gwLabels.en;
-  document.getElementById("gatewayEyebrow").textContent = isTrade ? labels[0] : labels[1];
-  document.getElementById("gatewayTitleText").textContent = isTrade ? tx("tradeTitle") : tx("researchTitle");
-  document.getElementById("gatewayDescription").textContent = isTrade ? tx("tradeText") : tx("researchText");
+  document.getElementById("gatewayEyebrow").textContent = gwLabels[state.lang] || gwLabels.en;
+  document.getElementById("gatewayTitleText").textContent = gwTitle;
+  document.getElementById("gatewayDescription").textContent = gwText;
 
   const list = hubs(type);
 
-  const hubCardsHtml = list.map(([title, desc], i) => {
+  const hubCardsHtml = list.length > 0 ? list.map(([title, desc], i) => {
     const adminBtns = state.admin ? `
       <div class="hub-card-actions">
         <button class="hub-action-btn" data-hub-edit="${type}:${i}" title="Edit Hub" type="button">✏️</button>
@@ -670,19 +999,21 @@ function renderGateway(type) {
       <div class="hub-card-wrapper">
         <button class="hub-card" data-hub="${type}:${i}" type="button">
           <span>${String(i + 1).padStart(2, "0")}</span>
-          <h2>${title}</h2>
-          <p>${desc}</p>
+          <h2>${escapeHtml(title)}</h2>
+          <p>${escapeHtml(desc)}</p>
           <b>→</b>
         </button>
         ${adminBtns}
       </div>
     `;
-  }).join("");
+  }).join("") : (state.admin
+    ? `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No hubs in this gateway yet. Click below to add one.</p>`
+    : `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No content available yet.</p>`);
 
   const createBtnHtml = state.admin ? `
     <button class="create-hub-btn" data-create-hub="${type}" type="button">
       <span>➕</span>
-      <b>${isTrade ? "Create New Trade Hub" : "Create New Research Hub"}</b>
+      <b>Create New Hub</b>
       <small>Add a new knowledge hub to this gateway</small>
     </button>
   ` : "";
@@ -698,37 +1029,19 @@ function renderGateway(type) {
 
   if (state.admin) {
     document.querySelectorAll("[data-hub-edit]").forEach((b) =>
-      (b.onclick = (e) => {
-        e.stopPropagation();
-        const [t, i] = b.dataset.hubEdit.split(":");
-        editHub(t, +i);
-      })
+      (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubEdit.split(":"); editHub(t, +i); })
     );
     document.querySelectorAll("[data-hub-delete]").forEach((b) =>
-      (b.onclick = (e) => {
-        e.stopPropagation();
-        const [t, i] = b.dataset.hubDelete.split(":");
-        deleteHub(t, +i);
-      })
+      (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubDelete.split(":"); deleteHub(t, +i); })
     );
     document.querySelectorAll("[data-hub-up]").forEach((b) =>
-      (b.onclick = (e) => {
-        e.stopPropagation();
-        const [t, i] = b.dataset.hubUp.split(":");
-        moveHub(t, +i, -1);
-      })
+      (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubUp.split(":"); moveHub(t, +i, -1); })
     );
     document.querySelectorAll("[data-hub-down]").forEach((b) =>
-      (b.onclick = (e) => {
-        e.stopPropagation();
-        const [t, i] = b.dataset.hubDown.split(":");
-        moveHub(t, +i, 1);
-      })
+      (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubDown.split(":"); moveHub(t, +i, 1); })
     );
     const createEl = document.querySelector("[data-create-hub]");
-    if (createEl) {
-      createEl.onclick = () => createHub(createEl.dataset.createHub);
-    }
+    if (createEl) createEl.onclick = () => createHub(createEl.dataset.createHub);
   }
 }
 
@@ -748,6 +1061,7 @@ function renderHub(type, index) {
   document.getElementById("hubTitleText").textContent = title;
   document.getElementById("hubDescription").textContent = desc;
   document.getElementById("hubWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Inquiry about " + title)}`;
+  renderHubMedia(type, index);
 }
 
 function closeGateway() {
@@ -766,18 +1080,19 @@ function escapeHtml(s) {
 }
 
 /* =========================================================
-   HUB CRUD — Create / Edit / Delete / Reorder
+   HUB CRUD
 ========================================================= */
 
 function createHub(type) {
-  const typeLabel = type === "trade" ? tx("tradeTitle") : tx("researchTitle");
+  const gw = getGateways().find(g => g.id === type);
+  const typeLabel = gw ? getGatewayTitle(gw) : "Hub";
   openEditModal(
     `🆕 Create New Hub — ${typeLabel}`,
     `
     <label>Hub Title: <span style="color:#ff6b6b">*</span></label>
     <input type="text" id="newHubTitle" placeholder="Enter hub title...">
     <label>Short Description:</label>
-    <textarea id="newHubDesc" rows="2" placeholder="Short subtitle for this hub..."></textarea>
+    <textarea id="newHubDesc" rows="2" placeholder="Short subtitle..."></textarea>
     `,
     async () => {
       const title = document.getElementById("newHubTitle").value.trim();
@@ -791,10 +1106,10 @@ function createHub(type) {
       const ok = await saveHubsKV();
       if (ok) {
         renderGateway(type);
-        setEditStatus("✅ Hub created successfully!", "success");
+        setEditStatus("✅ Hub created!", "success");
         setTimeout(closeEditModal, 1000);
       } else {
-        setEditStatus("❌ Save failed. Login again.", "error");
+        setEditStatus("❌ Save failed.", "error");
       }
     }
   );
@@ -803,7 +1118,8 @@ function createHub(type) {
 function editHub(type, index) {
   const list = hubs(type);
   const [currentTitle, currentDesc] = list[index] || ["", ""];
-  const typeLabel = type === "trade" ? tx("tradeTitle") : tx("researchTitle");
+  const gw = getGateways().find(g => g.id === type);
+  const typeLabel = gw ? getGatewayTitle(gw) : "Hub";
 
   openEditModal(
     `✏️ Edit Hub — ${typeLabel} #${index + 1}`,
@@ -847,7 +1163,7 @@ async function deleteHub(type, index) {
   if (ok) {
     renderGateway(type);
   } else {
-    alert("❌ Delete failed. Login again.");
+    alert("❌ Delete failed.");
   }
 }
 
@@ -861,6 +1177,170 @@ async function moveHub(type, index, direction) {
   const ok = await saveHubsKV();
   if (ok) {
     renderGateway(type);
+  }
+}
+
+/* =========================================================
+   HUB MEDIA
+========================================================= */
+
+async function loadHubMedia(type, index) {
+  const key = `hub_media_${type}_${index}`;
+  if (hubMediaCache[key] !== undefined) return hubMediaCache[key];
+  const val = await getFromKV(key);
+  const arr = Array.isArray(val) ? val : [];
+  hubMediaCache[key] = arr;
+  return arr;
+}
+
+async function saveHubMedia(type, index, arr) {
+  const key = `hub_media_${type}_${index}`;
+  hubMediaCache[key] = arr;
+  return await saveToKV(key, arr);
+}
+
+async function renderHubMedia(type, index) {
+  const container = document.getElementById("hubMedia");
+  if (!container) return;
+
+  const arr = await loadHubMedia(type, index);
+
+  const uploadBtn = state.admin
+    ? `<button class="btn btn-gold hubMediaUploadBtn" id="hubMediaUploadBtn" type="button">➕ Upload Media</button>`
+    : "";
+
+  if (arr.length === 0) {
+    container.innerHTML = uploadBtn + `<p class="hub-media-empty">${tx("mediaEmpty")}</p>`;
+  } else {
+    const items = arr.map((m, i) => {
+      const adminBtns = state.admin ? `
+        <div class="hub-media-item-actions">
+          <button class="hub-action-btn danger" data-media-delete="${type}:${index}:${i}" title="Delete" type="button">🗑</button>
+        </div>
+      ` : "";
+
+      let preview = "";
+      if (m.type === "image") {
+        preview = `<img src="${m.url}" alt="${escapeHtml(m.name)}" loading="lazy">`;
+      } else if (m.type === "video") {
+        preview = `<video src="${m.url}" controls preload="metadata"></video>`;
+      } else {
+        preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(m.name)}</b></div>`;
+      }
+
+      return `
+        <div class="hub-media-item">
+          <a href="${m.url}" target="_blank" rel="noopener">
+            ${preview}
+          </a>
+          ${adminBtns}
+        </div>
+      `;
+    }).join("");
+
+    container.innerHTML = uploadBtn + `<div class="hub-media-grid">${items}</div>`;
+  }
+
+  if (state.admin) {
+    const btn = document.getElementById("hubMediaUploadBtn");
+    if (btn) btn.onclick = () => uploadHubMedia(type, index);
+
+    container.querySelectorAll("[data-media-delete]").forEach((b) => {
+      b.onclick = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const [t, idx, mi] = b.dataset.mediaDelete.split(":");
+        await deleteHubMediaItem(t, +idx, +mi);
+      };
+    });
+  }
+}
+
+function uploadHubMedia(type, index) {
+  openEditModal(
+    "📤 Upload Media to Hub",
+    `
+    <label>File (image / video / PDF): <span style="color:#ff6b6b">*</span></label>
+    <input type="file" id="hubMediaFile" accept="image/*,video/*,application/pdf">
+    <label>Title (optional):</label>
+    <input type="text" id="hubMediaTitle" placeholder="e.g. Chilghoza Kernels Close-up">
+    `,
+    async () => {
+      const fileInput = document.getElementById("hubMediaFile");
+      const titleInput = document.getElementById("hubMediaTitle");
+      const file = fileInput.files[0];
+      if (!file) { setEditStatus("❌ Select a file first", "error"); return; }
+
+      setEditStatus("Uploading to Cloudinary...", "");
+      const folder = `hubs/${type}-${index}`;
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("folder", folder);
+      if (titleInput.value.trim()) fd.append("title", titleInput.value.trim());
+
+      try {
+        const r = await fetch("/api/media/upload", {
+          method: "POST",
+          headers: { Authorization: "Bearer " + state.token },
+          body: fd,
+        });
+        const d = await r.json();
+        if (!d.ok) {
+          setEditStatus("❌ Upload failed: " + (d.error || "unknown"), "error");
+          return;
+        }
+
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        let mtype = "image";
+        if (["mp4","webm","mov","avi"].includes(ext)) mtype = "video";
+        else if (["pdf","doc","docx"].includes(ext)) mtype = "raw";
+
+        const arr = await loadHubMedia(type, index);
+        arr.push({
+          url: d.url,
+          public_id: d.public_id || d.key,
+          name: titleInput.value.trim() || file.name,
+          type: mtype,
+          size: d.bytes || file.size,
+          uploaded: Date.now()
+        });
+
+        setEditStatus("Saving...", "");
+        const ok = await saveHubMedia(type, index, arr);
+        if (ok) {
+          setEditStatus("✅ Uploaded!", "success");
+          await renderHubMedia(type, index);
+          setTimeout(closeEditModal, 1000);
+        } else {
+          setEditStatus("❌ Save failed", "error");
+        }
+      } catch (e) {
+        setEditStatus("❌ Error: " + e.message, "error");
+      }
+    }
+  );
+}
+
+async function deleteHubMediaItem(type, index, mediaIndex) {
+  if (!confirm("🗑 Delete this media?\n\nThis will also remove it from Cloudinary.")) return;
+
+  const arr = await loadHubMedia(type, index);
+  const item = arr[mediaIndex];
+  if (!item) return;
+
+  try {
+    await fetch("/api/media/" + encodeURIComponent(item.public_id) + "?type=" + item.type, {
+      method: "DELETE",
+      headers: { Authorization: "Bearer " + state.token }
+    });
+  } catch (e) { /* ignore */ }
+
+  arr.splice(mediaIndex, 1);
+  const ok = await saveHubMedia(type, index, arr);
+  if (ok) {
+    await renderHubMedia(type, index);
+  } else {
+    alert("❌ Delete failed.");
   }
 }
 
@@ -1062,7 +1542,7 @@ function initThemeControls() {
 }
 
 /* =========================================================
-   MEDIA MANAGEMENT — Cloudinary
+   MEDIA MANAGEMENT
 ========================================================= */
 
 function formatSize(bytes) {
@@ -1232,18 +1712,11 @@ function editHeroImage() {
     if (fileInput.files[0]) {
       setEditStatus("Uploading...", "");
       const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "hero");
-      if (uploadedUrl) {
-        newUrl = uploadedUrl;
-      } else {
-        setEditStatus("❌ Upload failed", "error");
-        return;
-      }
+      if (uploadedUrl) newUrl = uploadedUrl;
+      else { setEditStatus("❌ Upload failed", "error"); return; }
     }
 
-    if (!newUrl) {
-      setEditStatus("❌ No image URL provided", "error");
-      return;
-    }
+    if (!newUrl) { setEditStatus("❌ No image URL provided", "error"); return; }
 
     setEditStatus("Saving...", "");
     const ok = await saveToKV("hero_image", newUrl);
@@ -1315,59 +1788,6 @@ function applyProfileImage() {
 }
 
 /* =========================================================
-   EDIT: GATEWAY (Trade / Research)
-========================================================= */
-
-function editGateway(type) {
-  const isTrade = type === "trade";
-  const currentTitle = isTrade
-    ? (gatewayTradeData.title || tx("tradeTitle"))
-    : (gatewayResearchData.title || tx("researchTitle"));
-  const currentText = isTrade
-    ? (gatewayTradeData.text || tx("tradeText"))
-    : (gatewayResearchData.text || tx("researchText"));
-
-  openEditModal(
-    isTrade ? "🌍 Edit Global Trade" : "📚 Edit Research & Knowledge",
-    `
-    <label>Title:</label>
-    <input type="text" id="editGatewayTitle" value="${escapeHtml(currentTitle)}">
-    <label>Description:</label>
-    <textarea id="editGatewayText" rows="3">${escapeHtml(currentText)}</textarea>
-  `,
-    async () => {
-      const newTitle = document.getElementById("editGatewayTitle").value.trim();
-      const newText = document.getElementById("editGatewayText").value.trim();
-
-      if (!newTitle || !newText) {
-        setEditStatus("❌ Both fields required", "error");
-        return;
-      }
-
-      setEditStatus("Saving...", "");
-      const keyTitle = isTrade ? "gateway_trade_title" : "gateway_research_title";
-      const keyText = isTrade ? "gateway_trade_text" : "gateway_research_text";
-
-      const ok1 = await saveToKV(keyTitle, newTitle);
-      const ok2 = await saveToKV(keyText, newText);
-
-      if (ok1 && ok2) {
-        if (isTrade) {
-          gatewayTradeData = { title: newTitle, text: newText };
-        } else {
-          gatewayResearchData = { title: newTitle, text: newText };
-        }
-        applyGatewayContent();
-        setEditStatus("✅ Saved!", "success");
-        setTimeout(closeEditModal, 1000);
-      } else {
-        setEditStatus("❌ Save failed", "error");
-      }
-    }
-  );
-}
-
-/* =========================================================
    EDIT: GALLERY ITEM
 ========================================================= */
 
@@ -1426,16 +1846,10 @@ function editGalleryItem(index) {
 
 async function loadAllKVContent() {
   const heroVal = await getFromKV("hero_image");
-  if (heroVal) {
-    heroImageUrl = typeof heroVal === "string" ? heroVal : heroVal;
-    applyHeroImage();
-  }
+  if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
 
   const profileVal = await getFromKV("profile_image");
-  if (profileVal) {
-    profileImageUrl = typeof profileVal === "string" ? profileVal : profileVal;
-    applyProfileImage();
-  }
+  if (profileVal) { profileImageUrl = profileVal; applyProfileImage(); }
 
   const gt = await getFromKV("gateway_trade_title");
   const gx = await getFromKV("gateway_trade_text");
@@ -1467,6 +1881,13 @@ async function loadAllKVContent() {
   if (customHubs && typeof customHubs === "object" && !Array.isArray(customHubs)) {
     customHubData = customHubs;
   }
+
+  const gwData = await getFromKV("gateways_data");
+  if (gwData && Array.isArray(gwData) && gwData.length >= 2) {
+    gateways = gwData;
+  }
+
+  renderGateways();
 }
 
 /* =========================================================
@@ -1485,6 +1906,7 @@ function activateAdminUI() {
     initThemeControls();
     renderOffices();
     renderGallery();
+    renderGateways();
   }, 100);
 }
 
@@ -1494,6 +1916,7 @@ function deactivateAdminUI() {
   document.getElementById("adminTools").hidden = true;
   document.getElementById("adminStatus").textContent =
     "Secure Admin Mode enables management tools and changes Royal AI into an Admin Assistant.";
+  renderGateways();
 }
 
 /* =========================================================
@@ -1503,18 +1926,13 @@ function deactivateAdminUI() {
 function init() {
   renderGallery();
   renderOffices();
+  renderGateways();
 
   const editHeroBtn = document.getElementById("editHeroBtn");
   if (editHeroBtn) editHeroBtn.onclick = editHeroImage;
 
   const editProfileBtn = document.getElementById("editProfileBtn");
   if (editProfileBtn) editProfileBtn.onclick = editProfileImage;
-
-  const editGatewayTradeBtn = document.getElementById("editGatewayTradeBtn");
-  if (editGatewayTradeBtn) editGatewayTradeBtn.onclick = () => editGateway("trade");
-
-  const editGatewayResearchBtn = document.getElementById("editGatewayResearchBtn");
-  if (editGatewayResearchBtn) editGatewayResearchBtn.onclick = () => editGateway("research");
 
   const editModalClose = document.getElementById("editModalClose");
   if (editModalClose) editModalClose.onclick = closeEditModal;
