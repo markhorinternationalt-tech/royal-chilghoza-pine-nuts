@@ -2280,18 +2280,42 @@ function init() {
     document.getElementById("adminDialog").close();
 
   const adminLoginEl = document.getElementById("adminLogin");
-  if (adminLoginEl) {
-    adminLoginEl.onclick = () => {
-      const token = document.getElementById("adminToken").value.trim();
-      if (!token) return;
-      state.admin = true;
-      state.token = token;
-      sessionStorage.setItem("royalAdmin", "1");
-      sessionStorage.setItem("royalAdminToken", token);
-      activateAdminUI();
-      applyLanguage();
-    };
-  }
+if (adminLoginEl) {
+  adminLoginEl.onclick = async () => {
+    const token = document.getElementById("adminToken").value.trim();
+    if (!token) return;
+
+    // Cloudflare سے پاسورڈ کی تصدیق کریں
+    try {
+      const r = await fetch("/api/kv/set", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token,
+        },
+        body: JSON.stringify({ key: "admin_auth_test", value: "test" }),
+      });
+
+      const data = await r.json();
+
+      if (data.ok) {
+        // پاسورڈ بالکل صحیح ہے
+        state.admin = true;
+        state.token = token;
+        sessionStorage.setItem("royalAdmin", "1");
+        sessionStorage.setItem("royalAdminToken", token);
+        activateAdminUI();
+        applyLanguage();
+      } else {
+        // پاسورڈ غلط ہے
+        alert("❌ غلط پاسورڈ! براہ کرم دوبارہ کوشش کریں۔");
+        document.getElementById("adminToken").value = "";
+      }
+    } catch (e) {
+      alert("❌ کنیکشن میں مسئلہ ہے۔ دوبارہ کوشش کریں۔");
+    }
+  };
+}
 
   const logoutBtn = document.getElementById("adminLogout");
   if (logoutBtn) {
