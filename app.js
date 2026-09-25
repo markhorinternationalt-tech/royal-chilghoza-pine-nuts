@@ -984,65 +984,79 @@ function renderGateway(type) {
   document.getElementById("gatewayDescription").textContent = gwText;
 
   const list = hubs(type);
+  const container = document.getElementById("hubGridPage");
+  if (!container) return;
 
-  const hubCardsHtml = list.length > 0 ? list.map(([title, desc], i) => {
-    const adminBtns = state.admin ? `
-      <div class="hub-card-actions">
-        <button class="hub-action-btn" data-hub-edit="${type}:${i}" title="Edit Hub" type="button">✏️</button>
-        ${i > 0 ? `<button class="hub-action-btn" data-hub-up="${type}:${i}" title="Move Up" type="button">⬆</button>` : ""}
-        ${i < list.length - 1 ? `<button class="hub-action-btn" data-hub-down="${type}:${i}" title="Move Down" type="button">⬇</button>` : ""}
-        <button class="hub-action-btn danger" data-hub-delete="${type}:${i}" title="Delete Hub" type="button">🗑</button>
-      </div>
-    ` : "";
+  if (list.length === 0) {
+    container.innerHTML = state.admin
+      ? `<p style="text-align:center;padding:40px;color:var(--muted);">No hubs yet. Click below to add one.</p>`
+      : `<p style="text-align:center;padding:40px;color:var(--muted);">Content coming soon.</p>`;
+  } else {
+    container.innerHTML = list.map(([title, desc], i) => {
+      const hubKey = `${type}_${i}`;
+      const adminBtns = state.admin ? `
+        <div class="hub-section-actions">
+          <button class="hub-action-btn" data-hub-edit="${type}:${i}" title="Edit Hub" type="button">✏️</button>
+          ${i > 0 ? `<button class="hub-action-btn" data-hub-up="${type}:${i}" title="Move Up" type="button">⬆</button>` : ""}
+          ${i < list.length - 1 ? `<button class="hub-action-btn" data-hub-down="${type}:${i}" title="Move Down" type="button">⬇</button>` : ""}
+          <button class="hub-action-btn danger" data-hub-delete="${type}:${i}" title="Delete Hub" type="button">🗑</button>
+        </div>
+      ` : "";
 
-    return `
-      <div class="hub-card-wrapper">
-        <button class="hub-card" data-hub="${type}:${i}" type="button">
-          <span>${String(i + 1).padStart(2, "0")}</span>
-          <h2>${escapeHtml(title)}</h2>
-          <p>${escapeHtml(desc)}</p>
-          <b>→</b>
-        </button>
-        ${adminBtns}
-      </div>
-    `;
-  }).join("") : (state.admin
-    ? `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No hubs in this gateway yet. Click below to add one.</p>`
-    : `<p style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);">No content available yet.</p>`);
+      const waLink = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Inquiry about " + title)}`;
 
-  const createBtnHtml = state.admin ? `
-    <button class="create-hub-btn" data-create-hub="${type}" type="button">
-      <span>➕</span>
-      <b>Create New Hub</b>
-      <small>Add a new knowledge hub to this gateway</small>
-    </button>
-  ` : "";
-
-  document.getElementById("hubGridPage").innerHTML = hubCardsHtml + createBtnHtml;
-
-  document.querySelectorAll("[data-hub]").forEach((b) =>
-    (b.onclick = () => {
-      const [t, index] = b.dataset.hub.split(":");
-      openHub(t, +index);
-    })
-  );
+      return `
+        <article class="hub-section" data-hub-section="${hubKey}" id="hub-${hubKey}">
+          ${adminBtns}
+          <div class="hub-section-header">
+            <div class="hub-section-number">HUB ${String(i + 1).padStart(2, "0")}</div>
+            <h2 class="hub-section-title">${escapeHtml(title)}</h2>
+            <p class="hub-section-desc">${escapeHtml(desc)}</p>
+          </div>
+          <div class="hub-section-media" id="hub-media-${hubKey}">
+            <div class="hub-media-loading">Loading media...</div>
+          </div>
+          <div class="hub-section-footer">
+            <a href="${waLink}" target="_blank" rel="noopener" class="btn btn-gold hub-wa-btn">
+              💬 WhatsApp Trade
+            </a>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
 
   if (state.admin) {
-    document.querySelectorAll("[data-hub-edit]").forEach((b) =>
+    const createBtn = `
+      <button class="create-hub-btn" data-create-hub="${type}" type="button">
+        <span>➕</span>
+        <b>Create New Hub</b>
+        <small>Add a new knowledge hub to this gateway</small>
+      </button>
+    `;
+    container.insertAdjacentHTML("beforeend", createBtn);
+  }
+
+  if (state.admin) {
+    container.querySelectorAll("[data-hub-edit]").forEach((b) =>
       (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubEdit.split(":"); editHub(t, +i); })
     );
-    document.querySelectorAll("[data-hub-delete]").forEach((b) =>
+    container.querySelectorAll("[data-hub-delete]").forEach((b) =>
       (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubDelete.split(":"); deleteHub(t, +i); })
     );
-    document.querySelectorAll("[data-hub-up]").forEach((b) =>
+    container.querySelectorAll("[data-hub-up]").forEach((b) =>
       (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubUp.split(":"); moveHub(t, +i, -1); })
     );
-    document.querySelectorAll("[data-hub-down]").forEach((b) =>
+    container.querySelectorAll("[data-hub-down]").forEach((b) =>
       (b.onclick = (e) => { e.stopPropagation(); const [t, i] = b.dataset.hubDown.split(":"); moveHub(t, +i, 1); })
     );
-    const createEl = document.querySelector("[data-create-hub]");
+    const createEl = container.querySelector("[data-create-hub]");
     if (createEl) createEl.onclick = () => createHub(createEl.dataset.createHub);
   }
+
+  list.forEach((_, i) => {
+    renderHubSectionMedia(type, i);
+  });
 }
 
 function openHub(type, index) {
@@ -1057,10 +1071,14 @@ function renderHub(type, index) {
   const list = hubs(type);
   const item = list[index] || ["", ""];
   const [title, desc] = item;
-  document.getElementById("hubNo").textContent = `${type === "trade" ? tx("tradeTitle") : tx("researchTitle")} · ${String(index + 1).padStart(2, "0")}`;
-  document.getElementById("hubTitleText").textContent = title;
-  document.getElementById("hubDescription").textContent = desc;
-  document.getElementById("hubWhatsapp").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Inquiry about " + title)}`;
+  const hubNoEl = document.getElementById("hubNo");
+  const hubTitleEl = document.getElementById("hubTitleText");
+  const hubDescEl = document.getElementById("hubDescription");
+  const hubWaEl = document.getElementById("hubWhatsapp");
+  if (hubNoEl) hubNoEl.textContent = `${type === "trade" ? tx("tradeTitle") : tx("researchTitle")} · ${String(index + 1).padStart(2, "0")}`;
+  if (hubTitleEl) hubTitleEl.textContent = title;
+  if (hubDescEl) hubDescEl.textContent = desc;
+  if (hubWaEl) hubWaEl.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Inquiry about " + title)}`;
   renderHubMedia(type, index);
 }
 
@@ -1206,15 +1224,11 @@ async function renderHubMedia(type, index) {
   const parentCard = container.closest(".hub-media");
   const arr = await loadHubMedia(type, index);
 
-  // =========================================================
-  // UPDATED: Hide entire media section from visitors if empty
-  // =========================================================
   if (arr.length === 0 && !state.admin) {
     if (parentCard) parentCard.style.display = "none";
     return;
   }
 
-  // Show parent card if it was hidden
   if (parentCard) parentCard.style.display = "";
 
   const uploadBtn = state.admin
@@ -1227,6 +1241,7 @@ async function renderHubMedia(type, index) {
     const items = arr.map((m, i) => {
       const adminBtns = state.admin ? `
         <div class="hub-media-item-actions">
+          <button class="hub-action-btn" data-media-edit="${type}:${index}:${i}" title="Edit Title" type="button">✏️</button>
           <button class="hub-action-btn danger" data-media-delete="${type}:${index}:${i}" title="Delete" type="button">🗑</button>
         </div>
       ` : "";
@@ -1263,6 +1278,93 @@ async function renderHubMedia(type, index) {
         e.stopPropagation();
         const [t, idx, mi] = b.dataset.mediaDelete.split(":");
         await deleteHubMediaItem(t, +idx, +mi);
+      };
+    });
+
+    container.querySelectorAll("[data-media-edit]").forEach((b) => {
+      b.onclick = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const [t, idx, mi] = b.dataset.mediaEdit.split(":");
+        editHubMediaItem(t, +idx, +mi);
+      };
+    });
+  }
+}
+
+async function renderHubSectionMedia(type, index) {
+  const hubKey = `${type}_${index}`;
+  const container = document.getElementById(`hub-media-${hubKey}`);
+  if (!container) return;
+
+  const arr = await loadHubMedia(type, index);
+
+  if (arr.length === 0 && !state.admin) {
+    container.style.display = "none";
+    return;
+  }
+
+  container.style.display = "";
+
+  const uploadBtn = state.admin
+    ? `<button class="btn btn-gold hubMediaUploadBtn" data-media-upload="${type}:${index}" type="button">➕ Upload Media</button>`
+    : "";
+
+  if (arr.length === 0) {
+    container.innerHTML = uploadBtn + `<p class="hub-media-empty">No media yet. Upload images, videos or PDFs.</p>`;
+  } else {
+    const items = arr.map((m, i) => {
+      const adminBtns = state.admin ? `
+        <div class="hub-media-item-actions">
+          <button class="hub-action-btn" data-media-edit="${type}:${index}:${i}" title="Edit Title" type="button">✏️</button>
+          <button class="hub-action-btn danger" data-media-delete="${type}:${index}:${i}" title="Delete" type="button">🗑</button>
+        </div>
+      ` : "";
+
+      let preview = "";
+      if (m.type === "image") {
+        preview = `<img src="${m.url}" alt="${escapeHtml(m.name)}" loading="lazy">`;
+      } else if (m.type === "video") {
+        preview = `<video src="${m.url}" controls preload="metadata"></video>`;
+      } else {
+        preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(m.name)}</b></div>`;
+      }
+
+      return `
+        <div class="hub-media-item">
+          <a href="${m.url}" target="_blank" rel="noopener">
+            ${preview}
+          </a>
+          ${adminBtns}
+        </div>
+      `;
+    }).join("");
+
+    container.innerHTML = uploadBtn + `<div class="hub-media-grid">${items}</div>`;
+  }
+
+  if (state.admin) {
+    const upBtn = container.querySelector("[data-media-upload]");
+    if (upBtn) {
+      const [t, i] = upBtn.dataset.mediaUpload.split(":");
+      upBtn.onclick = () => uploadHubMedia(t, +i);
+    }
+
+    container.querySelectorAll("[data-media-delete]").forEach((b) => {
+      b.onclick = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const [t, idx, mi] = b.dataset.mediaDelete.split(":");
+        await deleteHubMediaItem(t, +idx, +mi);
+      };
+    });
+
+    container.querySelectorAll("[data-media-edit]").forEach((b) => {
+      b.onclick = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const [t, idx, mi] = b.dataset.mediaEdit.split(":");
+        editHubMediaItem(t, +idx, +mi);
       };
     });
   }
@@ -1321,7 +1423,11 @@ function uploadHubMedia(type, index) {
         const ok = await saveHubMedia(type, index, arr);
         if (ok) {
           setEditStatus("✅ Uploaded!", "success");
-          await renderHubMedia(type, index);
+          if (state.gateway && !state.hub) {
+            await renderHubSectionMedia(type, index);
+          } else {
+            await renderHubMedia(type, index);
+          }
           setTimeout(closeEditModal, 1000);
         } else {
           setEditStatus("❌ Save failed", "error");
@@ -1350,10 +1456,60 @@ async function deleteHubMediaItem(type, index, mediaIndex) {
   arr.splice(mediaIndex, 1);
   const ok = await saveHubMedia(type, index, arr);
   if (ok) {
-    await renderHubMedia(type, index);
+    if (state.gateway && !state.hub) {
+      await renderHubSectionMedia(type, index);
+    } else {
+      await renderHubMedia(type, index);
+    }
   } else {
     alert("❌ Delete failed.");
   }
+}
+
+function editHubMediaItem(type, index, mediaIndex) {
+  const arr = hubMediaCache[`hub_media_${type}_${index}`] || [];
+  const item = arr[mediaIndex];
+  if (!item) return;
+
+  let previewHtml = "";
+  if (item.type === "image") {
+    previewHtml = `<img src="${item.url}" class="edit-modal-preview">`;
+  } else if (item.type === "video") {
+    previewHtml = `<video src="${item.url}" controls class="edit-modal-preview"></video>`;
+  } else {
+    previewHtml = `<p style="color:var(--muted);text-align:center;padding:20px;">📄 PDF File</p>`;
+  }
+
+  openEditModal(
+    `✏️ Edit Media Title`,
+    `
+    <label>Title:</label>
+    <input type="text" id="editMediaTitle" value="${escapeHtml(item.name || "")}">
+    <label>Preview:</label>
+    ${previewHtml}
+    `,
+    async () => {
+      const newTitle = document.getElementById("editMediaTitle").value.trim();
+      if (!newTitle) { setEditStatus("❌ Title required", "error"); return; }
+
+      setEditStatus("Saving...", "");
+      const arr2 = await loadHubMedia(type, index);
+      arr2[mediaIndex].name = newTitle;
+      const ok = await saveHubMedia(type, index, arr2);
+
+      if (ok) {
+        setEditStatus("✅ Title updated!", "success");
+        if (state.gateway && !state.hub) {
+          await renderHubSectionMedia(type, index);
+        } else {
+          await renderHubMedia(type, index);
+        }
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed", "error");
+      }
+    }
+  );
 }
 
 /* =========================================================
@@ -1972,13 +2128,18 @@ function init() {
     })
   );
 
-  document.getElementById("gatewayBack").onclick = closeGateway;
-  document.getElementById("hubBack").onclick = () => {
-    state.hub = null;
-    document.getElementById("hubView").classList.remove("open");
-    document.getElementById("gatewayView").classList.add("open");
-    renderGateway(state.gateway);
-  };
+  const gatewayBackEl = document.getElementById("gatewayBack");
+  if (gatewayBackEl) gatewayBackEl.onclick = closeGateway;
+
+  const hubBackEl = document.getElementById("hubBack");
+  if (hubBackEl) {
+    hubBackEl.onclick = () => {
+      state.hub = null;
+      document.getElementById("hubView").classList.remove("open");
+      document.getElementById("gatewayView").classList.add("open");
+      renderGateway(state.gateway);
+    };
+  }
 
   ["languageSelect", "gatewayLanguage", "hubLanguage"].forEach((id) => {
     const s = document.getElementById(id);
@@ -1987,9 +2148,12 @@ function init() {
     s.onchange = (e) => setLanguage(e.target.value);
   });
 
-  document.getElementById("menuOpen").onclick = () =>
+  const menuOpenEl = document.getElementById("menuOpen");
+  if (menuOpenEl) menuOpenEl.onclick = () =>
     document.getElementById("mobileDrawer").classList.add("open");
-  document.getElementById("menuClose").onclick = () =>
+
+  const menuCloseEl = document.getElementById("menuClose");
+  if (menuCloseEl) menuCloseEl.onclick = () =>
     document.getElementById("mobileDrawer").classList.remove("open");
 
   const adminOpen = document.getElementById("adminOpen");
@@ -2003,19 +2167,23 @@ function init() {
     };
   }
 
-  document.getElementById("adminClose").onclick = () =>
+  const adminCloseEl = document.getElementById("adminClose");
+  if (adminCloseEl) adminCloseEl.onclick = () =>
     document.getElementById("adminDialog").close();
 
-  document.getElementById("adminLogin").onclick = () => {
-    const token = document.getElementById("adminToken").value.trim();
-    if (!token) return;
-    state.admin = true;
-    state.token = token;
-    sessionStorage.setItem("royalAdmin", "1");
-    sessionStorage.setItem("royalAdminToken", token);
-    activateAdminUI();
-    applyLanguage();
-  };
+  const adminLoginEl = document.getElementById("adminLogin");
+  if (adminLoginEl) {
+    adminLoginEl.onclick = () => {
+      const token = document.getElementById("adminToken").value.trim();
+      if (!token) return;
+      state.admin = true;
+      state.token = token;
+      sessionStorage.setItem("royalAdmin", "1");
+      sessionStorage.setItem("royalAdminToken", token);
+      activateAdminUI();
+      applyLanguage();
+    };
+  }
 
   const logoutBtn = document.getElementById("adminLogout");
   if (logoutBtn) {
