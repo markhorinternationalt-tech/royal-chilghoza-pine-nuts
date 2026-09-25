@@ -1558,7 +1558,10 @@ function initColorPickers() {
     bg: saved.bg || "#03140A",
     gold: saved.gold || "#D4AF37",
     text: saved.text || "#F4F1E9",
-    heading: saved.heading || "#F4F1E9"
+    heading: saved.heading || "#F4F1E9",
+    captionText: saved.captionText || "#F5F1E8",
+    captionBg: saved.captionBg || "#0A2F1E",
+    mediaBox: saved.mediaBox || "#0A2F1E"
   };
 
   pickers.bg = new iro.ColorPicker("#pickerBg", {
@@ -1599,6 +1602,60 @@ function initColorPickers() {
     autoSaveTheme();
   });
 
+  // ===== NEW: Media Caption Pickers =====
+  const captionTextEl = document.getElementById("pickerCaptionText");
+  const captionBgEl = document.getElementById("pickerCaptionBg");
+  const mediaBoxEl = document.getElementById("pickerMediaBox");
+
+  if (captionTextEl) {
+    pickers.captionText = new iro.ColorPicker("#pickerCaptionText", {
+      width: 130, color: defaults.captionText, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+      layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
+    });
+    pickers.captionText.on("color:change", (color) => {
+      document.getElementById("hexCaptionText").textContent = color.hexString.toUpperCase();
+      document.documentElement.style.setProperty("--caption-text-color", color.hexString);
+      autoSaveTheme();
+    });
+  }
+  if (captionBgEl) {
+    pickers.captionBg = new iro.ColorPicker("#pickerCaptionBg", {
+      width: 130, color: defaults.captionBg, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+      layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
+    });
+    pickers.captionBg.on("color:change", (color) => {
+      document.getElementById("hexCaptionBg").textContent = color.hexString.toUpperCase();
+      document.documentElement.style.setProperty("--caption-bg-color", color.hexString);
+      autoSaveTheme();
+    });
+  }
+  if (mediaBoxEl) {
+    pickers.mediaBox = new iro.ColorPicker("#pickerMediaBox", {
+      width: 130, color: defaults.mediaBox, borderWidth: 1, borderColor: "rgba(212,175,55,0.3)",
+      layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider, options: { sliderType: "value" } }]
+    });
+    pickers.mediaBox.on("color:change", (color) => {
+      document.getElementById("hexMediaBox").textContent = color.hexString.toUpperCase();
+      document.documentElement.style.setProperty("--media-box-bg", color.hexString);
+      autoSaveTheme();
+    });
+  }
+
+  // ===== NEW: Load caption size + weight =====
+  const sizeEl = document.getElementById("captionFontSize");
+  const weightEl = document.getElementById("captionFontWeight");
+  if (sizeEl) {
+    sizeEl.value = saved.captionFontSize || 1.05;
+    document.getElementById("captionSizeVal").textContent = (saved.captionFontSize || 1.05) + "rem";
+    document.documentElement.style.setProperty("--caption-font-size", (saved.captionFontSize || 1.05) + "rem");
+  }
+  if (weightEl) {
+    weightEl.value = saved.captionFontWeight || "500";
+    const labels = { "300": "Light", "400": "Normal", "500": "Medium", "600": "Semi Bold", "700": "Bold" };
+    document.getElementById("captionWeightVal").textContent = labels[saved.captionFontWeight || "500"];
+    document.documentElement.style.setProperty("--caption-font-weight", saved.captionFontWeight || "500");
+  }
+
   loadTypography(saved);
 }
 
@@ -1637,7 +1694,12 @@ function readThemeFromUI() {
     baseFont: parseFloat(document.getElementById("baseFont")?.value) || 16,
     headingScale: parseFloat(document.getElementById("headingScale")?.value) || 1,
     headingFont: document.getElementById("headingFont")?.value || "'Playfair Display', Georgia, serif",
-    bodyFont: document.getElementById("bodyFont")?.value || "'Inter', Arial, sans-serif"
+    bodyFont: document.getElementById("bodyFont")?.value || "'Inter', Arial, sans-serif",
+    captionFontSize: parseFloat(document.getElementById("captionFontSize")?.value) || 1.05,
+    captionFontWeight: document.getElementById("captionFontWeight")?.value || "500",
+    captionText: pickers.captionText ? pickers.captionText.color.hexString : "#F5F1E8",
+    captionBg: pickers.captionBg ? pickers.captionBg.color.hexString : "#0A2F1E",
+    mediaBox: pickers.mediaBox ? pickers.mediaBox.color.hexString : "#0A2F1E"
   };
 }
 
@@ -1656,10 +1718,22 @@ function applyFullTheme(theme) {
   if (theme.headingFont) root.style.setProperty("--heading-font", theme.headingFont);
   if (theme.bodyFont) root.style.setProperty("--body-font", theme.bodyFont);
 
+  // ===== NEW: Apply caption styles =====
+  if (theme.captionFontSize) root.style.setProperty("--caption-font-size", theme.captionFontSize + "rem");
+  if (theme.captionFontWeight) root.style.setProperty("--caption-font-weight", theme.captionFontWeight);
+  if (theme.captionText) root.style.setProperty("--caption-text-color", theme.captionText);
+  if (theme.captionBg) root.style.setProperty("--caption-bg-color", theme.captionBg);
+  if (theme.mediaBox) root.style.setProperty("--media-box-bg", theme.mediaBox);
+
   if (document.getElementById("hexBg") && theme.bg) document.getElementById("hexBg").textContent = theme.bg.toUpperCase();
   if (document.getElementById("hexGold") && theme.gold) document.getElementById("hexGold").textContent = theme.gold.toUpperCase();
   if (document.getElementById("hexText") && theme.text) document.getElementById("hexText").textContent = theme.text.toUpperCase();
   if (document.getElementById("hexHeading") && theme.heading) document.getElementById("hexHeading").textContent = theme.heading.toUpperCase();
+
+  // ===== NEW: Update caption hex labels =====
+  if (document.getElementById("hexCaptionText") && theme.captionText) document.getElementById("hexCaptionText").textContent = theme.captionText.toUpperCase();
+  if (document.getElementById("hexCaptionBg") && theme.captionBg) document.getElementById("hexCaptionBg").textContent = theme.captionBg.toUpperCase();
+  if (document.getElementById("hexMediaBox") && theme.mediaBox) document.getElementById("hexMediaBox").textContent = theme.mediaBox.toUpperCase();
 }
 
 function initThemeControls() {
@@ -1688,6 +1762,23 @@ function initThemeControls() {
     autoSaveTheme();
   });
 
+  // ===== NEW: Caption Font Size + Weight =====
+  const captionFontSize = document.getElementById("captionFontSize");
+  const captionFontWeight = document.getElementById("captionFontWeight");
+
+  if (captionFontSize) captionFontSize.addEventListener("input", () => {
+    const val = parseFloat(captionFontSize.value);
+    document.getElementById("captionSizeVal").textContent = val + "rem";
+    document.documentElement.style.setProperty("--caption-font-size", val + "rem");
+    autoSaveTheme();
+  });
+  if (captionFontWeight) captionFontWeight.addEventListener("change", () => {
+    const labels = { "300": "Light", "400": "Normal", "500": "Medium", "600": "Semi Bold", "700": "Bold" };
+    document.getElementById("captionWeightVal").textContent = labels[captionFontWeight.value];
+    document.documentElement.style.setProperty("--caption-font-weight", captionFontWeight.value);
+    autoSaveTheme();
+  });
+
   const saveBtn = document.getElementById("themeSave");
   if (saveBtn) saveBtn.addEventListener("click", () => {
     autoSaveTheme();
@@ -1698,15 +1789,29 @@ function initThemeControls() {
   const resetBtn = document.getElementById("themeReset");
   if (resetBtn) resetBtn.addEventListener("click", () => {
     localStorage.removeItem(THEME_KEY);
-    const defaults = { bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9" };
+    const defaults = {
+      bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9",
+      captionFontSize: 1.05, captionFontWeight: "500",
+      captionText: "#F5F1E8", captionBg: "#0A2F1E", mediaBox: "#0A2F1E"
+    };
     applyFullTheme(defaults);
     if (pickers.bg) pickers.bg.color.hexString = defaults.bg;
     if (pickers.gold) pickers.gold.color.hexString = defaults.gold;
     if (pickers.text) pickers.text.color.hexString = defaults.text;
     if (pickers.heading) pickers.heading.color.hexString = defaults.heading;
+    if (pickers.captionText) pickers.captionText.color.hexString = defaults.captionText;
+    if (pickers.captionBg) pickers.captionBg.color.hexString = defaults.captionBg;
+    if (pickers.mediaBox) pickers.mediaBox.color.hexString = defaults.mediaBox;
     if (baseFont) { baseFont.value = 16; document.getElementById("baseFontVal").textContent = "16px"; }
     if (headingScale) { headingScale.value = 1; document.getElementById("headingScaleVal").textContent = "1.0x"; }
+    if (captionFontSize) { captionFontSize.value = 1.05; document.getElementById("captionSizeVal").textContent = "1.05rem"; }
+    if (captionFontWeight) { captionFontWeight.value = "500"; document.getElementById("captionWeightVal").textContent = "Medium"; }
     document.documentElement.style.setProperty("--font-scale", 1);
+    document.documentElement.style.setProperty("--caption-font-size", "1.05rem");
+    document.documentElement.style.setProperty("--caption-font-weight", "500");
+    document.documentElement.style.setProperty("--caption-text-color", "#F5F1E8");
+    document.documentElement.style.setProperty("--caption-bg-color", "#0A2F1E");
+    document.documentElement.style.setProperty("--media-box-bg", "#0A2F1E");
     const status = document.getElementById("adminStatus");
     if (status) status.textContent = "↺ Theme reset to default.";
   });
