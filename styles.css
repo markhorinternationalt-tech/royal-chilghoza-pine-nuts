@@ -25,6 +25,13 @@
   --shadow-lg: 0 30px 90px rgba(0, 0, 0, 0.5);
   --heading-font: 'Playfair Display', Georgia, serif;
   --body-font: 'Inter', Arial, sans-serif;
+
+  /* Caption Customization (Theme Controlled) */
+  --caption-font-size: 1.05rem;
+  --caption-font-weight: 500;
+  --caption-text-color: #f5f1e8;
+  --caption-bg-color: #0a2f1e;
+  --media-box-bg: #0a2f1e;
 }
 
 * { box-sizing: border-box; }
@@ -1946,7 +1953,8 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   padding: 20px;
   border: 1px dashed rgba(212, 175, 55, 0.22);
   border-radius: 16px;
-  background: rgba(3, 20, 10, 0.35);
+  background: var(--media-box-bg);
+  transition: background 0.3s ease;
 }
 
 .hub-section-media .hubMediaUploadBtn {
@@ -2081,6 +2089,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 
 /* =========================================================
    HUB MEDIA — PREMIUM CAPTION (Editorial Luxury)
+   Now fully controllable via Theme Customizer
 ========================================================= */
 
 .hub-media-caption {
@@ -2088,19 +2097,19 @@ body.admin-mode .hub-section-actions { display: flex; }
   padding: 20px 22px 22px;
   margin-top: -1px;
   font-family: var(--heading-font);
-  font-size: 1.05rem;
-  font-weight: 500;
+  font-size: var(--caption-font-size);
+  font-weight: var(--caption-font-weight);
   font-style: italic;
   line-height: 1.5;
   letter-spacing: 0.02em;
-  color: var(--cream);
+  color: var(--caption-text-color);
   text-align: center;
-  background:
-    linear-gradient(180deg, rgba(3, 20, 10, 0.4) 0%, rgba(3, 20, 10, 0.85) 50%, rgba(3, 20, 10, 0.95) 100%);
+  background: var(--caption-bg-color);
   border-top: 1px solid rgba(212, 175, 55, 0.45);
   border-radius: 0 0 12px 12px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
+  transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
 
 .hub-media-caption::before {
@@ -2116,7 +2125,6 @@ body.admin-mode .hub-section-actions { display: flex; }
 
 .hub-media-item:hover .hub-media-caption {
   border-top-color: var(--gold2);
-  color: #ffffff;
 }
 
 /* PDF needs no rounded top */
@@ -2127,7 +2135,6 @@ body.admin-mode .hub-section-actions { display: flex; }
 @media (max-width: 620px) {
   .hub-media-caption {
     padding: 16px 18px 18px;
-    font-size: 0.95rem;
     border-radius: 0 0 14px 14px;
   }
 
