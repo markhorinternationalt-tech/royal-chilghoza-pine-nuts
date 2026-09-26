@@ -1,0 +1,20 @@
+# Royal Chilghoza Pine Nuts - robots.txt
+# Updated: 26 September 2026
+
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
+
+# Baidu Spider
+User-agent: Baiduspider
+Allow: /
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
