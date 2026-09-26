@@ -27,7 +27,6 @@
   --heading-font: 'Playfair Display', Georgia, serif;
   --body-font: 'Inter', Arial, sans-serif;
 
-  /* Caption Customization (Theme Controlled) */
   --caption-font-size: 1.05rem;
   --caption-font-weight: 500;
   --caption-text-color: #f5f1e8;
@@ -60,6 +59,7 @@ body {
 
 body.subview { background: var(--forest); }
 body.subview .site-header { display: none; }
+body.lightbox-open { overflow: hidden; }
 
 .ambient {
   position: fixed;
@@ -515,13 +515,16 @@ body.subview .site-header { display: none; }
 }
 
 /* =========================================================
-   GALLERY — Image on top, Caption below (auto-expand)
+   GALLERY — 1080×1350 (4:5) premium cards with click-to-zoom
 ========================================================= */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
   margin-top: 42px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .gallery-item {
   margin: 0;
@@ -549,11 +552,11 @@ body.subview .site-header { display: none; }
 }
 .gallery-item img {
   width: 100%;
-  height: 380px;
-  object-fit: contain;
-  background: #03140a;
+  aspect-ratio: 4 / 5;   /* 1080 × 1350 */
+  object-fit: cover;
   display: block;
   flex-shrink: 0;
+  cursor: zoom-in;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .gallery-item:hover img { transform: scale(1.04); }
@@ -852,7 +855,7 @@ body.subview .site-header { display: none; }
   max-width: 700px;
 }
 
-/* HUB GRID (legacy — kept for safety) */
+/* HUB GRID (legacy) */
 .hub-grid-page {
   width: min(1100px, calc(100% - 40px));
   margin: auto;
@@ -1226,6 +1229,141 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
   background: rgba(212, 175, 55, 0.1);
 }
 
+/* =========================================================
+   GALLERY LIGHTBOX (click-to-zoom + drag)
+========================================================= */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+}
+.gallery-lightbox.open { display: flex; }
+
+.lightbox-stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+.lightbox-stage.dragging { cursor: grabbing; }
+
+.lightbox-stage img {
+  max-width: 96vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8);
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  transition: transform 0.15s ease-out;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: var(--gold2);
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+  backdrop-filter: blur(8px);
+}
+.lightbox-close:hover {
+  background: rgba(212, 175, 55, 0.3);
+  transform: scale(1.1);
+}
+
+.lightbox-controls {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  background: rgba(3, 20, 10, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 50px;
+  padding: 8px;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+.lightbox-controls button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--gold2);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--body-font);
+  line-height: 1;
+}
+.lightbox-controls button:hover {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: var(--gold);
+  transform: scale(1.08);
+}
+.lightbox-controls .zoom-level {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--gold);
+  font-size: 0.82rem;
+  font-weight: 600;
+  min-width: 60px;
+  justify-content: center;
+  letter-spacing: 0.05em;
+}
+
+.lightbox-hint {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(245, 241, 232, 0.7);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  background: rgba(3, 20, 10, 0.7);
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  z-index: 2;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+
 /* TABLET */
 @media (max-width: 900px) {
   .desktop-nav { display: none; }
@@ -1272,7 +1410,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
   .gateway-card h2 { font-size: calc(1.35rem * var(--heading-scale, 1)); margin: 8px 0 10px; }
   .gateway-card > p:not(.eyebrow) { min-height: auto; font-size: 0.86rem; }
   .gallery-grid, .hub-grid-page, .office-grid { grid-template-columns: 1fr; }
-  .gallery-item img { height: 280px; }
+  .gallery-grid { max-width: 100%; gap: 18px; }
   .ai-panel { grid-template-columns: 1fr; padding: 28px 24px; text-align: center; gap: 24px; }
   .ai-orb { margin: 0 auto; width: 110px; height: 110px; font-size: 2rem; }
   #aiForm { flex-direction: column; }
@@ -1302,6 +1440,10 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
   .admin-actions { align-items: stretch; flex-direction: column; }
   .admin-actions .btn { width: 100%; text-align: center; }
   .gateway-card:hover, .hub-card:hover { transform: translateY(-4px); }
+  .lightbox-close { top: 10px; right: 12px; width: 42px; height: 42px; font-size: 1.4rem; }
+  .lightbox-controls { bottom: 16px; padding: 6px; }
+  .lightbox-controls button { width: 40px; height: 40px; font-size: 1.1rem; }
+  .lightbox-hint { top: 12px; font-size: 0.68rem; padding: 6px 14px; }
 }
 
 /* VERY SMALL MOBILE */
@@ -1565,7 +1707,7 @@ body.admin-mode .edit-btn { display: flex; }
 .gallery-item { position: relative; }
 
 /* =========================================================
-   HUB CRUD — Action Buttons & Create New Hub
+   HUB CRUD
 ========================================================= */
 .hub-card-wrapper { position: relative; display: flex; }
 .hub-card-wrapper .hub-card { width: 100%; flex: 1; }
@@ -1847,9 +1989,8 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 }
 
 /* =========================================================
-   NEW — HUB SECTIONS PAGE (Mini-Website Layout)
+   HUB SECTIONS PAGE
 ========================================================= */
-
 .hub-sections-page {
   width: min(1100px, calc(100% - 40px));
   margin: auto;
@@ -2020,9 +2161,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   max-height: 320px;
 }
 
-/* =========================================================
-   HUB SECTIONS — Mobile
-========================================================= */
+/* HUB SECTIONS — Mobile */
 @media (max-width: 900px) {
   .hub-sections-page {
     gap: 40px;
@@ -2097,10 +2236,8 @@ body.admin-mode .hub-section-actions { display: flex; }
 }
 
 /* =========================================================
-   HUB MEDIA — PREMIUM CAPTION (Editorial Luxury)
-   Now fully controllable via Theme Customizer
+   HUB MEDIA — PREMIUM CAPTION
 ========================================================= */
-
 .hub-media-caption {
   position: relative;
   padding: 20px 22px 22px;
@@ -2136,7 +2273,6 @@ body.admin-mode .hub-section-actions { display: flex; }
   border-top-color: var(--gold2);
 }
 
-/* PDF needs no rounded top */
 .hub-media-pdf + .hub-media-caption {
   border-top: none;
 }
