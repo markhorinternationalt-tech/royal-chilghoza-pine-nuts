@@ -2452,3 +2452,151 @@ if (adminLoginEl) {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+/* =========================================================
+   GALLERY LIGHTBOX — Zoom, Pan, Drag
+   (Click any gallery image to open full-screen with zoom)
+========================================================= */
+(function initLightbox() {
+  const lightbox = document.getElementById("galleryLightbox");
+  const stage = document.getElementById("lightboxStage");
+  const img = document.getElementById("lightboxImage");
+  const closeBtn = document.getElementById("lightboxClose");
+  const zoomLevel = document.getElementById("zoomLevel");
+  if (!lightbox || !stage || !img) return;
+
+  let scale = 1;
+  let translateX = 0;
+  let translateY = 0;
+  let isDragging = false;
+  let startX = 0, startY = 0;
+  let startTX = 0, startTY = 0;
+  let lastTap = 0;
+
+  function applyTransform() {
+    img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    if (zoomLevel) zoomLevel.textContent = Math.round(scale * 100) + "%";
+  }
+
+  function resetView() {
+    scale = 1; translateX = 0; translateY = 0;
+    applyTransform();
+  }
+
+  function openLightbox(src, alt) {
+    img.src = src;
+    img.alt = alt || "";
+    resetView();
+    lightbox.classList.add("open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("lightbox-open");
+    resetView();
+  }
+
+  // Open on gallery image click
+  document.addEventListener("click", (e) => {
+    const gImg = e.target.closest(".gallery-item img");
+    if (!gImg || gImg.classList.contains("failed")) return;
+    e.preventDefault();
+    openLightbox(gImg.src, gImg.alt);
+  });
+
+  // Close
+  if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox || e.target === stage) closeLightbox();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "+" || e.key === "=") { scale = Math.min(scale * 1.2, 5); applyTransform(); }
+    if (e.key === "-" || e.key === "_") { scale = Math.max(scale / 1.2, 1); if (scale === 1) { translateX = 0; translateY = 0; } applyTransform(); }
+    if (e.key === "0") resetView();
+  });
+
+  // Zoom buttons
+  lightbox.querySelectorAll("[data-zoom]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const action = btn.dataset.zoom;
+      if (action === "in") scale = Math.min(scale * 1.25, 5);
+      if (action === "out") { scale = Math.max(scale / 1.25, 1); if (scale === 1) { translateX = 0; translateY = 0; } }
+      if (action === "reset") { resetView(); return; }
+      applyTransform();
+    });
+  });
+
+  // Wheel zoom
+  stage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    scale = Math.min(Math.max(scale * delta, 1), 5);
+    if (scale === 1) { translateX = 0; translateY = 0; }
+    applyTransform();
+  }, { passive: false });
+
+  // Drag / pan (mouse + touch)
+  stage.addEventListener("pointerdown", (e) => {
+    if (scale <= 1) return;
+    isDragging = true;
+    stage.classList.add("dragging");
+    startX = e.clientX; startY = e.clientY;
+    startTX = translateX; startTY = translateY;
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!isDragging) return;
+    translateX = startTX + (e.clientX - startX);
+    translateY = startTY + (e.clientY - startY);
+    applyTransform();
+  });
+  stage.addEventListener("pointerup", (e) => {
+    isDragging = false;
+    stage.classList.remove("dragging");
+    try { stage.releasePointerCapture(e.pointerId); } catch (err) {}
+  });
+  stage.addEventListener("pointercancel", () => {
+    isDragging = false;
+    stage.classList.remove("dragging");
+  });
+
+  // Pinch zoom + double-tap
+  let pinchStartDist = 0;
+  let pinchStartScale = 1;
+  stage.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      pinchStartDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      pinchStartScale = scale;
+    }
+    const now = Date.now();
+    if (e.touches.length === 1 && now - lastTap < 300) {
+      if (scale > 1) resetView();
+      else { scale = 2; applyTransform(); }
+      lastTap = 0;
+    } else {
+      lastTap = now;
+    }
+  }, { passive: true });
+
+  stage.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      scale = Math.min(Math.max(pinchStartScale * (dist / pinchStartDist), 1), 5);
+      if (scale === 1) { translateX = 0; translateY = 0; }
+      applyTransform();
+    }
+  }, { passive: false });
+})();
