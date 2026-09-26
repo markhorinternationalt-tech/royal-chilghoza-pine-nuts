@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- MAIN PAGE - Highest Priority -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- GATEWAYS SECTION -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/#gateways</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- GALLERY SECTION -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/#gallery</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- CONTACT SECTION -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/#contact</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TRADE GATEWAY -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/?gateway=trade</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- RESEARCH GATEWAY -->
+  <url>
+    <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/?gateway=research</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>
