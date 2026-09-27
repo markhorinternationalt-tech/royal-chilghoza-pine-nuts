@@ -576,6 +576,20 @@ Heading Scale: <b id="headingScaleVal">1.0x</b>
 <p class="edit-status" id="editModalStatus"></p>
 </div>
 </dialog>
+<!-- GALLERY LIGHTBOX (Click any gallery image to zoom) -->
+<div id="galleryLightbox" class="gallery-lightbox" aria-hidden="true">
+  <div class="lightbox-hint">🔍 Pinch / scroll to zoom · Drag to move · Double-tap to reset</div>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">×</button>
+  <div class="lightbox-controls">
+    <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+    <button type="button" data-zoom="reset" aria-label="Reset">↺</button>
+    <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+    <span class="zoom-level" id="zoomLevel">100%</span>
+  </div>
+  <div class="lightbox-stage" id="lightboxStage">
+    <img id="lightboxImage" src="" alt="">
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.2/dist/iro.min.js"></script>
 <script src="app.js"></script>
