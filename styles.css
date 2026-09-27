@@ -564,13 +564,19 @@ body.lightbox-open { overflow: hidden; }
 .gallery-item figcaption {
   position: relative;
   inset: auto;
-  padding: 22px 22px 26px;
-  background: linear-gradient(180deg, rgba(3, 20, 10, 0.98), rgba(3, 20, 10, 1));
-  font-size: 0.92rem;
-  color: var(--cream);
-  line-height: 1.7;
+  padding: 26px 24px 28px;
+  background: var(--caption-bg-color);
+  font-family: var(--heading-font);
+  font-style: italic;
+  font-size: var(--caption-font-size);
+  font-weight: var(--caption-font-weight);
+  color: var(--caption-text-color);
+  line-height: 1.75;
+  letter-spacing: 0.02em;
   flex: 1;
-  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  border-top: 1px solid rgba(212, 175, 55, 0.45);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
 .gallery-item figcaption span {
   display: block;
