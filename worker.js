@@ -1,11 +1,15 @@
 // =========================================================
 // ROYAL CHILGHOZA PINE NUTS — CLOUDFLARE WORKER
-// With Cloudinary + KV Storage
+// With Cloudinary + KV Storage + Rate Limiting
 // =========================================================
 
 const CLOUDINARY_CLOUD_NAME = "agnhxdu4";
 const CLOUDINARY_API_KEY = "118953582795868";
 const CLOUDINARY_API_SECRET = "bHpg060YsexAgpP4cTVTs227Io0";
+
+// Rate Limiting Configuration
+const RATE_LIMIT_MAX = 5;          // 5 attempts
+const RATE_LIMIT_WINDOW = 3600;    // per 1 hour (in seconds)
 
 export default {
   async fetch(request, env) {
@@ -36,8 +40,9 @@ export default {
       try {
         const { message = "", mode = "visitor", language = "en" } = await request.json();
 
-        if (mode === "admin" && !authorized(request, env)) {
-          return json({ reply: "Admin authorization required." }, cors, 401);
+        if (mode === "admin") {
+          const reject = await checkAuth(request, env, cors);
+          if (reject) return reject;
         }
 
         if (!env.AI) {
@@ -55,7 +60,6 @@ export default {
           { role: "user", content: message }
         ];
 
-        // نیا ماڈلز کی فہرست (پرانا ہٹا دیا گیا)
         const models = [
           "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
           "@cf/meta/llama-4-scout-17b-16e-instruct",
@@ -97,7 +101,7 @@ export default {
     // KV STORAGE APIs
     // =========================================================
 
-    // ---- KV: Get value ----
+    // ---- KV: Get value (PUBLIC — no auth) ----
     if (url.pathname.startsWith("/api/kv/get/") && request.method === "GET") {
       if (!env.ROYAL_KV) {
         return json({ ok: false, error: "KV not configured" }, cors, 503);
@@ -118,11 +122,11 @@ export default {
       }
     }
 
-    // ---- KV: Set value ----
+    // ---- KV: Set value (PROTECTED) ----
     if (url.pathname === "/api/kv/set" && request.method === "POST") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
       if (!env.ROYAL_KV) {
         return json({ ok: false, error: "KV not configured" }, cors, 503);
       }
@@ -138,11 +142,11 @@ export default {
       }
     }
 
-    // ---- KV: Delete value ----
+    // ---- KV: Delete value (PROTECTED) ----
     if (url.pathname.startsWith("/api/kv/delete/") && request.method === "DELETE") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
       if (!env.ROYAL_KV) {
         return json({ ok: false, error: "KV not configured" }, cors, 503);
       }
@@ -175,11 +179,11 @@ export default {
     // CLOUDINARY — Media Management
     // =========================================================
 
-    // ---- Cloudinary: Upload ----
+    // ---- Cloudinary: Upload (PROTECTED) ----
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
       try {
         const form = await request.formData();
         const file = form.get("file");
@@ -197,7 +201,6 @@ export default {
         const timestamp = Math.floor(Date.now() / 1000);
         const folderPath = `royal-chilghoza/${folder}`;
 
-        // Signature calculation — includes ONLY signed params
         const signatureParams = `folder=${folderPath}&timestamp=${timestamp}`;
         const signature = await sha1(signatureParams + CLOUDINARY_API_SECRET);
 
@@ -274,11 +277,11 @@ export default {
       }
     }
 
-    // ---- Cloudinary: Create Folder ----
+    // ---- Cloudinary: Create Folder (PROTECTED) ----
     if (url.pathname === "/api/media/folder" && request.method === "POST") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
       try {
         const body = await request.json();
         const name = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
@@ -297,11 +300,11 @@ export default {
       }
     }
 
-    // ---- Cloudinary: Delete ----
+    // ---- Cloudinary: Delete (PROTECTED) ----
     if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
-      if (!authorized(request, env)) {
-        return new Response("Unauthorized", { status: 401, headers: cors });
-      }
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
       try {
         const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
         const resourceType = url.searchParams.get("type") || "image";
@@ -342,10 +345,20 @@ export default {
 
     // ---- Admin Status ----
     if (url.pathname === "/api/admin/status") {
-      return json({ admin: authorized(request, env) }, cors);
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      const limit = await checkRateLimit(env, ip);
+      const isAuth = isAuthorized(request, env);
+      return json({
+        admin: isAuth,
+        rateLimit: {
+          remaining: Math.max(0, RATE_LIMIT_MAX - limit.count),
+          max: RATE_LIMIT_MAX,
+          blocked: !limit.allowed
+        }
+      }, cors);
     }
 
-    // ---- Static Assets (Cloudflare ASSETS binding) ----
+    // ---- Static Assets ----
     if (env.ASSETS) {
       try {
         const assetResp = await env.ASSETS.fetch(request);
@@ -355,7 +368,7 @@ export default {
 
     // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
-      || "https://raw.githubusercontent.com/markhor/royal-chilghoza-pine-nuts/upgrade-v1/";
+      || "https://raw.githubusercontent.com/markhor/royal-chilghoza-pine-nuts/main/";
 
     let path = url.pathname;
     if (path === "/") path = "/index.html";
@@ -392,6 +405,80 @@ export default {
 // HELPERS
 // =========================================================
 
+// ---- Check if request is authorized (no rate limit) ----
+function isAuthorized(request, env) {
+  const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
+  return !!env.ADMIN_TOKEN && token === env.ADMIN_TOKEN;
+}
+
+// ---- Check rate limit for an IP ----
+async function checkRateLimit(env, ip) {
+  if (!env.ROYAL_KV) return { allowed: true, count: 0 };
+  const key = `ratelimit:auth:${ip}`;
+  try {
+    const raw = await env.ROYAL_KV.get(key);
+    const count = raw ? parseInt(raw, 10) : 0;
+    return { allowed: count < RATE_LIMIT_MAX, count };
+  } catch (e) {
+    return { allowed: true, count: 0 };
+  }
+}
+
+// ---- Record a failed attempt ----
+async function recordFailedAttempt(env, ip) {
+  if (!env.ROYAL_KV) return;
+  const key = `ratelimit:auth:${ip}`;
+  try {
+    const raw = await env.ROYAL_KV.get(key);
+    const count = raw ? parseInt(raw, 10) : 0;
+    await env.ROYAL_KV.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_WINDOW });
+  } catch (e) { /* ignore */ }
+}
+
+// ---- Reset rate limit (on successful login) ----
+async function resetRateLimit(env, ip) {
+  if (!env.ROYAL_KV) return;
+  const key = `ratelimit:auth:${ip}`;
+  try {
+    await env.ROYAL_KV.delete(key);
+  } catch (e) { /* ignore */ }
+}
+
+// ---- Combined: check rate limit + auth ----
+async function checkAuth(request, env, cors) {
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+
+  // 1. Check rate limit first
+  const limit = await checkRateLimit(env, ip);
+  if (!limit.allowed) {
+    const retryAfter = RATE_LIMIT_WINDOW;
+    return json({
+      ok: false,
+      error: "Too many attempts. Try again later.",
+      retryAfter: retryAfter
+    }, {
+      ...cors,
+      "Retry-After": String(retryAfter)
+    }, 429);
+  }
+
+  // 2. Check auth
+  if (!isAuthorized(request, env)) {
+    await recordFailedAttempt(env, ip);
+    const newCount = limit.count + 1;
+    return json({
+      ok: false,
+      error: "Unauthorized",
+      attemptsUsed: newCount,
+      attemptsRemaining: Math.max(0, RATE_LIMIT_MAX - newCount)
+    }, cors, 401);
+  }
+
+  // 3. Success — reset counter
+  await resetRateLimit(env, ip);
+  return null; // authorized, proceed
+}
+
 async function cloudinaryAdminFetch(resourceType, prefix) {
   const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
   const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?prefix=${encodeURIComponent(prefix)}&max_results=100`;
@@ -420,11 +507,6 @@ async function sha1(str) {
   return Array.from(new Uint8Array(hash))
     .map(b => b.toString(16).padStart(2, "0"))
     .join("");
-}
-
-function authorized(request, env) {
-  const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
-  return !!env.ADMIN_TOKEN && token === env.ADMIN_TOKEN;
 }
 
 function json(data, cors, status = 200) {
