@@ -902,7 +902,7 @@ function renderOffices() {
       <button class="edit-btn" data-edit-office="${i}" type="button" title="Edit Office">✏️</button>
       <span>${String(i + 1).padStart(2, "0")}</span>
       <h3>${titles[i]}</h3>
-      <p>${a}</p>
+      <p>${String(a).replace(/\n/g, '<br>')}</p>
     </article>
   `).join("");
 
