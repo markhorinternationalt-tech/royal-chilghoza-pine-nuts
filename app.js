@@ -166,7 +166,16 @@ const hubData = {
     ],
   },
 };
-
+/* =========================================================
+   CLOUDINARY AUTO-OPTIMIZATION
+========================================================= */
+function cloudinaryOptimize(url, width, height, crop = 'fill') {
+  if (!url) return url;
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
+    return url.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/`);
+  }
+  return url;
+}
 const DEFAULT_GALLERY = [
   ["01-chilghoza-lot.jpg", "Chilghoza Pine Nuts Lot Inspection & Grading"],
   ["02-chilghoza-cones.jpg", "Harvested Cones of Chilghoza Pine Nuts"],
