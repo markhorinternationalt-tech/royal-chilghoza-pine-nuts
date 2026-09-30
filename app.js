@@ -600,7 +600,7 @@ function renderGallery() {
   if (!grid) return;
   grid.innerHTML = galleryItems.map(([src, cap], i) =>
     `<figure class="gallery-item" data-gallery-index="${i}">
-      <img src="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')">
+      <img src="${cloudinaryOptimize(src, 1080, 1350)}" data-fullsrc="${src}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')">
       <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
       <button class="edit-btn" data-edit-gallery="${i}" type="button" title="Edit Image">✏️</button>
     </figure>`
