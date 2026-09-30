@@ -172,7 +172,9 @@ const hubData = {
 function cloudinaryOptimize(url, width, height, crop = 'fill') {
   if (!url) return url;
   if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
-    return url.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/`);
+    // واٹر مارک (Watermark) کے ساتھ تصویر کا سائز
+    const watermark = 'l_text:Arial_30:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_60,g_south_east,x_15,y_15';
+    return url.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/${watermark}/`);
   }
   return url;
 }
