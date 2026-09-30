@@ -1354,7 +1354,7 @@ async function renderHubSectionMedia(type, index) {
 
       let preview = "";
       if (m.type === "image") {
-        preview = `<img src="${m.url}" alt="${escapeHtml(m.name)}" loading="lazy">`;
+        preview = `<img src="${cloudinaryOptimize(m.url, 1200, 800)}" alt="${escapeHtml(m.name)}" loading="lazy">`;
       } else if (m.type === "video") {
         preview = `<video src="${cloudinaryOptimize(m.url, 1200, 800)}" controls preload="metadata"></video>`;
       } else {
