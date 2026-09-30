@@ -1330,7 +1330,7 @@ async function renderHubSectionMedia(type, index) {
         preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(m.name)}</b></div>`;
       }
 
-      const caption = m.name ? `<div class="hub-media-caption">${escapeHtml(m.name)}</div>` : "";
+      const caption = m.name ? `<div class="hub-media-caption">${escapeHtml(m.name).replace(/\n/g, '<br>')}</div>` : "";
 
       return `
         <div class="hub-media-item">
