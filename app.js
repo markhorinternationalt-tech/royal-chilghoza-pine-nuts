@@ -171,10 +171,30 @@ const hubData = {
 ========================================================= */
 function cloudinaryOptimize(url, width, height, crop = 'fill') {
   if (!url) return url;
-  if (url.includes('res.cloudinary.com') && url.includes('/upload/') && !url.includes('/upload/w_')) {
-    // واٹر مارک (Watermark) کے ساتھ تصویر کا سائز
+  
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+    // 1. اگر واٹر مارک پہلے سے لگا ہو تو دوبارہ نہ لگائیں
+    if (url.includes('l_text:Arial')) return url;
+
+    // 2. پرانے سائز کو صاف کریں
+    let cleanUrl = url.replace(/\/upload\/w_\d+,h_\d+,c_[a-z]+\//, '/upload/');
+    cleanUrl = cleanUrl.replace(/\/upload\/w_\d+\//, '/upload/');
+
+    // 3. واٹر مارک کی سیٹنگ
     const watermark = 'l_text:Arial_40:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_center,a_45';
-    return url.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/${watermark}/`);
+
+    // 4. اگر ویڈیو ہے تو صرف سائز کریں (ویڈیو پر واٹر مارک نہیں لگائیں گے)
+    if (url.includes('/video/upload/')) {
+      return cleanUrl.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto/`);
+    }
+
+    // 5. اگر PDF یا کوئی اور raw فائل ہے تو اسے نہ چھیڑیں
+    if (url.includes('/raw/upload/')) {
+      return url;
+    }
+
+    // 6. اگر تصویر ہے تو سائز اور واٹر مارک دونوں لگائیں
+    return cleanUrl.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/${watermark}/`);
   }
   return url;
 }
