@@ -2513,7 +2513,7 @@ document.addEventListener("DOMContentLoaded", init);
     const gImg = e.target.closest(".gallery-item img");
     if (!gImg || gImg.classList.contains("failed")) return;
     e.preventDefault();
-    openLightbox(gImg.src, gImg.alt);
+    openLightbox(gImg.dataset.fullsrc || gImg.src, gImg.alt);
   });
 
   // Close
