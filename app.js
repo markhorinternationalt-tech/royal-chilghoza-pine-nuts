@@ -1281,7 +1281,7 @@ async function renderHubMedia(type, index) {
       if (m.type === "image") {
         preview = `<img src="${cloudinaryOptimize(m.url, 1200, 800)}" alt="${escapeHtml(m.name)}" loading="lazy">`;
       } else if (m.type === "video") {
-        preview = `<video src="${m.url}" controls preload="metadata"></video>`;
+        preview = `<video src="${cloudinaryOptimize(m.url, 1200, 800)}" controls preload="metadata"></video>`;
       } else {
         preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(m.name)}</b></div>`;
       }
