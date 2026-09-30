@@ -2019,7 +2019,7 @@ function editHeroImage() {
 function applyHeroImage() {
   const heroBg = document.getElementById("heroBg");
   if (heroBg) {
-    heroBg.style.background = `url("${heroImageUrl}") center / cover no-repeat`;
+    heroBg.style.background = `url("${cloudinaryOptimize(heroImageUrl, 1920, 1080)}") center / cover no-repeat`;
     heroBg.style.backgroundColor = "var(--forest)";
     heroBg.style.backgroundBlendMode = "luminosity";
     heroBg.style.opacity = "0.85";
