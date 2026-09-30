@@ -2069,7 +2069,7 @@ function editProfileImage() {
 
 function applyProfileImage() {
   const img = document.getElementById("profileImage");
-  if (img) img.src = profileImageUrl;
+  if (img) img.src = cloudinaryOptimize(profileImageUrl, 600, 600);
 }
 
 /* =========================================================
