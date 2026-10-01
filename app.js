@@ -2107,7 +2107,7 @@ function editGalleryItem(index) {
     <label>Current Image:</label>
     <img src="${currentSrc}" class="edit-modal-preview" alt="Gallery">
     <label>Caption:</label>
-    <input type="text" id="editGalleryCap" value="${escapeHtml(currentCap)}">
+    <textarea id="hubMediaTitle" rows="3" placeholder="e.g. Chilghoza Kernels Close-up" style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
     <label>Upload New Image (optional):</label>
     <input type="file" id="editGalleryFile" accept="image/*">
     <label>OR Paste Image URL:</label>
