@@ -1518,7 +1518,7 @@ function editHubMediaItem(type, index, mediaIndex) {
     `✏️ Edit Media Title`,
     `
     <label>Title:</label>
-    <input type="text" id="editMediaTitle" value="${escapeHtml(item.name || "")}">
+    <textarea id="editMediaTitle" rows="3" placeholder="Write title here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(item.name || "")}</textarea>
     <label>Preview:</label>
     ${previewHtml}
     `,
