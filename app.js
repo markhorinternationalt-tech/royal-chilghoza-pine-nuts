@@ -1365,7 +1365,7 @@ async function renderHubSectionMedia(type, index) {
 
       return `
         <div class="hub-media-item">
-          <a href="${m.url}" target="_blank" rel="noopener">
+          <a href="${cloudinaryOptimize(m.url, 1920, 2400)}" target="_blank" rel="noopener">
             ${preview}
           </a>
           ${caption}
