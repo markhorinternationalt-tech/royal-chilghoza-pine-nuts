@@ -2294,3 +2294,41 @@ body.admin-mode .hub-section-actions { display: flex; }
     margin-bottom: 6px;
   }
 }
+/* =========================================================
+   ROYAL PREMIUM FADE-IN EFFECT
+   (دھیرے دھیرے ظاہر ہونے کا خوبصورت اثر)
+========================================================= */
+@keyframes royalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* گیلری کی تصاویر اور کیپشن */
+.gallery-item img,
+.gallery-item figcaption {
+  animation: royalFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* آفس ایڈریس کارڈز */
+.office-card {
+  animation: royalFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ہب میڈیا (تصاویر، ویڈیوز، پی ڈی ایف) اور کیپشن */
+.hub-media-item img,
+.hub-media-item video,
+.hub-media-pdf,
+.hub-media-caption {
+  animation: royalFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* گیٹ وے کارڈز (Global Trade / Research) */
+.gateway-card {
+  animation: royalFadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
