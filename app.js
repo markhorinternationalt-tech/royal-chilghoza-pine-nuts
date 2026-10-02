@@ -2494,6 +2494,9 @@ if (adminLoginEl) {
 
   loadAllKVContent();
   trackVisit();
+  const loadStatsBtn = document.getElementById("loadStatsBtn");
+if (loadStatsBtn) loadStatsBtn.onclick = loadVisitStats;
+
   applyLanguage();
 }
 
