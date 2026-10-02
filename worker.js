@@ -35,6 +35,78 @@ export default {
       }, cors);
     }
 
+    // ---- Visitor Info (Country) ----
+if (url.pathname === "/api/visitor-info") {
+  return json({
+    ok: true,
+    country: request.cf?.country || "Unknown",
+    city: request.cf?.city || "Unknown"
+  }, cors);
+}
+
+// ---- Track Visit (increase counter) ----
+if (url.pathname === "/api/track-visit" && request.method === "POST") {
+  if (!env.ROYAL_KV) {
+    return json({ ok: false, error: "KV not configured" }, cors);
+  }
+  try {
+    const country = request.cf?.country || "Unknown";
+    const today = new Date().toISOString().split("T")[0];
+
+    // Total visits
+    const totalRaw = await env.ROYAL_KV.get("total_visits");
+    const total = totalRaw ? parseInt(totalRaw, 10) : 0;
+    await env.ROYAL_KV.put("total_visits", String(total + 1));
+
+    // Visits by country
+    const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
+    const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
+    byCountry[country] = (byCountry[country] || 0) + 1;
+    await env.ROYAL_KV.put("visits_by_country", JSON.stringify(byCountry));
+
+    // Daily visits (last 30 days)
+    const dailyRaw = await env.ROYAL_KV.get("visits_daily");
+    let daily = dailyRaw ? JSON.parse(dailyRaw) : {};
+    daily[today] = (daily[today] || 0) + 1;
+    const keys = Object.keys(daily).sort();
+    if (keys.length > 30) {
+      const toDelete = keys.slice(0, keys.length - 30);
+      toDelete.forEach(k => delete daily[k]);
+    }
+    await env.ROYAL_KV.put("visits_daily", JSON.stringify(daily));
+
+    return json({ ok: true, total: total + 1, country }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors);
+  }
+}
+
+// ---- Get Visit Stats (Admin only) ----
+if (url.pathname === "/api/visit-stats" && request.method === "GET") {
+  const reject = await checkAuth(request, env, cors);
+  if (reject) return reject;
+
+  if (!env.ROYAL_KV) {
+    return json({ ok: false, error: "KV not configured" }, cors);
+  }
+  try {
+    const total = parseInt(await env.ROYAL_KV.get("total_visits") || "0", 10);
+    const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
+    const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
+    const dailyRaw = await env.ROYAL_KV.get("visits_daily");
+    const daily = dailyRaw ? JSON.parse(dailyRaw) : {};
+
+    return json({
+      ok: true,
+      total,
+      byCountry,
+      daily
+    }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors);
+  }
+}
+
     // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
       try {
