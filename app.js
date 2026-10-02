@@ -198,6 +198,21 @@ function cloudinaryOptimize(url, width, height, crop = 'fill') {
   }
   return url;
 }
+
+/* =========================================================
+   VISIT TRACKING (silent, admin only)
+========================================================= */
+async function trackVisit() {
+  try {
+    // Only track once per browser session
+    if (sessionStorage.getItem("royalVisitTracked") === "1") return;
+    sessionStorage.setItem("royalVisitTracked", "1");
+
+    await fetch("/api/track-visit", { method: "POST" });
+  } catch (e) {
+    // Silent fail — never disturb the user
+  }
+}
 const DEFAULT_GALLERY = [
   ["01-chilghoza-lot.jpg", "Chilghoza Pine Nuts Lot Inspection & Grading"],
   ["02-chilghoza-cones.jpg", "Harvested Cones of Chilghoza Pine Nuts"],
