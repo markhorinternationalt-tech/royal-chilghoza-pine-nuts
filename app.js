@@ -2506,6 +2506,64 @@ document.addEventListener("DOMContentLoaded", init);
    GALLERY LIGHTBOX — Zoom, Pan, Drag
    (Click any gallery image to open full-screen with zoom)
 ========================================================= */
+/* =========================================================
+   VISITS DASHBOARD (admin only)
+========================================================= */
+async function loadVisitStats() {
+  const box = document.getElementById("statsBox");
+  if (!box) return;
+  box.innerHTML = `<p class="admin-note" style="text-align:center;">⏳ Loading...</p>`;
+
+  try {
+    const r = await fetch("/api/visit-stats", {
+      headers: { Authorization: "Bearer " + state.token }
+    });
+    const data = await r.json();
+
+    if (!data.ok) {
+      box.innerHTML = `<p class="admin-note" style="color:#ff6b6b;text-align:center;">❌ ${data.error || "Failed to load"}</p>`;
+      return;
+    }
+
+    const total = data.total || 0;
+    const byCountry = data.byCountry || {};
+    const daily = data.daily || {};
+
+    const countries = Object.entries(byCountry).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const countryRows = countries.map(([c, n]) =>
+      `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(212,175,55,0.15);">
+        <span>🌍 ${c}</span><b style="color:var(--gold);">${n}</b>
+      </div>`
+    ).join("");
+
+    const days = Object.entries(daily).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 7);
+    const dayRows = days.map(([d, n]) =>
+      `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(212,175,55,0.15);">
+        <span>📅 ${d}</span><b style="color:var(--gold);">${n}</b>
+      </div>`
+    ).join("");
+
+    box.innerHTML = `
+      <div style="text-align:center;margin-bottom:16px;">
+        <div style="font-size:2.5rem;font-family:var(--heading-font);color:var(--gold);line-height:1;">${total}</div>
+        <div style="color:var(--muted);font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;margin-top:4px;">Total Visits</div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <h4 style="color:var(--gold2);font-family:var(--heading-font);font-weight:500;margin:0 0 10px;">🌍 Top Countries</h4>
+        ${countryRows || '<p class="admin-note">No data yet.</p>'}
+      </div>
+
+      <div style="margin-top:20px;">
+        <h4 style="color:var(--gold2);font-family:var(--heading-font);font-weight:500;margin:0 0 10px;">📅 Last 7 Days</h4>
+        ${dayRows || '<p class="admin-note">No data yet.</p>'}
+      </div>
+    `;
+  } catch (e) {
+    box.innerHTML = `<p class="admin-note" style="color:#ff6b6b;text-align:center;">❌ Error: ${e.message}</p>`;
+  }
+}
+
 (function initLightbox() {
   const lightbox = document.getElementById("galleryLightbox");
   const stage = document.getElementById("lightboxStage");
