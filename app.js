@@ -2493,7 +2493,7 @@ if (adminLoginEl) {
   if (state.admin) activateAdminUI();
 
   loadAllKVContent();
-
+  trackVisit();
   applyLanguage();
 }
 
