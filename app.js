@@ -2655,6 +2655,10 @@ if (adminLoginEl) {
   const loadStatsBtn = document.getElementById("loadStatsBtn");
 if (loadStatsBtn) loadStatsBtn.onclick = loadVisitStats;
 
+loadReviews().then(() => {
+  renderReviews();
+});
+
   applyLanguage();
 }
 
