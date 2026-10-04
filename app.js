@@ -213,6 +213,164 @@ async function trackVisit() {
     // Silent fail — never disturb the user
   }
 }
+
+/* =========================================================
+   TESTIMONIALS / REVIEWS
+========================================================= */
+let reviewsData = [];
+
+async function loadReviews() {
+  try {
+    const val = await getFromKV("reviews_data");
+    reviewsData = Array.isArray(val) ? val : [];
+  } catch (e) {
+    reviewsData = [];
+  }
+}
+
+function renderReviews() {
+  const grid = document.getElementById("reviewsGrid");
+  if (!grid) return;
+
+  // Only show published reviews to visitors
+  const visible = state.admin ? reviewsData : reviewsData.filter(r => r.published !== false);
+
+  if (visible.length === 0) {
+    grid.innerHTML = `<p class="review-empty">No reviews yet. Check back soon.</p>`;
+    return;
+  }
+
+  grid.innerHTML = visible.map((r, i) => {
+    const realIndex = reviewsData.findIndex(x => x === r);
+    const initial = (r.name || "?").trim().charAt(0).toUpperCase();
+    const stars = "★".repeat(r.rating || 5) + "☆".repeat(5 - (r.rating || 5));
+    const hiddenBadge = (state.admin && r.published === false) ?
+      `<div class="gateway-hidden-badge" style="top:8px;left:8px;font-size:0.55rem;padding:4px 8px;">🌫 HIDDEN</div>` : "";
+
+    const adminBtns = state.admin ? `
+      <div class="hub-media-item-actions">
+        <button class="hub-action-btn" data-review-edit="${realIndex}" title="Edit" type="button">✏️</button>
+        <button class="hub-action-btn danger" data-review-delete="${realIndex}" title="Delete" type="button">🗑</button>
+      </div>
+    ` : "";
+
+    return `
+      <article class="review-card" style="position:relative;">
+        ${hiddenBadge}
+        ${adminBtns}
+        <div class="review-stars">${stars}</div>
+        <p class="review-text">${escapeHtml(r.text || "").replace(/\n/g, '<br>')}</p>
+        <div class="review-author">
+          <div class="review-avatar">${escapeHtml(initial)}</div>
+          <div class="review-author-info">
+            <span class="review-author-name">${escapeHtml(r.name || "Anonymous")}</span>
+            <span class="review-author-meta">${escapeHtml(r.country || "")}${r.role ? " · " + escapeHtml(r.role) : ""}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  // Attach admin buttons
+  if (state.admin) {
+    grid.querySelectorAll("[data-review-edit]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); editReview(+b.dataset.reviewEdit); })
+    );
+    grid.querySelectorAll("[data-review-delete]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); deleteReview(+b.dataset.reviewDelete); })
+    );
+  }
+}
+
+async function saveReviewsKV() {
+  return await saveToKV("reviews_data", reviewsData);
+}
+
+function editReview(index) {
+  const r = reviewsData[index] || { name: "", country: "", role: "", text: "", rating: 5, published: true };
+  const isPublished = r.published !== false;
+
+  openEditModal(
+    `✏️ ${index === -1 ? "Add New Review" : "Edit Review"}`,
+    `
+    <label>Client Name: <span style="color:#ff6b6b">*</span></label>
+    <input type="text" id="revName" value="${escapeHtml(r.name || "")}">
+
+    <label>Country:</label>
+    <input type="text" id="revCountry" value="${escapeHtml(r.country || "")}" placeholder="e.g. China, UAE, USA">
+
+    <label>Role / Company (optional):</label>
+    <input type="text" id="revRole" value="${escapeHtml(r.role || "")}" placeholder="e.g. Importer, Wholesaler">
+
+    <label>Rating (1-5 stars):</label>
+    <select id="revRating">
+      <option value="5" ${r.rating === 5 ? "selected" : ""}>★★★★★ (5)</option>
+      <option value="4" ${r.rating === 4 ? "selected" : ""}>★★★★☆ (4)</option>
+      <option value="3" ${r.rating === 3 ? "selected" : ""}>★★★☆☆ (3)</option>
+      <option value="2" ${r.rating === 2 ? "selected" : ""}>★★☆☆☆ (2)</option>
+      <option value="1" ${r.rating === 1 ? "selected" : ""}>★☆☆☆☆ (1)</option>
+    </select>
+
+    <label>Review Text: <span style="color:#ff6b6b">*</span></label>
+    <textarea id="revText" rows="4" placeholder="Write the client's feedback...">${escapeHtml(r.text || "")}</textarea>
+
+    <label style="margin-top:18px;">Visibility:</label>
+    <div class="gw-visibility-options">
+      <label class="gw-radio"><input type="radio" name="revVis" value="hide" ${!isPublished ? 'checked' : ''}> 🌫 <b>Hide</b> from visitors (Draft)</label>
+      <label class="gw-radio"><input type="radio" name="revVis" value="show" ${isPublished ? 'checked' : ''}> 👁 <b>Show</b> to everyone</label>
+    </div>
+    `,
+    async () => {
+      const name = document.getElementById("revName").value.trim();
+      const country = document.getElementById("revCountry").value.trim();
+      const role = document.getElementById("revRole").value.trim();
+      const rating = parseInt(document.getElementById("revRating").value, 10) || 5;
+      const text = document.getElementById("revText").value.trim();
+      const vis = document.querySelector('input[name="revVis"]:checked').value;
+      const published = vis === "show";
+
+      if (!name) { setEditStatus("❌ Name required", "error"); return; }
+      if (!text) { setEditStatus("❌ Review text required", "error"); return; }
+
+      const newReview = { name, country, role, rating, text, published };
+
+      if (index === -1) {
+        reviewsData.push(newReview);
+      } else {
+        reviewsData[index] = newReview;
+      }
+
+      setEditStatus("Saving...", "");
+      const ok = await saveReviewsKV();
+      if (ok) {
+        renderReviews();
+        setEditStatus("✅ Review saved!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed.", "error");
+      }
+    }
+  );
+}
+
+async function deleteReview(index) {
+  const r = reviewsData[index];
+  if (!r) return;
+
+  if (!confirm(`🗑 Delete review from "${r.name}"?\n\nThis action cannot be undone.`)) return;
+
+  reviewsData.splice(index, 1);
+  const ok = await saveReviewsKV();
+  if (ok) {
+    renderReviews();
+  } else {
+    alert("❌ Delete failed.");
+  }
+}
+
+function addNewReview() {
+  editReview(-1);
+}
 const DEFAULT_GALLERY = [
   ["01-chilghoza-lot.jpg", "Chilghoza Pine Nuts Lot Inspection & Grading"],
   ["02-chilghoza-cones.jpg", "Harvested Cones of Chilghoza Pine Nuts"],
