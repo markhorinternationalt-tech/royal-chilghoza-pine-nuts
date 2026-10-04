@@ -2658,6 +2658,8 @@ if (loadStatsBtn) loadStatsBtn.onclick = loadVisitStats;
 loadReviews().then(() => {
   renderReviews();
 });
+const addReviewBtn = document.getElementById("addReviewBtn");
+if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
   applyLanguage();
 }
