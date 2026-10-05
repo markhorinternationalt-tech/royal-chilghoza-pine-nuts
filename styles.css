@@ -2103,7 +2103,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   position: relative;
   z-index: 2;
   margin: 24px 0 24px;
-  padding: 20px;
+  padding: 4px;
   border: 1px dashed rgba(212, 175, 55, 0.22);
   border-radius: 16px;
   background: var(--media-box-bg);
