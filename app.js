@@ -2386,6 +2386,11 @@ async function loadAllKVContent() {
   }
 
   renderGateways();
+
+  // === SEO Hub Route Handler ===
+  if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(window.location.pathname)) {
+    setTimeout(openHubFromURL, 400);
+  }
 }
 
 /* =========================================================
