@@ -2889,3 +2889,143 @@ async function loadVisitStats() {
     }
   }, { passive: false });
 })();
+
+/* =========================================================
+   SEO HUB ROUTES — Auto-open hub from URL
+   /trade/global-markets  → opens Global Trade, Hub #01
+   /research/forests-ecology → opens Research, Hub #04
+========================================================= */
+
+const HUB_SLUGS = {
+  trade: [
+    "global-markets",
+    "usa-market",
+    "china-market",
+    "export-logistics",
+    "product-quality",
+    "supply-chain",
+    "gi-indication",
+    "organic-chemistry",
+    "processing-packaging",
+    "sustainable-trade"
+  ],
+  research: [
+    "geographical-origin",
+    "biology-botany",
+    "nutrition-value",
+    "forests-ecology",
+    "biodiversity-wildlife",
+    "climate-environment",
+    "forest-conservation",
+    "supply-chain-livelihoods",
+    "sustainable-harvesting",
+    "research-policy"
+  ]
+};
+
+function updateSEOTags(gateway, hubTitle, hubDesc) {
+  const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
+
+  // 1. Title
+  const newTitle = hubTitle
+    ? `${hubTitle} | Royal Chilghoza Pine Nuts`
+    : `Royal Chilghoza Pine Nuts — ${gatewayName}`;
+  document.title = newTitle;
+
+  // 2. Meta description
+  let descEl = document.querySelector('meta[name="description"]');
+  if (descEl) {
+    descEl.setAttribute("content",
+      hubDesc
+        ? `${hubDesc} — Royal Chilghoza Pine Nuts, Pakistan. چلغوزہ Chilgoza.`
+        : "Royal Chilghoza Pine Nuts — Global Trade and Research & Knowledge Ecosystem."
+    );
+  }
+
+  // 3. Meta keywords
+  let kwEl = document.querySelector('meta[name="keywords"]');
+  if (kwEl) {
+    kwEl.setAttribute("content",
+      `Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, Royal Chilghoza, ${hubTitle || gatewayName}, Pakistan, Export`
+    );
+  }
+
+  // 4. Canonical URL
+  let canonicalEl = document.querySelector('link[rel="canonical"]');
+  if (!canonicalEl) {
+    canonicalEl = document.createElement("link");
+    canonicalEl.setAttribute("rel", "canonical");
+    document.head.appendChild(canonicalEl);
+  }
+  canonicalEl.setAttribute("href", window.location.href);
+
+  // 5. og:title
+  let ogTitle = document.querySelector('meta[property="og:title"]');
+  if (!ogTitle) {
+    ogTitle = document.createElement("meta");
+    ogTitle.setAttribute("property", "og:title");
+    document.head.appendChild(ogTitle);
+  }
+  ogTitle.setAttribute("content", newTitle);
+
+  // 6. og:description
+  let ogDesc = document.querySelector('meta[property="og:description"]');
+  if (!ogDesc) {
+    ogDesc = document.createElement("meta");
+    ogDesc.setAttribute("property", "og:description");
+    document.head.appendChild(ogDesc);
+  }
+  if (hubDesc) ogDesc.setAttribute("content", hubDesc);
+
+  // 7. og:url
+  let ogUrl = document.querySelector('meta[property="og:url"]');
+  if (!ogUrl) {
+    ogUrl = document.createElement("meta");
+    ogUrl.setAttribute("property", "og:url");
+    document.head.appendChild(ogUrl);
+  }
+  ogUrl.setAttribute("content", window.location.href);
+}
+
+function openHubFromURL() {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+  const parts = path.split("/");
+  if (parts.length !== 2) return false;
+
+  const [gateway, slug] = parts;
+  if (!HUB_SLUGS[gateway]) return false;
+
+  const hubIndex = HUB_SLUGS[gateway].indexOf(slug);
+  if (hubIndex === -1) return false;
+
+  // Open the gateway
+  openGateway(gateway);
+
+  // Get hub data
+  const list = hubs(gateway);
+  const hubItem = list[hubIndex];
+  if (!hubItem) return false;
+  const [hubTitle, hubDesc] = hubItem;
+
+  // Update SEO tags
+  updateSEOTags(gateway, hubTitle, hubDesc);
+
+  // Scroll to the specific hub after DOM renders
+  setTimeout(() => {
+    const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
+    if (hubEl) {
+      hubEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Golden highlight effect
+      hubEl.style.transition = "box-shadow 0.5s";
+      hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
+      setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
+    }
+  }, 600);
+
+  return true;
+}
+
+// Run on page load (after main init)
+window.addEventListener("load", () => {
+  setTimeout(openHubFromURL, 700);
+});
