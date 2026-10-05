@@ -423,6 +423,9 @@ const T = {
     office2Title: "Regional Operations Hub",
     office3Title: "Federal & Trade Desk",
     office4Title: "International Trade Desk",
+    reviewsEyebrow: "TRUSTED BY BUYERS WORLDWIDE",
+    reviewsTitle: "What Our Clients Say",
+    reviewsText: "Real feedback from international buyers and trade partners.",
   },
   zh: {
     navHome: "首页", navTrade: "全球贸易", navResearch: "研究与知识",
@@ -464,6 +467,9 @@ const T = {
     office2Title: "区域运营中心",
     office3Title: "联邦与贸易办公室",
     office4Title: "国际贸易办公室",
+    reviewsEyebrow: "受到全球买家的信赖",
+    reviewsTitle: "客户评价",
+    reviewsText: "来自国际买家和贸易伙伴的真实反馈。",
   },
   ar: {
     navHome: "الرئيسية", navTrade: "التجارة العالمية", navResearch: "البحث والمعرفة",
@@ -505,6 +511,9 @@ const T = {
     office2Title: "مركز العمليات الإقليمي",
     office3Title: "مكتب التجارة الفيدرالي",
     office4Title: "مكتب التجارة الدولية",
+    reviewsEyebrow: "موثوق به من المشترين في جميع أنحاء العالم",
+    reviewsTitle: "ماذا يقول عملاؤنا",
+    reviewsText: "ملاحظات حقيقية من المشترين الدوليين وشركاء التجارة.",
   },
   ps: {
     navHome: "کور", navTrade: "نړیواله سوداګري", navResearch: "څېړنه او پوهه",
@@ -546,6 +555,9 @@ const T = {
     office2Title: "سیمه ییز عملیاتي مرکز",
     office3Title: "فدرالي او سوداګریز دفتر",
     office4Title: "نړیوال سوداګریز دفتر",
+    reviewsEyebrow: "د نړۍ په ګوټ ګوټ کې د پیریدونکو باور",
+    reviewsTitle: "زموږ پیریدونکي څه وايي",
+    reviewsText: "د نړیوالو پیریدونکو او سوداګریزو شریکانو ریښتیني نظرونه.",
   },
   ru: {
     navHome: "Главная", navTrade: "Мировая торговля", navResearch: "Исследования и знания",
@@ -587,6 +599,9 @@ const T = {
     office2Title: "Региональный операционный центр",
     office3Title: "Федеральный торговый офис",
     office4Title: "Международный торговый офис",
+    reviewsEyebrow: "НАМ ДОВЕРЯЮТ ПОКУПАТЕЛИ ПО ВСЕМУ МИРУ",
+    reviewsTitle: "Что говорят наши клиенты",
+    reviewsText: "Реальные отзывы международных покупателей и торговых партнёров.",
   },
   ur: {
     navHome: "ہوم", navTrade: "عالمی تجارت", navResearch: "تحقیق اور علم",
@@ -628,6 +643,9 @@ const T = {
     office2Title: "علاقائی آپریشنز ہب",
     office3Title: "وفاقی اور تجارتی ڈیسک",
     office4Title: "بین الاقوامی تجارتی ڈیسک",
+    reviewsEyebrow: "دنیا بھر کے خریداروں کا اعتماد",
+    reviewsTitle: "ہمارے گاہک کیا کہتے ہیں",
+    reviewsText: "بین الاقوامی خریداروں اور تجارتی شراکت داروں کی حقیقی رائے۔",
   },
 };
 
