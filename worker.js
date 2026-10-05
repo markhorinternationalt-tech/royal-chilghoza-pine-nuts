@@ -1,6 +1,7 @@
 // =========================================================
 // ROYAL CHILGHOZA PINE NUTS — CLOUDFLARE WORKER
 // With Cloudinary + KV Storage + Rate Limiting
+// + SEO-friendly Hub Routes for 20 hubs
 // =========================================================
 
 const CLOUDINARY_CLOUD_NAME = "agnhxdu4";
@@ -428,6 +429,21 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
           blocked: !limit.allowed
         }
       }, cors);
+    }
+
+    // =========================================================
+    // HUB ROUTES — SEO-friendly URLs for 20 hubs
+    // /trade/global-markets, /research/forests-ecology etc.
+    // These routes serve index.html so Google sees real URLs
+    // =========================================================
+    if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
+      try {
+        const newUrl = new URL(request.url);
+        newUrl.pathname = "/index.html";
+        const newReq = new Request(newUrl.toString(), request);
+        const hubResp = await env.ASSETS.fetch(newReq);
+        if (hubResp.status !== 404) return hubResp;
+      } catch (e) { /* fall through */ }
     }
 
     // ---- Static Assets ----
