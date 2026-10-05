@@ -2177,10 +2177,10 @@ body.admin-mode .hub-section-actions { display: flex; }
     gap: 28px;
   }
 
-  .hub-section {
-    padding: 26px 22px 22px;
-    border-radius: 20px;
-  }
+.hub-section {
+  padding: 12px 12px 12px;
+  border-radius: 20px;
+}
 
   .hub-section-number {
     font-size: 0.62rem;
