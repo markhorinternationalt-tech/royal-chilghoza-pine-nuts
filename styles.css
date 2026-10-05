@@ -2200,10 +2200,10 @@ body.admin-mode .hub-section-actions { display: flex; }
   }
 
   .hub-section-media {
-    padding: 14px;
-    margin: 20px 0 18px;
-    border-radius: 14px;
-  }
+  padding: 2px;
+  margin: 20px 0 18px;
+  border-radius: 14px;
+}
 
   .hub-section-media .hub-media-item img,
   .hub-section-media .hub-media-item video {
