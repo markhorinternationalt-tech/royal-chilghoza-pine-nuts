@@ -3027,5 +3027,5 @@ function openHubFromURL() {
 
 // Run on page load (after main init)
 window.addEventListener("load", () => {
-  setTimeout(openHubFromURL, 700);
+  setTimeout(openHubFromURL, 3000);
 });
