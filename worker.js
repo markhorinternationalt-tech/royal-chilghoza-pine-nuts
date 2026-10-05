@@ -431,18 +431,20 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }, cors);
     }
 
+    // =========================================================
+    // HUB ROUTES — SEO-friendly URLs for 20 hubs
+    // /trade/global-markets, /research/forests-ecology etc.
+    // These routes serve index.html so Google sees real URLs
+    // =========================================================
     if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
-  try {
-    const newUrl = new URL(request.url);
-    newUrl.pathname = "/index.html";
-    const newReq = new Request(newUrl.toString(), request);
-    const hubResp = await env.ASSETS.fetch(newReq);
-    if (hubResp.status !== 404) return hubResp;
-  } catch (e) { /* fall through */ }
-}
-  
-  } catch (e) { /* fall through */ }
-}
+      try {
+        const newUrl = new URL(request.url);
+        newUrl.pathname = "/index.html";
+        const newReq = new Request(newUrl.toString(), request);
+        const hubResp = await env.ASSETS.fetch(newReq);
+        if (hubResp.status !== 404) return hubResp;
+      } catch (e) { /* fall through */ }
+    }
 
     // ---- Static Assets ----
     if (env.ASSETS) {
