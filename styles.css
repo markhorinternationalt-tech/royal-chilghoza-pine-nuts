@@ -2002,10 +2002,9 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   flex-direction: column;
   gap: 56px;
 }
-
 .hub-section {
   position: relative;
-  padding: 40px 40px 32px;
+  padding: 16px 16px 16px;
   border-radius: 24px;
   background:
     radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.06) 0%, transparent 55%),
@@ -2020,7 +2019,6 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   overflow: hidden;
 }
-
 .hub-section::before {
   content: "";
   position: absolute;
