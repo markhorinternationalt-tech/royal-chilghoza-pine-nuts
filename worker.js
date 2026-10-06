@@ -515,6 +515,45 @@ if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
   }
 }  
 
+// =========================================================
+// SITEMAP ROUTE — Auto-generates /sitemap.xml from KV
+// =========================================================
+if (url.pathname === "/sitemap.xml") {
+  try {
+    const slugsRaw = await env.ROYAL_KV.get("hub_slugs");
+    const slugs = slugsRaw ? JSON.parse(slugsRaw) : {
+      trade: ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"],
+      research: ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"]
+    };
+
+    const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
+    const today = new Date().toISOString().split("T")[0];
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+    xml += `  <url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
+    xml += `  <url><loc>${base}/trade</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+    xml += `  <url><loc>${base}/research</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+
+    (slugs.trade || []).forEach(s => {
+      xml += `  <url><loc>${base}/trade/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+    });
+    (slugs.research || []).forEach(s => {
+      xml += `  <url><loc>${base}/research/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+    });
+
+    xml += `</urlset>`;
+
+    return new Response(xml, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/xml;charset=UTF-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  } catch (e) {
+    return new Response("Error generating sitemap: " + e.message, { status: 500 });
+  }
+}
     // ---- Static Assets ----
     if (env.ASSETS) {
       try {
