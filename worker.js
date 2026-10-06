@@ -774,9 +774,53 @@ function isBot(request) {
 // =========================================================
 // SSR RENDERER — Generates full HTML for bots
 // =========================================================
-function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
+function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
   const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}/${slug}`;
+
+  // ===== Build media section with captions =====
+  let mediaHtml = "";
+  let jsonLdImages = [];
+  if (Array.isArray(hubMedia) && hubMedia.length > 0) {
+    const mediaItems = hubMedia.map(m => {
+      const caption = (m.name || "").replace(/"/g, "&quot;");
+      if (m.type === "image") {
+        jsonLdImages.push(m.url);
+        return `<figure class="hub-figure"><img src="${m.url}" alt="${caption}" loading="lazy"><figcaption>${caption}</figcaption></figure>`;
+      } else if (m.type === "video") {
+        return `<div class="hub-video"><video src="${m.url}" controls preload="metadata"></video><p class="caption">${caption}</p></div>`;
+      } else {
+        return `<div class="hub-pdf"><a href="${m.url}" target="_blank" rel="noopener">📄 ${caption}</a></div>`;
+      }
+    }).join("");
+    mediaHtml = `<div class="media-section"><h2>Media & Documentation</h2>${mediaItems}</div>`;
+  }
+
+  // ===== JSON-LD Schema for AI & Google =====
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": hubTitle,
+    "description": hubDesc,
+    "url": fullUrl,
+    "inLanguage": "en",
+    "about": "Chilghoza Pine Nuts",
+    "keywords": `Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, ${hubTitle}, Pakistan, Export`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Royal Chilghoza Pine Nuts",
+      "url": "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Royal Chilghoza Pine Nuts",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/royal-profile-pic.jpg"
+      }
+    }
+  };
+  if (jsonLdImages.length > 0) jsonLd.image = jsonLdImages;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -791,6 +835,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
   <meta property="og:description" content="${hubDesc}">
   <meta property="og:url" content="${fullUrl}">
   <meta property="og:type" content="article">
+  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #03140a; color: #f5f1e8; line-height: 1.6; }
     .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
@@ -801,6 +846,16 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
     .content p { margin: 15px 0; }
     .cta { display: inline-block; margin-top: 30px; padding: 15px 30px; background: #d4af37; color: #03140a; text-decoration: none; border-radius: 8px; font-weight: 600; }
     .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
+    .media-section { margin-top: 40px; }
+    .media-section h2 { color: #d4af37; font-size: 1.6rem; margin-bottom: 20px; }
+    .hub-figure { margin: 20px 0; background: rgba(10,47,30,0.5); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; overflow: hidden; }
+    .hub-figure img { width: 100%; display: block; }
+    .hub-figure figcaption { padding: 15px 20px; color: #f5f1e8; font-style: italic; font-size: 1rem; }
+    .hub-video { margin: 20px 0; }
+    .hub-video video { width: 100%; border-radius: 12px; }
+    .hub-video .caption { color: #8fa89a; font-style: italic; margin-top: 8px; }
+    .hub-pdf { margin: 15px 0; padding: 15px; background: rgba(10,47,30,0.5); border-radius: 10px; }
+    .hub-pdf a { color: #d4af37; text-decoration: none; font-weight: 500; }
     footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
   </style>
 </head>
@@ -816,6 +871,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
       <p>For trade inquiries, export documentation, bulk orders, and worldwide shipping, please contact our trade desk directly via WhatsApp.</p>
       <a href="https://wa.me/923336665688?text=${encodeURIComponent("Inquiry about " + hubTitle)}" class="cta">💬 WhatsApp Trade Inquiry</a>
     </div>
+    ${mediaHtml}
     <footer>
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
       <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
@@ -825,6 +881,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
 </body>
 </html>`;
 }
+ 
 
 // =========================================================
 // SSR RENDERER — Generates full HTML for Gateway (bot)
