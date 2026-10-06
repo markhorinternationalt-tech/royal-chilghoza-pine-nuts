@@ -638,3 +638,58 @@ function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
   return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot/i.test(ua);
 }
+
+// =========================================================
+// SSR RENDERER — Generates full HTML for bots
+// =========================================================
+function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
+  const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
+  const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}/${slug}`;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${hubTitle} | Royal Chilghoza Pine Nuts</title>
+  <meta name="description" content="${hubDesc} — Royal Chilghoza Pine Nuts, Pakistan. چلغوزہ Chilgoza.">
+  <meta name="keywords" content="Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, Royal Chilghoza, ${hubTitle}, Pakistan, Export">
+  <link rel="canonical" href="${fullUrl}">
+  <meta property="og:title" content="${hubTitle} | Royal Chilghoza Pine Nuts">
+  <meta property="og:description" content="${hubDesc}">
+  <meta property="og:url" content="${fullUrl}">
+  <meta property="og:type" content="article">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #03140a; color: #f5f1e8; line-height: 1.6; }
+    .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    .eyebrow { color: #d4af37; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; }
+    h1 { font-size: 2.5rem; color: #d4af37; margin: 20px 0; line-height: 1.2; }
+    .desc { font-size: 1.2rem; color: #8fa89a; margin-bottom: 30px; }
+    .content { background: rgba(10, 47, 30, 0.5); padding: 30px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .content p { margin: 15px 0; }
+    .cta { display: inline-block; margin-top: 30px; padding: 15px 30px; background: #d4af37; color: #03140a; text-decoration: none; border-radius: 8px; font-weight: 600; }
+    .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
+    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← Back to Royal Chilghoza Pine Nuts</a>
+    <p class="eyebrow">${gatewayName} · Hub ${String(hubIndex + 1).padStart(2, "0")}</p>
+    <h1>${hubTitle}</h1>
+    <p class="desc">${hubDesc}</p>
+    <div class="content">
+      <p><strong>Royal Chilghoza Pine Nuts</strong> — Premium quality Chilghoza Pine Nuts from the native forests of Gilgit-Baltistan, Pakistan.</p>
+      <p>${hubDesc}</p>
+      <p>For trade inquiries, export documentation, bulk orders, and worldwide shipping, please contact our trade desk directly via WhatsApp.</p>
+      <a href="https://wa.me/923336665688?text=${encodeURIComponent("Inquiry about " + hubTitle)}" class="cta">💬 WhatsApp Trade Inquiry</a>
+    </div>
+    <footer>
+      <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
+      <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
+      <p>© 2026 Royal Chilghoza Pine Nuts. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
