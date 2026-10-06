@@ -2,6 +2,12 @@
 <html lang="en" dir="ltr">
 <head>
   <base href="/">
+  <script>
+  // Save original URL before any rewrite (for SPA routing)
+  if (!sessionStorage.getItem("royalOriginalUrl")) {
+    sessionStorage.setItem("royalOriginalUrl", window.location.pathname);
+  }
+</script>
   <meta name="google-site-verification" content="8LcTlujNpIy3pNF98h1UJriJD6q14fTP0JPr5n8L418" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
