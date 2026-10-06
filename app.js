@@ -3067,6 +3067,8 @@ if (hubIndex === -1) return false;
 }
 
 // Run on page load (after main init)
-window.addEventListener("load", () => {
-  setTimeout(openHubFromURL, 3000);
-});
+setTimeout(function() {
+  alert("DEBUG: URL = " + window.location.pathname);
+  var result = openHubFromURL();
+  alert("DEBUG: openHubFromURL returned = " + result);
+}, 1500);
