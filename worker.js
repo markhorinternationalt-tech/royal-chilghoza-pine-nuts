@@ -738,3 +738,94 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex) {
 </body>
 </html>`;
 }
+
+// =========================================================
+// SSR RENDERER — Generates full HTML for Gateway (bot)
+// =========================================================
+function renderGatewaySSR(gateway) {
+  const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
+  const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}`;
+
+  const description = gateway === "trade"
+    ? "Premium quality Chilghoza Pine Nuts · Worldwide export · Markets and buyers in USA, China, Central Asia, and the Middle East."
+    : "Science · Origin · Forests · Ecology · Knowledge about Chilghoza Pine Nuts from Gilgit-Baltistan, Pakistan.";
+
+  const hubTitles = gateway === "trade" ? [
+    "Global Markets for Chilghoza Pine Nuts",
+    "USA Market & Buyers for Chilghoza Pine Nuts",
+    "China Market & Buyers for Chilghoza Pine Nuts",
+    "Export & Logistics for Chilghoza Pine Nuts",
+    "Product & Quality Standards for Chilghoza Pine Nuts",
+    "Supply Chain & Traceability of Chilghoza Pine Nuts",
+    "Geographical Indication (GI) of Chilghoza Pine Nuts",
+    "Organic Chemistry & Natural Quality of Chilghoza Pine Nuts",
+    "Processing, Packaging & Value Addition for Chilghoza Pine Nuts",
+    "Sustainable & Ethical Trade of Chilghoza Pine Nuts"
+  ] : [
+    "Geographical Origin & GI Research on Chilghoza Pine Nuts",
+    "Chilghoza Pine Nuts Biology & Botany",
+    "Nutrition Value & Natural Composition of Chilghoza Pine Nuts",
+    "Chilghoza Pine Nuts Forests & Ecology",
+    "Biodiversity & Wildlife in Chilghoza Pine Nuts Forests",
+    "Climate & Global Green Environment for Chilghoza Pine Nuts",
+    "Forest Conservation & Restoration for Chilghoza Pine Nuts",
+    "Supply Chain & Livelihoods of Chilghoza Pine Nuts Communities",
+    "Sustainable Harvesting & Awareness for Chilghoza Pine Nuts",
+    "Research, Policy & Partnerships for Chilghoza Pine Nuts"
+  ];
+
+  const hubSlugs = gateway === "trade" ? [
+    "global-markets","usa-market","china-market","export-logistics","product-quality",
+    "supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"
+  ] : [
+    "geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife",
+    "climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"
+  ];
+
+  const hubsHtml = hubTitles.map((title, i) =>
+    `<div class="hub-card"><h2>${title}</h2><a href="/${gateway}/${hubSlugs[i]}">Open Hub →</a></div>`
+  ).join("");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${gatewayName} | Royal Chilghoza Pine Nuts</title>
+  <meta name="description" content="${description}">
+  <meta name="keywords" content="Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, Royal Chilghoza, ${gatewayName}, Pakistan, Export">
+  <link rel="canonical" href="${fullUrl}">
+  <meta property="og:title" content="${gatewayName} | Royal Chilghoza Pine Nuts">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${fullUrl}">
+  <meta property="og:type" content="website">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #03140a; color: #f5f1e8; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    .eyebrow { color: #d4af37; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; }
+    h1 { font-size: 3rem; color: #d4af37; margin: 20px 0; line-height: 1.2; }
+    .desc { font-size: 1.2rem; color: #8fa89a; margin-bottom: 40px; }
+    .hub-list { display: grid; gap: 20px; }
+    .hub-card { background: rgba(10, 47, 30, 0.5); padding: 25px; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .hub-card h2 { color: #d4af37; font-size: 1.3rem; margin: 0 0 10px; }
+    .hub-card a { color: #d4af37; text-decoration: none; font-weight: 600; }
+    .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
+    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← Back to Royal Chilghoza Pine Nuts</a>
+    <p class="eyebrow">PRIMARY GATEWAY</p>
+    <h1>${gatewayName}</h1>
+    <p class="desc">${description}</p>
+    <div class="hub-list">${hubsHtml}</div>
+    <footer>
+      <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
+      <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
+      <p>© 2026 Royal Chilghoza Pine Nuts. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>`;
+}
