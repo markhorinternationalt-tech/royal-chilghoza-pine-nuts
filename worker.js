@@ -516,15 +516,38 @@ if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
 }  
 
 // =========================================================
-// SITEMAP ROUTE — Auto-generates /sitemap.xml from KV
+// SITEMAP ROUTE — Auto-generates from hubs_data (KV)
 // =========================================================
 if (url.pathname === "/sitemap.xml") {
   try {
-    const slugsRaw = await env.ROYAL_KV.get("hub_slugs");
-    const slugs = slugsRaw ? JSON.parse(slugsRaw) : {
-      trade: ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"],
-      research: ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"]
-    };
+    const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+    let hubsData = null;
+    try { hubsData = hubsRaw ? JSON.parse(hubsRaw) : null; } catch (e) {}
+
+    const fallbackTrade = ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"];
+    const fallbackResearch = ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"];
+
+    const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
+    function makeSlug(text) {
+      if (!text) return "";
+      let words = String(text).toLowerCase()
+        .replace(/for chilghoza pine nuts/gi, "")
+        .replace(/of chilghoza pine nuts/gi, "")
+        .replace(/on chilghoza pine nuts/gi, "")
+        .replace(/chilghoza pine nuts/gi, "")
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .trim().split(/\s+/)
+        .filter(w => w && !stopWords.includes(w));
+      return words.slice(0, 3).join("-");
+    }
+
+    const tradeSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.trade)
+      ? hubsData.en.trade.map(([title]) => makeSlug(title)).filter(Boolean)
+      : fallbackTrade;
+
+    const researchSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.research)
+      ? hubsData.en.research.map(([title]) => makeSlug(title)).filter(Boolean)
+      : fallbackResearch;
 
     const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
     const today = new Date().toISOString().split("T")[0];
@@ -534,10 +557,10 @@ if (url.pathname === "/sitemap.xml") {
     xml += `  <url><loc>${base}/trade</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
     xml += `  <url><loc>${base}/research</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
 
-    (slugs.trade || []).forEach(s => {
+    tradeSlugs.forEach(s => {
       xml += `  <url><loc>${base}/trade/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
     });
-    (slugs.research || []).forEach(s => {
+    researchSlugs.forEach(s => {
       xml += `  <url><loc>${base}/research/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
     });
 
@@ -547,11 +570,11 @@ if (url.pathname === "/sitemap.xml") {
       status: 200,
       headers: {
         "Content-Type": "application/xml;charset=UTF-8",
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "public, max-age=60",
       },
     });
   } catch (e) {
-    return new Response("Error generating sitemap: " + e.message, { status: 500 });
+    return new Response("Error: " + e.message, { status: 500 });
   }
 }
     // ---- Static Assets ----
