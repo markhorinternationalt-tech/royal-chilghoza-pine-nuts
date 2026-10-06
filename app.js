@@ -1320,6 +1320,23 @@ function escapeHtml(s) {
 }
 
 /* =========================================================
+   SLUG GENERATOR — Converts hub title to URL slug
+========================================================= */
+function slugify(text) {
+  if (!text) return "";
+  return String(text)
+    .toLowerCase()
+    .replace(/chilghoza pine nuts/gi, "")
+    .replace(/for chilghoza pine nuts/gi, "")
+    .replace(/of chilghoza pine nuts/gi, "")
+    .replace(/on chilghoza pine nuts/gi, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+/* =========================================================
    HUB CRUD
 ========================================================= */
 
