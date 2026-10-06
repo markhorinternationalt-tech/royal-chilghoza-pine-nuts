@@ -744,7 +744,7 @@ async function saveHubsKV() {
         trade: getEnglishHubsList("trade").map(([title]) => slugify(title)),
         research: getEnglishHubsList("research").map(([title]) => slugify(title))
       };
-      alert("DEBUG hub_slugs:\n" + JSON.stringify(slugs, null, 2));
+      
       await saveToKV("hub_slugs", slugs);
     } catch (e) { /* ignore */ }
   }
