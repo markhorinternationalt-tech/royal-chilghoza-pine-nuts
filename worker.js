@@ -439,8 +439,42 @@ if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
   const botDetected = isBot(request);
 
   if (botDetected) {
-    console.log("BOT DETECTED:", url.pathname);
-  }
+  // Extract gateway and slug from URL
+  const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
+  const gateway = urlParts[0];
+  const slug = urlParts[1];
+
+  // Find the hub index
+  const HUB_SLUGS_MAP = {
+    trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
+    research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
+  };
+
+  const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
+
+  // Get hub data from KV
+  let hubTitle = slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  let hubDesc = "Royal Chilghoza Pine Nuts — " + hubTitle;
+
+  try {
+    const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+    const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
+
+    if (hubsData && hubsData.en && hubsData.en[gateway] && hubsData.en[gateway][hubIndex]) {
+      hubTitle = hubsData.en[gateway][hubIndex][0] || hubTitle;
+      hubDesc = hubsData.en[gateway][hubIndex][1] || hubDesc;
+    }
+  } catch (e) { /* use fallback */ }
+
+  // Return SSR HTML
+  return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex), {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html;charset=UTF-8",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
 
   try {
     const newUrl = new URL(request.url);
