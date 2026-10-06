@@ -3068,7 +3068,8 @@ if (hubIndex === -1) return false;
 
 // Run on page load (after main init)
 setTimeout(function() {
-  alert("DEBUG: URL = " + window.location.pathname);
+  var savedUrl = sessionStorage.getItem("royalOriginalUrl") || window.location.pathname;
+  alert("DEBUG: savedUrl = " + savedUrl);
   var result = openHubFromURL();
   alert("DEBUG: openHubFromURL returned = " + result);
 }, 1500);
