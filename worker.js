@@ -485,13 +485,13 @@ try {
 } catch (e) { /* no media */ }
 
   // Return SSR HTML
-  return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex), {
-    status: 200,
-    headers: {
-      "Content-Type": "text/html;charset=UTF-8",
-      "Cache-Control": "public, max-age=3600",
-    },
-  });
+  return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
+  status: 200,
+  headers: {
+    "Content-Type": "text/html;charset=UTF-8",
+    "Cache-Control": "public, max-age=3600",
+  },
+});
 }
 
   try {
