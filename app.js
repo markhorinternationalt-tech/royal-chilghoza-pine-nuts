@@ -735,7 +735,27 @@ function ensureCustomHub(type) {
 }
 
 async function saveHubsKV() {
-  return await saveToKV("hubs_data", customHubData);
+  const ok = await saveToKV("hubs_data", customHubData);
+
+  // === خودکار hub_slugs sync (worker.js کے SSR کے لیے) ===
+  if (ok) {
+    try {
+      const slugs = {
+        trade: getEnglishHubsList("trade").map(([title]) => slugify(title)),
+        research: getEnglishHubsList("research").map(([title]) => slugify(title))
+      };
+      await saveToKV("hub_slugs", slugs);
+    } catch (e) { /* ignore */ }
+  }
+
+  return ok;
+}
+
+function getEnglishHubsList(type) {
+  if (customHubData && customHubData.en && Array.isArray(customHubData.en[type])) {
+    return customHubData.en[type];
+  }
+  return hubData.en[type] || [];
 }
 
 function getGateways() {
