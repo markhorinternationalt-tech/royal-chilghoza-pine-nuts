@@ -624,3 +624,11 @@ function getContentType(path) {
   };
   return map[ext] || 'application/octet-stream';
 }
+
+// =========================================================
+// BOT DETECTION
+// =========================================================
+function isBot(request) {
+  const ua = request.headers.get("User-Agent") || "";
+  return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot/i.test(ua);
+}
