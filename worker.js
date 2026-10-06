@@ -495,7 +495,25 @@ if (!HUB_SLUGS_MAP) {
     if (hubResp.status !== 404) return hubResp;
   } catch (e) { /* fall through */ }
 }
-    
+  
+// =========================================================
+// GATEWAY ROUTES — SEO-friendly URLs for 2 gateways
+// /trade, /research (without slug)
+// =========================================================
+if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
+  const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
+  const botDetected = isBot(request);
+
+  if (botDetected) {
+    return new Response(renderGatewaySSR(gateway), {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html;charset=UTF-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  }
+}  
 
     // ---- Static Assets ----
     if (env.ASSETS) {
