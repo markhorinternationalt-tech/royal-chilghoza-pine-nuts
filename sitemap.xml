@@ -8,6 +8,21 @@
     <priority>1.0</priority>
   </url>
 
+<!-- GLOBAL TRADE GATEWAY -->
+<url>
+  <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/trade</loc>
+  <lastmod>2026-10-06</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.95</priority>
+</url>
+
+<!-- RESEARCH & KNOWLEDGE GATEWAY -->
+<url>
+  <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/research</loc>
+  <lastmod>2026-10-06</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.95</priority>
+</url>
   <url>
     <loc>https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/trade/global-markets</loc>
     <lastmod>2026-10-06</lastmod>
