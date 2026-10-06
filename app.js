@@ -2941,32 +2941,24 @@ async function loadVisitStats() {
    /research/forests-ecology → opens Research, Hub #04
 ========================================================= */
 
-const HUB_SLUGS = {
-  trade: [
-    "global-markets",
-    "usa-market",
-    "china-market",
-    "export-logistics",
-    "product-quality",
-    "supply-chain",
-    "gi-indication",
-    "organic-chemistry",
-    "processing-packaging",
-    "sustainable-trade"
-  ],
-  research: [
-    "geographical-origin",
-    "biology-botany",
-    "nutrition-value",
-    "forests-ecology",
-    "biodiversity-wildlife",
-    "climate-environment",
-    "forest-conservation",
-    "supply-chain-livelihoods",
-    "sustainable-harvesting",
-    "research-policy"
-  ]
+/* ---------- Dynamic slugs (from hubs_data) ---------- */
+function getHubSlugs() {
+  const slugs = { trade: [], research: [] };
+  ["trade", "research"].forEach(gateway => {
+    const list = (customHubData && customHubData.en && Array.isArray(customHubData.en[gateway]))
+      ? customHubData.en[gateway]
+      : (hubData.en[gateway] || []);
+    slugs[gateway] = list.map(([title]) => slugify(title)).filter(Boolean);
+  });
+  return slugs;
+}
+
+/* ---------- Legacy slugs (backward compatibility) ---------- */
+const LEGACY_HUB_SLUGS = {
+  trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
+  research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
 };
+  
 
 function updateSEOTags(gateway, hubTitle, hubDesc) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
