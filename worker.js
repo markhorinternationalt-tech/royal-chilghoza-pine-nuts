@@ -496,7 +496,7 @@ try {
 
   try {
     const newUrl = new URL(request.url);
-    newUrl.pathname = "/index.html";
+    newUrl.pathname = "/";
     const newReq = new Request(newUrl.toString(), request);
     const hubResp = await env.ASSETS.fetch(newReq);
     if (hubResp.status !== 404) return hubResp;
