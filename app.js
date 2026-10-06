@@ -3030,10 +3030,14 @@ function openHubFromURL() {
   if (parts.length !== 2) return false;
 
   const [gateway, slug] = parts;
-  if (!HUB_SLUGS[gateway]) return false;
+  const dynamicSlugs = getHubSlugs();
+let hubIndex = dynamicSlugs[gateway] ? dynamicSlugs[gateway].indexOf(slug) : -1;
 
-  const hubIndex = HUB_SLUGS[gateway].indexOf(slug);
-  if (hubIndex === -1) return false;
+// Legacy fallback
+if (hubIndex === -1 && LEGACY_HUB_SLUGS[gateway]) {
+  hubIndex = LEGACY_HUB_SLUGS[gateway].indexOf(slug);
+}
+if (hubIndex === -1) return false;
 
   // Open the gateway
   openGateway(gateway);
