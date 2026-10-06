@@ -477,6 +477,13 @@ if (!HUB_SLUGS_MAP) {
     }
   } catch (e) { /* use fallback */ }
 
+    // Fetch media captions for this hub (for SSR)
+let hubMedia = [];
+try {
+  const mediaRaw = await env.ROYAL_KV.get(`hub_media_${gateway}_${hubIndex}`);
+  if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
+} catch (e) { /* no media */ }
+
   // Return SSR HTML
   return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex), {
     status: 200,
