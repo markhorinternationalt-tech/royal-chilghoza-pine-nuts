@@ -444,11 +444,22 @@ if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
   const gateway = urlParts[0];
   const slug = urlParts[1];
 
-  // Find the hub index
-  const HUB_SLUGS_MAP = {
+  // Read HUB_SLUGS_MAP from KV (automatic), fallback to hardcoded
+let HUB_SLUGS_MAP = null;
+try {
+  const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
+  if (kvSlugsRaw) {
+    HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
+  }
+} catch (e) { /* use fallback */ }
+
+// Fallback: hardcoded (if KV is empty)
+if (!HUB_SLUGS_MAP) {
+  HUB_SLUGS_MAP = {
     trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
     research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
   };
+}
 
   const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
 
