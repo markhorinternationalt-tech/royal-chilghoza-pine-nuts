@@ -1345,17 +1345,19 @@ function escapeHtml(s) {
 ========================================================= */
 function slugify(text) {
   if (!text) return "";
-  return String(text)
+  const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
+  let words = String(text)
     .toLowerCase()
-    .replace(/chilghoza pine nuts/gi, "")
     .replace(/for chilghoza pine nuts/gi, "")
     .replace(/of chilghoza pine nuts/gi, "")
     .replace(/on chilghoza pine nuts/gi, "")
-    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/chilghoza pine nuts/gi, "")
+    .replace(/[^a-z0-9\s-]/g, " ")
     .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
+    .split(/\s+/)
+    .filter(w => w && !stopWords.includes(w));
+  words = words.slice(0, 3);
+  return words.join("-");
 }
 /* =========================================================
    HUB CRUD
