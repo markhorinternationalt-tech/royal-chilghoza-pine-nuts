@@ -463,7 +463,7 @@ export default {
       const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
 
       // ✅ ہر URL کے لیے SSR HTML بھیجیں
-      return new Response(renderGatewaySSR(gateway), {
+      return new Response(await renderGatewaySSR(gateway, env), {
         status: 200,
         headers: {
           "Content-Type": "text/html;charset=UTF-8",
