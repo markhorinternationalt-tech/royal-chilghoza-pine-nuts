@@ -407,7 +407,7 @@ export default {
     // =========================================================
 // HUB ROUTES — SSR for ALL (مکمل ڈائنامک)
 // =========================================================
-if (/^\/[a-z0-9-]+\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
+if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.
   const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
   const gateway = urlParts[0];
   const slug = urlParts[1];
