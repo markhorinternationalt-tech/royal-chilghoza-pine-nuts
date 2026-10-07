@@ -1010,6 +1010,8 @@ async function renderGatewaySSR(gateway, env) {
     .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
     footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
   </style>
+  <link rel="stylesheet" href="/styles.css">
+<script src="/app.js" defer></script>
 </head>
 <body>
   <div class="container">
