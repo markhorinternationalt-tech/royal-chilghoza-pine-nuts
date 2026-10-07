@@ -991,6 +991,11 @@ async function renderGatewaySSR(gateway, env) {
         "climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"
       ];
     }
+    } else {
+  // ✅ نیا گیٹ وے: خالی fallback
+  hubTitles = [];
+  hubSlugs = [];
+}
   }
 
   const hubsHtml = hubTitles.map((title, i) =>
