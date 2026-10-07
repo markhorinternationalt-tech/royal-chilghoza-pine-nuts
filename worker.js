@@ -9,8 +9,8 @@ const CLOUDINARY_API_KEY = "118953582795868";
 const CLOUDINARY_API_SECRET = "bHpg060YsexAgpP4cTVTs227Io0";
 
 // Rate Limiting Configuration
-const RATE_LIMIT_MAX = 5;          // 5 attempts
-const RATE_LIMIT_WINDOW = 3600;    // per 1 hour (in seconds)
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW = 3600;
 
 export default {
   async fetch(request, env) {
@@ -36,77 +36,69 @@ export default {
       }, cors);
     }
 
-    // ---- Visitor Info (Country) ----
-if (url.pathname === "/api/visitor-info") {
-  return json({
-    ok: true,
-    country: request.cf?.country || "Unknown",
-    city: request.cf?.city || "Unknown"
-  }, cors);
-}
-
-// ---- Track Visit (increase counter) ----
-if (url.pathname === "/api/track-visit" && request.method === "POST") {
-  if (!env.ROYAL_KV) {
-    return json({ ok: false, error: "KV not configured" }, cors);
-  }
-  try {
-    const country = request.cf?.country || "Unknown";
-    const today = new Date().toISOString().split("T")[0];
-
-    // Total visits
-    const totalRaw = await env.ROYAL_KV.get("total_visits");
-    const total = totalRaw ? parseInt(totalRaw, 10) : 0;
-    await env.ROYAL_KV.put("total_visits", String(total + 1));
-
-    // Visits by country
-    const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
-    const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
-    byCountry[country] = (byCountry[country] || 0) + 1;
-    await env.ROYAL_KV.put("visits_by_country", JSON.stringify(byCountry));
-
-    // Daily visits (last 30 days)
-    const dailyRaw = await env.ROYAL_KV.get("visits_daily");
-    let daily = dailyRaw ? JSON.parse(dailyRaw) : {};
-    daily[today] = (daily[today] || 0) + 1;
-    const keys = Object.keys(daily).sort();
-    if (keys.length > 30) {
-      const toDelete = keys.slice(0, keys.length - 30);
-      toDelete.forEach(k => delete daily[k]);
+    // ---- Visitor Info ----
+    if (url.pathname === "/api/visitor-info") {
+      return json({
+        ok: true,
+        country: request.cf?.country || "Unknown",
+        city: request.cf?.city || "Unknown"
+      }, cors);
     }
-    await env.ROYAL_KV.put("visits_daily", JSON.stringify(daily));
 
-    return json({ ok: true, total: total + 1, country }, cors);
-  } catch (err) {
-    return json({ ok: false, error: err.message }, cors);
-  }
-}
+    // ---- Track Visit ----
+    if (url.pathname === "/api/track-visit" && request.method === "POST") {
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors);
+      }
+      try {
+        const country = request.cf?.country || "Unknown";
+        const today = new Date().toISOString().split("T")[0];
 
-// ---- Get Visit Stats (Admin only) ----
-if (url.pathname === "/api/visit-stats" && request.method === "GET") {
-  const reject = await checkAuth(request, env, cors);
-  if (reject) return reject;
+        const totalRaw = await env.ROYAL_KV.get("total_visits");
+        const total = totalRaw ? parseInt(totalRaw, 10) : 0;
+        await env.ROYAL_KV.put("total_visits", String(total + 1));
 
-  if (!env.ROYAL_KV) {
-    return json({ ok: false, error: "KV not configured" }, cors);
-  }
-  try {
-    const total = parseInt(await env.ROYAL_KV.get("total_visits") || "0", 10);
-    const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
-    const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
-    const dailyRaw = await env.ROYAL_KV.get("visits_daily");
-    const daily = dailyRaw ? JSON.parse(dailyRaw) : {};
+        const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
+        const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
+        byCountry[country] = (byCountry[country] || 0) + 1;
+        await env.ROYAL_KV.put("visits_by_country", JSON.stringify(byCountry));
 
-    return json({
-      ok: true,
-      total,
-      byCountry,
-      daily
-    }, cors);
-  } catch (err) {
-    return json({ ok: false, error: err.message }, cors);
-  }
-}
+        const dailyRaw = await env.ROYAL_KV.get("visits_daily");
+        let daily = dailyRaw ? JSON.parse(dailyRaw) : {};
+        daily[today] = (daily[today] || 0) + 1;
+        const keys = Object.keys(daily).sort();
+        if (keys.length > 30) {
+          const toDelete = keys.slice(0, keys.length - 30);
+          toDelete.forEach(k => delete daily[k]);
+        }
+        await env.ROYAL_KV.put("visits_daily", JSON.stringify(daily));
+
+        return json({ ok: true, total: total + 1, country }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors);
+      }
+    }
+
+    // ---- Get Visit Stats ----
+    if (url.pathname === "/api/visit-stats" && request.method === "GET") {
+      const reject = await checkAuth(request, env, cors);
+      if (reject) return reject;
+
+      if (!env.ROYAL_KV) {
+        return json({ ok: false, error: "KV not configured" }, cors);
+      }
+      try {
+        const total = parseInt(await env.ROYAL_KV.get("total_visits") || "0", 10);
+        const byCountryRaw = await env.ROYAL_KV.get("visits_by_country");
+        const byCountry = byCountryRaw ? JSON.parse(byCountryRaw) : {};
+        const dailyRaw = await env.ROYAL_KV.get("visits_daily");
+        const daily = dailyRaw ? JSON.parse(dailyRaw) : {};
+
+        return json({ ok: true, total, byCountry, daily }, cors);
+      } catch (err) {
+        return json({ ok: false, error: err.message }, cors);
+      }
+    }
 
     // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
@@ -129,7 +121,7 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
           : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
 
         const messages = [
-          { role: "system", content: `${system} IMPORTANT: Reply in the SAME language the user writes in (Urdu → Urdu, English → English, Chinese → Chinese, Arabic → Arabic, Pashto → Pashto, Russian → Russian). If the user's language is unclear, use interface language code: ${language}.` },
+          { role: "system", content: `${system} IMPORTANT: Reply in the SAME language the user writes in. If unclear, use: ${language}.` },
           { role: "user", content: message }
         ];
 
@@ -145,9 +137,7 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
         for (const model of models) {
           try {
             result = await env.AI.run(model, { messages });
-            if (result && (result.response || result.result)) {
-              break;
-            }
+            if (result && (result.response || result.result)) break;
           } catch (e) {
             lastError = e;
             result = null;
@@ -155,18 +145,14 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
         }
 
         if (!result) {
-          return json({
-            reply: "AI Error: " + (lastError?.message || "تمام ماڈلز ناکام ہو گئے")
-          }, cors, 500);
+          return json({ reply: "AI Error: " + (lastError?.message || "تمام ماڈلز ناکام ہو گئے") }, cors, 500);
         }
 
         const reply = result.response || result.result || "No response.";
         return json({ reply }, cors);
 
       } catch (err) {
-        return json({
-          reply: "AI Error: " + (err.message || "Unknown error")
-        }, cors, 500);
+        return json({ reply: "AI Error: " + (err.message || "Unknown error") }, cors, 500);
       }
     }
 
@@ -174,7 +160,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
     // KV STORAGE APIs
     // =========================================================
 
-    // ---- KV: Get value (PUBLIC — no auth) ----
     if (url.pathname.startsWith("/api/kv/get/") && request.method === "GET") {
       if (!env.ROYAL_KV) {
         return json({ ok: false, error: "KV not configured" }, cors, 503);
@@ -195,7 +180,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- KV: Set value (PROTECTED) ----
     if (url.pathname === "/api/kv/set" && request.method === "POST") {
       const reject = await checkAuth(request, env, cors);
       if (reject) return reject;
@@ -215,7 +199,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- KV: Delete value (PROTECTED) ----
     if (url.pathname.startsWith("/api/kv/delete/") && request.method === "DELETE") {
       const reject = await checkAuth(request, env, cors);
       if (reject) return reject;
@@ -232,7 +215,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- KV: List all keys ----
     if (url.pathname === "/api/kv/list" && request.method === "GET") {
       if (!env.ROYAL_KV) {
         return json({ ok: false, error: "KV not configured" }, cors, 503);
@@ -252,7 +234,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
     // CLOUDINARY — Media Management
     // =========================================================
 
-    // ---- Cloudinary: Upload (PROTECTED) ----
     if (url.pathname === "/api/media/upload" && request.method === "POST") {
       const reject = await checkAuth(request, env, cors);
       if (reject) return reject;
@@ -309,7 +290,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- Cloudinary: List files ----
     if (url.pathname === "/api/media/list" && request.method === "GET") {
       try {
         const folder = url.searchParams.get("folder") || "";
@@ -326,7 +306,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
         const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
 
         const files = [...images, ...videos, ...raws];
-
         return json({ ok: true, files }, cors);
 
       } catch (err) {
@@ -334,7 +313,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- Cloudinary: List folders ----
     if (url.pathname === "/api/media/folders" && request.method === "GET") {
       try {
         const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
@@ -350,7 +328,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- Cloudinary: Create Folder (PROTECTED) ----
     if (url.pathname === "/api/media/folder" && request.method === "POST") {
       const reject = await checkAuth(request, env, cors);
       if (reject) return reject;
@@ -373,7 +350,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- Cloudinary: Delete (PROTECTED) ----
     if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
       const reject = await checkAuth(request, env, cors);
       if (reject) return reject;
@@ -401,7 +377,6 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
       }
     }
 
-    // ---- Cloudinary: Get single file (redirect) ----
     if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
       const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
       const type = url.searchParams.get("type") || "image";
@@ -413,10 +388,8 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
     }
 
     // =========================================================
-    // ADMIN & STATIC
+    // ADMIN STATUS
     // =========================================================
-
-    // ---- Admin Status ----
     if (url.pathname === "/api/admin/status") {
       const ip = request.headers.get("CF-Connecting-IP") || "unknown";
       const limit = await checkRateLimit(env, ip);
@@ -432,159 +405,139 @@ if (url.pathname === "/api/visit-stats" && request.method === "GET") {
     }
 
     // =========================================================
-// HUB ROUTES — SEO-friendly URLs for 20 hubs
-// =========================================================
-if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
-  // Check if this is a bot (Google, Bing, etc.)
-  const botDetected = isBot(request);
+    // HUB ROUTES — SSR for ALL (bots + users)
+    // =========================================================
+    if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
+      const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
+      const gateway = urlParts[0];
+      const slug = urlParts[1];
 
-  if (botDetected) {
-  // Extract gateway and slug from URL
-  const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
-  const gateway = urlParts[0];
-  const slug = urlParts[1];
+      let HUB_SLUGS_MAP = null;
+      try {
+        const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
+        if (kvSlugsRaw) HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
+      } catch (e) { /* use fallback */ }
 
-  // Read HUB_SLUGS_MAP from KV (automatic), fallback to hardcoded
-let HUB_SLUGS_MAP = null;
-try {
-  const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
-  if (kvSlugsRaw) {
-    HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
-  }
-} catch (e) { /* use fallback */ }
+      if (!HUB_SLUGS_MAP) {
+        HUB_SLUGS_MAP = {
+          trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
+          research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
+        };
+      }
 
-// Fallback: hardcoded (if KV is empty)
-if (!HUB_SLUGS_MAP) {
-  HUB_SLUGS_MAP = {
-    trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
-    research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
-  };
-}
+      const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
 
-  const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
+      let hubTitle = slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      let hubDesc = "Royal Chilghoza Pine Nuts — " + hubTitle;
 
-  // Get hub data from KV
-  let hubTitle = slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-  let hubDesc = "Royal Chilghoza Pine Nuts — " + hubTitle;
+      try {
+        const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+        const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
 
-  try {
-    const hubsRaw = await env.ROYAL_KV.get("hubs_data");
-    const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
+        if (hubsData && hubsData.en && hubsData.en[gateway] && hubsData.en[gateway][hubIndex]) {
+          hubTitle = hubsData.en[gateway][hubIndex][0] || hubTitle;
+          hubDesc = hubsData.en[gateway][hubIndex][1] || hubDesc;
+        }
+      } catch (e) { /* use fallback */ }
 
-    if (hubsData && hubsData.en && hubsData.en[gateway] && hubsData.en[gateway][hubIndex]) {
-      hubTitle = hubsData.en[gateway][hubIndex][0] || hubTitle;
-      hubDesc = hubsData.en[gateway][hubIndex][1] || hubDesc;
-    }
-  } catch (e) { /* use fallback */ }
+      let hubMedia = [];
+      try {
+        const mediaRaw = await env.ROYAL_KV.get(`hub_media_${gateway}_${hubIndex}`);
+        if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
+      } catch (e) { /* no media */ }
 
-    // Fetch media captions for this hub (for SSR)
-let hubMedia = [];
-try {
-  const mediaRaw = await env.ROYAL_KV.get(`hub_media_${gateway}_${hubIndex}`);
-  if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
-} catch (e) { /* no media */ }
-
-  // Return SSR HTML
-  return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
-  status: 200,
-  headers: {
-    "Content-Type": "text/html;charset=UTF-8",
-    "Cache-Control": "public, max-age=3600",
-  },
-});
-}
-
-  try {
-    const newUrl = new URL(request.url);
-    newUrl.pathname = "/";
-    const newReq = new Request(newUrl.toString(), request);
-    const hubResp = await env.ASSETS.fetch(newReq);
-    if (hubResp.status !== 404) return hubResp;
-  } catch (e) { /* fall through */ }
-}
-  
-// =========================================================
-// GATEWAY ROUTES — SEO-friendly URLs for 2 gateways
-// /trade, /research (without slug)
-// =========================================================
-if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
-  const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
-  const botDetected = isBot(request);
-
-  if (botDetected) {
-    return new Response(renderGatewaySSR(gateway), {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html;charset=UTF-8",
-        "Cache-Control": "public, max-age=3600",
-      },
-    });
-  }
-}  
-
-// =========================================================
-// SITEMAP ROUTE — Auto-generates from hubs_data (KV)
-// =========================================================
-if (url.pathname === "/sitemap.xml") {
-  try {
-    const hubsRaw = await env.ROYAL_KV.get("hubs_data");
-    let hubsData = null;
-    try { hubsData = hubsRaw ? JSON.parse(hubsRaw) : null; } catch (e) {}
-
-    const fallbackTrade = ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"];
-    const fallbackResearch = ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"];
-
-    const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
-    function makeSlug(text) {
-      if (!text) return "";
-      let words = String(text).toLowerCase()
-        .replace(/for chilghoza pine nuts/gi, "")
-        .replace(/of chilghoza pine nuts/gi, "")
-        .replace(/on chilghoza pine nuts/gi, "")
-        .replace(/chilghoza pine nuts/gi, "")
-        .replace(/[^a-z0-9\s-]/g, " ")
-        .trim().split(/\s+/)
-        .filter(w => w && !stopWords.includes(w));
-      return words.slice(0, 3).join("-");
+      // ✅ ہر URL کے لیے SSR HTML بھیجیں (bot ہو یا عام صارف)
+      return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
+        status: 200,
+        headers: {
+          "Content-Type": "text/html;charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
     }
 
-    const tradeSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.trade)
-      ? hubsData.en.trade.map(([title]) => makeSlug(title)).filter(Boolean)
-      : fallbackTrade;
+    // =========================================================
+    // GATEWAY ROUTES — SSR for ALL
+    // =========================================================
+    if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
+      const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
 
-    const researchSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.research)
-      ? hubsData.en.research.map(([title]) => makeSlug(title)).filter(Boolean)
-      : fallbackResearch;
+      // ✅ ہر URL کے لیے SSR HTML بھیجیں
+      return new Response(renderGatewaySSR(gateway), {
+        status: 200,
+        headers: {
+          "Content-Type": "text/html;charset=UTF-8",
+          "Cache-Control": "public, max-age=3600",
+        },
+      });
+    }
 
-    const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
-    const today = new Date().toISOString().split("T")[0];
+    // =========================================================
+    // SITEMAP ROUTE
+    // =========================================================
+    if (url.pathname === "/sitemap.xml") {
+      try {
+        const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+        let hubsData = null;
+        try { hubsData = hubsRaw ? JSON.parse(hubsRaw) : null; } catch (e) {}
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-    xml += `  <url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
-    xml += `  <url><loc>${base}/trade</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
-    xml += `  <url><loc>${base}/research</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+        const fallbackTrade = ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"];
+        const fallbackResearch = ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"];
 
-    tradeSlugs.forEach(s => {
-      xml += `  <url><loc>${base}/trade/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
-    });
-    researchSlugs.forEach(s => {
-      xml += `  <url><loc>${base}/research/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
-    });
+        const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
+        function makeSlug(text) {
+          if (!text) return "";
+          let words = String(text).toLowerCase()
+            .replace(/for chilghoza pine nuts/gi, "")
+            .replace(/of chilghoza pine nuts/gi, "")
+            .replace(/on chilghoza pine nuts/gi, "")
+            .replace(/chilghoza pine nuts/gi, "")
+            .replace(/[^a-z0-9\s-]/g, " ")
+            .trim().split(/\s+/)
+            .filter(w => w && !stopWords.includes(w));
+          return words.slice(0, 3).join("-");
+        }
 
-    xml += `</urlset>`;
+        const tradeSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.trade)
+          ? hubsData.en.trade.map(([title]) => makeSlug(title)).filter(Boolean)
+          : fallbackTrade;
 
-    return new Response(xml, {
-      status: 200,
-      headers: {
-        "Content-Type": "application/xml;charset=UTF-8",
-        "Cache-Control": "public, max-age=60",
-      },
-    });
-  } catch (e) {
-    return new Response("Error: " + e.message, { status: 500 });
-  }
-}
-    // ---- Static Assets ----
+        const researchSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.research)
+          ? hubsData.en.research.map(([title]) => makeSlug(title)).filter(Boolean)
+          : fallbackResearch;
+
+        const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
+        const today = new Date().toISOString().split("T")[0];
+
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+        xml += `  <url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
+        xml += `  <url><loc>${base}/trade</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+        xml += `  <url><loc>${base}/research</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+
+        tradeSlugs.forEach(s => {
+          xml += `  <url><loc>${base}/trade/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+        });
+        researchSlugs.forEach(s => {
+          xml += `  <url><loc>${base}/research/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+        });
+
+        xml += `</urlset>`;
+
+        return new Response(xml, {
+          status: 200,
+          headers: {
+            "Content-Type": "application/xml;charset=UTF-8",
+            "Cache-Control": "public, max-age=60",
+          },
+        });
+      } catch (e) {
+        return new Response("Error: " + e.message, { status: 500 });
+      }
+    }
+
+    // =========================================================
+    // STATIC ASSETS (index.html for home, CSS, JS, images)
+    // =========================================================
     if (env.ASSETS) {
       try {
         const assetResp = await env.ASSETS.fetch(request);
@@ -631,13 +584,11 @@ if (url.pathname === "/sitemap.xml") {
 // HELPERS
 // =========================================================
 
-// ---- Check if request is authorized (no rate limit) ----
 function isAuthorized(request, env) {
   const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/, "");
   return !!env.ADMIN_TOKEN && token === env.ADMIN_TOKEN;
 }
 
-// ---- Check rate limit for an IP ----
 async function checkRateLimit(env, ip) {
   if (!env.ROYAL_KV) return { allowed: true, count: 0 };
   const key = `ratelimit:auth:${ip}`;
@@ -650,7 +601,6 @@ async function checkRateLimit(env, ip) {
   }
 }
 
-// ---- Record a failed attempt ----
 async function recordFailedAttempt(env, ip) {
   if (!env.ROYAL_KV) return;
   const key = `ratelimit:auth:${ip}`;
@@ -661,7 +611,6 @@ async function recordFailedAttempt(env, ip) {
   } catch (e) { /* ignore */ }
 }
 
-// ---- Reset rate limit (on successful login) ----
 async function resetRateLimit(env, ip) {
   if (!env.ROYAL_KV) return;
   const key = `ratelimit:auth:${ip}`;
@@ -670,11 +619,9 @@ async function resetRateLimit(env, ip) {
   } catch (e) { /* ignore */ }
 }
 
-// ---- Combined: check rate limit + auth ----
 async function checkAuth(request, env, cors) {
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
 
-  // 1. Check rate limit first
   const limit = await checkRateLimit(env, ip);
   if (!limit.allowed) {
     const retryAfter = RATE_LIMIT_WINDOW;
@@ -688,7 +635,6 @@ async function checkAuth(request, env, cors) {
     }, 429);
   }
 
-  // 2. Check auth
   if (!isAuthorized(request, env)) {
     await recordFailedAttempt(env, ip);
     const newCount = limit.count + 1;
@@ -700,9 +646,8 @@ async function checkAuth(request, env, cors) {
     }, cors, 401);
   }
 
-  // 3. Success — reset counter
   await resetRateLimit(env, ip);
-  return null; // authorized, proceed
+  return null;
 }
 
 async function cloudinaryAdminFetch(resourceType, prefix) {
@@ -768,17 +713,16 @@ function getContentType(path) {
 // =========================================================
 function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
-  return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot/i.test(ua);
+  return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot|TelegramBot|Discordbot|curl|wget|python-requests|axios|node-fetch|Google-InspectionTool|Storebot-Google|Google-Read-Aloud|FeedFetcher-Google|Mediapartners-Google|AdsBot-Google|APIs-Google|Google-Site-Verification/i.test(ua);
 }
 
 // =========================================================
-// SSR RENDERER — Generates full HTML for bots
+// SSR RENDERER — Hub
 // =========================================================
 function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
   const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}/${slug}`;
 
-  // ===== Build media section with captions =====
   let mediaHtml = "";
   let jsonLdImages = [];
   if (Array.isArray(hubMedia) && hubMedia.length > 0) {
@@ -796,7 +740,6 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     mediaHtml = `<div class="media-section"><h2>Media & Documentation</h2>${mediaItems}</div>`;
   }
 
-  // ===== JSON-LD Schema for AI & Google =====
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -881,10 +824,9 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
 </body>
 </html>`;
 }
- 
 
 // =========================================================
-// SSR RENDERER — Generates full HTML for Gateway (bot)
+// SSR RENDERER — Gateway
 // =========================================================
 function renderGatewaySSR(gateway) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
