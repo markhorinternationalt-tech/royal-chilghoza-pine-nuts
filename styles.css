@@ -1890,9 +1890,9 @@ body.admin-mode .gateway-card-actions { display: flex; }
 ========================================================= */
 #hubMedia {
   display: block;
-  padding: 20px;
+  padding: 0;                     /* ✅ 20px سے 0 کیا */
   min-height: auto;
-  border: 1px dashed var(--line);
+  border: none;                   /* ✅ 1px dashed سے none کیا */
   border-radius: 14px;
   text-align: left;
 }
@@ -1909,6 +1909,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
   border: none;
+  box-shadow: none;               /* ✅ یہ شامل کیا */
   transition: border-color 0.25s, transform 0.25s;
 }
 .hub-media-item:hover { border-color: var(--gold); transform: translateY(-2px); }
@@ -2004,7 +2005,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 }
 .hub-section {
   position: relative;
-  padding: 16px 16px 16px;
+  padding: 12px 12px 12px;       /* ✅ 16px سے 12px کیا */
   border-radius: 24px;
   background:
     radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.06) 0%, transparent 55%),
@@ -2100,11 +2101,12 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 .hub-section-media {
   position: relative;
   z-index: 2;
-  margin: 24px 0 24px;
+  margin: 0;                      /* ✅ 24px 0 24px سے 0 کیا (فل چوڑائی) */
   padding: 0;
   border: none;
   border-radius: 16px;
   background: transparent;
+  width: 100%;                    /* ✅ یہ شامل کیا */
   transition: background 0.3s ease;
 }
 
@@ -2201,8 +2203,10 @@ body.admin-mode .hub-section-actions { display: flex; }
 
   .hub-section-media {
   padding: 0;
-  margin: 20px 0 18px;
+  margin: 0;                     /* ✅ 20px 0 18px سے 0 کیا */
+  border: none;                  /* ✅ یہ شامل کیا */
   border-radius: 14px;
+  box-shadow: none;              /* ✅ یہ شامل کیا */
 }
 
   .hub-section-media .hub-media-item img,
