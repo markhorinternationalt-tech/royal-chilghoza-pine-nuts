@@ -534,6 +534,81 @@ export default {
         return new Response("Error: " + e.message, { status: 500 });
       }
     }
+// =========================================================
+// ROBOTS.TXT ROUTE
+// =========================================================
+if (url.pathname === "/robots.txt") {
+  const robotsTxt = `# Royal Chilghoza Pine Nuts - robots.txt
+# Updated: 7 October 2026
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
+`;
+
+  return new Response(robotsTxt, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8",
+      "Cache-Control": "public, max-age=86400",
+    },
+  });
+}
 
     // =========================================================
     // STATIC ASSETS (index.html for home, CSS, JS, images)
