@@ -1908,7 +1908,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
   border-radius: 12px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--line-soft);
+  border: none;
   transition: border-color 0.25s, transform 0.25s;
 }
 .hub-media-item:hover { border-color: var(--gold); transform: translateY(-2px); }
