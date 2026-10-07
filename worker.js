@@ -969,8 +969,16 @@ try {
   if (Array.isArray(gatewaysData)) {
     const gw = gatewaysData.find(g => (g.id === gateway || g.slug === gateway));
     if (gw) {
-      gatewayName = gw.name || gw.title || gatewayName;
-      description = gw.description || gw.desc || description;
+      // ✅ title/text objects ہیں — en نکالیں
+const gwName = gw.name || 
+               (gw.title && typeof gw.title === 'object' ? gw.title.en : gw.title) || 
+               gatewayName;
+const gwDesc = gw.description || 
+               (gw.text && typeof gw.text === 'object' ? gw.text.en : gw.text) || 
+               (gw.desc) || 
+               description;
+gatewayName = gwName;
+description = gwDesc;
     }
   }
 } catch (e) { /* ignore */ }
