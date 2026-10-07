@@ -1314,6 +1314,17 @@ function openHub(type, index) {
   document.getElementById("hubView").classList.add("open");
   renderHub(type, index);
   window.scrollTo(0, 0);
+
+  // ✅ URL تبدیل کریں
+  const list = hubs(type);
+  const hubItem = list[index];
+  if (hubItem) {
+    const slug = slugify(hubItem[0]);
+    const newUrl = `/${type}/${slug}`;
+    if (window.location.pathname !== newUrl) {
+      history.pushState({ gateway: type, hub: index }, "", newUrl);
+    }
+  }
 }
 
 function renderHub(type, index) {
