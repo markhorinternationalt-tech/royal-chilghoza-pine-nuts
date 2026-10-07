@@ -486,67 +486,88 @@ export default {
 }
 
     // =========================================================
-    // SITEMAP ROUTE
-    // =========================================================
-    if (url.pathname === "/sitemap.xml") {
-      try {
-        const hubsRaw = await env.ROYAL_KV.get("hubs_data");
-        let hubsData = null;
-        try { hubsData = hubsRaw ? JSON.parse(hubsRaw) : null; } catch (e) {}
+// SITEMAP ROUTE — مکمل ڈائنامک
+// =========================================================
+if (url.pathname === "/sitemap.xml") {
+  try {
+    const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
+    const today = new Date().toISOString().split("T")[0];
 
-        const fallbackTrade = ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"];
-        const fallbackResearch = ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"];
-
-        const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
-        function makeSlug(text) {
-          if (!text) return "";
-          let words = String(text).toLowerCase()
-            .replace(/for chilghoza pine nuts/gi, "")
-            .replace(/of chilghoza pine nuts/gi, "")
-            .replace(/on chilghoza pine nuts/gi, "")
-            .replace(/chilghoza pine nuts/gi, "")
-            .replace(/[^a-z0-9\s-]/g, " ")
-            .trim().split(/\s+/)
-            .filter(w => w && !stopWords.includes(w));
-          return words.slice(0, 3).join("-");
-        }
-
-        const tradeSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.trade)
-          ? hubsData.en.trade.map(([title]) => makeSlug(title)).filter(Boolean)
-          : fallbackTrade;
-
-        const researchSlugs = hubsData && hubsData.en && Array.isArray(hubsData.en.research)
-          ? hubsData.en.research.map(([title]) => makeSlug(title)).filter(Boolean)
-          : fallbackResearch;
-
-        const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
-        const today = new Date().toISOString().split("T")[0];
-
-        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-        xml += `  <url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
-        xml += `  <url><loc>${base}/trade</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
-        xml += `  <url><loc>${base}/research</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
-
-        tradeSlugs.forEach(s => {
-          xml += `  <url><loc>${base}/trade/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+    // ✅ تمام گیٹ ویز لاؤ (trade + research + KV سے)
+    const allGateways = ["trade", "research"];
+    try {
+      const gatewaysRaw = await env.ROYAL_KV.get("gateways_data");
+      const gatewaysData = gatewaysRaw ? JSON.parse(gatewaysRaw) : null;
+      if (Array.isArray(gatewaysData)) {
+        gatewaysData.forEach(g => {
+          const slug = g.id || g.slug;
+          if (slug && !allGateways.includes(slug)) {
+            allGateways.push(slug);
+          }
         });
-        researchSlugs.forEach(s => {
-          xml += `  <url><loc>${base}/research/${s}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
-        });
+      }
+    } catch (e) { /* ignore */ }
 
-        xml += `</urlset>`;
+    // ✅ hubs_data لاؤ
+    let hubsData = null;
+    try {
+      const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+      hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
+    } catch (e) { /* ignore */ }
 
-        return new Response(xml, {
-          status: 200,
-          headers: {
-            "Content-Type": "application/xml;charset=UTF-8",
-            "Cache-Control": "public, max-age=60",
-          },
-        });
-      } catch (e) {
-        return new Response("Error: " + e.message, { status: 500 });
+    const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
+    function makeSlug(text) {
+      if (!text) return "";
+      let words = String(text).toLowerCase()
+        .replace(/for chilghoza pine nuts/gi, "")
+        .replace(/of chilghoza pine nuts/gi, "")
+        .replace(/on chilghoza pine nuts/gi, "")
+        .replace(/chilghoza pine nuts/gi, "")
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .trim().split(/\s+/)
+        .filter(w => w && !stopWords.includes(w));
+      return words.slice(0, 3).join("-");
+    }
+
+    const fallbackTrade = ["global-markets","usa-market","china-market","export-logistics","product-quality","supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"];
+    const fallbackResearch = ["geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife","climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"];
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+    xml += `  <url><loc>${base}/</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n`;
+
+    // ✅ ہر گیٹ وے اور اس کے ہبز
+    for (const gw of allGateways) {
+      xml += `  <url><loc>${base}/${gw}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>\n`;
+
+      let hubSlugs = [];
+
+      if (hubsData && hubsData.en && Array.isArray(hubsData.en[gw])) {
+        hubSlugs = hubsData.en[gw].map(([title]) => makeSlug(title)).filter(Boolean);
+      }
+
+      if (hubSlugs.length === 0) {
+        if (gw === "trade") hubSlugs = fallbackTrade;
+        else if (gw === "research") hubSlugs = fallbackResearch;
+      }
+
+      for (const hubSlug of hubSlugs) {
+        xml += `  <url><loc>${base}/${gw}/${hubSlug}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
       }
     }
+
+    xml += `</urlset>`;
+
+    return new Response(xml, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/xml;charset=UTF-8",
+        "Cache-Control": "public, max-age=60",
+      },
+    });
+  } catch (e) {
+    return new Response("Error: " + e.message, { status: 500 });
+  }
+}
 // =========================================================
 // ROBOTS.TXT ROUTE
 // =========================================================
