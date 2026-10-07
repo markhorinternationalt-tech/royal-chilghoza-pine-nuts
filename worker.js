@@ -957,12 +957,25 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
 // SSR RENDERER — Gateway (AUTOMATIC from KV)
 // =========================================================
 async function renderGatewaySSR(gateway, env) {
-  const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
-  const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}`;
+  let gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
+let description = gateway === "trade"
+  ? "Premium quality Chilghoza Pine Nuts · Worldwide export · Markets and buyers in USA, China, Central Asia, and the Middle East."
+  : "Science · Origin · Forests · Ecology · Knowledge about Chilghoza Pine Nuts from Gilgit-Baltistan, Pakistan.";
 
-  const description = gateway === "trade"
-    ? "Premium quality Chilghoza Pine Nuts · Worldwide export · Markets and buyers in USA, China, Central Asia, and the Middle East."
-    : "Science · Origin · Forests · Ecology · Knowledge about Chilghoza Pine Nuts from Gilgit-Baltistan, Pakistan.";
+// ✅ KV سے نیا گیٹ وے کا نام اور description لاؤ
+try {
+  const gatewaysRaw = await env.ROYAL_KV.get("gateways_data");
+  const gatewaysData = gatewaysRaw ? JSON.parse(gatewaysRaw) : null;
+  if (Array.isArray(gatewaysData)) {
+    const gw = gatewaysData.find(g => (g.id === gateway || g.slug === gateway));
+    if (gw) {
+      gatewayName = gw.name || gw.title || gatewayName;
+      description = gw.description || gw.desc || description;
+    }
+  }
+} catch (e) { /* ignore */ }
+
+const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}`;
 
   // ✅ خودکار: KV سے hubs_data لے کر hubTitles اور hubSlugs بنائیں
   let hubTitles = [];
