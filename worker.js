@@ -470,7 +470,7 @@ export default {
       const gatewaysRaw = await env.ROYAL_KV.get("gateways_data");
       const gatewaysData = gatewaysRaw ? JSON.parse(gatewaysRaw) : null;
       isGateway = !!(gatewaysData && Array.isArray(gatewaysData) &&
-        gatewaysData.some(g => g.id === gateway));
+        gatewaysData.some(g => (g.id === gateway || g.slug === gateway)));
     } catch (e) { /* ignore */ }
   }
 
