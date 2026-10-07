@@ -1349,6 +1349,11 @@ function closeGateway() {
   document.getElementById("gatewayView").classList.remove("open");
   document.getElementById("hubView").classList.remove("open");
   document.getElementById("mainPage").hidden = false;
+
+  // ✅ URL واپس مین پیج پر
+  if (window.location.pathname !== "/") {
+    history.pushState({}, "", "/");
+  }
 }
 
 function escapeHtml(s) {
