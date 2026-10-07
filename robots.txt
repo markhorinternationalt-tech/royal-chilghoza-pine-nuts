@@ -1,20 +1,65 @@
 # Royal Chilghoza Pine Nuts - robots.txt
-# Updated: 26 September 2026
+# Updated: 7 October 2026
 
+# ---- All Bots ----
 User-agent: *
 Allow: /
 
-# Sitemap Location
-Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
-
-# Baidu Spider
-User-agent: Baiduspider
-Allow: /
-
-# Google Bot
+# ---- Search Engines ----
 User-agent: Googlebot
 Allow: /
 
-# Bing Bot
 User-agent: Bingbot
 Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ---- AI Crawlers (ChatGPT, Gemini, Claude, Perplexity) ----
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+# ---- Sitemap ----
+Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
