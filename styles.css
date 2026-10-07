@@ -2200,7 +2200,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   }
 
   .hub-section-media {
-  padding: 2px;
+  padding: 0;
   margin: 20px 0 18px;
   border-radius: 14px;
 }
