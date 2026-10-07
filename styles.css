@@ -528,7 +528,7 @@ body.lightbox-open { overflow: hidden; }
 }
 .gallery-item {
   margin: 0;
-  border: 1px solid var(--line-soft);
+  border: 1px solid rgba(212, 175, 55, 0.12);
   border-radius: 18px;
   overflow: hidden;
   position: relative;
