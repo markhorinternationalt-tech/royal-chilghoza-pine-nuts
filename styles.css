@@ -2101,10 +2101,10 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   position: relative;
   z-index: 2;
   margin: 24px 0 24px;
-  padding: 4px;
-  border: 1px dashed rgba(212, 175, 55, 0.22);
+  padding: 0;
+  border: none;
   border-radius: 16px;
-  background: var(--media-box-bg);
+  background: transparent;
   transition: background 0.3s ease;
 }
 
