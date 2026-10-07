@@ -405,56 +405,70 @@ export default {
     }
 
     // =========================================================
-    // HUB ROUTES — SSR for ALL (bots + users)
-    // =========================================================
-    if (/^\/(trade|research)\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
-      const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
-      const gateway = urlParts[0];
-      const slug = urlParts[1];
+// HUB ROUTES — SSR for ALL (مکمل ڈائنامک)
+// =========================================================
+if (/^\/[a-z0-9-]+\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
+  const urlParts = url.pathname.replace(/^\/+|\/+$/g, "").split("/");
+  const gateway = urlParts[0];
+  const slug = urlParts[1];
 
-      let HUB_SLUGS_MAP = null;
-      try {
-        const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
-        if (kvSlugsRaw) HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
-      } catch (e) { /* use fallback */ }
+  // ✅ چیک کریں کہ یہ valid gateway ہے (trade/research یا KV سے)
+  let validGateway = (gateway === "trade" || gateway === "research");
+  if (!validGateway) {
+    try {
+      const gatewaysRaw = await env.ROYAL_KV.get("gateways_data");
+      const gatewaysData = gatewaysRaw ? JSON.parse(gatewaysRaw) : null;
+      validGateway = !!(gatewaysData && Array.isArray(gatewaysData) &&
+        gatewaysData.some(g => (g.id === gateway || g.slug === gateway)));
+    } catch (e) { /* ignore */ }
+  }
 
-      if (!HUB_SLUGS_MAP) {
-        HUB_SLUGS_MAP = {
-          trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
-          research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
-        };
-      }
+  if (validGateway) {
+    let HUB_SLUGS_MAP = null;
+    try {
+      const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
+      if (kvSlugsRaw) HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
+    } catch (e) { /* use fallback */ }
 
-      const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
-
-      let hubTitle = slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
-      let hubDesc = "Royal Chilghoza Pine Nuts — " + hubTitle;
-
-      try {
-        const hubsRaw = await env.ROYAL_KV.get("hubs_data");
-        const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
-
-        if (hubsData && hubsData.en && hubsData.en[gateway] && hubsData.en[gateway][hubIndex]) {
-          hubTitle = hubsData.en[gateway][hubIndex][0] || hubTitle;
-          hubDesc = hubsData.en[gateway][hubIndex][1] || hubDesc;
-        }
-      } catch (e) { /* use fallback */ }
-
-      let hubMedia = [];
-      try {
-        const mediaRaw = await env.ROYAL_KV.get(`hub_media_${gateway}_${hubIndex}`);
-        if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
-      } catch (e) { /* no media */ }
-
-      // ✅ ہر URL کے لیے SSR HTML بھیجیں (bot ہو یا عام صارف)
-      return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
-        status: 200,
-        headers: {
-          "Content-Type": "text/html;charset=UTF-8",
-          "Cache-Control": "public, max-age=3600",
-        },
-      });
+    if (!HUB_SLUGS_MAP) {
+      HUB_SLUGS_MAP = {
+        trade: ["global-markets", "usa-market", "china-market", "export-logistics", "product-quality", "supply-chain", "gi-indication", "organic-chemistry", "processing-packaging", "sustainable-trade"],
+        research: ["geographical-origin", "biology-botany", "nutrition-value", "forests-ecology", "biodiversity-wildlife", "climate-environment", "forest-conservation", "supply-chain-livelihoods", "sustainable-harvesting", "research-policy"]
+      };
     }
+
+    const hubIndex = HUB_SLUGS_MAP[gateway] ? HUB_SLUGS_MAP[gateway].indexOf(slug) : -1;
+
+    let hubTitle = slug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+    let hubDesc = "Royal Chilghoza Pine Nuts — " + hubTitle;
+
+    try {
+      const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+      const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
+
+      if (hubsData && hubsData.en && hubsData.en[gateway] && hubsData.en[gateway][hubIndex]) {
+        hubTitle = hubsData.en[gateway][hubIndex][0] || hubTitle;
+        hubDesc = hubsData.en[gateway][hubIndex][1] || hubDesc;
+      }
+    } catch (e) { /* use fallback */ }
+
+    let hubMedia = [];
+    try {
+      const mediaRaw = await env.ROYAL_KV.get(`hub_media_${gateway}_${hubIndex}`);
+      if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
+    } catch (e) { /* no media */ }
+
+    // ✅ ہر URL کے لیے SSR HTML بھیجیں (bot ہو یا عام صارف)
+    return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html;charset=UTF-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  }
+}
+    
 
     // =========================================================
     // GATEWAY ROUTES — SSR for ALL
