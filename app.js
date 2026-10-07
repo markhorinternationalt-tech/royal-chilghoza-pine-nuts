@@ -1206,6 +1206,12 @@ function openGateway(type) {
   document.getElementById("gatewayView").classList.add("open");
   renderGateway(type);
   window.scrollTo(0, 0);
+
+  // ✅ URL تبدیل کریں
+  const newUrl = `/${type}`;
+  if (window.location.pathname !== newUrl) {
+    history.pushState({ gateway: type }, "", newUrl);
+  }
 }
 
 function renderGateway(type) {
