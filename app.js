@@ -2762,7 +2762,6 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
     }
   });
 }
-}
 
 document.addEventListener("DOMContentLoaded", init);
 
