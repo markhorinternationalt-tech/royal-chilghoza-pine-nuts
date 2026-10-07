@@ -973,7 +973,7 @@ async function renderGatewaySSR(gateway, env) {
         "global-markets","usa-market","china-market","export-logistics","product-quality",
         "supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"
       ];
-    } else {
+    } else if (gateway === "research") {
       hubTitles = [
         "Geographical Origin & GI Research on Chilghoza Pine Nuts",
         "Chilghoza Pine Nuts Biology & Botany",
