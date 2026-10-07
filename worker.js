@@ -1025,13 +1025,12 @@ async function renderGatewaySSR(gateway, env) {
         "geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife",
         "climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"
       ];
-    }
     } else {
-  // ✅ نیا گیٹ وے: خالی fallback
-  hubTitles = [];
-  hubSlugs = [];
-}
+    // ✅ نیا گیٹ وے: خالی fallback
+    hubTitles = [];
+    hubSlugs = [];
   }
+}
 
   const hubsHtml = hubTitles.map((title, i) =>
     `<div class="hub-card"><h2>${title}</h2><a href="/${gateway}/${hubSlugs[i]}">Open Hub →</a></div>`
