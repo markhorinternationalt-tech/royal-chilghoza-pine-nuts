@@ -903,7 +903,10 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
 // =========================================================
 // SSR RENDERER — Gateway
 // =========================================================
-function renderGatewaySSR(gateway) {
+// =========================================================
+// SSR RENDERER — Gateway (AUTOMATIC from KV)
+// =========================================================
+async function renderGatewaySSR(gateway, env) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
   const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}`;
 
@@ -911,37 +914,69 @@ function renderGatewaySSR(gateway) {
     ? "Premium quality Chilghoza Pine Nuts · Worldwide export · Markets and buyers in USA, China, Central Asia, and the Middle East."
     : "Science · Origin · Forests · Ecology · Knowledge about Chilghoza Pine Nuts from Gilgit-Baltistan, Pakistan.";
 
-  const hubTitles = gateway === "trade" ? [
-    "Global Markets for Chilghoza Pine Nuts",
-    "USA Market & Buyers for Chilghoza Pine Nuts",
-    "China Market & Buyers for Chilghoza Pine Nuts",
-    "Export & Logistics for Chilghoza Pine Nuts",
-    "Product & Quality Standards for Chilghoza Pine Nuts",
-    "Supply Chain & Traceability of Chilghoza Pine Nuts",
-    "Geographical Indication (GI) of Chilghoza Pine Nuts",
-    "Organic Chemistry & Natural Quality of Chilghoza Pine Nuts",
-    "Processing, Packaging & Value Addition for Chilghoza Pine Nuts",
-    "Sustainable & Ethical Trade of Chilghoza Pine Nuts"
-  ] : [
-    "Geographical Origin & GI Research on Chilghoza Pine Nuts",
-    "Chilghoza Pine Nuts Biology & Botany",
-    "Nutrition Value & Natural Composition of Chilghoza Pine Nuts",
-    "Chilghoza Pine Nuts Forests & Ecology",
-    "Biodiversity & Wildlife in Chilghoza Pine Nuts Forests",
-    "Climate & Global Green Environment for Chilghoza Pine Nuts",
-    "Forest Conservation & Restoration for Chilghoza Pine Nuts",
-    "Supply Chain & Livelihoods of Chilghoza Pine Nuts Communities",
-    "Sustainable Harvesting & Awareness for Chilghoza Pine Nuts",
-    "Research, Policy & Partnerships for Chilghoza Pine Nuts"
-  ];
+  // ✅ خودکار: KV سے hubs_data لے کر hubTitles اور hubSlugs بنائیں
+  let hubTitles = [];
+  let hubSlugs = [];
 
-  const hubSlugs = gateway === "trade" ? [
-    "global-markets","usa-market","china-market","export-logistics","product-quality",
-    "supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"
-  ] : [
-    "geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife",
-    "climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"
-  ];
+  try {
+    const hubsRaw = await env.ROYAL_KV.get("hubs_data");
+    const hubsData = hubsRaw ? JSON.parse(hubsRaw) : null;
+
+    if (hubsData && hubsData.en && Array.isArray(hubsData.en[gateway])) {
+      hubTitles = hubsData.en[gateway].map(([title]) => title);
+      hubSlugs = hubsData.en[gateway].map(([title]) => {
+        const stopWords = ["for","of","on","the","and","with","in","at","to","by","a","an"];
+        let words = String(title).toLowerCase()
+          .replace(/for chilghoza pine nuts/gi, "")
+          .replace(/of chilghoza pine nuts/gi, "")
+          .replace(/on chilghoza pine nuts/gi, "")
+          .replace(/chilghoza pine nuts/gi, "")
+          .replace(/[^a-z0-9\s-]/g, " ")
+          .trim().split(/\s+/)
+          .filter(w => w && !stopWords.includes(w));
+        return words.slice(0, 3).join("-");
+      });
+    }
+  } catch (e) { /* use fallback */ }
+
+  // Fallback: اگر KV خالی ہو یا hubs_data نہ ملے
+  if (hubTitles.length === 0) {
+    if (gateway === "trade") {
+      hubTitles = [
+        "Global Markets for Chilghoza Pine Nuts",
+        "USA Market & Buyers for Chilghoza Pine Nuts",
+        "China Market & Buyers for Chilghoza Pine Nuts",
+        "Export & Logistics for Chilghoza Pine Nuts",
+        "Product & Quality Standards for Chilghoza Pine Nuts",
+        "Supply Chain & Traceability of Chilghoza Pine Nuts",
+        "Geographical Indication (GI) of Chilghoza Pine Nuts",
+        "Organic Chemistry & Natural Quality of Chilghoza Pine Nuts",
+        "Processing, Packaging & Value Addition for Chilghoza Pine Nuts",
+        "Sustainable & Ethical Trade of Chilghoza Pine Nuts"
+      ];
+      hubSlugs = [
+        "global-markets","usa-market","china-market","export-logistics","product-quality",
+        "supply-chain","gi-indication","organic-chemistry","processing-packaging","sustainable-trade"
+      ];
+    } else {
+      hubTitles = [
+        "Geographical Origin & GI Research on Chilghoza Pine Nuts",
+        "Chilghoza Pine Nuts Biology & Botany",
+        "Nutrition Value & Natural Composition of Chilghoza Pine Nuts",
+        "Chilghoza Pine Nuts Forests & Ecology",
+        "Biodiversity & Wildlife in Chilghoza Pine Nuts Forests",
+        "Climate & Global Green Environment for Chilghoza Pine Nuts",
+        "Forest Conservation & Restoration for Chilghoza Pine Nuts",
+        "Supply Chain & Livelihoods of Chilghoza Pine Nuts Communities",
+        "Sustainable Harvesting & Awareness for Chilghoza Pine Nuts",
+        "Research, Policy & Partnerships for Chilghoza Pine Nuts"
+      ];
+      hubSlugs = [
+        "geographical-origin","biology-botany","nutrition-value","forests-ecology","biodiversity-wildlife",
+        "climate-environment","forest-conservation","supply-chain-livelihoods","sustainable-harvesting","research-policy"
+      ];
+    }
+  }
 
   const hubsHtml = hubTitles.map((title, i) =>
     `<div class="hub-card"><h2>${title}</h2><a href="/${gateway}/${hubSlugs[i]}">Open Hub →</a></div>`
