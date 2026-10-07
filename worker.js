@@ -459,18 +459,31 @@ export default {
     // =========================================================
     // GATEWAY ROUTES — SSR for ALL
     // =========================================================
-    if (/^\/(trade|research)\/?$/i.test(url.pathname)) {
-      const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
+    if (/^\/[a-z0-9-]+\/?$/i.test(url.pathname)) {
+  const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
 
-      // ✅ ہر URL کے لیے SSR HTML بھیجیں
-      return new Response(await renderGatewaySSR(gateway, env), {
-        status: 200,
-        headers: {
-          "Content-Type": "text/html;charset=UTF-8",
-          "Cache-Control": "public, max-age=3600",
-        },
-      });
-    }
+  // ✅ چیک کریں کہ یہ ایک valid gateway ہے یا نہیں
+  let isGateway = (gateway === "trade" || gateway === "research");
+
+  if (!isGateway) {
+    try {
+      const gatewaysRaw = await env.ROYAL_KV.get("gateways_data");
+      const gatewaysData = gatewaysRaw ? JSON.parse(gatewaysRaw) : null;
+      isGateway = !!(gatewaysData && Array.isArray(gatewaysData) &&
+        gatewaysData.some(g => g.id === gateway));
+    } catch (e) { /* ignore */ }
+  }
+
+  if (isGateway) {
+    return new Response(await renderGatewaySSR(gateway, env), {
+      status: 200,
+      headers: {
+        "Content-Type": "text/html;charset=UTF-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  }
+}
 
     // =========================================================
     // SITEMAP ROUTE
