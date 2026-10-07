@@ -2747,6 +2747,22 @@ const addReviewBtn = document.getElementById("addReviewBtn");
 if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
   applyLanguage();
+    applyLanguage();
+
+  // ✅ Back بٹن کے لیے لسنر
+  window.addEventListener("popstate", (event) => {
+    const path = window.location.pathname;
+
+    if (path === "/" || path === "") {
+      closeGateway();
+    } else if (/^\/(trade|research)\/?$/.test(path)) {
+      const gateway = path.replace(/^\/+|\/+$/g, "");
+      openGateway(gateway);
+    } else if (/^\/(trade|research)\/[a-z0-9-]+\/?$/.test(path)) {
+      openHubFromURL();
+    }
+  });
+}
 }
 
 document.addEventListener("DOMContentLoaded", init);
