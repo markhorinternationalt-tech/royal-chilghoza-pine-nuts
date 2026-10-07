@@ -2747,7 +2747,6 @@ const addReviewBtn = document.getElementById("addReviewBtn");
 if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
   applyLanguage();
-    applyLanguage();
 
   // ✅ Back بٹن کے لیے لسنر
   window.addEventListener("popstate", (event) => {
