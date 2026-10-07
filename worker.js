@@ -473,7 +473,7 @@ if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
     // =========================================================
     // GATEWAY ROUTES — SSR for ALL
     // =========================================================
-    if (/^\/[a-z0-9_-]+\/?$/i.test(url.pathname
+    if (/^\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
   const gateway = url.pathname.replace(/^\/+|\/+$/g, "");
 
   // ✅ چیک کریں کہ یہ ایک valid gateway ہے یا نہیں
