@@ -458,15 +458,16 @@ if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
       if (mediaRaw) hubMedia = JSON.parse(mediaRaw);
     } catch (e) { /* no media */ }
 
-    // ✅ ہر URL کے لیے SSR HTML بھیجیں (bot ہو یا عام صارف)
-    return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html;charset=UTF-8",
-        "Cache-Control": "public, max-age=3600",
-      },
-    });
-  }
+    // ✅ صرف بوٹس کے لیے SSR
+if (isBot(request)) {
+  return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html;charset=UTF-8",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
 }
     
 
