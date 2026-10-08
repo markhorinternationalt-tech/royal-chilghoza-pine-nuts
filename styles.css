@@ -3072,3 +3072,58 @@ body.admin-mode .hub-section-actions {
   border: none !important;
   object-fit: cover !important;
 }
+/* =========================================================
+   ROYAL FINAL FIX — SQUARE GALLERY + DYNAMIC THEME CARDS
+   ========================================================= */
+
+/* 1. مین گیلری: بالکل چوکور، فریم اور گولائی کا مکمل خاتمہ */
+.gallery-grid,
+.gallery-item {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.gallery-item img {
+  width: 100% !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: block !important;
+  object-fit: cover !important;
+  aspect-ratio: auto !important;
+}
+
+.gallery-item figcaption {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 12px 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 2. سی ای او پروفائل: ڈیزائن وہی، لیکن تھیم کے حساب سے ڈائنامک کلرز */
+.royal-profile-shell {
+  background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(212, 175, 55, 0.1) 0%,
+      transparent 50%
+    ),
+    linear-gradient(160deg, var(--forest3, #0d3a26) 0%, var(--card-accent, #0a2f1e) 50%, var(--forest, #03140a) 100%) !important;
+  border: 1px solid var(--line, rgba(212, 175, 55, 0.28)) !important;
+}
+
+/* 3. گیٹ وے کارڈز: ڈیزائن وہی، تھیم کسٹمائزر کے ساتھ مطابقت */
+.gateway-card {
+  background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(212, 175, 55, 0.08) 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--forest3, #0d3a26) 0%, var(--card-accent, #0a2f1e) 50%, var(--forest, #03140a) 100%) !important;
+  border: 1px solid var(--line, rgba(212, 175, 55, 0.25)) !important;
+}
