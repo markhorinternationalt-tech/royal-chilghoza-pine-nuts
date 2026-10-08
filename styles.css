@@ -471,21 +471,19 @@ body.lightbox-open {
 }
 .gateway-card {
   padding: clamp(28px, 4vw, 48px);
-  border-radius: 22px;
+  border-radius: 0;
   min-height: auto;
   position: relative;
   overflow: hidden;
   background: radial-gradient(
       ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.08) 0%,
+      var(--line-soft) 0%,
       transparent 60%
     ),
-    linear-gradient(160deg, #0d3a26 0%, #0a2f1e 30%, #062015 70%, #03140a 100%);
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 0 40px rgba(212, 175, 55, 0.05), inset 0 -2px 4px rgba(0, 0, 0, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3),
-    0 12px 24px rgba(0, 0, 0, 0.35), 0 24px 48px rgba(0, 0, 0, 0.35);
+    linear-gradient(160deg, var(--forest3) 0%, var(--forest2) 50%, var(--forest) 100%);
+  border: 0.3px solid var(--line-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 12px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
 }
 .gateway-card::before {
@@ -588,13 +586,12 @@ body.lightbox-open {
 }
 .gallery-item {
   margin: 0;
-  border: 1px solid rgba(212, 175, 55, 0.12);
-  border-radius: 18px;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(135deg, #0a2f1e, #03140a);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.35),
-    0 20px 40px rgba(0, 0, 0, 0.35);
+  background: transparent;
+  box-shadow: none;
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   display: flex;
   flex-direction: column;
@@ -613,6 +610,8 @@ body.lightbox-open {
   flex-shrink: 0;
   cursor: zoom-in;
   transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  border-radius: 0;
 }
 .gallery-item:hover img {
   transform: scale(1.04);
@@ -633,7 +632,7 @@ body.lightbox-open {
   line-height: 1.75;
   letter-spacing: 0.02em;
   flex: 1;
-  border-top: 1px solid rgba(212, 175, 55, 0.45);
+  border-top: 0.3px solid rgba(212, 175, 55, 0.15);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
@@ -1280,17 +1279,16 @@ dialog::backdrop {
   gap: 32px;
   padding: 48px 36px;
   text-align: center;
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  border-radius: 24px;
+  border: 0.3px solid var(--line-soft);
+  border-radius: 0;
   background: radial-gradient(
       ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.1) 0%,
+      var(--line-soft) 0%,
       transparent 50%
     ),
-    linear-gradient(160deg, #0d3a26 0%, #0a2f1e 30%, #062015 70%, #03140a 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    inset 0 0 60px rgba(212, 175, 55, 0.05), 0 4px 12px rgba(0, 0, 0, 0.4),
-    0 20px 50px rgba(0, 0, 0, 0.5), 0 0 80px rgba(212, 175, 55, 0.1);
+    linear-gradient(160deg, var(--forest3) 0%, var(--forest2) 50%, var(--forest) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 12px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
 }
 .royal-profile-image-wrap {
@@ -2441,12 +2439,12 @@ body.admin-mode .gateway-card-actions {
 }
 .hub-media-item {
   position: relative;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent;
   border: none;
   box-shadow: none;
-  transition: border-color 0.25s, transform 0.25s;
+  transition: transform 0.25s;
 }
 .hub-media-item:hover {
   border-color: var(--gold);
@@ -2461,9 +2459,10 @@ body.admin-mode .gateway-card-actions {
 .hub-media-item video {
   width: 100%;
   display: block;
-  max-height: 240px;
+  max-height: 380px;
   object-fit: cover;
-  border-radius: 12px 12px 0 0;
+  border-radius: 0;
+  border: none;
   background: #000;
 }
 .hub-media-pdf {
@@ -2571,11 +2570,11 @@ body.admin-mode .hub-media-item-actions {
 .hub-section {
   position: relative;
   padding: 0;
-  border-radius: 24px;
-  background: #0a2f1e;
-  border: 1px solid rgba(212, 175, 55, 0.08);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
+  border-radius: 0;
+  background: var(--forest3);
+  border: 0.3px solid var(--line-soft);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
+    0 12px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   overflow: hidden;
 }
