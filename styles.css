@@ -2420,12 +2420,12 @@ body.admin-mode .gateway-card-actions {
   font-weight: 600;
 }
 
-/* ========================================================= HUB MEDIA — Grid & Items (FIXED BORDERS) ========================================================= */
+/* ========================================================= HUB MEDIA — Grid & Items ========================================================= */
 #hubMedia {
   display: block;
   padding: 0;
   min-height: auto;
-  border: none !important;
+  border: none;
   border-radius: 14px;
   text-align: left;
 }
@@ -2436,51 +2436,41 @@ body.admin-mode .gateway-card-actions {
 .hub-media-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 12px;
   margin-top: 8px;
 }
 .hub-media-item {
   position: relative;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
-  background: var(--media-box-bg, #0a2f1e);
-  border: 1px solid rgba(212, 175, 55, 0.3) !important; /* فلیٹ سنگل بارڈر */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  box-shadow: none;
   transition: border-color 0.25s, transform 0.25s;
-  padding: 0 !important;
-  margin: 0 !important;
 }
 .hub-media-item:hover {
-  border-color: var(--gold) !important;
+  border-color: var(--gold);
   transform: translateY(-2px);
 }
 .hub-media-item a {
   display: block;
   text-decoration: none;
   color: inherit;
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
 }
 .hub-media-item img,
 .hub-media-item video {
   width: 100%;
   display: block;
-  max-height: 380px;
+  max-height: 240px;
   object-fit: cover;
-  border: none !important; /* ڈبل بارڈر ختم */
-  border-radius: 0 !important;
+  border-radius: 12px 12px 0 0;
   background: #000;
-  margin: 0 !important;
-  padding: 0 !important;
-  outline: none !important;
 }
 .hub-media-pdf {
   padding: 28px 20px;
   text-align: center;
   color: var(--gold);
   background: linear-gradient(135deg, #0a2f1e, #062015);
-  border: none !important;
 }
 .hub-media-pdf span {
   display: block;
@@ -2672,8 +2662,8 @@ body.admin-mode .hub-media-item-actions {
   z-index: 2;
   margin: 0;
   padding: 16px 20px;
-  border: none !important;
-  background: transparent !important;
+  border: none;
+  background: transparent;
   width: 100%;
   transition: background 0.3s ease;
 }
@@ -2723,7 +2713,7 @@ body.admin-mode .hub-section-actions {
 }
 .hub-section-media .hub-media-item img,
 .hub-section-media .hub-media-item video {
-  max-height: 380px;
+  max-height: 320px;
 }
 
 /* HUB SECTIONS — Mobile */
@@ -2763,13 +2753,13 @@ body.admin-mode .hub-section-actions {
   .hub-section-media {
     padding: 12px 12px;
     margin: 0;
-    border: none !important;
+    border: none;
     border-radius: 14px;
     box-shadow: none;
   }
   .hub-section-media .hub-media-item img,
   .hub-section-media .hub-media-item video {
-    max-height: 280px;
+    max-height: 260px;
   }
   .hub-wa-btn {
     width: 100%;
@@ -2797,11 +2787,11 @@ body.admin-mode .hub-section-actions {
   }
 }
 
-/* ========================================================= HUB MEDIA — PREMIUM CAPTION (SINGLE BORDER FIX) ========================================================= */
+/* ========================================================= HUB MEDIA — PREMIUM CAPTION ========================================================= */
 .hub-media-caption {
   position: relative;
-  padding: 14px 18px !important;
-  margin-top: 0 !important;
+  padding: 20px 0 0;
+  margin-top: 0;
   font-family: var(--heading-font);
   font-size: var(--caption-font-size);
   font-weight: var(--caption-font-weight);
@@ -2809,38 +2799,37 @@ body.admin-mode .hub-section-actions {
   line-height: 1.6;
   letter-spacing: 0.02em;
   color: var(--caption-text-color);
-  text-align: left;
-  background: var(--caption-bg-color, #0a2f1e) !important;
-  border: none !important;
-  border-top: 1px solid rgba(212, 175, 55, 0.25) !important; /* صرف تصویر اور ٹیکسٹ کے درمیان باریک بارڈر */
-  border-radius: 0 0 14px 14px !important;
+  text-align: center;
+  background: transparent;
+  border-top: none;
+  border-radius: 0;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
-  box-sizing: border-box !important;
 }
 .hub-media-caption::before {
   content: "❖";
-  display: inline-block;
+  display: block;
   color: var(--gold);
   font-size: 0.7rem;
   font-style: normal;
   letter-spacing: 0.4em;
-  margin-right: 6px;
-  margin-bottom: 4px;
-  opacity: 0.85;
+  margin-bottom: 8px;
+  opacity: 0.7;
 }
 .hub-media-item:hover .hub-media-caption {
   color: var(--gold2);
 }
 .hub-media-pdf + .hub-media-caption {
-  border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+  border-top: none;
 }
 @media (max-width: 620px) {
   .hub-media-caption {
-    padding: 12px 14px !important;
+    padding: 16px 0 0;
+    border-radius: 0;
   }
   .hub-media-caption::before {
     font-size: 0.6rem;
+    margin-bottom: 6px;
   }
 }
 
@@ -3000,417 +2989,4 @@ body.admin-mode .hub-section-actions {
   .review-text {
     font-size: 0.95rem;
   }
-}
-/* =========================================================
-   1. SQUARE IMAGE & NO BORDER FIX
-   ========================================================= */
-.hub-media-item,
-.hub-section-media,
-.hub-media-grid,
-.hub-media-item a {
-  border-radius: 0 !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  background: transparent !important;
-}
-
-.hub-media-item img,
-.hub-section-media img,
-.hub-media-grid img {
-  border-radius: 0 !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  display: block !important;
-  object-fit: cover !important;
-}
-
-.hub-media-caption {
-  border-radius: 0 !important;
-  border: none !important;
-  margin: 0 !important;
-  padding: 14px 16px !important;
-}
-
-/* =========================================================
-   2. GATEWAY FULL SCREEN & FULL WIDTH LAYOUT FIX
-   ========================================================= */
-.full-view,
-.hub-sections-page,
-.hub-page,
-.gateway-hero {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-.hub-section,
-.hub-section-media,
-.hub-media-grid,
-.hub-media-item {
-  width: 100% !important;
-  max-width: 100% !important;
-  border-radius: 0 !important;
-  border-left: none !important;
-  border-right: none !important;
-  box-shadow: none !important;
-}
-
-.hub-media-item img,
-.hub-section-media img,
-.gallery-item img {
-  width: 100% !important;
-  border-radius: 0 !important;
-  border: none !important;
-  object-fit: cover !important;
-}
-/* =========================================================
-   ROYAL FINAL FIX — SQUARE GALLERY + DYNAMIC THEME CARDS
-   ========================================================= */
-
-/* 1. مین گیلری: بالکل چوکور، فریم اور گولائی کا مکمل خاتمہ */
-.gallery-grid,
-.gallery-item {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.gallery-item img {
-  width: 100% !important;
-  border-radius: 0 !important;
-  border: none !important;
-  box-shadow: none !important;
-  display: block !important;
-  object-fit: cover !important;
-  aspect-ratio: auto !important;
-}
-
-.gallery-item figcaption {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 12px 0 !important;
-  margin: 0 !important;
-  box-shadow: none !important;
-}
-
-/* 2. سی ای او پروفائل: ڈیزائن وہی، لیکن تھیم کے حساب سے ڈائنامک کلرز */
-.royal-profile-shell {
-  background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.1) 0%,
-      transparent 50%
-    ),
-    linear-gradient(160deg, var(--forest3, #0d3a26) 0%, var(--card-accent, #0a2f1e) 50%, var(--forest, #03140a) 100%) !important;
-  border: 1px solid var(--line, rgba(212, 175, 55, 0.28)) !important;
-}
-
-/* 3. گیٹ وے کارڈز: ڈیزائن وہی، تھیم کسٹمائزر کے ساتھ مطابقت */
-.gateway-card {
-  background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.08) 0%,
-      transparent 60%
-    ),
-    linear-gradient(160deg, var(--forest3, #0d3a26) 0%, var(--card-accent, #0a2f1e) 50%, var(--forest, #03140a) 100%) !important;
-  border: 1px solid var(--line, rgba(212, 175, 55, 0.25)) !important;
-}
-/* =========================================================
-   REMOVE GREEN CONTAINER FRAME & MARGINS (EDGE-TO-EDGE)
-   ========================================================= */
-
-/* 1. گیلری کے مین ڈبے سے سبز بیک گراؤنڈ اور سائیڈوں کا فاصلہ ختم کریں */
-.section-shell,
-.gallery-grid {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  background: transparent !important;
-}
-
-/* 2. گیلری آئٹم کے تمام سبز فریم اور بارڈر غائب کریں */
-.gallery-item {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-}
-
-/* 3. تصویر کو بغیر کسی فریم کے پوری چوڑائی میں دکھائیں */
-.gallery-item img {
-  width: 100% !important;
-  max-width: 100% !important;
-  display: block !important;
-  border: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 4. کیپشن کے ٹیکسٹ کو بغیر کسی سبز ڈبے کے صاف ستھرا رکھیں */
-.gallery-item figcaption {
-  background: transparent !important;
-  border: none !important;
-  padding: 12px 16px !important;
-  margin: 0 !important;
-}
-/* =========================================================
-   ROYAL CHILGHOZA PINE NUTS — FINAL LUXURY & ALIGNMENT CSS
-   ========================================================= */
-
-/* 1. ایڈریس اور تمام گیٹ وے ہیڈرز کی ٹاپ سپیسنگ اور الائنمنٹ (Address & Header Fix) */
-.primary-gateway-header,
-.gateway-header,
-.office-address-header,
-main header:first-of-type,
-.gateway-page-title {
-  padding-top: 40px !important;
-  margin-top: 15px !important;
-  padding-bottom: 24px !important;
-  text-align: left !important;
-}
-
-/* سب ٹائٹل اور باریک لکھائی کا کونوں سے ٹکرانا روکنا (Safe Margin) */
-.primary-gateway-header span,
-.gateway-header span,
-.office-address-header span,
-.section-subtitle,
-p.subtitle {
-  display: inline-block !important;
-  padding-left: 4px !important;
-  letter-spacing: 1px !important;
-}
-
-/* 2. کارڈز کے فریم کے بغیر اندرونی لکھائی کا فاصلہ (Inner Padding Fix for No-Frame Look) */
-.hub-card,
-.gateway-hub-card,
-.gateway-card,
-.address-card {
-  margin-top: 0 !important;
-  margin-bottom: 22px !important;
-  padding: 28px 24px !important; /* اندرونی لکھائی کو کونوں سے ہٹانے کے لیے بہترین پیڈنگ */
-  border-radius: 16px !important;
-  background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.1) 0%,
-      transparent 75%
-    ),
-    linear-gradient(160deg, #0d3a26 0%, #0a2f1e 50%, #03140a 100%) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-  text-align: left !important;
-}
-
-/* کارڈز کے اندر موجود نمبرز (جیسے 01) اور ٹائٹلز کو الائن کرنا */
-.hub-card h2, 
-.gateway-hub-card h2,
-.hub-card h3,
-.gateway-hub-card h3,
-.address-card h3 {
-  padding-left: 0 !important;
-  margin-left: 0 !important;
-}
-
-/* 3. واٹس ایپ اور ہب بٹنز کی لگژری گولڈن لک (Luxury Buttons Theme) */
-.whatsapp-trade-btn,
-.gateway-action-btn,
-.hub-action-btn,
-a.cta-button,
-button.cta-button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  margin-top: 16px !important;
-  padding: 14px 20px !important;
-  background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%) !important;
-  color: #03140a !important;
-  font-weight: 700 !important;
-  border-radius: 10px !important;
-  border: 1px solid #ffe875 !important;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
-  text-decoration: none !important;
-  transition: all 0.3s ease !important;
-}
-
-.whatsapp-trade-btn:hover,
-.gateway-action-btn:hover {
-  background: linear-gradient(135deg, #fff2d0 0%, #e5be42 50%, #b8860b 100%) !important;
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
-}
-
-/* 4. گیلری اور میڈیا آئتمز کو ایج ٹو ایج (Edge-to-Edge) فلیٹ رکھنا */
-.gallery-grid {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-.gallery-grid .gallery-item {
-  margin: 0 !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-}
-/* =========================================================
-   ROYAL FINAL ALIGNMENT & SAFE PADDING FIX (BOTTOM OVERRIDE)
-   ========================================================= */
-
-/* 1. پوری ویب سائٹ کے مین کنٹینرز کو سکرین کے کونوں سے محفوظ فاصلہ دینا */
-main,
-.gateway-hero,
-.hub-page,
-.hub-sections-page,
-.section-shell {
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-  box-sizing: border-box !important;
-}
-
-/* 2. تمام کارڈز (گیٹ وے، ہب، اور ایڈریس کارڈز) کو بالکل سیدھا، متوازن اور مناسب اندرونی جگہ دینا */
-.gateway-card,
-.hub-card,
-.office-card,
-.hub-section,
-.address-card {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-bottom: 24px !important;
-  padding: 28px 24px !important;
-  box-sizing: border-box !important;
-  text-align: left !important;
-}
-
-/* 3. کارڈز کے اندر موجود نمبرز (جیسے 01)، ہیڈنگز اور سب ٹائٹلز کو کونے سے ہٹانا */
-.gateway-card h2,
-.hub-card h2,
-.office-card h3,
-.hub-section-title,
-.primary-gateway-header,
-.gateway-header,
-.office-address-header {
-  padding-left: 0 !important;
-  margin-left: 0 !important;
-  text-align: left !important;
-}
-
-/* 4. اوپر کی باریک لکھائی (CONTACT · OFFICE · PARTNERSHIP) اور سب ٹائٹلز کی درست الائنمنٹ */
-span,
-.section-subtitle,
-.gateway-subtitle,
-.royal-profile-eyebrow {
-  display: inline-block !important;
-  padding-left: 2px !important;
-  letter-spacing: 1.5px !important;
-}
-
-/* 5. واٹس ایپ اور ہب بٹنز کو مکمل اور لگژری لک دینا */
-.whatsapp-trade-btn,
-.gateway-action-btn,
-.hub-action-btn,
-.hub-wa-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  margin-top: 18px !important;
-  padding: 14px 20px !important;
-  background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%) !important;
-  color: #03140a !important;
-  font-weight: 700 !important;
-  border-radius: 10px !important;
-  border: 1px solid #ffe875 !important;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
-  text-decoration: none !important;
-}
-/* =========================================================
-   ROYAL FINAL CLEAN ALIGNMENT & SPACING FIX (BOTTOM OVERRIDE)
-   ========================================================= */
-
-/* 1. ایڈریس اور تمام اہم سیکشنز کی ٹاپ سپیسنگ اور الائنمنٹ کی درستگی */
-.primary-gateway-header,
-.gateway-header,
-.office-address-header,
-.gateway-page-title {
-  padding-top: 30px !important;
-  margin-top: 10px !important;
-  padding-bottom: 20px !important;
-  text-align: left !important;
-}
-
-/* 2. اوپر کی باریک لکھائی (CONTACT · OFFICE · PARTNERSHIP) کو محفوظ فاصلہ دینا */
-.primary-gateway-header span,
-.gateway-header span,
-.office-address-header span,
-.section-subtitle,
-.gateway-hero .eyebrow {
-  display: inline-block !important;
-  padding-left: 4px !important;
-  letter-spacing: 1.5px !important;
-}
-
-/* 3. تمام کارڈز (گیٹ وے، ہب، اور ایڈریس کارڈز) کا متوازن اور پریمیم فریم */
-.gateway-card,
-.hub-card,
-.office-card,
-.address-card {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  margin-bottom: 24px !important;
-  padding: 28px 24px !important;
-  box-sizing: border-box !important;
-  text-align: left !important;
-  background: radial-gradient(
-      ellipse at 50% 0%,
-      rgba(212, 175, 55, 0.1) 0%,
-      transparent 75%
-    ),
-    linear-gradient(160deg, #0d3a26 0%, #0a2f1e 50%, #03140a 100%) !important;
-  border: 1px solid rgba(212, 175, 55, 0.35) !important;
-  border-radius: 18px !important;
-}
-
-/* 4. کارڈز کے اندر موجود نمبرز (جیسے 01) اور ہیڈنگز کو سیدھا کرنا */
-.hub-card h2, 
-.gateway-card h2,
-.office-card h3,
-.address-card h3 {
-  padding-left: 0 !important;
-  margin-left: 0 !important;
-  text-align: left !important;
-}
-
-/* 5. واٹس ایپ اور ہب کے تمام بٹنز کی شاندار گولڈن لگژری لک */
-.whatsapp-trade-btn,
-.gateway-action-btn,
-.hub-action-btn,
-.hub-wa-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 100% !important;
-  margin-top: 16px !important;
-  padding: 14px 20px !important;
-  background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%) !important;
-  color: #03140a !important;
-  font-weight: 700 !important;
-  border-radius: 10px !important;
-  border: 1px solid #ffe875 !important;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
-  text-decoration: none !important;
 }
