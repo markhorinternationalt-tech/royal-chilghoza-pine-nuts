@@ -1083,7 +1083,8 @@ const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.worke
     .hub-card h2 { color: #d4af37; font-size: 1.3rem; margin: 0 0 10px; }
     .hub-card a { color: #d4af37; text-decoration: none; font-weight: 600; }
     .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
-    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
+    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; } 
+        .hub-card { transform: none !important; border: 1px solid rgba(212, 175, 55, 0.4) !important; border-radius: 12px !important; }
   </style>
     <link rel="stylesheet" href="/style.css?v=2026_final">
 <script src="/app.js" defer></script>
