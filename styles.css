@@ -3127,3 +3127,47 @@ body.admin-mode .hub-section-actions {
     linear-gradient(160deg, var(--forest3, #0d3a26) 0%, var(--card-accent, #0a2f1e) 50%, var(--forest, #03140a) 100%) !important;
   border: 1px solid var(--line, rgba(212, 175, 55, 0.25)) !important;
 }
+/* =========================================================
+   REMOVE GREEN CONTAINER FRAME & MARGINS (EDGE-TO-EDGE)
+   ========================================================= */
+
+/* 1. گیلری کے مین ڈبے سے سبز بیک گراؤنڈ اور سائیڈوں کا فاصلہ ختم کریں */
+.section-shell,
+.gallery-grid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  background: transparent !important;
+}
+
+/* 2. گیلری آئٹم کے تمام سبز فریم اور بارڈر غائب کریں */
+.gallery-item {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* 3. تصویر کو بغیر کسی فریم کے پوری چوڑائی میں دکھائیں */
+.gallery-item img {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 4. کیپشن کے ٹیکسٹ کو بغیر کسی سبز ڈبے کے صاف ستھرا رکھیں */
+.gallery-item figcaption {
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+}
