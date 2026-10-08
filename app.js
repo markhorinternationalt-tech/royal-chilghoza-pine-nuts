@@ -2754,10 +2754,10 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
     if (path === "/" || path === "") {
       closeGateway();
-    } else if (/^\/(trade|research)\/?$/.test(path)) {
+    } else if (/^\/[a-z0-9_-]+\/?$/.test(path)) {
       const gateway = path.replace(/^\/+|\/+$/g, "");
       openGateway(gateway);
-    } else if (/^\/(trade|research)\/[a-z0-9-]+\/?$/.test(path)) {
+    } else if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/.test(path)) {
       openHubFromURL();
     }
   });
