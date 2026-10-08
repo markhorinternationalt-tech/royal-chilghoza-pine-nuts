@@ -922,7 +922,9 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     .hub-video .caption { color: #8fa89a; font-style: italic; margin-top: 8px; }
     .hub-pdf { margin: 15px 0; padding: 15px; background: rgba(10,47,30,0.5); border-radius: 10px; }
     .hub-pdf a { color: #d4af37; text-decoration: none; font-weight: 500; }
-    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
+    footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; } 
+        .hub-figure { border: none !important; border-radius: 12px !important; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+    .hub-figure img { width: 100%; display: block; border: none !important; border-radius: 12px !important; }
   </style>
   <link rel="stylesheet" href="/style.css?v=2026_final">
 <script src="/app.js" defer></script>
