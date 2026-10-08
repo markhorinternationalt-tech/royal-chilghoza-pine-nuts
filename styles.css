@@ -1,6 +1,6 @@
 /* =========================================================
-   ROYAL CHILGHOZA PINE NUTS — PREMIUM LUXURY STYLESHEET
-   FINAL VERSION — Clean, Solid, Professional
+   ROYAL CHILGHOZA PINE NUTS â€” PREMIUM LUXURY STYLESHEET
+   FINAL VERSION â€” Clean, Solid, Professional
 ========================================================= */
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
@@ -514,7 +514,7 @@ body.lightbox-open { overflow: hidden; }
 }
 
 /* =========================================================
-   GALLERY — 1080×1350 (4:5) premium cards with click-to-zoom
+   GALLERY â€” 1080Ã—1350 (4:5) premium cards with click-to-zoom
 ========================================================= */
 .gallery-grid {
   display: grid;
@@ -527,14 +527,15 @@ body.lightbox-open { overflow: hidden; }
 }
 .gallery-item {
   margin: 0;
-  border: 0.3px solid rgba(212, 175, 55, 0.08);
-  border-radius: 0;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  border-radius: 18px;
   overflow: hidden;
   position: relative;
   background: linear-gradient(135deg, #0a2f1e, #03140a);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.3);
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 8px 16px rgba(0, 0, 0, 0.35),
+    0 20px 40px rgba(0, 0, 0, 0.35);
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   display: flex;
   flex-direction: column;
@@ -572,7 +573,7 @@ body.lightbox-open { overflow: hidden; }
   line-height: 1.75;
   letter-spacing: 0.02em;
   flex: 1;
-  border-top: 0.3px solid rgba(212, 175, 55, 0.15);
+  border-top: 1px solid rgba(212, 175, 55, 0.45);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
@@ -1143,7 +1144,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
 .royal-profile-ring:hover .royal-profile-image { transform: scale(1.06); }
 .royal-profile-image.profile-image-failed { display: none; }
 .royal-profile-ring:has(.profile-image-failed):after {
-  content: "♛";
+  content: "â™›";
   display: grid;
   place-items: center;
   width: 100%; height: 100%;
@@ -1517,7 +1518,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
 }
 
 /* =========================================================
-   MEDIA MANAGER — Cloudinary
+   MEDIA MANAGER â€” Cloudinary
 ========================================================= */
 .media-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; max-height: 400px; overflow-y: auto; }
 .media-item {
@@ -1805,7 +1806,7 @@ body.admin-mode .hub-card-actions { display: flex; }
 }
 
 /* =========================================================
-   GATEWAY CARD — Dynamic + Hidden Badge
+   GATEWAY CARD â€” Dynamic + Hidden Badge
 ========================================================= */
 .gateway-card-actions {
   position: absolute;
@@ -1869,14 +1870,14 @@ body.admin-mode .gateway-card-actions { display: flex; }
 .gw-radio b { color: var(--gold2); font-weight: 600; }
 
 /* =========================================================
-   HUB MEDIA — Grid & Items
+   HUB MEDIA â€” Grid & Items
 ========================================================= */
 #hubMedia {
   display: block;
   padding: 0;
   min-height: auto;
   border: none;
-  border-radius: 0px;
+  border-radius: 14px;
   text-align: left;
 }
 .hubMediaUploadBtn { width: 100%; margin-bottom: 16px; }
@@ -1888,12 +1889,12 @@ body.admin-mode .gateway-card-actions { display: flex; }
 }
 .hub-media-item {
   position: relative;
-  border-radius: 0px;
+  border-radius: 12px;
   overflow: hidden;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   border: none;
   box-shadow: none;
-  transition: transform 0.25s;
+  transition: border-color 0.25s, transform 0.25s;
 }
 .hub-media-item:hover { border-color: var(--gold); transform: translateY(-2px); }
 .hub-media-item a { display: block; text-decoration: none; color: inherit; }
@@ -1903,7 +1904,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
   display: block;
   max-height: 240px;
   object-fit: cover;
-  border-radius: 0;
+  border-radius: 12px 12px 0 0;
   background: #000;
 }
 .hub-media-pdf {
@@ -1986,15 +1987,15 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   flex-direction: column;
   gap: 56px;
 }
- .hub-section {
+.hub-section {
   position: relative;
   padding: 0;
-  border-radius: 0;
+  border-radius: 24px;
   background: #0a2f1e;
-  border: 0.3px solid rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.08);
   box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.4),
-    0 12px 32px rgba(0, 0, 0, 0.3);
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   overflow: hidden;
 }
@@ -2121,7 +2122,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   max-height: 320px;
 }
 
-/* HUB SECTIONS — Mobile */
+/* HUB SECTIONS â€” Mobile */
 @media (max-width: 900px) {
   .hub-sections-page { gap: 40px; padding: 16px 0 100px; }
 }
@@ -2157,7 +2158,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 }
 
 /* =========================================================
-   HUB MEDIA — PREMIUM CAPTION
+   HUB MEDIA â€” PREMIUM CAPTION
 ========================================================= */
 .hub-media-caption {
   position: relative;
@@ -2178,7 +2179,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
 .hub-media-caption::before {
-  content: "❖";
+  content: "â–";
   display: block;
   color: var(--gold);
   font-size: 0.7rem;
