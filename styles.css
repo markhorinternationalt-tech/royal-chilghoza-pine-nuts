@@ -527,15 +527,14 @@ body.lightbox-open { overflow: hidden; }
 }
 .gallery-item {
   margin: 0;
-  border: 1px solid rgba(212, 175, 55, 0.12);
-  border-radius: 18px;
+  border: 0.3px solid rgba(212, 175, 55, 0.08);
+  border-radius: 0;
   overflow: hidden;
   position: relative;
   background: linear-gradient(135deg, #0a2f1e, #03140a);
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 8px 16px rgba(0, 0, 0, 0.35),
-    0 20px 40px rgba(0, 0, 0, 0.35);
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3);
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   display: flex;
   flex-direction: column;
