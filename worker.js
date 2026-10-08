@@ -1085,7 +1085,7 @@ const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.worke
     .back { display: inline-block; margin-bottom: 20px; color: #d4af37; text-decoration: none; }
     footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
   </style>
-  <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/style.css?v=2026_final">
 <script src="/app.js" defer></script>
 </head>
 <body>
