@@ -3267,3 +3267,74 @@ button.cta-button {
   padding: 0 !important;
   border-radius: 0 !important;
 }
+/* =========================================================
+   ROYAL FINAL ALIGNMENT & SAFE PADDING FIX (BOTTOM OVERRIDE)
+   ========================================================= */
+
+/* 1. پوری ویب سائٹ کے مین کنٹینرز کو سکرین کے کونوں سے محفوظ فاصلہ دینا */
+main,
+.gateway-hero,
+.hub-page,
+.hub-sections-page,
+.section-shell {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* 2. تمام کارڈز (گیٹ وے، ہب، اور ایڈریس کارڈز) کو بالکل سیدھا، متوازن اور مناسب اندرونی جگہ دینا */
+.gateway-card,
+.hub-card,
+.office-card,
+.hub-section,
+.address-card {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 24px !important;
+  padding: 28px 24px !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+}
+
+/* 3. کارڈز کے اندر موجود نمبرز (جیسے 01)، ہیڈنگز اور سب ٹائٹلز کو کونے سے ہٹانا */
+.gateway-card h2,
+.hub-card h2,
+.office-card h3,
+.hub-section-title,
+.primary-gateway-header,
+.gateway-header,
+.office-address-header {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+
+/* 4. اوپر کی باریک لکھائی (CONTACT · OFFICE · PARTNERSHIP) اور سب ٹائٹلز کی درست الائنمنٹ */
+span,
+.section-subtitle,
+.gateway-subtitle,
+.royal-profile-eyebrow {
+  display: inline-block !important;
+  padding-left: 2px !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* 5. واٹس ایپ اور ہب بٹنز کو مکمل اور لگژری لک دینا */
+.whatsapp-trade-btn,
+.gateway-action-btn,
+.hub-action-btn,
+.hub-wa-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin-top: 18px !important;
+  padding: 14px 20px !important;
+  background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%) !important;
+  color: #03140a !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  border: 1px solid #ffe875 !important;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+  text-decoration: none !important;
+}
