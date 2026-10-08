@@ -924,7 +924,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     .hub-pdf a { color: #d4af37; text-decoration: none; font-weight: 500; }
     footer { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.2); color: #8fa89a; font-size: 0.9rem; }
   </style>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/style.css?v=2026_final">
 <script src="/app.js" defer></script>
 </head>
 <body>
