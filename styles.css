@@ -1890,10 +1890,10 @@ body.admin-mode .gateway-card-actions { display: flex; }
   position: relative;
   border-radius: 0px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent;
   border: none;
   box-shadow: none;
-  transition: border-color 0.25s, transform 0.25s;
+  transition: transform 0.25s;
 }
 .hub-media-item:hover { border-color: var(--gold); transform: translateY(-2px); }
 .hub-media-item a { display: block; text-decoration: none; color: inherit; }
