@@ -1876,7 +1876,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
   padding: 0;
   min-height: auto;
   border: none;
-  border-radius: 14px;
+  border-radius: 0px;
   text-align: left;
 }
 .hubMediaUploadBtn { width: 100%; margin-bottom: 16px; }
@@ -1888,7 +1888,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
 }
 .hub-media-item {
   position: relative;
-  border-radius: 12px;
+  border-radius: 0px;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
   border: none;
@@ -1903,7 +1903,7 @@ body.admin-mode .gateway-card-actions { display: flex; }
   display: block;
   max-height: 240px;
   object-fit: cover;
-  border-radius: 12px 12px 0 0;
+  border-radius: 0;
   background: #000;
 }
 .hub-media-pdf {
