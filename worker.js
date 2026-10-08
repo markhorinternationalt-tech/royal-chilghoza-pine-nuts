@@ -674,7 +674,7 @@ Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/s
 
     // ---- Fallback: GitHub Raw ----
     const githubBase = env.GITHUB_RAW_BASE
-      || "https://raw.githubusercontent.com/markhor/royal-chilghoza-pine-nuts/main/";
+      || "https://raw.githubusercontent.com/markhorinternationalt-tech/royal-chilghoza-pine-nuts/main/";
 
     let path = url.pathname;
     if (path === "/") path = "/index.html";
