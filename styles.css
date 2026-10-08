@@ -572,7 +572,7 @@ body.lightbox-open { overflow: hidden; }
   line-height: 1.75;
   letter-spacing: 0.02em;
   flex: 1;
-  border-top: 1px solid rgba(212, 175, 55, 0.45);
+  border-top: 0.3px solid rgba(212, 175, 55, 0.15);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
