@@ -3338,3 +3338,79 @@ span,
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
   text-decoration: none !important;
 }
+/* =========================================================
+   ROYAL FINAL CLEAN ALIGNMENT & SPACING FIX (BOTTOM OVERRIDE)
+   ========================================================= */
+
+/* 1. ایڈریس اور تمام اہم سیکشنز کی ٹاپ سپیسنگ اور الائنمنٹ کی درستگی */
+.primary-gateway-header,
+.gateway-header,
+.office-address-header,
+.gateway-page-title {
+  padding-top: 30px !important;
+  margin-top: 10px !important;
+  padding-bottom: 20px !important;
+  text-align: left !important;
+}
+
+/* 2. اوپر کی باریک لکھائی (CONTACT · OFFICE · PARTNERSHIP) کو محفوظ فاصلہ دینا */
+.primary-gateway-header span,
+.gateway-header span,
+.office-address-header span,
+.section-subtitle,
+.gateway-hero .eyebrow {
+  display: inline-block !important;
+  padding-left: 4px !important;
+  letter-spacing: 1.5px !important;
+}
+
+/* 3. تمام کارڈز (گیٹ وے، ہب، اور ایڈریس کارڈز) کا متوازن اور پریمیم فریم */
+.gateway-card,
+.hub-card,
+.office-card,
+.address-card {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 24px !important;
+  padding: 28px 24px !important;
+  box-sizing: border-box !important;
+  text-align: left !important;
+  background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(212, 175, 55, 0.1) 0%,
+      transparent 75%
+    ),
+    linear-gradient(160deg, #0d3a26 0%, #0a2f1e 50%, #03140a 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  border-radius: 18px !important;
+}
+
+/* 4. کارڈز کے اندر موجود نمبرز (جیسے 01) اور ہیڈنگز کو سیدھا کرنا */
+.hub-card h2, 
+.gateway-card h2,
+.office-card h3,
+.address-card h3 {
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+  text-align: left !important;
+}
+
+/* 5. واٹس ایپ اور ہب کے تمام بٹنز کی شاندار گولڈن لگژری لک */
+.whatsapp-trade-btn,
+.gateway-action-btn,
+.hub-action-btn,
+.hub-wa-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin-top: 16px !important;
+  padding: 14px 20px !important;
+  background: linear-gradient(135deg, #f3e7c4 0%, #d4af37 50%, #aa7c11 100%) !important;
+  color: #03140a !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  border: 1px solid #ffe875 !important;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+  text-decoration: none !important;
+}
