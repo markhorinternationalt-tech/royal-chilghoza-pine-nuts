@@ -678,6 +678,11 @@ Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/s
 
     let path = url.pathname;
     if (path === "/") path = "/index.html";
+// ✅ SPA fallback: صارفین کے لیے کسی بھی URL پر index.html دیں
+const staticExtTest = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json|woff|woff2|ttf)$/i;
+if (!staticExtTest.test(path) && !path.startsWith("/api/")) {
+  path = "/index.html";
+}
 
     const staticExtensions = /\.(html|css|js|jpg|jpeg|png|gif|webp|svg|ico|json|woff|woff2|ttf)$/i;
     if (staticExtensions.test(path)) {
