@@ -591,57 +591,133 @@ if (url.pathname === "/sitemap.xml") {
 // =========================================================
 if (url.pathname === "/robots.txt") {
   const robotsTxt = `# Royal Chilghoza Pine Nuts - robots.txt
-# Updated: 7 October 2026
+# Updated: 9 October 2026
 
+# --- Allow Everything ---
 User-agent: *
 Allow: /
 
+# =========================================================
+# SEARCH ENGINES (Global)
+# =========================================================
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Baiduspider
+User-agent: DuckDuckBot
 Allow: /
 
 User-agent: YandexBot
 Allow: /
 
-User-agent: DuckDuckBot
+User-agent: Baiduspider
 Allow: /
 
-User-agent: GPTBot
+# =========================================================
+# OPENAI / CHATGPT
+# =========================================================
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: GPTBot
+Allow: /
+
+# =========================================================
+# GOOGLE AI (Gemini)
+# =========================================================
 User-agent: Google-Extended
 Allow: /
 
 User-agent: Googlebot-Extended
 Allow: /
 
+# =========================================================
+# ANTHROPIC / CLAUDE
+# =========================================================
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Claude-Web
-Allow: /
-
+# =========================================================
+# PERPLEXITY AI
+# =========================================================
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Applebot
+User-agent: Perplexity-User
 Allow: /
 
+# =========================================================
+# XAI / GROK
+# =========================================================
+User-agent: xAI-SearchBot
+Allow: /
+
+User-agent: GrokBot
+Allow: /
+
+User-agent: xAI-Grok
+Allow: /
+
+User-agent: Grok-DeepSearch
+Allow: /
+
+# =========================================================
+# DEEPSEEK
+# =========================================================
+User-agent: DeepSeekBot
+Allow: /
+
+# =========================================================
+# APPLE AI
+# =========================================================
 User-agent: Applebot-Extended
 Allow: /
 
+# =========================================================
+# AMAZON AI
+# =========================================================
+User-agent: Amazonbot
+Allow: /
+
+# =========================================================
+# CHINESE AI CRAWLERS
+# =========================================================
+User-agent: Bytespider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: ShenmaSpider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+# =========================================================
+# SOCIAL MEDIA / MESSAGING APPS
+# =========================================================
 User-agent: FacebookBot
 Allow: /
 
-User-agent: Twitterbot
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: X
 Allow: /
 
 User-agent: LinkedInBot
@@ -650,6 +726,15 @@ Allow: /
 User-agent: WhatsApp
 Allow: /
 
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+# =========================================================
+# SITEMAP
+# =========================================================
 Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
 `;
 
@@ -660,7 +745,7 @@ Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/s
       "Cache-Control": "public, max-age=86400",
     },
   });
-}
+}  
 
     // =========================================================
     // STATIC ASSETS (index.html for home, CSS, JS, images)
