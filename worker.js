@@ -930,7 +930,7 @@ function getContentType(path) {
 // =========================================================
 function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
-  return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot|TelegramBot|Discordbot|curl|wget|python-requests|axios|node-fetch|Google-InspectionTool|Storebot-Google|Google-Read-Aloud|FeedFetcher-Google|Mediapartners-Google|AdsBot-Google|APIs-Google|Google-Site-Verification/i.test(ua);
+  return /Googlebot|Bingbot|Baiduspider|YandexBot|DuckDuckBot|Slurp|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|Applebot|AhrefsBot|SemrushBot|TelegramBot|Discordbot|curl|wget|python-requests|axios|node-fetch|Google-InspectionTool|Storebot-Google|Google-Read-Aloud|FeedFetcher-Google|Mediapartners-Google|AdsBot-Google|APIs-Google|Google-Site-Verification|OAI-SearchBot|ChatGPT-User|GPTBot|Claude-SearchBot|Claude-User|ClaudeBot|PerplexityBot|Perplexity-User|xAI-SearchBot|GrokBot|xAI-Grok|Grok-DeepSearch|DeepSeekBot|Bytespider|Sogou web spider|360Spider|ShenmaSpider|YisouSpider|Google-Extended|Googlebot-Extended|Applebot-Extended|Amazonbot|meta-externalagent/i.test(ua);
 }
 
 // =========================================================
