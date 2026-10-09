@@ -3088,7 +3088,41 @@ if (hubIndex === -1) return false;
   return true;
 }
 
-// Run on page load (after main init)
-setTimeout(function() {
-  openHubFromURL();
-}, 800);
+/* =========================================================
+   ROUTING — URL کے مطابق صحیح صفحہ کھولیں
+   /                       → Home
+   /trade یا /research     → Gateway
+   /trade/global-markets   → Gateway + Hub پر scroll
+========================================================= */
+function handleRoute() {
+  const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+  const parts = path.split("/").filter(p => p);
+
+  // کیس 1: ہوم پیج
+  if (parts.length === 0) {
+    if (state.gateway || state.hub) closeGateway();
+    return;
+  }
+
+  const gateway = parts[0];
+  const validIds = getGateways().map(g => g.id);
+  if (!validIds.includes(gateway)) return;
+
+  // کیس 2: صرف گیٹ وے (مثلاً /trade)
+  if (parts.length === 1) {
+    if (state.hub) {
+      state.hub = null;
+      document.getElementById("hubView").classList.remove("open");
+      document.getElementById("gatewayView").classList.add("open");
+      renderGateway(gateway);
+    } else if (state.gateway !== gateway) {
+      openGateway(gateway);
+    }
+    return;
+  }
+
+  // کیس 3: گیٹ وے + ہب (مثلاً /trade/global-markets)
+  if (parts.length === 2) {
+    openHubFromURL();
+  }
+}
