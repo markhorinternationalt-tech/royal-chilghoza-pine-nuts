@@ -863,9 +863,9 @@ async function checkAuth(request, env, cors) {
   return null;
 }
 
-async function cloudinaryAdminFetch(resourceType, prefix) {
-  const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
-  const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?prefix=${encodeURIComponent(prefix)}&max_results=100`;
+async function cloudinaryAdminFetch(resourceType, prefix, env) {
+  const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
+  const url = `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?prefix=${encodeURIComponent(prefix)}&max_results=100`;
   const resp = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
   if (!resp.ok) return { resources: [] };
   return await resp.json();
