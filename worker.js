@@ -4,7 +4,6 @@
 // + SEO-friendly Hub Routes for 20 hubs
 // =========================================================
 
-
 // Rate Limiting Configuration
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW = 3600;
