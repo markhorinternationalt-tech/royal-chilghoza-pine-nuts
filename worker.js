@@ -227,161 +227,161 @@ export default {
     }
 
     // =========================================================
-    // CLOUDINARY — Media Management
-    // =========================================================
+// CLOUDINARY — Media Management
+// =========================================================
 
-    if (url.pathname === "/api/media/upload" && request.method === "POST") {
-      const reject = await checkAuth(request, env, cors);
-      if (reject) return reject;
+if (url.pathname === "/api/media/upload" && request.method === "POST") {
+  const reject = await checkAuth(request, env, cors);
+  if (reject) return reject;
 
-      try {
-        const form = await request.formData();
-        const file = form.get("file");
-        const folder = String(form.get("folder") || "general").replace(/[^a-zA-Z0-9/_-]/g, "");
+  try {
+    const form = await request.formData();
+    const file = form.get("file");
+    const folder = String(form.get("folder") || "general").replace(/[^a-zA-Z0-9/_-]/g, "");
 
-        if (!(file instanceof File)) {
-          return new Response("file required", { status: 400, headers: cors });
-        }
-
-        const ext = (file.name.split(".").pop() || "").toLowerCase();
-        let resourceType = "image";
-        if (["mp4", "webm", "mov", "avi"].includes(ext)) resourceType = "video";
-        else if (["pdf", "doc", "docx"].includes(ext)) resourceType = "raw";
-
-        const timestamp = Math.floor(Date.now() / 1000);
-        const folderPath = `royal-chilghoza/${folder}`;
-
-        const signatureParams = `folder=${folderPath}&timestamp=${timestamp}`;
-        const signature = await sha1(signatureParams + CLOUDINARY_API_SECRET);
-
-        const uploadForm = new FormData();
-        uploadForm.append("file", file);
-        uploadForm.append("api_key", CLOUDINARY_API_KEY);
-        uploadForm.append("timestamp", timestamp.toString());
-        uploadForm.append("folder", folderPath);
-        uploadForm.append("signature", signature);
-
-        const cloudResp = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`,
-          { method: "POST", body: uploadForm }
-        );
-        const cloudData = await cloudResp.json();
-
-        if (!cloudResp.ok) {
-          return json({ ok: false, error: cloudData.error?.message || "Cloudinary upload failed" }, cors, 500);
-        }
-
-        return json({
-          ok: true,
-          key: cloudData.public_id,
-          url: cloudData.secure_url,
-          public_id: cloudData.public_id,
-          format: cloudData.format,
-          bytes: cloudData.bytes,
-          created_at: cloudData.created_at,
-        }, cors);
-
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
+    if (!(file instanceof File)) {
+      return new Response("file required", { status: 400, headers: cors });
     }
 
-    if (url.pathname === "/api/media/list" && request.method === "GET") {
-      try {
-        const folder = url.searchParams.get("folder") || "";
-        const prefix = folder ? `royal-chilghoza/${folder}` : "royal-chilghoza";
+    const ext = (file.name.split(".").pop() || "").toLowerCase();
+    let resourceType = "image";
+    if (["mp4", "webm", "mov", "avi"].includes(ext)) resourceType = "video";
+    else if (["pdf", "doc", "docx"].includes(ext)) resourceType = "raw";
 
-        const [imagesResp, videosResp, rawResp] = await Promise.all([
-          cloudinaryAdminFetch("image", prefix),
-          cloudinaryAdminFetch("video", prefix),
-          cloudinaryAdminFetch("raw", prefix),
-        ]);
+    const timestamp = Math.floor(Date.now() / 1000);
+    const folderPath = `royal-chilghoza/${folder}`;
 
-        const images = (imagesResp.resources || []).map(r => formatCloudResource(r, "image"));
-        const videos = (videosResp.resources || []).map(r => formatCloudResource(r, "video"));
-        const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
+    const signatureParams = `folder=${folderPath}&timestamp=${timestamp}`;
+    const signature = await sha1(signatureParams + env.CLOUDINARY_API_SECRET);
 
-        const files = [...images, ...videos, ...raws];
-        return json({ ok: true, files }, cors);
+    const uploadForm = new FormData();
+    uploadForm.append("file", file);
+    uploadForm.append("api_key", env.CLOUDINARY_API_KEY);
+    uploadForm.append("timestamp", timestamp.toString());
+    uploadForm.append("folder", folderPath);
+    uploadForm.append("signature", signature);
 
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
+    const cloudResp = await fetch(
+      `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`,
+      { method: "POST", body: uploadForm }
+    );
+    const cloudData = await cloudResp.json();
+
+    if (!cloudResp.ok) {
+      return json({ ok: false, error: cloudData.error?.message || "Cloudinary upload failed" }, cors, 500);
     }
 
-    if (url.pathname === "/api/media/folders" && request.method === "GET") {
-      try {
-        const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
-        const resp = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza`,
-          { headers: { Authorization: `Basic ${auth}` } }
-        );
-        const data = await resp.json();
-        const folders = (data.folders || []).map(f => f.name);
-        return json({ ok: true, folders }, cors);
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
-    }
+    return json({
+      ok: true,
+      key: cloudData.public_id,
+      url: cloudData.secure_url,
+      public_id: cloudData.public_id,
+      format: cloudData.format,
+      bytes: cloudData.bytes,
+      created_at: cloudData.created_at,
+    }, cors);
 
-    if (url.pathname === "/api/media/folder" && request.method === "POST") {
-      const reject = await checkAuth(request, env, cors);
-      if (reject) return reject;
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
 
-      try {
-        const body = await request.json();
-        const name = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
-        if (!name) return json({ ok: false, error: "Invalid folder name" }, cors, 400);
+if (url.pathname === "/api/media/list" && request.method === "GET") {
+  try {
+    const folder = url.searchParams.get("folder") || "";
+    const prefix = folder ? `royal-chilghoza/${folder}` : "royal-chilghoza";
 
-        const auth = btoa(`${CLOUDINARY_API_KEY}:${CLOUDINARY_API_SECRET}`);
-        const resp = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza/${name}`,
-          { method: "POST", headers: { Authorization: `Basic ${auth}` } }
-        );
-        const data = await resp.json();
-        if (!resp.ok) return json({ ok: false, error: data.error?.message || "Failed" }, cors, 500);
-        return json({ ok: true, folder: name }, cors);
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
-    }
+    const [imagesResp, videosResp, rawResp] = await Promise.all([
+      cloudinaryAdminFetch("image", prefix, env),
+      cloudinaryAdminFetch("video", prefix, env),
+      cloudinaryAdminFetch("raw", prefix, env),
+    ]);
 
-    if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
-      const reject = await checkAuth(request, env, cors);
-      if (reject) return reject;
+    const images = (imagesResp.resources || []).map(r => formatCloudResource(r, "image"));
+    const videos = (videosResp.resources || []).map(r => formatCloudResource(r, "video"));
+    const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
 
-      try {
-        const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
-        const resourceType = url.searchParams.get("type") || "image";
-        const timestamp = Math.floor(Date.now() / 1000);
-        const signature = await sha1(`public_id=${publicId}&timestamp=${timestamp}` + CLOUDINARY_API_SECRET);
+    const files = [...images, ...videos, ...raws];
+    return json({ ok: true, files }, cors);
 
-        const delForm = new FormData();
-        delForm.append("public_id", publicId);
-        delForm.append("api_key", CLOUDINARY_API_KEY);
-        delForm.append("timestamp", timestamp.toString());
-        delForm.append("signature", signature);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
 
-        const resp = await fetch(
-          `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/destroy`,
-          { method: "POST", body: delForm }
-        );
-        const data = await resp.json();
-        return json({ ok: data.result === "ok", result: data.result }, cors);
-      } catch (err) {
-        return json({ ok: false, error: err.message }, cors, 500);
-      }
-    }
+if (url.pathname === "/api/media/folders" && request.method === "GET") {
+  try {
+    const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
+    const resp = await fetch(
+      `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza`,
+      { headers: { Authorization: `Basic ${auth}` } }
+    );
+    const data = await resp.json();
+    const folders = (data.folders || []).map(f => f.name);
+    return json({ ok: true, folders }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
 
-    if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
-      const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
-      const type = url.searchParams.get("type") || "image";
-      const ext = url.searchParams.get("format") || "jpg";
-      return Response.redirect(
-        `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/${type}/upload/${publicId}.${ext}`,
-        302
-      );
-    }
+if (url.pathname === "/api/media/folder" && request.method === "POST") {
+  const reject = await checkAuth(request, env, cors);
+  if (reject) return reject;
+
+  try {
+    const body = await request.json();
+    const name = String(body.folder || "").trim().replace(/[^a-zA-Z0-9/_-]/g, "");
+    if (!name) return json({ ok: false, error: "Invalid folder name" }, cors, 400);
+
+    const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
+    const resp = await fetch(
+      `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/folders/royal-chilghoza/${name}`,
+      { method: "POST", headers: { Authorization: `Basic ${auth}` } }
+    );
+    const data = await resp.json();
+    if (!resp.ok) return json({ ok: false, error: data.error?.message || "Failed" }, cors, 500);
+    return json({ ok: true, folder: name }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
+
+if (url.pathname.startsWith("/api/media/") && request.method === "DELETE") {
+  const reject = await checkAuth(request, env, cors);
+  if (reject) return reject;
+
+  try {
+    const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
+    const resourceType = url.searchParams.get("type") || "image";
+    const timestamp = Math.floor(Date.now() / 1000);
+    const signature = await sha1(`public_id=${publicId}&timestamp=${timestamp}` + env.CLOUDINARY_API_SECRET);
+
+    const delForm = new FormData();
+    delForm.append("public_id", publicId);
+    delForm.append("api_key", env.CLOUDINARY_API_KEY);
+    delForm.append("timestamp", timestamp.toString());
+    delForm.append("signature", signature);
+
+    const resp = await fetch(
+      `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/${resourceType}/destroy`,
+      { method: "POST", body: delForm }
+    );
+    const data = await resp.json();
+    return json({ ok: data.result === "ok", result: data.result }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
+
+if (url.pathname.startsWith("/api/media/") && request.method === "GET") {
+  const publicId = decodeURIComponent(url.pathname.slice("/api/media/".length));
+  const type = url.searchParams.get("type") || "image";
+  const ext = url.searchParams.get("format") || "jpg";
+  return Response.redirect(
+    `https://res.cloudinary.com/${env.CLOUDINARY_CLOUD_NAME}/${type}/upload/${publicId}.${ext}`,
+    302
+  );
+}
 
     // =========================================================
     // ADMIN STATUS
