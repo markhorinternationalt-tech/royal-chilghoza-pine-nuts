@@ -2487,6 +2487,14 @@ function deactivateAdminUI() {
 ========================================================= */
 
 function init() {
+  // Check URL immediately - hide main page if not home
+const currentPath = window.location.pathname;
+if (currentPath !== "/" && currentPath !== "") {
+  const mainPage = document.getElementById("mainPage");
+  const gatewayView = document.getElementById("gatewayView");
+  if (mainPage) mainPage.hidden = true;
+  if (gatewayView) gatewayView.classList.add("open");
+}
   renderGallery();
   renderOffices();
   renderGateways();
