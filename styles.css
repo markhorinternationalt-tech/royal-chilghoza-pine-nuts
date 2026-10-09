@@ -581,8 +581,8 @@ body.lightbox-open {
   gap: 12px;
   margin-top: 42px;
   max-width: none;
-  margin-left: -20px;
-  margin-right: -20px;
+  margin-left: 0;
+margin-right: 0;
 }
 .gallery-item {
   margin: 0;
