@@ -5,7 +5,15 @@
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*", "/trade/*", "/research/*", "/sitemap.xml"]
+    "run_worker_first": [
+      "/api/*",
+      "/trade",
+      "/trade/*",
+      "/research",
+      "/research/*",
+      "/sitemap.xml",
+      "/robots.txt"
+    ]
   },
   "ai": {
     "binding": "AI"
