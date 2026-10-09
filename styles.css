@@ -2660,7 +2660,7 @@ body.admin-mode .hub-media-item-actions {
   position: relative;
   z-index: 2;
   margin: 0;
-  padding: 16px 20px;
+  padding: 0;
   border: none;
   background: transparent;
   width: 100%;
