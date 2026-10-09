@@ -2571,10 +2571,9 @@ body.admin-mode .hub-media-item-actions {
   position: relative;
   padding: 0;
   border-radius: 0;
-  background: var(--forest3);
-  border: 0.3px solid var(--line-soft);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4),
-    0 12px 32px rgba(0, 0, 0, 0.3);
+  background: transparent;
+  border: none;
+  box-shadow: none;
   transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   overflow: hidden;
 }
