@@ -2746,19 +2746,8 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
   applyLanguage();
 
-  // ✅ Back بٹن کے لیے لسنر
-  window.addEventListener("popstate", (event) => {
-    const path = window.location.pathname;
-
-    if (path === "/" || path === "") {
-      closeGateway();
-    } else if (/^\/[a-z0-9_-]+\/?$/.test(path)) {
-      const gateway = path.replace(/^\/+|\/+$/g, "");
-      openGateway(gateway);
-    } else if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/.test(path)) {
-      openHubFromURL();
-    }
-  });
+window.addEventListener("popstate", handleRoute);    ← صرف ایک لائن
+}                                                    ← یہ init() بند ہوا
 }
 
 document.addEventListener("DOMContentLoaded", init);
