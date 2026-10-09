@@ -2447,12 +2447,10 @@ async function loadAllKVContent() {
     gateways = gwData;
   }
 
-  renderGateways();
+    renderGateways();
 
-  // === SEO Hub Route Handler ===
-  if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(window.location.pathname)) {
-    setTimeout(openHubFromURL, 400);
-  }
+  // ✅ ریفریش پر URL کے مطابق صفحہ کھولیں
+  setTimeout(handleRoute, 300);
 }
 
 /* =========================================================
