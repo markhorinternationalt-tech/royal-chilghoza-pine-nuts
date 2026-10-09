@@ -2746,7 +2746,7 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 
   applyLanguage();
 
-window.addEventListener("popstate", handleRoute);    ← صرف ایک لائن                                                   ← یہ init() بند ہوا
+window.addEventListener("popstate", handleRoute);
 }
 
 document.addEventListener("DOMContentLoaded", init);
