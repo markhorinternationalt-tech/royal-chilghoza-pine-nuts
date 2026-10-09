@@ -2750,7 +2750,7 @@ body.admin-mode .hub-section-actions {
     line-height: 1.65;
   }
   .hub-section-media {
-    padding: 12px 12px;
+    padding: 0;
     margin: 0;
     border: none;
     border-radius: 14px;
