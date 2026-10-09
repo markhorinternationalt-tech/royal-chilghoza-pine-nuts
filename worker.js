@@ -4,9 +4,6 @@
 // + SEO-friendly Hub Routes for 20 hubs
 // =========================================================
 
-const CLOUDINARY_CLOUD_NAME = "agnhxdu4";
-const CLOUDINARY_API_KEY = "118953582795868";
-const CLOUDINARY_API_SECRET = "bHpg060YsexAgpP4cTVTs227Io0";
 
 // Rate Limiting Configuration
 const RATE_LIMIT_MAX = 5;
