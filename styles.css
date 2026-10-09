@@ -2133,6 +2133,9 @@ body.admin-mode .hub-section-actions { display: flex; }
   grid-template-columns: 1fr;
   gap: 14px;
   margin-top: 8px;
+  margin-left: -28px;
+  margin-right: -28px;
+  width: calc(100% + 56px);
 }
 .hub-section-media .hub-media-item img,
 .hub-section-media .hub-media-item video { max-height: 320px; }
@@ -2167,6 +2170,12 @@ body.admin-mode .hub-section-actions { display: flex; }
     border-radius: 12px;
     box-shadow: none;
   }
+   .hub-section-media .hub-media-grid {
+  margin-left: -16px;
+  margin-right: -16px;
+  width: calc(100% + 32px);
+  gap: 0;
+}
   .hub-section-media .hub-media-item img,
   .hub-section-media .hub-media-item video { max-height: 260px; }
   .hub-wa-btn { width: auto; max-width: 180px; padding: 9px 16px; font-size: 0.78rem; }
@@ -2175,7 +2184,13 @@ body.admin-mode .hub-section-actions { display: flex; }
   .hub-section-actions .hub-action-btn { width: 30px; height: 30px; font-size: 0.8rem; }
 }
 @media (min-width: 768px) {
-  .hub-section-media .hub-media-grid { grid-template-columns: 1fr 1fr; }
+  .hub-section-media .hub-media-grid {
+    grid-template-columns: 1fr 1fr;
+    margin-left: -28px;
+    margin-right: -28px;
+    width: calc(100% + 56px);
+  }
+}
 }
 
 /* HUB MEDIA — PREMIUM CAPTION */
