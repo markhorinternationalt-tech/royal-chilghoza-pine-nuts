@@ -2439,6 +2439,139 @@ body.admin-mode .hub-section-actions { display: flex; }
   }
 }
 /* =========================================================
+   [FLAT & EDGE-TO-EDGE FIX] — کوئی گولائی نہیں، کوئی فریم نہیں
+   تصویر کے کونے فلیٹ، Hub/Gallery edge-to-edge، بٹن چھوٹا 3D
+   ========================================================= */
+
+/* ---------- 1. HUB PAGE — مکمل چوڑا کریں (20px gap ختم) ---------- */
+.hub-sections-page {
+  width: 100% !important;
+  padding: 20px 0 120px !important;
+  gap: 32px !important;
+}
+
+/* ---------- 2. HUB CARD — فلیٹ کونے، کوئی فریم نہیں ---------- */
+.hub-section {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ---------- 3. HUB MEDIA — تصویر بالکل کنارے تک ---------- */
+.hub-section-media {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+}
+
+.hub-section-media .hub-media-grid {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  gap: 0 !important;
+}
+
+.hub-section-media .hub-media-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+}
+
+.hub-section-media .hub-media-item a {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.hub-section-media .hub-media-item img,
+.hub-section-media .hub-media-item video {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+}
+
+/* ---------- 4. GALLERY — تمام کونے فلیٹ (اوپر والی گولائی بھی) ---------- */
+.gallery-item {
+  border-radius: 0 !important;
+}
+.gallery-item img {
+  border-radius: 0 !important;
+}
+
+/* ---------- 5. WhatsApp بٹن — چھوٹا + زیادہ 3D ---------- */
+.hub-wa-btn {
+  padding: 8px 15px !important;
+  font-size: 0.75rem !important;
+  gap: 6px !important;
+  border-radius: 7px !important;
+  max-width: 155px !important;
+  font-weight: 700 !important;
+  background: linear-gradient(180deg, #ffe89a 0%, #f2d77a 20%, #d4af37 55%, #b8941f 80%, #8b6b14 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 2px 3px rgba(0, 0, 0, 0.55),
+    0 6px 16px rgba(212, 175, 55, 0.55),
+    0 12px 32px rgba(212, 175, 55, 0.35) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+.hub-wa-btn::after {
+  font-size: 0.9em !important;
+}
+
+.hub-wa-btn:hover {
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 4px 10px rgba(212, 175, 55, 0.7),
+    0 16px 40px rgba(212, 175, 55, 0.55) !important;
+}
+
+/* ---------- 6. موبائل — مزید چھوٹا ---------- */
+@media (max-width: 620px) {
+  .hub-sections-page {
+    gap: 22px !important;
+    padding: 16px 0 80px !important;
+  }
+  .hub-wa-btn {
+    padding: 7px 13px !important;
+    font-size: 0.72rem !important;
+    max-width: 140px !important;
+    border-radius: 6px !important;
+  }
+  .hub-wa-btn::after {
+    font-size: 0.85em !important;
+  }
+}
+
+/* ---------- 7. Footer اور header کی padding بھی کم (تاکہ کارڈ نہ کٹے) ---------- */
+.hub-section-header {
+  padding: 56px 20px 14px !important;
+}
+.hub-section-footer {
+  padding: 0 20px 20px !important;
+}
+
+@media (max-width: 620px) {
+  .hub-section-header {
+    padding: 50px 14px 12px !important;
+  }
+  .hub-section-footer {
+    padding: 0 14px 18px !important;
+  }
+}
+/* =========================================================
    END OF FILE — Royal Chilghoza Pine Nuts
    Fix Pack v1 (Integrated): Gallery frame + Hub media + Office straight + Hub 3D + WA button
    ========================================================= */
