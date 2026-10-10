@@ -2964,6 +2964,33 @@ async function loadVisitStats() {
     }
   }, { passive: false });
 })();
+/* =========================================================
+   HUB MEDIA LIGHTBOX — Gallery جیسا (Hub images پر کلک سے lightbox)
+========================================================= */
+document.addEventListener("click", (e) => {
+  const mediaItem = e.target.closest(".hub-media-item");
+  if (!mediaItem) return;
+  if (e.target.closest("[data-media-delete], [data-media-edit]")) return;
+  
+  const src = mediaItem.dataset.lightboxSrc;
+  const alt = mediaItem.dataset.lightboxAlt || "";
+  if (!src) return;
+  
+  e.preventDefault();
+  
+  const lightbox = document.getElementById("galleryLightbox");
+  const img = document.getElementById("lightboxImage");
+  const zoomLevel = document.getElementById("zoomLevel");
+  if (!lightbox || !img) return;
+  
+  img.src = src;
+  img.alt = alt;
+  img.style.transform = "translate(0px, 0px) scale(1)";
+  if (zoomLevel) zoomLevel.textContent = "100%";
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("lightbox-open");
+});
 
 /* =========================================================
    SEO HUB ROUTES — Auto-open hub from URL
