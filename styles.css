@@ -2366,7 +2366,78 @@ body.admin-mode .hub-section-actions { display: flex; }
   .review-card::before { font-size: 4rem; right: 18px; }
   .review-text { font-size: 0.95rem; }
 }
+/* =========================================================
+   [DEFINITIVE FIX] Hub Media — edge-to-edge
+   perspective + overflow + border-radius کا conflict حل
+   ========================================================= */
 
+/* 1. .hub-section سے perspective ہٹا دیں — یہی فریم کا سبب ہے */
+.hub-section {
+  perspective: none !important;
+}
+
+/* 2. media کو زبردستی کارڈ کے کنارے تک لائیں */
+.hub-section-media {
+  margin: 0 -28px !important;
+  padding: 0 !important;
+  width: calc(100% + 56px) !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+/* 3. grid اور item سے ہر قسم کا gap/padding ہٹائیں */
+.hub-section-media .hub-media-grid {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  gap: 0 !important;
+}
+
+.hub-section-media .hub-media-item {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+/* 4. img/video کو pixel-perfect edge-to-edge بنائیں */
+.hub-section-media .hub-media-item img,
+.hub-section-media .hub-media-item video {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  object-fit: cover !important;
+  vertical-align: bottom !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+}
+
+/* 5. تمام intermediate elements سے gap ہٹائیں */
+.hub-section-media .hub-media-item a,
+.hub-section-media .hub-media-item figure,
+.hub-section-media .hub-media-item picture {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+}
+
+/* 6. موبائل MQ میں بھی یہی اصول */
+@media (max-width: 620px) {
+  .hub-section-media {
+    margin: 0 -16px !important;
+    width: calc(100% + 32px) !important;
+  }
+}
 /* =========================================================
    END OF FILE — Royal Chilghoza Pine Nuts
    Fix Pack v1 (Integrated): Gallery frame + Hub media + Office straight + Hub 3D + WA button
