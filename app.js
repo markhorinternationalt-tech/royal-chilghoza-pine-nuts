@@ -1617,14 +1617,14 @@ async function renderHubSectionMedia(type, index) {
       const caption = m.name ? `<div class="hub-media-caption">${escapeHtml(m.name).replace(/\n/g, '<br>')}</div>` : "";
 
       return `
-        <div class="hub-media-item">
-          <a href="${cloudinaryOptimize(m.url, 1920, 2400)}" target="_blank" rel="noopener">
-            ${preview}
-          </a>
-          ${caption}
-          ${adminBtns}
-        </div>
-      `;
+  <div class="hub-media-item" 
+       data-lightbox-src="${cloudinaryOptimize(m.url, 1920, 2400)}" 
+       data-lightbox-alt="${escapeHtml(m.name || '')}">
+    ${preview}
+    ${caption}
+    ${adminBtns}
+  </div>
+`;
     }).join("");
 
     container.innerHTML = uploadBtn + `<div class="hub-media-grid">${items}</div>`;
