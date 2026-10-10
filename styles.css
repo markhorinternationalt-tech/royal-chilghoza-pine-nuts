@@ -2209,7 +2209,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   line-height: 1.6;
   letter-spacing: 0.02em;
   color: var(--caption-text-color);
-  text-align: center;
+  text-align: start;
   background: transparent;
   border-top: none;
   border-radius: 0;
