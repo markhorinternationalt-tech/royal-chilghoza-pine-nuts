@@ -2040,11 +2040,12 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 .hub-section-media {
   position: relative;
   z-index: 2;
-  margin: 0;
+   /* [FINAL FIX] Break out from .hub-section-header padding — edge-to-edge media */
+  margin: 0 -28px;
   padding: 0;
   border: none;
   background: transparent;
-  width: 100%;
+  width: calc(100% + 56px);
   transition: background 0.3s ease;
 }
 .hub-section-media .hubMediaUploadBtn { width: 100%; margin-bottom: 18px; }
