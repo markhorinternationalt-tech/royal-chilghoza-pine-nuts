@@ -2366,12 +2366,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   .review-card::before { font-size: 4rem; right: 18px; }
   .review-text { font-size: 0.95rem; }
 }
-/* DEBUG — temporary, remove after diagnosis */
-.hub-section-media { outline: 3px solid red !important; }
-.hub-section-media .hub-media-grid { outline: 3px solid blue !important; }
-.hub-section-media .hub-media-item { outline: 3px solid yellow !important; }
-.hub-section-media .hub-media-item img,
-.hub-section-media .hub-media-item video { outline: 3px solid lime !important; }
+
 /* =========================================================
    END OF FILE — Royal Chilghoza Pine Nuts
    Fix Pack v1 (Integrated): Gallery frame + Hub media + Office straight + Hub 3D + WA button
