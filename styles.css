@@ -2367,125 +2367,54 @@ body.admin-mode .hub-section-actions { display: flex; }
   .review-text { font-size: 0.95rem; }
 }
 /* =========================================================
-   [DEFINITIVE FIX] Hub Media — edge-to-edge
-   perspective + overflow + border-radius کا conflict حل
+   [FINAL CLEAN] — Flat corners + Edge-to-edge media + Padded button & caption
    ========================================================= */
 
-/* 1. .hub-section سے perspective ہٹا دیں — یہی فریم کا سبب ہے */
+/* --- Bug fixes --- */
 .hub-section {
   perspective: none !important;
+  will-change: auto !important;
 }
 
-/* 2. media کو زبردستی کارڈ کے کنارے تک لائیں */
-.hub-section-media {
-  margin: 0 -28px !important;
-  padding: 0 !important;
-  width: calc(100% + 56px) !important;
-  border-radius: 0 !important;
-  overflow: visible !important;
-}
-
-/* 3. grid اور item سے ہر قسم کا gap/padding ہٹائیں */
-.hub-section-media .hub-media-grid {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  gap: 0 !important;
-}
-
-.hub-section-media .hub-media-item {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  border-radius: 0 !important;
-  overflow: hidden !important;
-}
-
-/* 4. img/video کو pixel-perfect edge-to-edge بنائیں */
-.hub-section-media .hub-media-item img,
-.hub-section-media .hub-media-item video {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  object-fit: cover !important;
-  vertical-align: bottom !important;
-  line-height: 0 !important;
-  font-size: 0 !important;
-}
-
-/* 5. تمام intermediate elements سے gap ہٹائیں */
-.hub-section-media .hub-media-item a,
-.hub-section-media .hub-media-item figure,
-.hub-section-media .hub-media-item picture {
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  line-height: 0 !important;
-  font-size: 0 !important;
-}
-
-/* 6. موبائل MQ میں بھی یہی اصول */
-@media (max-width: 620px) {
-  .hub-section-media {
-    margin: 0 -16px !important;
-    width: calc(100% + 32px) !important;
-  }
-}
-/* =========================================================
-   [FLAT & EDGE-TO-EDGE FIX] — کوئی گولائی نہیں، کوئی فریم نہیں
-   تصویر کے کونے فلیٹ، Hub/Gallery edge-to-edge، بٹن چھوٹا 3D
-   ========================================================= */
-
-/* ---------- 1. HUB PAGE — مکمل چوڑا کریں (20px gap ختم) ---------- */
+/* --- Hub page full width --- */
 .hub-sections-page {
   width: 100% !important;
   padding: 20px 0 120px !important;
   gap: 32px !important;
 }
 
-/* ---------- 2. HUB CARD — فلیٹ کونے، کوئی فریم نہیں ---------- */
+/* --- Hub card flat --- */
 .hub-section {
   margin: 0 !important;
   border-radius: 0 !important;
   overflow: hidden !important;
 }
 
-/* ---------- 3. HUB MEDIA — تصویر بالکل کنارے تک ---------- */
+/* --- Hub media edge-to-edge --- */
 .hub-section-media {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
   border-radius: 0 !important;
 }
-
 .hub-section-media .hub-media-grid {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
   gap: 0 !important;
 }
-
 .hub-section-media .hub-media-item {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
   border-radius: 0 !important;
 }
-
 .hub-section-media .hub-media-item a {
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
   border-radius: 0 !important;
 }
-
 .hub-section-media .hub-media-item img,
 .hub-section-media .hub-media-item video {
   display: block !important;
@@ -2499,15 +2428,28 @@ body.admin-mode .hub-section-actions { display: flex; }
   outline: 0 !important;
 }
 
-/* ---------- 4. GALLERY — تمام کونے فلیٹ (اوپر والی گولائی بھی) ---------- */
-.gallery-item {
-  border-radius: 0 !important;
+/* --- Header: 👑 + HUB number + title: سائیڈ padding 20px --- */
+.hub-section-header {
+  padding: 56px 20px 14px !important;
 }
+
+/* --- Footer (WhatsApp button): سائیڈ padding 20px — edge-to-edge نہیں --- */
+.hub-section-footer {
+  padding: 0 20px 20px !important;
+}
+
+/* --- Caption: سائیڈ padding 28px — کنارے سے نہ چپکے --- */
+.hub-media-caption {
+  padding: 20px 28px 0 !important;
+}
+
+/* --- Gallery flat corners --- */
+.gallery-item,
 .gallery-item img {
   border-radius: 0 !important;
 }
 
-/* ---------- 5. WhatsApp بٹن — چھوٹا + زیادہ 3D ---------- */
+/* --- WhatsApp button: چھوٹا + مضبوط 3D --- */
 .hub-wa-btn {
   padding: 8px 15px !important;
   font-size: 0.75rem !important;
@@ -2524,11 +2466,9 @@ body.admin-mode .hub-section-actions { display: flex; }
     0 12px 32px rgba(212, 175, 55, 0.35) !important;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) !important;
 }
-
 .hub-wa-btn::after {
   font-size: 0.9em !important;
 }
-
 .hub-wa-btn:hover {
   transform: translateY(-2px) scale(1.03) !important;
   box-shadow:
@@ -2538,11 +2478,20 @@ body.admin-mode .hub-section-actions { display: flex; }
     0 16px 40px rgba(212, 175, 55, 0.55) !important;
 }
 
-/* ---------- 6. موبائل — مزید چھوٹا ---------- */
+/* --- Mobile --- */
 @media (max-width: 620px) {
   .hub-sections-page {
     gap: 22px !important;
     padding: 16px 0 80px !important;
+  }
+  .hub-section-header {
+    padding: 50px 14px 12px !important;
+  }
+  .hub-section-footer {
+    padding: 0 16px 18px !important;
+  }
+  .hub-media-caption {
+    padding: 16px 20px 0 !important;
   }
   .hub-wa-btn {
     padding: 7px 13px !important;
@@ -2552,23 +2501,6 @@ body.admin-mode .hub-section-actions { display: flex; }
   }
   .hub-wa-btn::after {
     font-size: 0.85em !important;
-  }
-}
-
-/* ---------- 7. Footer اور header کی padding بھی کم (تاکہ کارڈ نہ کٹے) ---------- */
-.hub-section-header {
-  padding: 56px 20px 14px !important;
-}
-.hub-section-footer {
-  padding: 0 20px 20px !important;
-}
-
-@media (max-width: 620px) {
-  .hub-section-header {
-    padding: 50px 14px 12px !important;
-  }
-  .hub-section-footer {
-    padding: 0 14px 18px !important;
   }
 }
 /* =========================================================
