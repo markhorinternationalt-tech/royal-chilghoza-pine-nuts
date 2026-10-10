@@ -1618,7 +1618,7 @@ async function renderHubSectionMedia(type, index) {
 
       return `
   <div class="hub-media-item" 
-       data-lightbox-src="${cloudinaryOptimize(m.url, 1920, 2400)}" 
+       data-lightbox-src="${cloudinaryOptimize(m.url, 1600, 2000, 'limit')}"
        data-lightbox-alt="${escapeHtml(m.name || '')}">
     ${preview}
     ${caption}
