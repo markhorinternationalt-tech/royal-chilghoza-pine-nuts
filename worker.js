@@ -504,7 +504,7 @@ if (isBot(request)) {
 // =========================================================
 if (url.pathname === "/sitemap.xml") {
   try {
-    const base = "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev";
+    const base = "https://chilgozapinenuts.com";
     const today = new Date().toISOString().split("T")[0];
 
     // ✅ تمام گیٹ ویز لاؤ (trade + research + KV سے)
@@ -731,7 +731,7 @@ Allow: /
 # =========================================================
 # SITEMAP
 # =========================================================
-Sitemap: https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/sitemap.xml
+Sitemap: https://chilgozapinenuts.com/sitemap.xml
 `;
 
   return new Response(robotsTxt, {
@@ -1075,7 +1075,7 @@ description = gwDesc;
   }
 } catch (e) { /* ignore */ }
 
-const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}`;
+const fullUrl = `https://chilgozapinenuts.com/${gateway}`;
 
   // ✅ خودکار: KV سے hubs_data لے کر hubTitles اور hubSlugs بنائیں
   let hubTitles = [];
