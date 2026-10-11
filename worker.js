@@ -934,7 +934,7 @@ function isBot(request) {
 // =========================================================
 function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   const gatewayName = gateway === "trade" ? "Global Trade" : "Research & Knowledge";
-  const fullUrl = `https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/${gateway}/${slug}`;
+  const fullUrl = `https://chilgozapinenuts.com/${gateway}/${slug}`;
 
   let mediaHtml = "";
   let jsonLdImages = [];
@@ -965,14 +965,14 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     "isPartOf": {
       "@type": "WebSite",
       "name": "Royal Chilghoza Pine Nuts",
-      "url": "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/"
+      "url": "https://chilgozapinenuts.com/"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Royal Chilghoza Pine Nuts",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://royal-chilghoza-pine-nuts.markhor-international-t.workers.dev/royal-profile-pic.jpg"
+        "url": "https://chilgozapinenuts.com/royal-profile-pic.jpg"
       }
     }
   };
