@@ -11,6 +11,13 @@ const RATE_LIMIT_WINDOW = 3600;
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // ✅ پرانے workers.dev سے نیئے ڈومین پر permanent redirect
+    if (url.hostname === "royal-chilghoza-pine-nuts.markhor-international-t.workers.dev") {
+      const newUrl = `https://chilgozapinenuts.com${url.pathname}${url.search}`;
+      return Response.redirect(newUrl, 301);
+    }
+
     const cors = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
