@@ -562,13 +562,20 @@ if (url.pathname === "/sitemap.xml") {
 
       let hubSlugs = [];
 
-      if (hubsData && hubsData.en && Array.isArray(hubsData.en[gw])) {
-        hubSlugs = hubsData.en[gw].map(([title]) => makeSlug(title)).filter(Boolean);
-      }
+      // ✅ پہلے hub_slugs KV سے لاؤ (routing کی طرح — SHORT slugs)
+let SITEMAP_HUB_SLUGS_MAP = null;
+try {
+  const kvSlugsRaw = await env.ROYAL_KV.get("hub_slugs");
+  if (kvSlugsRaw) SITEMAP_HUB_SLUGS_MAP = JSON.parse(kvSlugsRaw);
+} catch (e) { /* ignore */ }
 
-      if (hubSlugs.length === 0) {
-        if (gw === "trade") hubSlugs = fallbackTrade;
-        else if (gw === "research") hubSlugs = fallbackResearch;
+if (SITEMAP_HUB_SLUGS_MAP && SITEMAP_HUB_SLUGS_MAP[gw]) {
+  hubSlugs = SITEMAP_HUB_SLUGS_MAP[gw];
+} else if (gw === "trade") {
+  hubSlugs = fallbackTrade;
+} else if (gw === "research") {
+  hubSlugs = fallbackResearch;
+}
       }
 
       for (const hubSlug of hubSlugs) {
