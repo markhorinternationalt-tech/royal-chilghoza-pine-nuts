@@ -576,7 +576,6 @@ if (SITEMAP_HUB_SLUGS_MAP && SITEMAP_HUB_SLUGS_MAP[gw]) {
 } else if (gw === "research") {
   hubSlugs = fallbackResearch;
 }
-      }
 
       for (const hubSlug of hubSlugs) {
         xml += `  <url><loc>${base}/${gw}/${hubSlug}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
