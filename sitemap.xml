@@ -8,141 +8,44 @@
     <priority>1.0</priority>
   </url>
 
-<!-- GLOBAL TRADE GATEWAY -->
-<url>
-  <loc>https://chilgozapinenuts.com/trade</loc>
-  <lastmod>2026-10-11</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.95</priority>
-</url>
-
-<!-- RESEARCH & KNOWLEDGE GATEWAY -->
-<url>
-  <loc>https://chilgozapinenuts.com/research</loc>
-  <lastmod>2026-10-11</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.95</priority>
-</url>
+  <!-- GLOBAL TRADE GATEWAY -->
   <url>
-    <loc>https://chilgozapinenuts.com/trade/global-markets</loc>
+    <loc>https://chilgozapinenuts.com/trade</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/usa-market</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/china-market</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/export-logistics</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/product-quality</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/supply-chain</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/gi-indication</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/organic-chemistry</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/processing-packaging</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/trade/sustainable-trade</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
 
+  <!-- RESEARCH & KNOWLEDGE GATEWAY -->
   <url>
-    <loc>https://chilgozapinenuts.com/research/geographical-origin</loc>
+    <loc>https://chilgozapinenuts.com/research</loc>
     <lastmod>2026-10-11</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
   </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/biology-botany</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/nutrition-value</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/forests-ecology</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/biodiversity-wildlife</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/climate-environment</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/forest-conservation</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/supply-chain-livelihoods</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/sustainable-harvesting</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://chilgozapinenuts.com/research/research-policy</loc>
-    <lastmod>2026-10-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+
+  <!-- TRADE HUBS -->
+  <url><loc>https://chilgozapinenuts.com/trade/global-markets</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/usa-market</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/china-market</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/export-logistics</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/product-quality</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/supply-chain</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/gi-indication</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/organic-chemistry</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/processing-packaging</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/trade/sustainable-trade</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
+  <!-- RESEARCH HUBS -->
+  <url><loc>https://chilgozapinenuts.com/research/geographical-origin</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/biology-botany</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/nutrition-value</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/forests-ecology</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/biodiversity-wildlife</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/climate-environment</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/forest-conservation</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/supply-chain-livelihoods</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/sustainable-harvesting</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chilgozapinenuts.com/research/research-policy</loc><lastmod>2026-10-11</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 
 </urlset>
