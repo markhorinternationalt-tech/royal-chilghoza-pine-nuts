@@ -1221,6 +1221,101 @@ const fullUrl = `https://chilgozapinenuts.com/${gateway}`;
     `<div class="hub-card"><h2>${title}</h2><a href="/${gateway}/${hubSlugs[i]}">Open Hub →</a></div>`
   ).join("");
 
+  // ═══════════════════════════════════════════════════════
+// ORGANIZATION SCHEMA — Company identity
+// ═══════════════════════════════════════════════════════
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Royal Chilghoza Pine Nuts",
+  "legalName": "Markhor Global SMC Pvt Ltd",
+  "url": "https://chilgozapinenuts.com",
+  "logo": "https://chilgozapinenuts.com/royal-profile-pic.jpg",
+  "description": "Premium Chilghoza Pine Nuts from Chilas, Gilgit-Baltistan, Pakistan. Hand-harvested from wild Himalayan forests, graded to Grade A standards, and exported worldwide.",
+  "foundingLocation": {
+    "@type": "Place",
+    "name": "Chilas, Gilgit-Baltistan, Pakistan"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+92-333-6665688",
+      "contactType": "sales",
+      "areaServed": ["PK", "US", "CN", "HK", "DE", "AE", "SA", "GB"],
+      "availableLanguage": ["en", "ur", "zh", "ar"]
+    },
+    {
+      "@type": "ContactPoint",
+      "telephone": "+86-185-8223-5544",
+      "contactType": "sales",
+      "areaServed": "CN",
+      "availableLanguage": ["zh", "en"]
+    }
+  ],
+  "sameAs": [
+    "https://wa.me/923336665688"
+  ]
+};
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Royal Chilghoza Pine Nuts — Global Offices",
+  "itemListElement": [
+    {
+      "@type": "LocalBusiness",
+      "name": "Royal Chilghoza Pine Nuts — Headquarters & Native Origin",
+      "description": "Headquarters at the native origin of Chilghoza Pine Nuts",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Office No. 0010, New Adda, Airport Road",
+        "addressLocality": "Chilas",
+        "addressRegion": "Gilgit-Baltistan",
+        "postalCode": "14100",
+        "addressCountry": "PK"
+      },
+      "telephone": "+92-333-6665688"
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Royal Chilghoza Pine Nuts — Regional Operations Hub",
+      "description": "Pine Nut Market collection point",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Office No. 50, 2nd Floor, Shaheedano Market",
+        "addressLocality": "Khost City",
+        "addressRegion": "Khost Province",
+        "addressCountry": "AF"
+      },
+      "telephone": "+93-77-266-0467"
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Royal Chilghoza Pine Nuts — Federal & Trade Desk",
+      "description": "Export documentation and trade desk",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Main Office: Office No. 1107, 11th Floor, Mall of Islamabad, Blue Area",
+        "addressLocality": "Islamabad",
+        "addressCountry": "PK"
+      },
+      "telephone": "+92-315-288-8829"
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "Royal Chilghoza Pine Nuts — International Trade Desk",
+      "description": "China distribution and international trade",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Room 1904-2, 19th Floor, Building 1, Baoli International Building, Anchang Street, Keqiao District",
+        "addressLocality": "Shaoxing City",
+        "addressRegion": "Zhejiang Province",
+        "addressCountry": "CN"
+      },
+      "telephone": "+86-185-8223-5544"
+    }
+  ]
+};
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
