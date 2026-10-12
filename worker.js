@@ -988,17 +988,33 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     "logo": "https://chilgozapinenuts.com/royal-profile-pic.jpg"
   },
   "offers": {
-    "@type": "Offer",
-    "url": fullUrl,
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "itemCondition": "https://schema.org/NewCondition",
-    "areaServed": ["US", "CN", "HK", "DE", "AE", "SA", "GB", "PK"],
-    "seller": {
-      "@type": "Organization",
-      "name": "Royal Chilghoza Pine Nuts"
-    }
+  "@type": "AggregateOffer",
+  "url": fullUrl,
+  "priceCurrency": "USD",
+  "lowPrice": "20",
+  "highPrice": "45",
+  "offerCount": "4",
+  "availability": "https://schema.org/InStock",
+  "itemCondition": "https://schema.org/NewCondition",
+  "areaServed": ["US", "CN", "HK", "DE", "AE", "SA", "GB", "PK"],
+  "seller": {
+    "@type": "Organization",
+    "name": "Royal Chilghoza Pine Nuts"
+  }
+},
+"review": {
+  "@type": "Review",
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "5",
+    "bestRating": "5"
   },
+  "author": {
+    "@type": "Person",
+    "name": "International Buyer"
+  },
+  "reviewBody": "Premium quality Chilghoza Pine Nuts from Chilas — excellent for export."
+},
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
