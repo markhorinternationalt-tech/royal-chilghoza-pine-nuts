@@ -2971,7 +2971,7 @@ document.addEventListener("click", (e) => {
   const mediaItem = e.target.closest(".hub-media-item");
   if (!mediaItem) return;
   if (e.target.closest("[data-media-delete], [data-media-edit]")) return;
-  if (e.target.closest("figcaption")) return;
+  if (e.target.closest("figcaption, .hub-media-caption")) return;
   
   const src = mediaItem.dataset.lightboxSrc;
   const alt = mediaItem.dataset.lightboxAlt || "";
