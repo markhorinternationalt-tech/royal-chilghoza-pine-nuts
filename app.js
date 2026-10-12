@@ -828,6 +828,29 @@ function setLanguage(lang) {
   sessionStorage.setItem("royalLanguage", lang);
   applyLanguage();
 }
+/* =========================================================
+   GALLERY FONTS LOADER — 5 Google Fonts for Headlines
+   (dynamically loads only when needed — SEO safe)
+========================================================= */
+let galleryFontsLoaded = false;
+function loadGalleryFonts() {
+  if (galleryFontsLoaded) return;
+  galleryFontsLoaded = true;
+
+  const fonts = [
+    "Playfair+Display:ital,wght@0,500;0,700;1,500",
+    "Cormorant+Garamond:wght@500;600;700",
+    "Cinzel:wght@500;600;700",
+    "Montserrat:wght@600;700;800",
+    "Oswald:wght@500;600;700"
+  ].join("&family=");
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = `https://fonts.googleapis.com/css2?family=${fonts}&display=swap`;
+  link.crossOrigin = "anonymous";
+  document.head.appendChild(link);
+}
 
 function renderGallery() {
   const grid = document.getElementById("galleryGrid");
