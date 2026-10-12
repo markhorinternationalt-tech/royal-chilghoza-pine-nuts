@@ -1047,6 +1047,62 @@ const articleSchema = {
     }
   }
 };
+
+  const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where do Chilghoza Pine Nuts come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Chilghoza Pine Nuts come from the wild forests of Chilas, District Diamer, Gilgit-Baltistan, Pakistan. Our headquarters is at the native origin in Chilas, where local mountain families harvest the cones by hand from the Himalayan forests."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What makes Royal Chilghoza Pine Nuts premium quality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Royal Chilghoza Pine Nuts are hand-harvested from wild Himalayan forests, naturally sun-dried without chemicals, and graded to Grade A and Grade B export standards. Every kernel is carefully extracted by traditional methods passed down through generations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I buy Chilghoza Pine Nuts in bulk for export?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Contact our trade desk via WhatsApp at +92 333 6665688 or through our International Trade Desk in Shaoxing, China (+86 185 8223 5544). We ship worldwide by sea, air, or road via the Khunjerab Pass."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What grades of Chilghoza Pine Nuts are available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We offer Grade A (larger premium kernels for direct export), Grade B (medium premium), Grade C and Grade D (smaller kernels sent to shelling centres). All grades are 100% natural, organic, and chemical-free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where are Royal Chilghoza Pine Nuts offices located?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We have 4 global offices: Headquarters in Chilas (Gilgit-Baltistan, Pakistan), Regional Operations Hub in Khost City (Afghanistan), Federal Trade Desk in Islamabad (Pakistan), and International Trade Desk in Shaoxing (Zhejiang, China)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Royal Chilghoza Pine Nuts organic and natural?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our Chilghoza Pine Nuts are 100% organic, hand-harvested from wild Himalayan forests, sun-dried naturally in the open air without any chemicals or artificial processing, preserving the authentic buttery flavour and creamy texture."
+      }
+    }
+  ]
+};
+
 if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
 
   return `<!DOCTYPE html>
