@@ -1007,6 +1007,32 @@ async function moveGalleryItem(index, direction) {
   }
 }
 /* =========================================================
+   RENDER: GALLERY CREATE BUTTON (Admin Only)
+========================================================= */
+function renderGalleryCreateButton() {
+  const grid = document.getElementById("galleryGrid");
+  if (!grid) return;
+  
+  const oldBtn = document.getElementById("createGalleryBtn");
+  if (oldBtn) oldBtn.remove();
+  
+  if (!state.admin) return;
+  
+  const btn = document.createElement("button");
+  btn.id = "createGalleryBtn";
+  btn.type = "button";
+  btn.className = "gallery-create-btn";
+  btn.innerHTML = `
+    <span>➕</span>
+    <b>Create New Gallery Item</b>
+    <small>Add image, video, or PDF to the gallery</small>
+  `;
+  btn.onclick = createGalleryItem;
+  
+  // Grid کے اوپر insert کریں
+  grid.parentNode.insertBefore(btn, grid);
+}
+/* =========================================================
    RENDER GATEWAYS — Main Page Dynamic
 ========================================================= */
 
