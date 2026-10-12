@@ -974,6 +974,25 @@ function createGalleryItem() {
   );
 }
 /* =========================================================
+   DELETE: GALLERY ITEM
+========================================================= */
+async function deleteGalleryItem(index) {
+  const item = galleryItems[index];
+  if (!item) return;
+  const type = item[2] || "image";
+  const cap = item[1] || "item";
+  
+  if (!confirm(`🗑 Delete this ${type}?\n\n"${cap}"\n\nThis action cannot be undone.`)) return;
+  
+  galleryItems.splice(index, 1);
+  const ok = await saveToKV("gallery_data", galleryItems);
+  if (ok) {
+    renderGallery();
+  } else {
+    alert("❌ Delete failed.");
+  }
+}
+/* =========================================================
    RENDER GATEWAYS — Main Page Dynamic
 ========================================================= */
 
