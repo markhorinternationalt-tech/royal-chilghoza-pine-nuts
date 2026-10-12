@@ -873,6 +873,107 @@ function renderGallery() {
 }
 
 /* =========================================================
+   CREATE: NEW GALLERY ITEM
+========================================================= */
+function createGalleryItem() {
+  openEditModal(
+    "👑 Add New Gallery Item",
+    `
+    <label>Upload File (Image / Video / PDF):</label>
+    <input type="file" id="newGalleryFile" accept="image/*,video/*,application/pdf">
+    
+    <label>OR Paste URL:</label>
+    <input type="text" id="newGalleryUrl" placeholder="https://..." value="">
+    
+    <label style="margin-top:18px;">HEADLINE (bold, above caption):</label>
+    <input type="text" id="newGalleryHeadline" placeholder="Enter headline...">
+    
+    <label>Headline Font:</label>
+    <select id="newGalleryFont">
+      <option value="'Playfair Display', serif">Playfair Display (Classic)</option>
+      <option value="'Cormorant Garamond', serif">Cormorant Garamond (Elegant)</option>
+      <option value="'Cinzel', serif">Cinzel (Roman)</option>
+      <option value="'Montserrat', sans-serif">Montserrat (Bold)</option>
+      <option value="'Oswald', sans-serif">Oswald (Strong)</option>
+    </select>
+    
+    <label>Headline Size:</label>
+    <select id="newGallerySize">
+      <option value="14px">S — Small (14px)</option>
+      <option value="18px" selected>M — Medium (18px)</option>
+      <option value="22px">L — Large (22px)</option>
+      <option value="28px">XL — Extra Large (28px)</option>
+      <option value="34px">XXL — Huge (34px)</option>
+    </select>
+    
+    <label>Headline Background Color:</label>
+    <input type="color" id="newGalleryBg" value="#d4af37" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label>Headline Text Color:</label>
+    <input type="color" id="newGalleryColor" value="#0a1810" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px;">CAPTION (below headline):</label>
+    <textarea id="newGalleryCap" rows="2" placeholder="Write caption here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
+    `,
+    async () => {
+      const fileInput = document.getElementById("newGalleryFile");
+      const urlInput = document.getElementById("newGalleryUrl");
+      const headInput = document.getElementById("newGalleryHeadline");
+      const fontInput = document.getElementById("newGalleryFont");
+      const sizeInput = document.getElementById("newGallerySize");
+      const bgInput = document.getElementById("newGalleryBg");
+      const colorInput = document.getElementById("newGalleryColor");
+      const capInput = document.getElementById("newGalleryCap");
+      
+      const headline = headInput.value.trim();
+      const cap = capInput.value.trim();
+      let src = urlInput.value.trim();
+      let type = "image";
+      
+      if (!cap) { setEditStatus("❌ Caption required", "error"); return; }
+      
+      if (fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        if (["mp4", "webm", "mov", "avi"].includes(ext)) type = "video";
+        else if (["pdf"].includes(ext)) type = "pdf";
+        else type = "image";
+        
+        setEditStatus("Uploading...", "");
+        const uploadedUrl = await uploadToCloudinary(file, "gallery");
+        if (uploadedUrl) src = uploadedUrl;
+        else { setEditStatus("❌ Upload failed", "error"); return; }
+      }
+      
+      if (!src) { setEditStatus("❌ No file or URL provided", "error"); return; }
+      
+      setEditStatus("Saving...", "");
+      const newItem = [
+        src,
+        cap,
+        type,
+        headline,
+        {
+          font: fontInput.value,
+          size: sizeInput.value,
+          bg: bgInput.value,
+          color: colorInput.value
+        }
+      ];
+      galleryItems.push(newItem);
+      const ok = await saveToKV("gallery_data", galleryItems);
+      
+      if (ok) {
+        renderGallery();
+        setEditStatus("✅ Gallery item added!", "success");
+        setTimeout(closeEditModal, 1000);
+      } else {
+        setEditStatus("❌ Save failed", "error");
+      }
+    }
+  );
+}
+/* =========================================================
    RENDER GATEWAYS — Main Page Dynamic
 ========================================================= */
 
