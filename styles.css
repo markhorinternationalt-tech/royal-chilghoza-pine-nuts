@@ -2503,6 +2503,184 @@ body.admin-mode .hub-section-actions { display: flex; }
     font-size: 0.85em !important;
   }
 }
+
+/* =========================================================
+   GALLERY UPGRADE — Headline + Admin Buttons + Create Button
+   (Added: Gallery CRUD feature — mirrors existing patterns)
+========================================================= */
+
+/* --- Media wrapper — edge-to-edge, 4:5, no frame --- */
+.gallery-item-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #000;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.gallery-item-media img,
+.gallery-item-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto !important;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- PDF preview --- */
+.gallery-pdf-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a2f1e, #062015);
+  color: var(--cream);
+  cursor: pointer;
+}
+.gallery-pdf-preview span {
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--gold);
+  filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4));
+}
+.gallery-pdf-preview b {
+  font-family: var(--heading-font);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+}
+
+/* --- Headline — bold, colored box above caption --- */
+.gallery-headline {
+  display: block;
+  width: 100%;
+  padding: 12px 18px;
+  margin: 0;
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Admin buttons — top-right, mirrors hub-media-item-actions --- */
+.gallery-item-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  gap: 6px;
+  z-index: 20;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: calc(100% - 20px);
+}
+body.admin-mode .gallery-item-actions {
+  display: flex;
+}
+.gallery-item-actions .hub-action-btn {
+  width: 34px;
+  height: 34px;
+  font-size: 0.85rem;
+}
+
+/* --- Create button — mirrors .create-hub-btn look --- */
+.gallery-create-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 28px 22px;
+  margin: 12px 0 24px;
+  min-height: 180px;
+  border: 2px dashed rgba(212, 175, 55, 0.4);
+  border-radius: 20px;
+  background: rgba(212, 175, 55, 0.03);
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--body-font);
+  text-align: center;
+  box-sizing: border-box;
+}
+.gallery-create-btn:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+}
+.gallery-create-btn span {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--gold);
+}
+.gallery-create-btn b {
+  font-family: var(--heading-font);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+.gallery-create-btn small {
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+/* --- Mobile adjustments --- */
+@media (max-width: 620px) {
+  .gallery-item-actions {
+    top: 8px;
+    right: 8px;
+    gap: 5px;
+  }
+  .gallery-item-actions .hub-action-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+  .gallery-create-btn {
+    padding: 24px 18px;
+    min-height: 160px;
+    margin: 10px 0 20px;
+    border-radius: 16px;
+    /* Edge-to-edge with the gallery grid breakout */
+    margin-left: -16px;
+    margin-right: -16px;
+    width: calc(100% + 32px);
+  }
+  .gallery-create-btn b {
+    font-size: 1.05rem;
+  }
+  .gallery-create-btn span {
+    font-size: 1.8rem;
+  }
+  .gallery-headline {
+    padding: 10px 14px;
+  }
+}
 /* =========================================================
    END OF FILE — Royal Chilghoza Pine Nuts
    Fix Pack v1 (Integrated): Gallery frame + Hub media + Office straight + Hub 3D + WA button
