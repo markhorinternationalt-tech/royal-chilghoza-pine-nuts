@@ -2510,6 +2510,7 @@ function deactivateAdminUI() {
 ========================================================= */
 
 function init() {
+  loadGalleryFonts();
   // Check URL immediately - hide main page if not home
 const currentPath = window.location.pathname;
 if (currentPath !== "/" && currentPath !== "") {
