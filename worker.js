@@ -1120,6 +1120,7 @@ if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
   <meta property="og:type" content="article">
   <script type="application/ld+json">${JSON.stringify(productSchema)}</script>
 <script type="application/ld+json">${JSON.stringify(articleSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #03140a; color: #f5f1e8; line-height: 1.6; }
     .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
