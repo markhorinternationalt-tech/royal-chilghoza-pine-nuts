@@ -993,6 +993,20 @@ async function deleteGalleryItem(index) {
   }
 }
 /* =========================================================
+   MOVE: GALLERY ITEM (Up / Down)
+========================================================= */
+async function moveGalleryItem(index, direction) {
+  const newIndex = index + direction;
+  if (newIndex < 0 || newIndex >= galleryItems.length) return;
+  
+  [galleryItems[index], galleryItems[newIndex]] = [galleryItems[newIndex], galleryItems[index]];
+  
+  const ok = await saveToKV("gallery_data", galleryItems);
+  if (ok) {
+    renderGallery();
+  }
+}
+/* =========================================================
    RENDER GATEWAYS — Main Page Dynamic
 ========================================================= */
 
