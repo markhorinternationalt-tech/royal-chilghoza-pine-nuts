@@ -1329,6 +1329,8 @@ const localBusinessSchema = {
   <meta property="og:description" content="${description}">
   <meta property="og:url" content="${fullUrl}">
   <meta property="og:type" content="website">
+  <script type="application/ld+json">${JSON.stringify(organizationSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(localBusinessSchema)}</script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #03140a; color: #f5f1e8; line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
