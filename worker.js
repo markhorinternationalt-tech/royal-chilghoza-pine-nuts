@@ -966,30 +966,72 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
     mediaHtml = `<div class="media-section"><h2>Media & Documentation</h2>${mediaItems}</div>`;
   }
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": hubTitle,
-    "description": hubDesc,
+  const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Royal Chilghoza Pine Nuts",
+  "description": hubDesc,
+  "image": jsonLdImages.length > 0 ? jsonLdImages : ["https://chilgozapinenuts.com/royal-profile-pic.jpg"],
+  "brand": {
+    "@type": "Brand",
+    "name": "Royal Chilghoza Pine Nuts"
+  },
+  "category": "Chilghoza Pine Nuts",
+  "countryOfOrigin": {
+    "@type": "Country",
+    "name": "Pakistan"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "Markhor Global SMC Pvt Ltd",
+    "url": "https://chilgozapinenuts.com",
+    "logo": "https://chilgozapinenuts.com/royal-profile-pic.jpg"
+  },
+  "offers": {
+    "@type": "Offer",
     "url": fullUrl,
-    "inLanguage": "en",
-    "about": "Chilghoza Pine Nuts",
-    "keywords": `Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, ${hubTitle}, Pakistan, Export`,
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Royal Chilghoza Pine Nuts",
-      "url": "https://chilgozapinenuts.com/"
-    },
-    "publisher": {
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+    "areaServed": ["US", "CN", "HK", "DE", "AE", "SA", "GB", "PK"],
+    "seller": {
       "@type": "Organization",
-      "name": "Royal Chilghoza Pine Nuts",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://chilgozapinenuts.com/royal-profile-pic.jpg"
-      }
+      "name": "Royal Chilghoza Pine Nuts"
     }
-  };
-  if (jsonLdImages.length > 0) jsonLd.image = jsonLdImages;
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "5",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": hubTitle,
+  "description": hubDesc,
+  "url": fullUrl,
+  "inLanguage": "en",
+  "about": "Chilghoza Pine Nuts",
+  "keywords": `Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, ${hubTitle}, Pakistan, Export`,
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Royal Chilghoza Pine Nuts",
+    "url": "https://chilgozapinenuts.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Royal Chilghoza Pine Nuts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://chilgozapinenuts.com/royal-profile-pic.jpg"
+    }
+  }
+};
+if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
 
   return `<!DOCTYPE html>
 <html lang="en">
