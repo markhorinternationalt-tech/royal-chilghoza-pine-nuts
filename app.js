@@ -855,21 +855,72 @@ function loadGalleryFonts() {
 function renderGallery() {
   const grid = document.getElementById("galleryGrid");
   if (!grid) return;
-  grid.innerHTML = galleryItems.map(([src, cap], i) =>
-    `<figure class="gallery-item" data-gallery-index="${i}">
-      <img src="${cloudinaryOptimize(src, 1080, 1350)}" data-fullsrc="${cloudinaryOptimize(src, 1920, 2400)}" alt="${cap}" loading="lazy" onerror="this.classList.add('failed')">
-      <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
-      <button class="edit-btn" data-edit-gallery="${i}" type="button" title="Edit Image">✏️</button>
-    </figure>`
-  ).join("");
 
-  document.querySelectorAll("[data-edit-gallery]").forEach((btn) => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const idx = +btn.dataset.editGallery;
-      editGalleryItem(idx);
-    };
-  });
+  grid.innerHTML = galleryItems.map((item, i) => {
+    const src = item[0] || "";
+    const cap = item[1] || "";
+    const type = item[2] || "image";
+    const headline = item[3] || "";
+    const style = item[4] || {};
+
+    const font = style.font || "'Playfair Display', serif";
+    const size = style.size || "18px";
+    const bg = style.bg || "#d4af37";
+    const color = style.color || "#0a1810";
+
+    // Media HTML
+    let mediaHtml = "";
+    if (type === "video") {
+      mediaHtml = `<video src="${cloudinaryOptimize(src, 1080, 1350)}" preload="metadata" muted playsinline></video>`;
+    } else if (type === "pdf") {
+      mediaHtml = `<div class="gallery-pdf-preview"><span>📄</span><b>PDF Document</b></div>`;
+    } else {
+      mediaHtml = `<img src="${cloudinaryOptimize(src, 1080, 1350)}" data-fullsrc="${cloudinaryOptimize(src, 1920, 2400)}" alt="${escapeHtml(cap)}" loading="lazy" onerror="this.classList.add('failed')">`;
+    }
+
+    // Headline HTML
+    const headlineHtml = headline ? `
+      <div class="gallery-headline" style="font-family:${font}; font-size:${size}; background:${bg}; color:${color};">
+        ${escapeHtml(headline)}
+      </div>
+    ` : "";
+
+    // Admin buttons
+    const adminBtns = state.admin ? `
+      <div class="gallery-item-actions">
+        <button class="hub-action-btn" data-gallery-edit="${i}" title="Edit" type="button">✏️</button>
+        ${i > 0 ? `<button class="hub-action-btn" data-gallery-up="${i}" title="Move Up" type="button">⬆</button>` : ""}
+        ${i < galleryItems.length - 1 ? `<button class="hub-action-btn" data-gallery-down="${i}" title="Move Down" type="button">⬇</button>` : ""}
+        <button class="hub-action-btn danger" data-gallery-delete="${i}" title="Delete" type="button">🗑</button>
+      </div>
+    ` : "";
+
+    return `<figure class="gallery-item" data-gallery-index="${i}" data-gallery-type="${type}">
+      ${adminBtns}
+      <div class="gallery-item-media">${mediaHtml}</div>
+      ${headlineHtml}
+      <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
+    </figure>`;
+  }).join("");
+
+  // Attach admin buttons
+  if (state.admin) {
+    grid.querySelectorAll("[data-gallery-edit]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); editGalleryItem(+b.dataset.galleryEdit); })
+    );
+    grid.querySelectorAll("[data-gallery-up]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); moveGalleryItem(+b.dataset.galleryUp, -1); })
+    );
+    grid.querySelectorAll("[data-gallery-down]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); moveGalleryItem(+b.dataset.galleryDown, 1); })
+    );
+    grid.querySelectorAll("[data-gallery-delete]").forEach((b) =>
+      (b.onclick = (e) => { e.stopPropagation(); deleteGalleryItem(+b.dataset.galleryDelete); })
+    );
+  }
+
+  // Create button
+  renderGalleryCreateButton();
 }
 
 /* =========================================================
