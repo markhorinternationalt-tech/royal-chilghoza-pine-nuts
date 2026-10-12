@@ -2424,10 +2424,10 @@ async function loadAllKVContent() {
   applyGatewayContent();
 
   const gal = await getFromKV("gallery_data");
-  if (gal && Array.isArray(gal) && gal.length === 8) {
-    galleryItems = gal;
-    renderGallery();
-  }
+if (gal && Array.isArray(gal) && gal.length > 0) {
+  galleryItems = gal;
+  renderGallery();
+}
 
   const off = await getFromKV("offices");
   if (off && Array.isArray(off) && off.length === 4) {
