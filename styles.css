@@ -2524,7 +2524,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 }
 
 .gallery-item[data-gallery-type="video"] .gallery-item-media {
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9 !important;
 }
 
 .gallery-item-media img {
