@@ -895,12 +895,14 @@ function renderGallery() {
       </div>
     ` : "";
 
-    return `<figure class="gallery-item" data-gallery-index="${i}" data-gallery-type="${type}">
-      ${adminBtns}
-      <div class="gallery-item-media">${mediaHtml}</div>
-      ${headlineHtml}
-      <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
-    </figure>`;
+    const isVideo = type === "video";
+const mediaWrapperStyle = isVideo ? 'style="aspect-ratio:16/9 !important;"' : '';
+return `<figure class="gallery-item" data-gallery-index="${i}" data-gallery-type="${type}">
+  ${adminBtns}
+  <div class="gallery-item-media" ${mediaWrapperStyle}>${mediaHtml}</div>
+  ${headlineHtml}
+  <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
+</figure>`;
   }).join("");
 
   // Attach admin buttons
