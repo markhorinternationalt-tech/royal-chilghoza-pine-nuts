@@ -168,8 +168,10 @@ const hubData = {
 };
 /* =========================================================
    CLOUDINARY AUTO-OPTIMIZATION
+   ✅ v2: Preserves original aspect ratio (Facebook/Instagram style)
+   ✅ SEO-safe — SSR اور worker.js محفوظ
 ========================================================= */
-function cloudinaryOptimize(url, width, height, crop = 'fill') {
+function cloudinaryOptimize(url, width, height, crop = 'limit') {
   if (!url) return url;
   
   if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
@@ -183,9 +185,9 @@ function cloudinaryOptimize(url, width, height, crop = 'fill') {
     // 3. واٹر مارک کی سیٹنگ
     const watermark = 'l_text:Arial_40:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_center,a_45';
 
-    // 4. اگر ویڈیو ہے تو صرف سائز کریں (ویڈیو پر واٹر مارک نہیں لگائیں گے)
+    // 4. ✅ ویڈیو: اصل aspect ratio برقرار رکھیں — کوئی کراپ نہیں
     if (url.includes('/video/upload/')) {
-      return cleanUrl.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto/`);
+      return cleanUrl.replace('/upload/', `/upload/w_${width},c_limit,q_auto/`);
     }
 
     // 5. اگر PDF یا کوئی اور raw فائل ہے تو اسے نہ چھیڑیں
@@ -193,8 +195,8 @@ function cloudinaryOptimize(url, width, height, crop = 'fill') {
       return url;
     }
 
-    // 6. اگر تصویر ہے تو سائز اور واٹر مارک دونوں لگائیں
-    return cleanUrl.replace('/upload/', `/upload/w_${width},h_${height},c_${crop},q_auto,f_auto/${watermark}/`);
+    // 6. ✅ تصویر: اصل aspect ratio برقرا رکھیں — کوئی کراپ نہیں
+    return cleanUrl.replace('/upload/', `/upload/w_${width},c_limit,q_auto,f_auto/${watermark}/`);
   }
   return url;
 }
