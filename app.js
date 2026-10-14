@@ -871,14 +871,14 @@ function renderGallery() {
     const color = style.color || "#0a1810";
 
     // Media HTML
-    let mediaHtml = "";
-    if (type === "video") {
-      mediaHtml = `<video src="${cloudinaryOptimize(src, 1080, 1350)}" controls preload="metadata" playsinline></video>`;
-    } else if (type === "pdf") {
-      mediaHtml = `<div class="gallery-pdf-preview"><span>📄</span><b>PDF Document</b></div>`;
-    } else {
-      mediaHtml = `<img src="${cloudinaryOptimize(src, 1080, 1350)}" data-fullsrc="${cloudinaryOptimize(src, 1920, 2400)}" alt="${escapeHtml(cap)}" loading="lazy" onerror="this.classList.add('failed')">`;
-    }
+let mediaHtml = "";
+if (type === "video") {
+  mediaHtml = `<video src="${cloudinaryOptimize(src, 1280)}" controls preload="metadata" playsinline></video>`;
+} else if (type === "pdf") {
+  mediaHtml = `<div class="gallery-pdf-preview"><span>📄</span><b>PDF Document</b></div>`;
+} else {
+  mediaHtml = `<img src="${cloudinaryOptimize(src, 1280)}" data-fullsrc="${cloudinaryOptimize(src, 1920)}" alt="${escapeHtml(cap)}" loading="lazy" onerror="this.classList.add('failed')">`;
+}
 
     // Headline HTML
     const headlineHtml = headline ? `
