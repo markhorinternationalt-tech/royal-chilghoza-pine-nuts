@@ -2514,7 +2514,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #000;
   border: 0;
