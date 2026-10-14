@@ -2523,13 +2523,27 @@ body.admin-mode .hub-section-actions { display: flex; }
   padding: 0;
 }
 
-.gallery-item-media img,
+.gallery-item[data-gallery-type="video"] .gallery-item-media {
+  aspect-ratio: 16 / 9;
+}
+
+.gallery-item-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .gallery-item-media video {
   display: block;
   width: 100%;
   height: 100%;
-  aspect-ratio: auto !important;
-  object-fit: cover;
+  object-fit: contain;
+  background: #000;
   border: 0;
   border-radius: 0;
   margin: 0;
