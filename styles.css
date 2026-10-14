@@ -2506,15 +2506,14 @@ body.admin-mode .hub-section-actions { display: flex; }
 
 /* =========================================================
    GALLERY UPGRADE — Headline + Admin Buttons + Create Button
-   (Added: Gallery CRUD feature — mirrors existing patterns)
+   ✅ v2: Adaptive media — images 4:5, videos native aspect ratio
 ========================================================= */
 
-/* --- Media wrapper — edge-to-edge, 4:5, no frame --- */
+/* --- Media wrapper — edge-to-edge, no forced frame --- */
 .gallery-item-media {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #000;
   border: 0;
@@ -2523,14 +2522,11 @@ body.admin-mode .hub-section-actions { display: flex; }
   padding: 0;
 }
 
-.gallery-item[data-gallery-type="video"] .gallery-item-media {
-  aspect-ratio: 16 / 9 !important;
-}
-
 .gallery-item-media img {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border: 0;
   border-radius: 0;
@@ -2541,8 +2537,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 .gallery-item-media video {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
   background: #000;
   border: 0;
   border-radius: 0;
@@ -2680,7 +2675,6 @@ body.admin-mode .gallery-item-actions {
     min-height: 160px;
     margin: 10px 0 20px;
     border-radius: 16px;
-    /* Edge-to-edge with the gallery grid breakout */
     margin-left: -16px;
     margin-right: -16px;
     width: calc(100% + 32px);
