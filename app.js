@@ -871,7 +871,7 @@ function renderGallery() {
     // Media HTML
     let mediaHtml = "";
     if (type === "video") {
-      mediaHtml = `<video src="${cloudinaryOptimize(src, 1080, 1350)}" preload="metadata" muted playsinline></video>`;
+      mediaHtml = `<video src="${cloudinaryOptimize(src, 1080, 1350)}" controls preload="metadata" playsinline></video>`;
     } else if (type === "pdf") {
       mediaHtml = `<div class="gallery-pdf-preview"><span>📄</span><b>PDF Document</b></div>`;
     } else {
