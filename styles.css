@@ -2181,8 +2181,6 @@ body.admin-mode .hub-section-actions { display: flex; }
     width: 100%;
     gap: 0;
   }
-  .hub-section-media .hub-media-item img,
-  .hub-section-media .hub-media-item video { max-height: 260px; }
   .hub-wa-btn { width: auto; max-width: 180px; padding: 9px 16px; font-size: 0.78rem; }
   .hub-section-footer { padding: 0 16px 20px; }
   .hub-section-actions { top: 12px; right: 12px; gap: 5px; }
