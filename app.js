@@ -1998,21 +1998,95 @@ function uploadHubMedia(type, index) {
     `
     <label>File (image / video / PDF): <span style="color:#ff6b6b">*</span></label>
     <input type="file" id="hubMediaFile" accept="image/*,video/*,application/pdf">
-    <label>Title (optional):</label>
-    <textarea id="hubMediaTitle" rows="3" placeholder="e.g. Chilghoza Kernels Close-up" style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
+    
+    <label style="margin-top:18px;">HEADLINE — English:</label>
+    <input type="text" id="hubMediaHeadEN" placeholder="English headline...">
+    
+    <label>HEADLINE — 中文:</label>
+    <input type="text" id="hubMediaHeadZH" placeholder="中文标题...">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ ENGLISH STYLE ━━━</label>
+    
+    <label>English Font:</label>
+    <select id="hubMediaFontEN">
+      <option value="'Playfair Display', serif">Playfair Display</option>
+      <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+      <option value="'Cinzel', serif">Cinzel</option>
+      <option value="'Montserrat', sans-serif">Montserrat</option>
+      <option value="'Oswald', sans-serif">Oswald</option>
+    </select>
+    
+    <label>English Size:</label>
+    <select id="hubMediaSizeEN">
+      <option value="14px">S (14px)</option>
+      <option value="18px" selected>M (18px)</option>
+      <option value="22px">L (22px)</option>
+      <option value="28px">XL (28px)</option>
+      <option value="34px">XXL (34px)</option>
+    </select>
+    
+    <label>English BG Color:</label>
+    <input type="color" id="hubMediaBgEN" value="#d4af37" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label>English Text Color:</label>
+    <input type="color" id="hubMediaColorEN" value="#0a1810" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ 中文样式 ━━━</label>
+    
+    <label>Chinese Font:</label>
+    <select id="hubMediaFontZH">
+      <option value="'Noto Sans SC', sans-serif" selected>Noto Sans SC</option>
+      <option value="'Noto Serif SC', serif">Noto Serif SC</option>
+      <option value="'Ma Shan Zheng', cursive">Ma Shan Zheng</option>
+      <option value="'ZCOOL XiaoWei', serif">ZCOOL XiaoWei</option>
+      <option value="'Long Cang', cursive">Long Cang</option>
+    </select>
+    
+    <label>Chinese Size:</label>
+    <select id="hubMediaSizeZH">
+      <option value="16px">S (16px)</option>
+      <option value="20px" selected>M (20px)</option>
+      <option value="24px">L (24px)</option>
+      <option value="30px">XL (30px)</option>
+      <option value="36px">XXL (36px)</option>
+    </select>
+    
+    <label>Chinese BG Color:</label>
+    <input type="color" id="hubMediaBgZH" value="#c8102e" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label>Chinese Text Color:</label>
+    <input type="color" id="hubMediaColorZH" value="#ffffff" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px;">CAPTION — English:</label>
+    <textarea id="hubMediaCapEN" rows="3" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
+    
+    <label>CAPTION — 中文:</label>
+    <textarea id="hubMediaCapZH" rows="3" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
     `,
     async () => {
       const fileInput = document.getElementById("hubMediaFile");
-      const titleInput = document.getElementById("hubMediaTitle");
+      const headEN = document.getElementById("hubMediaHeadEN").value.trim();
+      const headZH = document.getElementById("hubMediaHeadZH").value.trim();
+      const fontEN = document.getElementById("hubMediaFontEN").value;
+      const fontZH = document.getElementById("hubMediaFontZH").value;
+      const sizeEN = document.getElementById("hubMediaSizeEN").value;
+      const sizeZH = document.getElementById("hubMediaSizeZH").value;
+      const bgEN = document.getElementById("hubMediaBgEN").value;
+      const colorEN = document.getElementById("hubMediaColorEN").value;
+      const bgZH = document.getElementById("hubMediaBgZH").value;
+      const colorZH = document.getElementById("hubMediaColorZH").value;
+      const capEN = document.getElementById("hubMediaCapEN").value.trim();
+      const capZH = document.getElementById("hubMediaCapZH").value.trim();
+
       const file = fileInput.files[0];
       if (!file) { setEditStatus("❌ Select a file first", "error"); return; }
+      if (!capEN && !capZH) { setEditStatus("❌ Caption required", "error"); return; }
 
       setEditStatus("Uploading to Cloudinary...", "");
       const folder = `hubs/${type}-${index}`;
       const fd = new FormData();
       fd.append("file", file);
       fd.append("folder", folder);
-      if (titleInput.value.trim()) fd.append("title", titleInput.value.trim());
 
       try {
         const r = await fetch("/api/media/upload", {
@@ -2035,10 +2109,16 @@ function uploadHubMedia(type, index) {
         arr.push({
           url: d.url,
           public_id: d.public_id || d.key,
-          name: titleInput.value.trim() || file.name,
+          name: { en: capEN, zh: capZH },
+          headline: { en: headEN, zh: headZH },
           type: mtype,
           size: d.bytes || file.size,
-          uploaded: Date.now()
+          uploaded: Date.now(),
+          style: {
+            fontEN, fontZH, sizeEN, sizeZH,
+            en: { bg: bgEN, color: colorEN },
+            zh: { bg: bgZH, color: colorZH }
+          }
         });
 
         setEditStatus("Saving...", "");
