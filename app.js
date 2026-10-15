@@ -860,15 +860,42 @@ function renderGallery() {
 
   grid.innerHTML = galleryItems.map((item, i) => {
     const src = item[0] || "";
-    const cap = item[1] || "";
-    const type = item[2] || "image";
-    const headline = item[3] || "";
-    const style = item[4] || {};
+const type = item[2] || "image";
+const style = item[4] || {};
 
-    const font = style.font || "'Playfair Display', serif";
-    const size = style.size || "18px";
-    const bg = style.bg || "#d4af37";
-    const color = style.color || "#0a1810";
+// Bilingual captions — old: string / new: object
+let capEN, capZH;
+if (typeof item[1] === "string") {
+  capEN = item[1] || "";
+  capZH = "";
+} else if (item[1] && typeof item[1] === "object") {
+  capEN = item[1].en || "";
+  capZH = item[1].zh || "";
+} else {
+  capEN = ""; capZH = "";
+}
+
+// Bilingual headlines — old: string / new: object
+let headlineEN, headlineZH;
+if (typeof item[3] === "string") {
+  headlineEN = item[3] || "";
+  headlineZH = "";
+} else if (item[3] && typeof item[3] === "object") {
+  headlineEN = item[3].en || "";
+  headlineZH = item[3].zh || "";
+} else {
+  headlineEN = ""; headlineZH = "";
+}
+
+// User language
+const lang = (typeof state !== "undefined" && state.lang) ? state.lang : "en";
+const cap = (lang === "zh" && capZH) ? capZH : capEN;
+const headline = (lang === "zh" && headlineZH) ? headlineZH : headlineEN;
+
+const font = style.font || "'Playfair Display', serif";
+const size = style.size || "18px";
+const bg = style.bg || "#d4af37";
+const color = style.color || "#0a1810";
 
     // Media HTML
 let mediaHtml = "";
