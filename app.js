@@ -964,11 +964,11 @@ if (type === "video") {
 }
 
 /* =========================================================
-   CREATE: NEW GALLERY ITEM
+   CREATE: NEW GALLERY ITEM (BILINGUAL)
 ========================================================= */
 function createGalleryItem() {
   openEditModal(
-    "👑 Add New Gallery Item",
+    `👑 Add New Gallery Item`,
     `
     <label>Upload File (Image / Video / PDF):</label>
     <input type="file" id="newGalleryFile" accept="image/*,video/*,application/pdf">
@@ -976,11 +976,16 @@ function createGalleryItem() {
     <label>OR Paste URL:</label>
     <input type="text" id="newGalleryUrl" placeholder="https://..." value="">
     
-    <label style="margin-top:18px;">HEADLINE (bold, above caption):</label>
-    <input type="text" id="newGalleryHeadline" placeholder="Enter headline...">
+    <label style="margin-top:18px;">HEADLINE — English:</label>
+    <input type="text" id="newGalleryHeadEN" placeholder="English headline...">
     
-    <label>Headline Font:</label>
-    <select id="newGalleryFont">
+    <label>HEADLINE — 中文:</label>
+    <input type="text" id="newGalleryHeadZH" placeholder="中文标题...">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ ENGLISH STYLE ━━━</label>
+    
+    <label>English Font:</label>
+    <select id="newGalleryFontEN">
       <option value="'Playfair Display', serif">Playfair Display (Classic)</option>
       <option value="'Cormorant Garamond', serif">Cormorant Garamond (Elegant)</option>
       <option value="'Cinzel', serif">Cinzel (Roman)</option>
@@ -988,8 +993,8 @@ function createGalleryItem() {
       <option value="'Oswald', sans-serif">Oswald (Strong)</option>
     </select>
     
-    <label>Headline Size:</label>
-    <select id="newGallerySize">
+    <label>English Size:</label>
+    <select id="newGallerySizeEN">
       <option value="14px">S — Small (14px)</option>
       <option value="18px" selected>M — Medium (18px)</option>
       <option value="22px">L — Large (22px)</option>
@@ -997,63 +1002,104 @@ function createGalleryItem() {
       <option value="34px">XXL — Huge (34px)</option>
     </select>
     
-    <label>Headline Background Color:</label>
-    <input type="color" id="newGalleryBg" value="#d4af37" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <label>English BG Color:</label>
+    <input type="color" id="newGalleryBgEN" value="#d4af37" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
-    <label>Headline Text Color:</label>
-    <input type="color" id="newGalleryColor" value="#0a1810" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <label>English Text Color:</label>
+    <input type="color" id="newGalleryColorEN" value="#0a1810" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
-    <label style="margin-top:18px;">CAPTION (below headline):</label>
-    <textarea id="newGalleryCap" rows="2" placeholder="Write caption here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ 中文样式 ━━━</label>
+    
+    <label>Chinese Font:</label>
+    <select id="newGalleryFontZH">
+      <option value="'Noto Sans SC', sans-serif" selected>Noto Sans SC (简体)</option>
+      <option value="'Noto Serif SC', serif">Noto Serif SC (宋体)</option>
+      <option value="'Ma Shan Zheng', cursive">Ma Shan Zheng (书法)</option>
+      <option value="'ZCOOL XiaoWei', serif">ZCOOL XiaoWei (雅致)</option>
+      <option value="'Long Cang', cursive">Long Cang (草书)</option>
+    </select>
+    
+    <label>Chinese Size:</label>
+    <select id="newGallerySizeZH">
+      <option value="16px">S — Small (16px)</option>
+      <option value="20px" selected>M — Medium (20px)</option>
+      <option value="24px">L — Large (24px)</option>
+      <option value="30px">XL — Extra Large (30px)</option>
+      <option value="36px">XXL — Huge (36px)</option>
+    </select>
+    
+    <label>Chinese BG Color:</label>
+    <input type="color" id="newGalleryBgZH" value="#c8102e" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label>Chinese Text Color:</label>
+    <input type="color" id="newGalleryColorZH" value="#ffffff" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px;">CAPTION — English:</label>
+    <textarea id="newGalleryCapEN" rows="3" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
+    
+    <label>CAPTION — 中文:</label>
+    <textarea id="newGalleryCapZH" rows="3" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;"></textarea>
     `,
     async () => {
       const fileInput = document.getElementById("newGalleryFile");
       const urlInput = document.getElementById("newGalleryUrl");
-      const headInput = document.getElementById("newGalleryHeadline");
-      const fontInput = document.getElementById("newGalleryFont");
-      const sizeInput = document.getElementById("newGallerySize");
-      const bgInput = document.getElementById("newGalleryBg");
-      const colorInput = document.getElementById("newGalleryColor");
-      const capInput = document.getElementById("newGalleryCap");
-      
-      const headline = headInput.value.trim();
-      const cap = capInput.value.trim();
+      const headENInput = document.getElementById("newGalleryHeadEN");
+      const headZHInput = document.getElementById("newGalleryHeadZH");
+      const fontENInput = document.getElementById("newGalleryFontEN");
+      const fontZHInput = document.getElementById("newGalleryFontZH");
+      const sizeENInput = document.getElementById("newGallerySizeEN");
+      const sizeZHInput = document.getElementById("newGallerySizeZH");
+      const bgENInput = document.getElementById("newGalleryBgEN");
+      const colorENInput = document.getElementById("newGalleryColorEN");
+      const bgZHInput = document.getElementById("newGalleryBgZH");
+      const colorZHInput = document.getElementById("newGalleryColorZH");
+      const capENInput = document.getElementById("newGalleryCapEN");
+      const capZHInput = document.getElementById("newGalleryCapZH");
+
+      const headlineEN = headENInput.value.trim();
+      const headlineZH = headZHInput.value.trim();
+      const capEN = capENInput.value.trim();
+      const capZH = capZHInput.value.trim();
       let src = urlInput.value.trim();
       let type = "image";
-      
-      if (!cap) { setEditStatus("❌ Caption required", "error"); return; }
-      
+
+      if (!capEN && !capZH) { 
+        setEditStatus("❌ Caption required (at least one language)", "error"); 
+        return; 
+      }
+
       if (fileInput.files[0]) {
         const file = fileInput.files[0];
         const ext = (file.name.split(".").pop() || "").toLowerCase();
         if (["mp4", "webm", "mov", "avi"].includes(ext)) type = "video";
         else if (["pdf"].includes(ext)) type = "pdf";
         else type = "image";
-        
+
         setEditStatus("Uploading...", "");
         const uploadedUrl = await uploadToCloudinary(file, "gallery");
         if (uploadedUrl) src = uploadedUrl;
         else { setEditStatus("❌ Upload failed", "error"); return; }
       }
-      
+
       if (!src) { setEditStatus("❌ No file or URL provided", "error"); return; }
-      
+
       setEditStatus("Saving...", "");
-      const newItem = [
+      galleryItems.push([
         src,
-        cap,
+        { en: capEN, zh: capZH },
         type,
-        headline,
+        { en: headlineEN, zh: headlineZH },
         {
-          font: fontInput.value,
-          size: sizeInput.value,
-          bg: bgInput.value,
-          color: colorInput.value
+          fontEN: fontENInput.value,
+          fontZH: fontZHInput.value,
+          sizeEN: sizeENInput.value,
+          sizeZH: sizeZHInput.value,
+          en: { bg: bgENInput.value, color: colorENInput.value },
+          zh: { bg: bgZHInput.value, color: colorZHInput.value }
         }
-      ];
-      galleryItems.push(newItem);
+      ]);
       const ok = await saveToKV("gallery_data", galleryItems);
-      
+
       if (ok) {
         renderGallery();
         setEditStatus("✅ Gallery item added!", "success");
