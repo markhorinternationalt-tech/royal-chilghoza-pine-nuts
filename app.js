@@ -892,10 +892,21 @@ const lang = (typeof state !== "undefined" && state.lang) ? state.lang : "en";
 const cap = (lang === "zh" && capZH) ? capZH : capEN;
 const headline = (lang === "zh" && headlineZH) ? headlineZH : headlineEN;
 
-const font = style.font || "'Playfair Display', serif";
-const size = style.size || "18px";
-const bg = style.bg || "#d4af37";
-const color = style.color || "#0a1810";
+// Per-language styles
+const isZH = (lang === "zh");
+const fontEN = style.fontEN || style.font || "'Playfair Display', serif";
+const fontZH = style.fontZH || "'Noto Sans SC', sans-serif";
+const sizeEN = style.sizeEN || style.size || "18px";
+const sizeZH = style.sizeZH || style.size || "20px";
+const bgEN = (style.en && style.en.bg) || style.bg || "#d4af37";
+const colorEN = (style.en && style.en.color) || style.color || "#0a1810";
+const bgZH = (style.zh && style.zh.bg) || "#c8102e";
+const colorZH = (style.zh && style.zh.color) || "#ffffff";
+
+const font = isZH ? fontZH : fontEN;
+const size = isZH ? sizeZH : sizeEN;
+const bg = isZH ? bgZH : bgEN;
+const color = isZH ? colorZH : colorEN;
 
     // Media HTML
 let mediaHtml = "";
