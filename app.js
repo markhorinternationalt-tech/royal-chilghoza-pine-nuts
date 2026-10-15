@@ -2173,6 +2173,31 @@ function editHubMediaItem(type, index, mediaIndex) {
   const item = arr[mediaIndex];
   if (!item) return;
 
+  // Bilingual caption + headline
+  let capEN = "", capZH = "", headEN = "", headZH = "";
+  if (typeof item.name === "string") {
+    capEN = item.name || "";
+  } else if (item.name && typeof item.name === "object") {
+    capEN = item.name.en || "";
+    capZH = item.name.zh || "";
+  }
+  if (typeof item.headline === "string") {
+    headEN = item.headline || "";
+  } else if (item.headline && typeof item.headline === "object") {
+    headEN = item.headline.en || "";
+    headZH = item.headline.zh || "";
+  }
+
+  const style = item.style || {};
+  const fontEN = style.fontEN || "'Playfair Display', serif";
+  const fontZH = style.fontZH || "'Noto Sans SC', sans-serif";
+  const sizeEN = style.sizeEN || "18px";
+  const sizeZH = style.sizeZH || "20px";
+  const bgEN = (style.en && style.en.bg) || "#d4af37";
+  const colorEN = (style.en && style.en.color) || "#0a1810";
+  const bgZH = (style.zh && style.zh.bg) || "#c8102e";
+  const colorZH = (style.zh && style.zh.color) || "#ffffff";
+
   let previewHtml = "";
   if (item.type === "image") {
     previewHtml = `<img src="${item.url}" class="edit-modal-preview">`;
@@ -2183,24 +2208,104 @@ function editHubMediaItem(type, index, mediaIndex) {
   }
 
   openEditModal(
-    `✏️ Edit Media Title`,
+    `✏️ Edit Media`,
     `
-    <label>Title:</label>
-    <textarea id="editMediaTitle" rows="3" placeholder="Write title here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(item.name || "")}</textarea>
     <label>Preview:</label>
     ${previewHtml}
+    
+    <label style="margin-top:18px;">HEADLINE — English:</label>
+    <input type="text" id="editHubMediaHeadEN" value="${escapeHtml(headEN)}" placeholder="English headline...">
+    
+    <label>HEADLINE — 中文:</label>
+    <input type="text" id="editHubMediaHeadZH" value="${escapeHtml(headZH)}" placeholder="中文标题...">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ ENGLISH STYLE ━━━</label>
+    
+    <label>English Font:</label>
+    <select id="editHubMediaFontEN">
+      <option value="'Playfair Display', serif" ${fontEN.includes("Playfair") ? "selected" : ""}>Playfair Display</option>
+      <option value="'Cormorant Garamond', serif" ${fontEN.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond</option>
+      <option value="'Cinzel', serif" ${fontEN.includes("Cinzel") ? "selected" : ""}>Cinzel</option>
+      <option value="'Montserrat', sans-serif" ${fontEN.includes("Montserrat") ? "selected" : ""}>Montserrat</option>
+      <option value="'Oswald', sans-serif" ${fontEN.includes("Oswald") ? "selected" : ""}>Oswald</option>
+    </select>
+    
+    <label>English Size:</label>
+    <select id="editHubMediaSizeEN">
+      <option value="14px" ${sizeEN === "14px" ? "selected" : ""}>S (14px)</option>
+      <option value="18px" ${sizeEN === "18px" ? "selected" : ""}>M (18px)</option>
+      <option value="22px" ${sizeEN === "22px" ? "selected" : ""}>L (22px)</option>
+      <option value="28px" ${sizeEN === "28px" ? "selected" : ""}>XL (28px)</option>
+      <option value="34px" ${sizeEN === "34px" ? "selected" : ""}>XXL (34px)</option>
+    </select>
+    
+    <label>English BG Color:</label>
+    <input type="color" id="editHubMediaBgEN" value="${bgEN}" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label>English Text Color:</label>
+    <input type="color" id="editHubMediaColorEN" value="${colorEN}" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ 中文样式 ━━━</label>
+    
+    <label>Chinese Font:</label>
+    <select id="editHubMediaFontZH">
+      <option value="'Noto Sans SC', sans-serif" ${fontZH.includes("Noto Sans") ? "selected" : ""}>Noto Sans SC</option>
+      <option value="'Noto Serif SC', serif" ${fontZH.includes("Noto Serif") ? "selected" : ""}>Noto Serif SC</option>
+      <option value="'Ma Shan Zheng', cursive" ${fontZH.includes("Ma Shan") ? "selected" : ""}>Ma Shan Zheng</option>
+      <option value="'ZCOOL XiaoWei', serif" ${fontZH.includes("ZCOOL") ? "selected" : ""}>ZCOOL XiaoWei</option>
+      <option value="'Long Cang', cursive" ${fontZH.includes("Long Cang") ? "selected" : ""}>Long Cang</option>
+    </select>
+    
+    <label>Chinese Size:</label>
+    <select id="editHubMediaSizeZH">
+      <option value="16px" ${sizeZH === "16px" ? "selected" : ""}>S (16px)</option>
+      <option value="20px" ${sizeZH === "20px" ? "selected" : ""}>M (20px)</option>
+      <option value="24px" ${sizeZH === "24px" ? "selected" : ""}>L (24px)</option>
+      <option value="30px" ${sizeZH === "30px" ? "selected" : ""}>XL (30px)</option>
+      <option value="36px" ${sizeZH === "36px" ? "selected" : ""}>XXL (36px)</option>
+    </select>
+    
+    <label>Chinese BG Color:</label>
+    <input type="color" id="editHubMediaBgZH" value="${bgZH}" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label>Chinese Text Color:</label>
+    <input type="color" id="editHubMediaColorZH" value="${colorZH}" style="width:100%;height:40px;border-radius:8px;cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px;">CAPTION — English:</label>
+    <textarea id="editHubMediaCapEN" rows="3" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capEN)}</textarea>
+    
+    <label>CAPTION — 中文:</label>
+    <textarea id="editHubMediaCapZH" rows="3" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capZH)}</textarea>
     `,
     async () => {
-      const newTitle = document.getElementById("editMediaTitle").value.trim();
-      if (!newTitle) { setEditStatus("❌ Title required", "error"); return; }
+      const headEN = document.getElementById("editHubMediaHeadEN").value.trim();
+      const headZH = document.getElementById("editHubMediaHeadZH").value.trim();
+      const fontEN = document.getElementById("editHubMediaFontEN").value;
+      const fontZH = document.getElementById("editHubMediaFontZH").value;
+      const sizeEN = document.getElementById("editHubMediaSizeEN").value;
+      const sizeZH = document.getElementById("editHubMediaSizeZH").value;
+      const bgEN = document.getElementById("editHubMediaBgEN").value;
+      const colorEN = document.getElementById("editHubMediaColorEN").value;
+      const bgZH = document.getElementById("editHubMediaBgZH").value;
+      const colorZH = document.getElementById("editHubMediaColorZH").value;
+      const capEN = document.getElementById("editHubMediaCapEN").value.trim();
+      const capZH = document.getElementById("editHubMediaCapZH").value.trim();
+
+      if (!capEN && !capZH) { setEditStatus("❌ Caption required", "error"); return; }
 
       setEditStatus("Saving...", "");
       const arr2 = await loadHubMedia(type, index);
-      arr2[mediaIndex].name = newTitle;
+      arr2[mediaIndex].name = { en: capEN, zh: capZH };
+      arr2[mediaIndex].headline = { en: headEN, zh: headZH };
+      arr2[mediaIndex].style = {
+        fontEN, fontZH, sizeEN, sizeZH,
+        en: { bg: bgEN, color: colorEN },
+        zh: { bg: bgZH, color: colorZH }
+      };
       const ok = await saveHubMedia(type, index, arr2);
 
       if (ok) {
-        setEditStatus("✅ Title updated!", "success");
+        setEditStatus("✅ Media updated!", "success");
         if (state.gateway && !state.hub) {
           await renderHubSectionMedia(type, index);
         } else {
