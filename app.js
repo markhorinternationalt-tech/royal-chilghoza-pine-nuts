@@ -1117,9 +1117,18 @@ async function deleteGalleryItem(index) {
   const item = galleryItems[index];
   if (!item) return;
   const type = item[2] || "image";
-  const cap = item[1] || "item";
   
-  if (!confirm(`🗑 Delete this ${type}?\n\n"${cap}"\n\nThis action cannot be undone.`)) return;
+  // Bilingual caption — object or string
+  let capText = "item";
+  if (typeof item[1] === "string") {
+    capText = item[1] || "item";
+  } else if (item[1] && typeof item[1] === "object") {
+    capText = item[1].en || item[1].zh || "item";
+  }
+  
+  const typeLabel = type === "video" ? "video" : type === "pdf" ? "PDF" : "image";
+  
+  if (!confirm(`🗑 Delete this ${typeLabel}?\n\n"${capText}"\n\nThis action cannot be undone.`)) return;
   
   galleryItems.splice(index, 1);
   const ok = await saveToKV("gallery_data", galleryItems);
