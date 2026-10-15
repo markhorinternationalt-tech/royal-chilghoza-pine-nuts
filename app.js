@@ -3249,14 +3249,11 @@ window.addEventListener("popstate", handleRoute);
     }
     
     sessionStorage.setItem("royalLanguage", "en");
-    
-    if (!prompted) {
-      window.addEventListener("load", () => {
-        setTimeout(() => showWelcomePrompt(), 800);
-      });
-    }
-  } catch (e) { /* silent */ }
-})();
+sessionStorage.setItem("royalPrompted", "1");
+
+window.addEventListener("load", () => {
+  setTimeout(() => showWelcomePrompt(), 800);
+});
 
 /* =========================================================
    WELCOME PROMPT — 2 Languages
