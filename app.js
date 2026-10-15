@@ -840,12 +840,17 @@ function loadGalleryFonts() {
   galleryFontsLoaded = true;
 
   const fonts = [
-    "Playfair+Display:ital,wght@0,500;0,700;1,500",
-    "Cormorant+Garamond:wght@500;600;700",
-    "Cinzel:wght@500;600;700",
-    "Montserrat:wght@600;700;800",
-    "Oswald:wght@500;600;700"
-  ].join("&family=");
+  "Playfair+Display:ital,wght@0,500;0,700;1,500",
+  "Cormorant+Garamond:wght@500;600;700",
+  "Cinzel:wght@500;600;700",
+  "Montserrat:wght@600;700;800",
+  "Oswald:wght@500;600;700",
+  "Noto+Sans+SC:wght@400;500;700",
+  "Noto+Serif+SC:wght@500;700",
+  "Ma+Shan+Zheng",
+  "ZCOOL+XiaoWei",
+  "Long+Cang"
+].join("&family=");
 
   const link = document.createElement("link");
   link.rel = "stylesheet";
