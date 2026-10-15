@@ -2508,10 +2508,10 @@ body.admin-mode .hub-section-actions { display: flex; }
 
 /* =========================================================
    GALLERY UPGRADE — Headline + Admin Buttons + Create Button
-   ✅ v2: Adaptive media — images 4:5, videos native aspect ratio
+   ✅ v3: Natural aspect ratio — no crop for any image/video
 ========================================================= */
 
-/* --- Media wrapper — edge-to-edge, no forced frame --- */
+/* --- Media wrapper — no forced frame --- */
 .gallery-item-media {
   position: relative;
   display: block;
@@ -2528,8 +2528,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  object-fit: contain;
   border: 0;
   border-radius: 0;
   margin: 0;
@@ -2540,6 +2539,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   display: block;
   width: 100%;
   height: auto;
+  object-fit: contain;
   background: #000;
   border: 0;
   border-radius: 0;
@@ -2556,6 +2556,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   gap: 12px;
   width: 100%;
   height: 100%;
+  min-height: 400px;
   background: linear-gradient(135deg, #0a2f1e, #062015);
   color: var(--cream);
   cursor: pointer;
@@ -2690,114 +2691,4 @@ body.admin-mode .gallery-item-actions {
   .gallery-headline {
     padding: 10px 14px;
   }
-}
-/* =========================================================
-   END OF FILE — Royal Chilghoza Pine Nuts
-   Fix Pack v1 (Integrated): Gallery frame + Hub media + Office straight + Hub 3D + WA button
-   ========================================================= */
-/* =========================================================
-   WELCOME LANGUAGE PROMPT
-========================================================= */
-.welcome-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: welcomeFadeIn 0.4s ease;
-}
-@keyframes welcomeFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.welcome-card {
-  background: linear-gradient(160deg, #0a2f1e 0%, #062015 50%, #03140a 100%);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-radius: 20px;
-  padding: 40px 32px;
-  max-width: 440px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 80px rgba(212, 175, 55, 0.15);
-  animation: welcomeSlideUp 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-}
-@keyframes welcomeSlideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-.welcome-crown {
-  font-size: 3rem;
-  color: var(--gold);
-  margin-bottom: 16px;
-  filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.5));
-}
-.welcome-title {
-  font-family: var(--heading-font);
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: var(--cream);
-  margin: 0 0 12px;
-}
-.welcome-subtitle {
-  color: var(--gold);
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin: 0 0 28px;
-  line-height: 1.5;
-}
-.welcome-options {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-.welcome-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 16px;
-  border: 2px solid rgba(212, 175, 55, 0.3);
-  border-radius: 14px;
-  background: rgba(212, 175, 55, 0.05);
-  color: var(--cream);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-  font-family: var(--body-font);
-}
-.welcome-btn:hover {
-  border-color: var(--gold);
-  background: rgba(212, 175, 55, 0.15);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.3);
-}
-.welcome-btn span {
-  font-size: 2rem;
-  line-height: 1;
-}
-.welcome-btn b {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--cream);
-}
-.welcome-note {
-  color: var(--muted);
-  font-size: 0.78rem;
-  margin: 0;
-  line-height: 1.4;
-}
-@media (max-width: 620px) {
-  .welcome-card { padding: 32px 22px; }
-  .welcome-title { font-size: 1.35rem; }
-  .welcome-crown { font-size: 2.5rem; }
-  .welcome-options { gap: 10px; }
-  .welcome-btn { padding: 16px 12px; }
-  .welcome-btn span { font-size: 1.7rem; }
-  .welcome-btn b { font-size: 0.92rem; }
 }
