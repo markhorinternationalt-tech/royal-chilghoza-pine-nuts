@@ -3229,6 +3229,88 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 window.addEventListener("popstate", handleRoute);
 }
 
+/* =========================================================
+   AUTO-DETECT LANGUAGE — Chinese visitors
+========================================================= */
+(function autoDetectLanguage() {
+  try {
+    const saved = sessionStorage.getItem("royalLanguage");
+    const prompted = sessionStorage.getItem("royalPrompted");
+    
+    if (saved && prompted) return;
+    
+    const browserLang = (navigator.language || "").toLowerCase();
+    
+    if (browserLang.startsWith("zh")) {
+      sessionStorage.setItem("royalLanguage", "zh");
+      sessionStorage.setItem("royalPrompted", "1");
+      return;
+    }
+    
+    sessionStorage.setItem("royalLanguage", "en");
+    
+    if (!prompted) {
+      window.addEventListener("load", () => {
+        setTimeout(() => showWelcomePrompt(), 800);
+      });
+    }
+  } catch (e) { /* silent */ }
+})();
+
+/* =========================================================
+   WELCOME PROMPT — 2 Languages
+========================================================= */
+function showWelcomePrompt() {
+  if (document.getElementById("welcomeLanguagePrompt")) return;
+  if (document.body.classList.contains("admin-mode")) return;
+  
+  const prompt = document.createElement("div");
+  prompt.id = "welcomeLanguagePrompt";
+  prompt.innerHTML = `
+    <div class="welcome-overlay">
+      <div class="welcome-card">
+        <div class="welcome-crown">👑</div>
+        <h2 class="welcome-title">Royal Chilgoza Pine Nuts</h2>
+        <p class="welcome-subtitle">Please choose your language<br>请选择您的语言</p>
+        <div class="welcome-options">
+          <button class="welcome-btn" data-welcome-lang="en">
+            <span>🇬🇧</span>
+            <b>English</b>
+          </button>
+          <button class="welcome-btn" data-welcome-lang="zh">
+            <span>🇨🇳</span>
+            <b>中文</b>
+          </button>
+        </div>
+        <p class="welcome-note">You can change language anytime from the top menu.</p>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(prompt);
+  
+  prompt.querySelectorAll("[data-welcome-lang]").forEach((btn) => {
+    btn.onclick = () => {
+      const lang = btn.dataset.welcomeLang;
+      sessionStorage.setItem("royalLanguage", lang);
+      sessionStorage.setItem("royalPrompted", "1");
+      
+      prompt.style.transition = "opacity 0.4s ease";
+      prompt.style.opacity = "0";
+      
+      setTimeout(() => {
+        prompt.remove();
+        if (typeof setLanguage === "function") {
+          setLanguage(lang);
+        } else if (typeof state !== "undefined") {
+          state.lang = lang;
+          if (typeof applyLanguage === "function") applyLanguage();
+        }
+      }, 400);
+    };
+  });
+}
+
 document.addEventListener("DOMContentLoaded", init);
 
 /* =========================================================
