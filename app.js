@@ -2617,10 +2617,24 @@ function applyProfileImage() {
 function editGalleryItem(index) {
   const item = galleryItems[index] || ["", "", "image", "", {}];
   const currentSrc = item[0] || "";
-  const currentCap = item[1] || "";
   const currentType = item[2] || "image";
-  const currentHeadline = item[3] || "";
   const currentStyle = item[4] || {};
+  
+  // Bilingual captions
+  let capEN = "", capZH = "";
+  if (typeof item[1] === "string") { capEN = item[1] || ""; }
+  else if (item[1] && typeof item[1] === "object") {
+    capEN = item[1].en || "";
+    capZH = item[1].zh || "";
+  }
+  
+  // Bilingual headlines
+  let headEN = "", headZH = "";
+  if (typeof item[3] === "string") { headEN = item[3] || ""; }
+  else if (item[3] && typeof item[3] === "object") {
+    headEN = item[3].en || "";
+    headZH = item[3].zh || "";
+  }
   
   const font = currentStyle.font || "'Playfair Display', serif";
   const size = currentStyle.size || "18px";
@@ -2629,7 +2643,7 @@ function editGalleryItem(index) {
 
   let previewHtml = "";
   if (currentType === "video") {
-    previewHtml = `<video src="${currentSrc}" controls style="max-width:100%; max-height:200px; border-radius:10px; margin-top:8px;"></video>`;
+    previewHtml = `<video src="${currentSrc}" controls style="max-width:100%; max-height:180px; border-radius:10px; margin-top:8px;"></video>`;
   } else if (currentType === "pdf") {
     previewHtml = `<div style="padding:20px; text-align:center; background:#0a2f1e; border-radius:10px; margin-top:8px; color:var(--gold);">📄 PDF Document</div>`;
   } else {
@@ -2642,8 +2656,11 @@ function editGalleryItem(index) {
     <label>Current ${currentType.toUpperCase()}:</label>
     ${previewHtml}
     
-    <label style="margin-top:18px;">HEADLINE (bold, above caption):</label>
-    <input type="text" id="editGalleryHeadline" value="${escapeHtml(currentHeadline)}" placeholder="Enter headline...">
+    <label style="margin-top:18px;">HEADLINE — English:</label>
+    <input type="text" id="editGalleryHeadEN" value="${escapeHtml(headEN)}" placeholder="English headline...">
+    
+    <label>HEADLINE — 中文:</label>
+    <input type="text" id="editGalleryHeadZH" value="${escapeHtml(headZH)}" placeholder="中文标题...">
     
     <label>Headline Font:</label>
     <select id="editGalleryFont">
@@ -2664,13 +2681,16 @@ function editGalleryItem(index) {
     </select>
     
     <label>Headline Background Color:</label>
-    <input type="color" id="editGalleryBg" value="${bg}" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <input type="color" id="editGalleryBg" value="${bg}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
     <label>Headline Text Color:</label>
-    <input type="color" id="editGalleryColor" value="${color}" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <input type="color" id="editGalleryColor" value="${color}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
-    <label style="margin-top:18px;">CAPTION (below headline):</label>
-    <textarea id="editGalleryCap" rows="4" placeholder="Write caption here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(currentCap)}</textarea>
+    <label style="margin-top:18px;">CAPTION — English:</label>
+    <textarea id="editGalleryCapEN" rows="5" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capEN)}</textarea>
+    
+    <label>CAPTION — 中文:</label>
+    <textarea id="editGalleryCapZH" rows="5" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capZH)}</textarea>
     
     <label>Upload New File (optional):</label>
     <input type="file" id="editGalleryFile" accept="image/*,video/*,application/pdf">
@@ -2679,21 +2699,29 @@ function editGalleryItem(index) {
     <input type="text" id="editGalleryUrl" placeholder="https://..." value="${currentSrc}">
     `,
     async () => {
-      const headInput = document.getElementById("editGalleryHeadline");
+      const headENInput = document.getElementById("editGalleryHeadEN");
+      const headZHInput = document.getElementById("editGalleryHeadZH");
       const fontInput = document.getElementById("editGalleryFont");
       const sizeInput = document.getElementById("editGallerySize");
       const bgInput = document.getElementById("editGalleryBg");
       const colorInput = document.getElementById("editGalleryColor");
-      const capInput = document.getElementById("editGalleryCap");
+      const capENInput = document.getElementById("editGalleryCapEN");
+      const capZHInput = document.getElementById("editGalleryCapZH");
       const fileInput = document.getElementById("editGalleryFile");
       const urlInput = document.getElementById("editGalleryUrl");
 
-      const newHeadline = headInput.value.trim();
-      const newCap = capInput.value.trim();
+      const newHeadEN = headENInput.value.trim();
+      const newHeadZH = headZHInput.value.trim();
+      const newCapEN = capENInput.value.trim();
+      const newCapZH = capZHInput.value.trim();
+      
       let newSrc = urlInput.value.trim();
       let newType = currentType;
 
-      if (!newCap) { setEditStatus("❌ Caption required", "error"); return; }
+      if (!newCapEN && !newCapZH) { 
+        setEditStatus("❌ Caption required (at least one language)", "error"); 
+        return; 
+      }
 
       if (fileInput.files[0]) {
         const file = fileInput.files[0];
@@ -2711,11 +2739,13 @@ function editGalleryItem(index) {
       if (!newSrc) { setEditStatus("❌ No file or URL", "error"); return; }
 
       setEditStatus("Saving...", "");
+      
+      // New bilingual format
       galleryItems[index] = [
         newSrc,
-        newCap,
+        { en: newCapEN, zh: newCapZH },
         newType,
-        newHeadline,
+        { en: newHeadEN, zh: newHeadZH },
         {
           font: fontInput.value,
           size: sizeInput.value,
@@ -2723,6 +2753,7 @@ function editGalleryItem(index) {
           color: colorInput.value
         }
       ];
+      
       const ok = await saveToKV("gallery_data", galleryItems);
 
       if (ok) {
