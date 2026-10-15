@@ -2140,8 +2140,6 @@ body.admin-mode .hub-section-actions { display: flex; }
   gap: 14px;
   margin-top: 8px;
 }
-.hub-section-media .hub-media-item img,
-.hub-section-media .hub-media-item video { max-height: 320px; }
 
 /* HUB SECTIONS — Tablet */
 @media (max-width: 900px) {
