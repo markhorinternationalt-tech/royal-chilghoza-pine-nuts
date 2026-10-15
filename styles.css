@@ -460,8 +460,9 @@ body.lightbox-open { overflow: hidden; }
 .gateway-card .btn-gold { padding: 12px 22px; font-size: 0.84rem; }
 
 /* =========================================================
-   GALLERY — 1080×1350 (4:5) premium cards
-   [FIX-INTEGRATED] Gallery frame removal — mobile + desktop
+   GALLERY — Natural Aspect Ratio (Facebook/Instagram style)
+   ✅ No crop, edge-to-edge, no border
+   ✅ Works for all image/video sizes
    ========================================================= */
 .gallery-grid {
   display: grid;
@@ -473,6 +474,7 @@ body.lightbox-open { overflow: hidden; }
   margin-left: -20px;
   margin-right: -20px;
   width: calc(100% + 40px);
+  align-items: start;
 }
 .gallery-item {
   margin: 0;
@@ -493,8 +495,8 @@ body.lightbox-open { overflow: hidden; }
 }
 .gallery-item img {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   display: block;
   flex-shrink: 0;
   cursor: zoom-in;
