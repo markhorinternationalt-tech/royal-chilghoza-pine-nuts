@@ -3249,6 +3249,15 @@ window.addEventListener("popstate", handleRoute);
     }
     
     sessionStorage.setItem("royalLanguage", "en");
+    sessionStorage.setItem("royalPrompted", "1");
+
+    window.addEventListener("load", () => {
+      setTimeout(() => showWelcomePrompt(), 800);
+    });
+  } catch (e) { /* silent */ }
+})();
+    
+    sessionStorage.setItem("royalLanguage", "en");
 sessionStorage.setItem("royalPrompted", "1");
 
 window.addEventListener("load", () => {
