@@ -3257,13 +3257,6 @@ window.addEventListener("popstate", handleRoute);
   } catch (e) { /* silent */ }
 })();
     
-    sessionStorage.setItem("royalLanguage", "en");
-sessionStorage.setItem("royalPrompted", "1");
-
-window.addEventListener("load", () => {
-  setTimeout(() => showWelcomePrompt(), 800);
-});
-
 /* =========================================================
    WELCOME PROMPT — 2 Languages
 ========================================================= */
