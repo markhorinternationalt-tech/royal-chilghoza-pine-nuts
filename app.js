@@ -1959,6 +1959,8 @@ async function renderHubSectionMedia(type, index) {
   if (!container) return;
 
   const arr = await loadHubMedia(type, index);
+  
+  const lang = (typeof state !== "undefined" && state.lang) ? state.lang : "en";
 
   if (arr.length === 0 && !state.admin) {
     container.style.display = "none";
@@ -1975,33 +1977,70 @@ async function renderHubSectionMedia(type, index) {
     container.innerHTML = uploadBtn + `<p class="hub-media-empty">No media yet. Upload images, videos or PDFs.</p>`;
   } else {
     const items = arr.map((m, i) => {
+      // Bilingual caption + headline
+      let capEN = "", capZH = "", headEN = "", headZH = "";
+      if (typeof m.name === "string") { capEN = m.name || ""; }
+      else if (m.name && typeof m.name === "object") {
+        capEN = m.name.en || ""; capZH = m.name.zh || "";
+      }
+      if (typeof m.headline === "string") { headEN = m.headline || ""; }
+      else if (m.headline && typeof m.headline === "object") {
+        headEN = m.headline.en || ""; headZH = m.headline.zh || "";
+      }
+      
+      const isZH = (lang === "zh");
+      const caption = (isZH && capZH) ? capZH : capEN;
+      const headline = (isZH && headZH) ? headZH : headEN;
+      
+      const style = m.style || {};
+      const fontEN = style.fontEN || "'Playfair Display', serif";
+      const fontZH = style.fontZH || "'Noto Sans SC', sans-serif";
+      const sizeEN = style.sizeEN || "18px";
+      const sizeZH = style.sizeZH || "20px";
+      const bgEN = (style.en && style.en.bg) || "#d4af37";
+      const colorEN = (style.en && style.en.color) || "#0a1810";
+      const bgZH = (style.zh && style.zh.bg) || "#c8102e";
+      const colorZH = (style.zh && style.zh.color) || "#ffffff";
+      
+      const font = isZH ? fontZH : fontEN;
+      const size = isZH ? sizeZH : sizeEN;
+      const bg = isZH ? bgZH : bgEN;
+      const color = isZH ? colorZH : colorEN;
+
       const adminBtns = state.admin ? `
         <div class="hub-media-item-actions">
-          <button class="hub-action-btn" data-media-edit="${type}:${index}:${i}" title="Edit Title" type="button">✏️</button>
+          <button class="hub-action-btn" data-media-edit="${type}:${index}:${i}" title="Edit" type="button">✏️</button>
           <button class="hub-action-btn danger" data-media-delete="${type}:${index}:${i}" title="Delete" type="button">🗑</button>
         </div>
       ` : "";
 
       let preview = "";
       if (m.type === "image") {
-        preview = `<img src="${cloudinaryOptimize(m.url, 1200, 800)}" alt="${escapeHtml(m.name)}" loading="lazy">`;
+        preview = `<img src="${cloudinaryOptimize(m.url, 1200, 800)}" alt="${escapeHtml(caption)}" loading="lazy">`;
       } else if (m.type === "video") {
         preview = `<video src="${cloudinaryOptimize(m.url, 1200, 800)}" controls preload="metadata"></video>`;
       } else {
-        preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(m.name)}</b></div>`;
+        preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(caption)}</b></div>`;
       }
 
-      const caption = m.name ? `<div class="hub-media-caption">${escapeHtml(m.name).replace(/\n/g, '<br>')}</div>` : "";
+      const headlineHtml = headline ? `
+        <div class="gallery-headline" style="font-family:${font}; font-size:${size}; background:${bg}; color:${color};">
+          ${escapeHtml(headline)}
+        </div>
+      ` : "";
+
+      const captionHtml = caption ? `<div class="hub-media-caption">${escapeHtml(caption).replace(/\n/g, '<br>')}</div>` : "";
 
       return `
-  <div class="hub-media-item" 
-       data-lightbox-src="${cloudinaryOptimize(m.url, 1600, 2000, 'limit')}"
-       data-lightbox-alt="${escapeHtml(m.name || '')}">
-    ${preview}
-    ${caption}
-    ${adminBtns}
-  </div>
-`;
+        <div class="hub-media-item" 
+             data-lightbox-src="${cloudinaryOptimize(m.url, 1600, 2000, 'limit')}"
+             data-lightbox-alt="${escapeHtml(caption)}">
+          ${preview}
+          ${headlineHtml}
+          ${captionHtml}
+          ${adminBtns}
+        </div>
+      `;
     }).join("");
 
     container.innerHTML = uploadBtn + `<div class="hub-media-grid">${items}</div>`;
