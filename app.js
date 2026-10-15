@@ -2588,46 +2588,119 @@ function applyProfileImage() {
 ========================================================= */
 
 function editGalleryItem(index) {
-  const [currentSrc, currentCap] = galleryItems[index] || ["", ""];
+  const item = galleryItems[index] || ["", "", "image", "", {}];
+  const currentSrc = item[0] || "";
+  const currentCap = item[1] || "";
+  const currentType = item[2] || "image";
+  const currentHeadline = item[3] || "";
+  const currentStyle = item[4] || {};
+  
+  const font = currentStyle.font || "'Playfair Display', serif";
+  const size = currentStyle.size || "18px";
+  const bg = currentStyle.bg || "#d4af37";
+  const color = currentStyle.color || "#0a1810";
+
+  let previewHtml = "";
+  if (currentType === "video") {
+    previewHtml = `<video src="${currentSrc}" controls style="max-width:100%; max-height:200px; border-radius:10px; margin-top:8px;"></video>`;
+  } else if (currentType === "pdf") {
+    previewHtml = `<div style="padding:20px; text-align:center; background:#0a2f1e; border-radius:10px; margin-top:8px; color:var(--gold);">📄 PDF Document</div>`;
+  } else {
+    previewHtml = `<img src="${currentSrc}" class="edit-modal-preview" alt="Gallery">`;
+  }
 
   openEditModal(
-    `🖼️ Edit Gallery Image #${index + 1}`,
+    `✏️ Edit Gallery Item #${index + 1}`,
     `
-    <label>Current Image:</label>
-    <img src="${currentSrc}" class="edit-modal-preview" alt="Gallery">
-    <label>Caption:</label>
-    <textarea id="editGalleryCap" rows="3" placeholder="Write caption here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(currentCap)}</textarea>
-    <label>Upload New Image (optional):</label>
-    <input type="file" id="editGalleryFile" accept="image/*">
-    <label>OR Paste Image URL:</label>
+    <label>Current ${currentType.toUpperCase()}:</label>
+    ${previewHtml}
+    
+    <label style="margin-top:18px;">HEADLINE (bold, above caption):</label>
+    <input type="text" id="editGalleryHeadline" value="${escapeHtml(currentHeadline)}" placeholder="Enter headline...">
+    
+    <label>Headline Font:</label>
+    <select id="editGalleryFont">
+      <option value="'Playfair Display', serif" ${font.includes("Playfair") ? "selected" : ""}>Playfair Display (Classic)</option>
+      <option value="'Cormorant Garamond', serif" ${font.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond (Elegant)</option>
+      <option value="'Cinzel', serif" ${font.includes("Cinzel") ? "selected" : ""}>Cinzel (Roman)</option>
+      <option value="'Montserrat', sans-serif" ${font.includes("Montserrat") ? "selected" : ""}>Montserrat (Bold)</option>
+      <option value="'Oswald', sans-serif" ${font.includes("Oswald") ? "selected" : ""}>Oswald (Strong)</option>
+    </select>
+    
+    <label>Headline Size:</label>
+    <select id="editGallerySize">
+      <option value="14px" ${size === "14px" ? "selected" : ""}>S — Small (14px)</option>
+      <option value="18px" ${size === "18px" ? "selected" : ""}>M — Medium (18px)</option>
+      <option value="22px" ${size === "22px" ? "selected" : ""}>L — Large (22px)</option>
+      <option value="28px" ${size === "28px" ? "selected" : ""}>XL — Extra Large (28px)</option>
+      <option value="34px" ${size === "34px" ? "selected" : ""}>XXL — Huge (34px)</option>
+    </select>
+    
+    <label>Headline Background Color:</label>
+    <input type="color" id="editGalleryBg" value="${bg}" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label>Headline Text Color:</label>
+    <input type="color" id="editGalleryColor" value="${color}" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px;">CAPTION (below headline):</label>
+    <textarea id="editGalleryCap" rows="4" placeholder="Write caption here..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(currentCap)}</textarea>
+    
+    <label>Upload New File (optional):</label>
+    <input type="file" id="editGalleryFile" accept="image/*,video/*,application/pdf">
+    
+    <label>OR Paste URL:</label>
     <input type="text" id="editGalleryUrl" placeholder="https://..." value="${currentSrc}">
-  `,
+    `,
     async () => {
+      const headInput = document.getElementById("editGalleryHeadline");
+      const fontInput = document.getElementById("editGalleryFont");
+      const sizeInput = document.getElementById("editGallerySize");
+      const bgInput = document.getElementById("editGalleryBg");
+      const colorInput = document.getElementById("editGalleryColor");
       const capInput = document.getElementById("editGalleryCap");
       const fileInput = document.getElementById("editGalleryFile");
       const urlInput = document.getElementById("editGalleryUrl");
 
+      const newHeadline = headInput.value.trim();
       const newCap = capInput.value.trim();
       let newSrc = urlInput.value.trim();
+      let newType = currentType;
 
       if (!newCap) { setEditStatus("❌ Caption required", "error"); return; }
 
       if (fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        if (["mp4", "webm", "mov", "avi"].includes(ext)) newType = "video";
+        else if (["pdf"].includes(ext)) newType = "pdf";
+        else newType = "image";
+
         setEditStatus("Uploading...", "");
-        const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "gallery");
+        const uploadedUrl = await uploadToCloudinary(file, "gallery");
         if (uploadedUrl) newSrc = uploadedUrl;
         else { setEditStatus("❌ Upload failed", "error"); return; }
       }
 
-      if (!newSrc) { setEditStatus("❌ No image", "error"); return; }
+      if (!newSrc) { setEditStatus("❌ No file or URL", "error"); return; }
 
       setEditStatus("Saving...", "");
-      galleryItems[index] = [newSrc, newCap];
+      galleryItems[index] = [
+        newSrc,
+        newCap,
+        newType,
+        newHeadline,
+        {
+          font: fontInput.value,
+          size: sizeInput.value,
+          bg: bgInput.value,
+          color: colorInput.value
+        }
+      ];
       const ok = await saveToKV("gallery_data", galleryItems);
 
       if (ok) {
         renderGallery();
-        setEditStatus("✅ Gallery image saved!", "success");
+        setEditStatus("✅ Gallery item saved!", "success");
         setTimeout(closeEditModal, 1000);
       } else {
         setEditStatus("❌ Save failed", "error");
