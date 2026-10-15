@@ -183,7 +183,7 @@ function cloudinaryOptimize(url, width, height, crop = 'limit') {
     cleanUrl = cleanUrl.replace(/\/upload\/w_\d+\//, '/upload/');
 
     // 3. واٹر مارک کی سیٹنگ
-    const watermark = 'l_text:Arial_40:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_center,a_45';
+    const watermark = 'l_text:Arial_22:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_30,g_center,a_45';
 
     // 4. ✅ ویڈیو: اصل aspect ratio برقرار رکھیں — کوئی کراپ نہیں
     if (url.includes('/video/upload/')) {
