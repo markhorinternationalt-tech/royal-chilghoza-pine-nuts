@@ -2631,26 +2631,26 @@ function editGalleryItem(index) {
   const currentType = item[2] || "image";
   const currentStyle = item[4] || {};
   
-  // Bilingual captions
   let capEN = "", capZH = "";
   if (typeof item[1] === "string") { capEN = item[1] || ""; }
   else if (item[1] && typeof item[1] === "object") {
-    capEN = item[1].en || "";
-    capZH = item[1].zh || "";
+    capEN = item[1].en || ""; capZH = item[1].zh || "";
   }
   
-  // Bilingual headlines
   let headEN = "", headZH = "";
   if (typeof item[3] === "string") { headEN = item[3] || ""; }
   else if (item[3] && typeof item[3] === "object") {
-    headEN = item[3].en || "";
-    headZH = item[3].zh || "";
+    headEN = item[3].en || ""; headZH = item[3].zh || "";
   }
   
-  const font = currentStyle.font || "'Playfair Display', serif";
-  const size = currentStyle.size || "18px";
-  const bg = currentStyle.bg || "#d4af37";
-  const color = currentStyle.color || "#0a1810";
+  const fontEN = currentStyle.fontEN || currentStyle.font || "'Playfair Display', serif";
+  const fontZH = currentStyle.fontZH || "'Noto Sans SC', sans-serif";
+  const sizeEN = currentStyle.sizeEN || currentStyle.size || "18px";
+  const sizeZH = currentStyle.sizeZH || currentStyle.size || "20px";
+  const bgEN = (currentStyle.en && currentStyle.en.bg) || currentStyle.bg || "#d4af37";
+  const colorEN = (currentStyle.en && currentStyle.en.color) || currentStyle.color || "#0a1810";
+  const bgZH = (currentStyle.zh && currentStyle.zh.bg) || "#c8102e";
+  const colorZH = (currentStyle.zh && currentStyle.zh.color) || "#ffffff";
 
   let previewHtml = "";
   if (currentType === "video") {
@@ -2673,35 +2673,63 @@ function editGalleryItem(index) {
     <label>HEADLINE — 中文:</label>
     <input type="text" id="editGalleryHeadZH" value="${escapeHtml(headZH)}" placeholder="中文标题...">
     
-    <label>Headline Font:</label>
-    <select id="editGalleryFont">
-      <option value="'Playfair Display', serif" ${font.includes("Playfair") ? "selected" : ""}>Playfair Display (Classic)</option>
-      <option value="'Cormorant Garamond', serif" ${font.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond (Elegant)</option>
-      <option value="'Cinzel', serif" ${font.includes("Cinzel") ? "selected" : ""}>Cinzel (Roman)</option>
-      <option value="'Montserrat', sans-serif" ${font.includes("Montserrat") ? "selected" : ""}>Montserrat (Bold)</option>
-      <option value="'Oswald', sans-serif" ${font.includes("Oswald") ? "selected" : ""}>Oswald (Strong)</option>
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ ENGLISH STYLE ━━━</label>
+    
+    <label>English Font:</label>
+    <select id="editGalleryFontEN">
+      <option value="'Playfair Display', serif" ${fontEN.includes("Playfair") ? "selected" : ""}>Playfair Display (Classic)</option>
+      <option value="'Cormorant Garamond', serif" ${fontEN.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond (Elegant)</option>
+      <option value="'Cinzel', serif" ${fontEN.includes("Cinzel") ? "selected" : ""}>Cinzel (Roman)</option>
+      <option value="'Montserrat', sans-serif" ${fontEN.includes("Montserrat") ? "selected" : ""}>Montserrat (Bold)</option>
+      <option value="'Oswald', sans-serif" ${fontEN.includes("Oswald") ? "selected" : ""}>Oswald (Strong)</option>
     </select>
     
-    <label>Headline Size:</label>
-    <select id="editGallerySize">
-      <option value="14px" ${size === "14px" ? "selected" : ""}>S — Small (14px)</option>
-      <option value="18px" ${size === "18px" ? "selected" : ""}>M — Medium (18px)</option>
-      <option value="22px" ${size === "22px" ? "selected" : ""}>L — Large (22px)</option>
-      <option value="28px" ${size === "28px" ? "selected" : ""}>XL — Extra Large (28px)</option>
-      <option value="34px" ${size === "34px" ? "selected" : ""}>XXL — Huge (34px)</option>
+    <label>English Size:</label>
+    <select id="editGallerySizeEN">
+      <option value="14px" ${sizeEN === "14px" ? "selected" : ""}>S — Small (14px)</option>
+      <option value="18px" ${sizeEN === "18px" ? "selected" : ""}>M — Medium (18px)</option>
+      <option value="22px" ${sizeEN === "22px" ? "selected" : ""}>L — Large (22px)</option>
+      <option value="28px" ${sizeEN === "28px" ? "selected" : ""}>XL — Extra Large (28px)</option>
+      <option value="34px" ${sizeEN === "34px" ? "selected" : ""}>XXL — Huge (34px)</option>
     </select>
     
-    <label>Headline Background Color:</label>
-    <input type="color" id="editGalleryBg" value="${bg}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <label>English BG Color:</label>
+    <input type="color" id="editGalleryBgEN" value="${bgEN}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
-    <label>Headline Text Color:</label>
-    <input type="color" id="editGalleryColor" value="${color}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    <label>English Text Color:</label>
+    <input type="color" id="editGalleryColorEN" value="${colorEN}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ 中文样式 ━━━</label>
+    
+    <label>Chinese Font:</label>
+    <select id="editGalleryFontZH">
+      <option value="'Noto Sans SC', sans-serif" ${fontZH.includes("Noto") ? "selected" : ""}>Noto Sans SC (简体)</option>
+      <option value="'Noto Serif SC', serif" ${fontZH.includes("Noto Serif") ? "selected" : ""}>Noto Serif SC (宋体)</option>
+      <option value="'Ma Shan Zheng', cursive" ${fontZH.includes("Ma Shan") ? "selected" : ""}>Ma Shan Zheng (书法)</option>
+      <option value="'ZCOOL XiaoWei', serif" ${fontZH.includes("ZCOOL") ? "selected" : ""}>ZCOOL XiaoWei (雅致)</option>
+      <option value="'Long Cang', cursive" ${fontZH.includes("Long Cang") ? "selected" : ""}>Long Cang (草书)</option>
+    </select>
+    
+    <label>Chinese Size:</label>
+    <select id="editGallerySizeZH">
+      <option value="16px" ${sizeZH === "16px" ? "selected" : ""}>S — Small (16px)</option>
+      <option value="20px" ${sizeZH === "20px" ? "selected" : ""}>M — Medium (20px)</option>
+      <option value="24px" ${sizeZH === "24px" ? "selected" : ""}>L — Large (24px)</option>
+      <option value="30px" ${sizeZH === "30px" ? "selected" : ""}>XL — Extra Large (30px)</option>
+      <option value="36px" ${sizeZH === "36px" ? "selected" : ""}>XXL — Huge (36px)</option>
+    </select>
+    
+    <label>Chinese BG Color:</label>
+    <input type="color" id="editGalleryBgZH" value="${bgZH}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
+    
+    <label>Chinese Text Color:</label>
+    <input type="color" id="editGalleryColorZH" value="${colorZH}" style="width:100%;height:40px;border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:4px;">
     
     <label style="margin-top:18px;">CAPTION — English:</label>
-    <textarea id="editGalleryCapEN" rows="5" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capEN)}</textarea>
+    <textarea id="editGalleryCapEN" rows="4" placeholder="English caption..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capEN)}</textarea>
     
     <label>CAPTION — 中文:</label>
-    <textarea id="editGalleryCapZH" rows="5" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capZH)}</textarea>
+    <textarea id="editGalleryCapZH" rows="4" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capZH)}</textarea>
     
     <label>Upload New File (optional):</label>
     <input type="file" id="editGalleryFile" accept="image/*,video/*,application/pdf">
@@ -2712,10 +2740,14 @@ function editGalleryItem(index) {
     async () => {
       const headENInput = document.getElementById("editGalleryHeadEN");
       const headZHInput = document.getElementById("editGalleryHeadZH");
-      const fontInput = document.getElementById("editGalleryFont");
-      const sizeInput = document.getElementById("editGallerySize");
-      const bgInput = document.getElementById("editGalleryBg");
-      const colorInput = document.getElementById("editGalleryColor");
+      const fontENInput = document.getElementById("editGalleryFontEN");
+      const fontZHInput = document.getElementById("editGalleryFontZH");
+      const sizeENInput = document.getElementById("editGallerySizeEN");
+      const sizeZHInput = document.getElementById("editGallerySizeZH");
+      const bgENInput = document.getElementById("editGalleryBgEN");
+      const colorENInput = document.getElementById("editGalleryColorEN");
+      const bgZHInput = document.getElementById("editGalleryBgZH");
+      const colorZHInput = document.getElementById("editGalleryColorZH");
       const capENInput = document.getElementById("editGalleryCapEN");
       const capZHInput = document.getElementById("editGalleryCapZH");
       const fileInput = document.getElementById("editGalleryFile");
@@ -2730,7 +2762,7 @@ function editGalleryItem(index) {
       let newType = currentType;
 
       if (!newCapEN && !newCapZH) { 
-        setEditStatus("❌ Caption required (at least one language)", "error"); 
+        setEditStatus("❌ Caption required", "error"); 
         return; 
       }
 
@@ -2751,17 +2783,18 @@ function editGalleryItem(index) {
 
       setEditStatus("Saving...", "");
       
-      // New bilingual format
       galleryItems[index] = [
         newSrc,
         { en: newCapEN, zh: newCapZH },
         newType,
         { en: newHeadEN, zh: newHeadZH },
         {
-          font: fontInput.value,
-          size: sizeInput.value,
-          bg: bgInput.value,
-          color: colorInput.value
+          fontEN: fontENInput.value,
+          fontZH: fontZHInput.value,
+          sizeEN: sizeENInput.value,
+          sizeZH: sizeZHInput.value,
+          en: { bg: bgENInput.value, color: colorENInput.value },
+          zh: { bg: bgZHInput.value, color: colorZHInput.value }
         }
       ];
       
