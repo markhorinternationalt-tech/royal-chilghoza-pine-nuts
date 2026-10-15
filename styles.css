@@ -2419,6 +2419,8 @@ body.admin-mode .hub-section-actions { display: flex; }
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
+  object-fit: contain !important;
+  background: transparent !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
