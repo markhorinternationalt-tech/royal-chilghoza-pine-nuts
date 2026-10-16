@@ -3170,11 +3170,17 @@ function editGalleryItem(index) {
   );
 }
 
-/* =========================================================
+ /* =========================================================
    LOAD ALL KV CONTENT
 ========================================================= */
 
 async function loadAllKVContent() {
+  // ✅ GLOBAL THEME — Load first for ALL users (admin-controlled)
+  try {
+    const siteTheme = await loadThemeGlobal();
+    if (siteTheme) applyFullTheme(siteTheme);
+  } catch (e) { /* silent */ }
+
   const heroVal = await getFromKV("hero_image");
   if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
 
@@ -3194,10 +3200,10 @@ async function loadAllKVContent() {
   applyGatewayContent();
 
   const gal = await getFromKV("gallery_data");
-if (gal && Array.isArray(gal) && gal.length > 0) {
-  galleryItems = gal;
-  renderGallery();
-}
+  if (gal && Array.isArray(gal) && gal.length > 0) {
+    galleryItems = gal;
+    renderGallery();
+  }
 
   const off = await getFromKV("offices");
   if (off && Array.isArray(off) && off.length === 4) {
@@ -3217,7 +3223,7 @@ if (gal && Array.isArray(gal) && gal.length > 0) {
     gateways = gwData;
   }
 
-    renderGateways();
+  renderGateways();
 
   // ✅ ریفریش پر URL کے مطابق صفحہ کھولیں
   setTimeout(handleRoute, 300);
