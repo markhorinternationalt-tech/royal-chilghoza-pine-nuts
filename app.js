@@ -184,7 +184,7 @@ function cloudinaryOptimize(url, width, height, crop = 'limit') {
     cleanUrl = cleanUrl.replace(/\/upload\/w_\d+\//, '/upload/');
 
     // 3. واٹر مارک کی سیٹنگ — بڑا سائز (35px) تاکہ ہر سائز پر نظر آئے
-    const watermark = 'l_text:Arial_35:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_30,g_center,a_45';
+    const watermark = 'l_text:Arial_35:Royal%20Chilgoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_south_west,x_30,y_30,a_0';
 
     // 4. ✅ ویڈیو: اصل aspect ratio برقرار + واٹر مارک
     if (url.includes('/video/upload/')) {
