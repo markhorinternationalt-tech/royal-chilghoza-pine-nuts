@@ -3651,17 +3651,18 @@ function showWelcomePrompt() {
       const lang = btn.dataset.welcomeLang;
       const remember = document.getElementById("welcomeRememberChoice")?.checked;
 
-      // Session storage — ہمیشہ
       sessionStorage.setItem("royalLanguage", lang);
       sessionStorage.setItem("royalPrompted", "1");
 
-      // localStorage — صرف اگر صارف نے "یاد رکھو" چیک کیا
       if (remember) {
-        localStorage.setItem("royalLanguage", lang);
-        localStorage.setItem("royalLangRemember", "1");
+        const exp = new Date();
+        exp.setFullYear(exp.getFullYear() + 10);
+        const expStr = exp.toUTCString();
+        document.cookie = "rlSaved=1; expires=" + expStr + "; path=/";
+        document.cookie = "rlLang=" + lang + "; expires=" + expStr + "; path=/";
       } else {
-        localStorage.removeItem("royalLanguage");
-        localStorage.removeItem("royalLangRemember");
+        document.cookie = "rlSaved=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+        document.cookie = "rlLang=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
       }
 
       prompt.style.transition = "opacity 0.4s ease";
@@ -3678,7 +3679,6 @@ function showWelcomePrompt() {
       }, 400);
     };
   });
-}
 
 document.addEventListener("DOMContentLoaded", init);
 
