@@ -2198,7 +2198,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 .hub-media-caption {
   position: relative;
   /* [FIX] سائیڈ padding تاکہ edge-to-edge پر متن کنارے سے نہ چپکے */
-  padding: 20px 28px 0;
+  padding: 20px 28px;
   margin-top: 0;
   font-family: var(--heading-font);
   font-size: var(--caption-font-size);
@@ -2208,7 +2208,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   letter-spacing: 0.02em;
   color: var(--caption-text-color);
   text-align: start;
-  background: transparent;
+  background: var(--caption-bg-color);
   border-top: none;
   border-radius: 0;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
@@ -2227,7 +2227,7 @@ body.admin-mode .hub-section-actions { display: flex; }
 .hub-media-item:hover .hub-media-caption { color: var(--gold2); }
 .hub-media-pdf + .hub-media-caption { border-top: none; }
 @media (max-width: 620px) {
-  .hub-media-caption { padding: 16px 16px 0; border-radius: 0; }
+  .hub-media-caption { padding: 16px 16px; }
   .hub-media-caption::before { font-size: 0.6rem; margin-bottom: 6px; }
 }
 
