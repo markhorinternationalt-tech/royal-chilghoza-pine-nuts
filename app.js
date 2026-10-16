@@ -3679,6 +3679,7 @@ function showWelcomePrompt() {
       }, 400);
     };
   });
+}  
 
 document.addEventListener("DOMContentLoaded", init);
 
