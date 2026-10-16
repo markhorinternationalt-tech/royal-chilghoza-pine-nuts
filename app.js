@@ -2588,6 +2588,38 @@ function readThemeFromUI() {
   };
 }
 
+/* =========================================================
+   GLOBAL THEME — Save/Load from KV (Admin-controlled)
+========================================================= */
+async function saveThemeGlobal() {
+  if (!state.admin || !state.token) return false;
+  const theme = readThemeFromUI();
+  try {
+    const r = await fetch("/api/kv/set", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + state.token,
+      },
+      body: JSON.stringify({ key: "site_theme", value: theme }),
+    });
+    const data = await r.json();
+    return data.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function loadThemeGlobal() {
+  try {
+    const r = await fetch("/api/kv/get/site_theme");
+    if (!r.ok) return null;
+    const data = await r.json();
+    return data.ok && data.value && typeof data.value === "object" ? data.value : null;
+  } catch (e) {
+    return null;
+  }
+}
 function autoSaveTheme() {
   try { localStorage.setItem(THEME_KEY, JSON.stringify(readThemeFromUI())); } catch (e) {}
 }
