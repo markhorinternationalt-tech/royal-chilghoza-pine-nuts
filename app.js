@@ -3571,7 +3571,114 @@ window.addEventListener("popstate", handleRoute);
   } catch (e) { /* silent */ }
 })();
     
-welcomePrompt
+/* =========================================================
+   WELCOME PROMPT — 2 Languages + Remember Option
+========================================================= */
+function showWelcomePrompt() {
+  if (document.getElementById("welcomeLanguagePrompt")) return;
+  if (document.body.classList.contains("admin-mode")) return;
+
+  const prompt = document.createElement("div");
+  prompt.id = "welcomeLanguagePrompt";
+  prompt.style.cssText = `
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+  `;
+  prompt.innerHTML = `
+    <div style="
+      background: linear-gradient(160deg, #0a2f1e 0%, #062015 50%, #03140a 100%);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+      box-sizing: border-box;
+    ">
+      <div style="font-size:3rem;color:#d4af37;margin-bottom:16px;">👑</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#f5f1e8;margin:0 0 12px;font-weight:500;">Royal Chilgoza Pine Nuts</h2>
+      <p style="color:#d4af37;font-size:0.95rem;font-weight:500;margin:0 0 28px;line-height:1.5;">Please choose your language<br>请选择您的语言</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:20px;">
+        <button data-welcome-lang="en" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
+          <span style="font-size:2rem;line-height:1;">🇬🇧</span>
+          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">English</b>
+        </button>
+        <button data-welcome-lang="zh" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
+          <span style="font-size:2rem;line-height:1;">🇨🇳</span>
+          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">中文</b>
+        </button>
+      </div>
+      <label style="
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        margin:0 0 14px;
+        padding:12px 16px;
+        background:rgba(212,175,55,0.06);
+        border:1px solid rgba(212,175,55,0.2);
+        border-radius:10px;
+        cursor:pointer;
+        user-select:none;
+      ">
+        <input type="checkbox" id="welcomeRememberChoice" style="width:18px;height:18px;accent-color:#d4af37;cursor:pointer;flex-shrink:0;">
+        <span style="color:#f5f1e8;font-size:0.85rem;line-height:1.4;text-align:left;">
+          Remember my choice<br>
+          <span style="color:#8fa89a;font-size:0.78rem;">میرا انتخاب یاد رکھو · 记住我的选择</span>
+        </span>
+      </label>
+      <p style="color:#8fa89a;font-size:0.75rem;margin:0;line-height:1.4;">You can change language anytime from the top menu.</p>
+    </div>
+  `;
+
+  document.body.appendChild(prompt);
+
+  prompt.querySelectorAll("[data-welcome-lang]").forEach((btn) => {
+    btn.onclick = () => {
+      const lang = btn.dataset.welcomeLang;
+      const remember = document.getElementById("welcomeRememberChoice")?.checked;
+
+      // Session storage — ہمیشہ
+      sessionStorage.setItem("royalLanguage", lang);
+      sessionStorage.setItem("royalPrompted", "1");
+
+      // localStorage — صرف اگر صارف نے "یاد رکھو" چیک کیا
+      if (remember) {
+        localStorage.setItem("royalLanguage", lang);
+        localStorage.setItem("royalLangRemember", "1");
+      } else {
+        localStorage.removeItem("royalLanguage");
+        localStorage.removeItem("royalLangRemember");
+      }
+
+      prompt.style.transition = "opacity 0.4s ease";
+      prompt.style.opacity = "0";
+
+      setTimeout(() => {
+        prompt.remove();
+        if (typeof setLanguage === "function") {
+          setLanguage(lang);
+        } else if (typeof state !== "undefined") {
+          state.lang = lang;
+          if (typeof applyLanguage === "function") applyLanguage();
+        }
+      }, 400);
+    };
+  });
+}
 
 document.addEventListener("DOMContentLoaded", init);
 
