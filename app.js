@@ -2736,8 +2736,9 @@ if (saveBtn) saveBtn.addEventListener("click", async () => {
     document.documentElement.style.setProperty("--caption-text-color", "#F5F1E8");
     document.documentElement.style.setProperty("--caption-bg-color", "#0A2F1E");
     document.documentElement.style.setProperty("--media-box-bg", "#0A2F1E");
+    saveThemeGlobal();
     const status = document.getElementById("adminStatus");
-    if (status) status.textContent = "↺ Theme reset to default.";
+    if (status) status.textContent = "↺ Theme reset for ALL users.";
   });
 }
 
