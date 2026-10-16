@@ -3545,26 +3545,45 @@ window.addEventListener("popstate", handleRoute);
 }
 
 /* =========================================================
-   AUTO-DETECT LANGUAGE — Chinese visitors
+   AUTO-DETECT LANGUAGE — Cookie-based (10 years persistence)
 ========================================================= */
 (function autoDetectLanguage() {
   try {
-    const saved = sessionStorage.getItem("royalLanguage");
-    const prompted = sessionStorage.getItem("royalPrompted");
-    
-    if (saved && prompted) return;
-    
+    // ✅ Cookie reader
+    function getCookie(name) {
+      const parts = document.cookie.split(";");
+      for (let i = 0; i < parts.length; i++) {
+        const c = parts[i].trim();
+        if (c.indexOf(name + "=") === 0) {
+          return c.substring(name.length + 1);
+        }
+      }
+      return null;
+    }
+
+    // ✅ 1. COOKIE — اگر "Saved" ہو تو prompt نہیں
+    const saved = getCookie("rlSaved");
+    if (saved === "1") {
+      const lang = getCookie("rlLang") || "en";
+      sessionStorage.setItem("royalLanguage", lang);
+      sessionStorage.setItem("royalPrompted", "1");
+      return;
+    }
+
+    // ✅ 2. session چیک کریں
+    const sessionLang = sessionStorage.getItem("royalLanguage");
+    const sessionPrompted = sessionStorage.getItem("royalPrompted");
+    if (sessionLang && sessionPrompted === "1") return;
+
+    // ✅ 3. Browser language — چینی
     const browserLang = (navigator.language || "").toLowerCase();
-    
     if (browserLang.startsWith("zh")) {
       sessionStorage.setItem("royalLanguage", "zh");
       sessionStorage.setItem("royalPrompted", "1");
       return;
     }
-    
-    sessionStorage.setItem("royalLanguage", "en");
-    sessionStorage.setItem("royalPrompted", "1");
 
+    // ✅ 4. Prompt دکھائیں
     window.addEventListener("load", () => {
       setTimeout(() => showWelcomePrompt(), 800);
     });
