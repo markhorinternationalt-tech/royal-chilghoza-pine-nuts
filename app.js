@@ -3580,24 +3580,48 @@ function showWelcomePrompt() {
   
   const prompt = document.createElement("div");
   prompt.id = "welcomeLanguagePrompt";
+  prompt.style.cssText = `
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+  `;
   prompt.innerHTML = `
-    <div class="welcome-overlay">
-      <div class="welcome-card">
-        <div class="welcome-crown">👑</div>
-        <h2 class="welcome-title">Royal Chilgoza Pine Nuts</h2>
-        <p class="welcome-subtitle">Please choose your language<br>请选择您的语言</p>
-        <div class="welcome-options">
-          <button class="welcome-btn" data-welcome-lang="en">
-            <span>🇬🇧</span>
-            <b>English</b>
-          </button>
-          <button class="welcome-btn" data-welcome-lang="zh">
-            <span>🇨🇳</span>
-            <b>中文</b>
-          </button>
-        </div>
-        <p class="welcome-note">You can change language anytime from the top menu.</p>
+    <div style="
+      background: linear-gradient(160deg, #0a2f1e 0%, #062015 50%, #03140a 100%);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 20px;
+      padding: 40px 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+      box-sizing: border-box;
+    ">
+      <div style="font-size:3rem;color:#d4af37;margin-bottom:16px;">👑</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#f5f1e8;margin:0 0 12px;font-weight:500;">Royal Chilgoza Pine Nuts</h2>
+      <p style="color:#d4af37;font-size:0.95rem;font-weight:500;margin:0 0 28px;line-height:1.5;">Please choose your language<br>请选择您的语言</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:20px;">
+        <button data-welcome-lang="en" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
+          <span style="font-size:2rem;line-height:1;">🇬🇧</span>
+          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">English</b>
+        </button>
+        <button data-welcome-lang="zh" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
+          <span style="font-size:2rem;line-height:1;">🇨🇳</span>
+          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">中文</b>
+        </button>
       </div>
+      <p style="color:#8fa89a;font-size:0.78rem;margin:0;line-height:1.4;">You can change language anytime from the top menu.</p>
     </div>
   `;
   
