@@ -3521,8 +3521,10 @@ if (adminLoginEl) {
     };
   }
 
+  if (state.admin) {
   const savedTheme = JSON.parse(localStorage.getItem(THEME_KEY) || "null");
   if (savedTheme) applyFullTheme(savedTheme);
+}
 
   if (state.admin) activateAdminUI();
 
