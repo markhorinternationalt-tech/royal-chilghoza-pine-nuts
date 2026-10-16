@@ -2697,11 +2697,18 @@ function initThemeControls() {
   });
 
   const saveBtn = document.getElementById("themeSave");
-  if (saveBtn) saveBtn.addEventListener("click", () => {
-    autoSaveTheme();
-    const status = document.getElementById("adminStatus");
-    if (status) status.textContent = "✅ Theme saved successfully!";
-  });
+if (saveBtn) saveBtn.addEventListener("click", async () => {
+  autoSaveTheme();
+  const status = document.getElementById("adminStatus");
+  if (status) status.textContent = "⏳ Saving for all users...";
+  
+  const ok = await saveThemeGlobal();
+  if (ok) {
+    if (status) status.textContent = "✅ Theme saved for ALL users!";
+  } else {
+    if (status) status.textContent = "❌ Save failed. Please login again.";
+  }
+});
 
   const resetBtn = document.getElementById("themeReset");
   if (resetBtn) resetBtn.addEventListener("click", () => {
