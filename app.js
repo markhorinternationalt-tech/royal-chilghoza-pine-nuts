@@ -2661,6 +2661,13 @@ async function saveThemeGlobal() {
       body: JSON.stringify({ key: "site_theme", value: theme }),
     });
     const data = await r.json();
+    
+    // ✅ جب ایڈمن سیو کرے تو براؤزر میں بھی محفوظ کر لو تاکہ فوراً لوڈ ہو
+    if (data.ok) {
+      localStorage.setItem("royalGlobalTheme", JSON.stringify(theme));
+      localStorage.setItem(THEME_KEY, JSON.stringify(theme));
+    }
+    
     return data.ok;
   } catch (e) {
     return false;
@@ -2677,6 +2684,7 @@ async function loadThemeGlobal() {
     return null;
   }
 }
+
 function autoSaveTheme() {
   try { localStorage.setItem(THEME_KEY, JSON.stringify(readThemeFromUI())); } catch (e) {}
 }
@@ -2692,7 +2700,7 @@ function applyFullTheme(theme) {
   if (theme.headingFont) root.style.setProperty("--heading-font", theme.headingFont);
   if (theme.bodyFont) root.style.setProperty("--body-font", theme.bodyFont);
 
-  // ===== NEW: Apply caption styles =====
+  // ===== Apply caption styles =====
   if (theme.captionFontSize) root.style.setProperty("--caption-font-size", theme.captionFontSize + "rem");
   if (theme.captionFontWeight) root.style.setProperty("--caption-font-weight", theme.captionFontWeight);
   if (theme.captionText) root.style.setProperty("--caption-text-color", theme.captionText);
@@ -2704,7 +2712,7 @@ function applyFullTheme(theme) {
   if (document.getElementById("hexText") && theme.text) document.getElementById("hexText").textContent = theme.text.toUpperCase();
   if (document.getElementById("hexHeading") && theme.heading) document.getElementById("hexHeading").textContent = theme.heading.toUpperCase();
 
-  // ===== NEW: Update caption hex labels =====
+  // ===== Update caption hex labels =====
   if (document.getElementById("hexCaptionText") && theme.captionText) document.getElementById("hexCaptionText").textContent = theme.captionText.toUpperCase();
   if (document.getElementById("hexCaptionBg") && theme.captionBg) document.getElementById("hexCaptionBg").textContent = theme.captionBg.toUpperCase();
   if (document.getElementById("hexMediaBox") && theme.mediaBox) document.getElementById("hexMediaBox").textContent = theme.mediaBox.toUpperCase();
@@ -2736,7 +2744,7 @@ function initThemeControls() {
     autoSaveTheme();
   });
 
-  // ===== NEW: Caption Font Size + Weight =====
+  // ===== Caption Font Size + Weight =====
   const captionFontSize = document.getElementById("captionFontSize");
   const captionFontWeight = document.getElementById("captionFontWeight");
 
@@ -2753,23 +2761,39 @@ function initThemeControls() {
     autoSaveTheme();
   });
 
+  // ✅ نیا Save بٹن (کنفرمیشن الرٹ کے ساتھ)
   const saveBtn = document.getElementById("themeSave");
-if (saveBtn) saveBtn.addEventListener("click", async () => {
-  autoSaveTheme();
-  const status = document.getElementById("adminStatus");
-  if (status) status.textContent = "⏳ Saving for all users...";
-  
-  const ok = await saveThemeGlobal();
-  if (ok) {
-    if (status) status.textContent = "✅ Theme saved for ALL users!";
-  } else {
-    if (status) status.textContent = "❌ Save failed. Please login again.";
+  if (saveBtn) {
+    saveBtn.addEventListener("click", async () => {
+      autoSaveTheme();
+      const status = document.getElementById("adminStatus");
+      if (status) status.textContent = "⏳ Saving for ALL users...";
+      
+      // بٹن پر لوڈنگ کا اثر
+      const originalText = saveBtn.textContent;
+      saveBtn.textContent = "⏳ Saving...";
+      saveBtn.disabled = true;
+
+      const ok = await saveThemeGlobal();
+      
+      saveBtn.disabled = false;
+      saveBtn.textContent = originalText;
+
+      if (ok) {
+        if (status) status.textContent = "✅ Theme permanently saved for ALL users!";
+        // ✅ واضح کنفرمیشن پاپ اپ
+        alert("✅ Theme Saved Successfully!\n\nThis theme is now final and will appear for all visitors worldwide.");
+      } else {
+        if (status) status.textContent = "❌ Save failed. Please login again.";
+        alert("❌ Save failed! Please check your connection or login again.");
+      }
+    });
   }
-});
 
   const resetBtn = document.getElementById("themeReset");
   if (resetBtn) resetBtn.addEventListener("click", () => {
     localStorage.removeItem(THEME_KEY);
+    localStorage.removeItem("royalGlobalTheme");
     const defaults = {
       bg: "#03140A", gold: "#D4AF37", text: "#F4F1E9", heading: "#F4F1E9",
       captionFontSize: 1.05, captionFontWeight: "500",
