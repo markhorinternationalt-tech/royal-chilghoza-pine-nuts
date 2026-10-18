@@ -3266,8 +3266,20 @@ function editGalleryItem(index) {
 async function loadAllKVContent() {
   // ✅ GLOBAL THEME — Load first for ALL users (admin-controlled)
   try {
+    // 1. پہلے براؤزر (localStorage) سے تھیم لوڈ کریں تاکہ صفحہ فوراً رنگ بدل لے اور کوئی جھٹکا نہ لگے
+    const localTheme = localStorage.getItem("royalGlobalTheme");
+    if (localTheme) {
+      applyFullTheme(JSON.parse(localTheme));
+    }
+    
+    // 2. پھر سرور (KV) سے لائیو تھیم لائیں اور اسے حتمی (Final) مانیں
     const siteTheme = await loadThemeGlobal();
-    if (siteTheme) applyFullTheme(siteTheme);
+    if (siteTheme) {
+      applyFullTheme(siteTheme);
+      // براؤزر میں بھی اپڈیٹ کر دیں تاکہ اگلی بار فوراً کھلے
+      localStorage.setItem("royalGlobalTheme", JSON.stringify(siteTheme));
+      localStorage.setItem(THEME_KEY, JSON.stringify(siteTheme));
+    }
   } catch (e) { /* silent */ }
 
   const heroVal = await getFromKV("hero_image");
