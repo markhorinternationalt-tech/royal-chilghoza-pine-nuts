@@ -2337,12 +2337,12 @@ function editHubMediaItem(type, index, mediaIndex) {
     
     <label>Chinese Font:</label>
     <select id="editHubMediaFontZH">
-      <option value="'Noto Sans SC', sans-serif" ${fontZH.includes("Noto Sans") ? "selected" : ""}>Noto Sans SC</option>
-      <option value="'Noto Serif SC', serif" ${fontZH.includes("Noto Serif") ? "selected" : ""}>Noto Serif SC</option>
-      <option value="'Ma Shan Zheng', cursive" ${fontZH.includes("Ma Shan") ? "selected" : ""}>Ma Shan Zheng</option>
-      <option value="'ZCOOL XiaoWei', serif" ${fontZH.includes("ZCOOL") ? "selected" : ""}>ZCOOL XiaoWei</option>
-      <option value="'Long Cang', cursive" ${fontZH.includes("Long Cang") ? "selected" : ""}>Long Cang</option>
-    </select>
+  <option value="'Noto Sans SC', sans-serif" ${fontZH.includes("Noto") ? "selected" : ""}>Noto Sans SC (简体)</option>
+  <option value="'Noto Serif SC', serif" ${fontZH.includes("Noto Serif") ? "selected" : ""}>Noto Serif SC (宋体)</option>
+  <option value="'Ma Shan Zheng', cursive" ${fontZH.includes("Ma Shan") ? "selected" : ""}>Ma Shan Zheng (书法)</option>
+  <option value="'ZCOOL XiaoWei', serif" ${fontZH.includes("ZCOOL") ? "selected" : ""}>ZCOOL XiaoWei (雅致)</option>
+  <option value="'Long Cang', cursive" ${fontZH.includes("Long Cang") ? "selected" : ""}>Long Cang (草书)</option>
+</select>
     
     <label>Chinese Size:</label>
     <select id="editHubMediaSizeZH">
