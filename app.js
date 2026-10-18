@@ -2294,6 +2294,13 @@ function editHubMediaItem(type, index, mediaIndex) {
     <label>Preview:</label>
     ${previewHtml}
     
+    <label style="margin-top:18px; color:var(--gold); font-weight:600;">━━━ REPLACE MEDIA (OPTIONAL) ━━━</label>
+    <label>Upload New File:</label>
+    <input type="file" id="editHubMediaFile" accept="image/*,video/*,application/pdf" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); margin-bottom:8px;">
+    
+    <label>OR Paste URL:</label>
+    <input type="text" id="editHubMediaUrl" value="${escapeHtml(item.url)}" placeholder="https://..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem;">
+    
     <label style="margin-top:18px;">HEADLINE — English:</label>
     <input type="text" id="editHubMediaHeadEN" value="${escapeHtml(headEN)}" placeholder="English headline...">
     
@@ -2359,6 +2366,8 @@ function editHubMediaItem(type, index, mediaIndex) {
     <textarea id="editHubMediaCapZH" rows="3" placeholder="中文说明..." style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(capZH)}</textarea>
     `,
     async () => {
+      const fileInput = document.getElementById("editHubMediaFile");
+      const urlInput = document.getElementById("editHubMediaUrl");
       const headEN = document.getElementById("editHubMediaHeadEN").value.trim();
       const headZH = document.getElementById("editHubMediaHeadZH").value.trim();
       const fontEN = document.getElementById("editHubMediaFontEN").value;
@@ -2374,8 +2383,54 @@ function editHubMediaItem(type, index, mediaIndex) {
 
       if (!capEN && !capZH) { setEditStatus("❌ Caption required", "error"); return; }
 
+      let newUrl = urlInput.value.trim();
+      let newPublicId = item.public_id;
+      let newType = item.type;
+
+      // ✅ اگر نئی فائل اپلوڈ کی گئی ہے
+      if (fileInput.files[0]) {
+        setEditStatus("Uploading new media...", "");
+        const file = fileInput.files[0];
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        if (["mp4","webm","mov","avi"].includes(ext)) newType = "video";
+        else if (["pdf","doc","docx"].includes(ext)) newType = "raw";
+        else newType = "image";
+
+        const fd = new FormData();
+        fd.append("file", file);
+        fd.append("folder", `hubs/${type}-${index}`);
+
+        try {
+          const r = await fetch("/api/media/upload", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + state.token },
+            body: fd,
+          });
+          const d = await r.json();
+          if (d.ok) {
+            newUrl = d.url;
+            newPublicId = d.public_id || d.key;
+          } else {
+            setEditStatus("❌ Upload failed: " + (d.error || "unknown"), "error");
+            return;
+          }
+        } catch (e) {
+          setEditStatus("❌ Upload error: " + e.message, "error");
+          return;
+        }
+      }
+
+      if (!newUrl) { setEditStatus("❌ URL or File required", "error"); return; }
+
       setEditStatus("Saving...", "");
       const arr2 = await loadHubMedia(type, index);
+      
+      // ✅ URL, ID اور Type اپڈیٹ کریں
+      arr2[mediaIndex].url = newUrl;
+      arr2[mediaIndex].public_id = newPublicId;
+      arr2[mediaIndex].type = newType;
+      
+      // باقی کیپشن اور سٹائل اپڈیٹ کریں
       arr2[mediaIndex].name = { en: capEN, zh: capZH };
       arr2[mediaIndex].headline = { en: headEN, zh: headZH };
       arr2[mediaIndex].style = {
@@ -2383,6 +2438,7 @@ function editHubMediaItem(type, index, mediaIndex) {
         en: { bg: bgEN, color: colorEN },
         zh: { bg: bgZH, color: colorZH }
       };
+      
       const ok = await saveHubMedia(type, index, arr2);
 
       if (ok) {
@@ -2399,6 +2455,7 @@ function editHubMediaItem(type, index, mediaIndex) {
     }
   );
 }
+
 
 /* =========================================================
    AI ASSISTANT
