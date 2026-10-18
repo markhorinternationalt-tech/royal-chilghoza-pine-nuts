@@ -2116,12 +2116,12 @@ function uploadHubMedia(type, index) {
     
     <label>Chinese Font:</label>
     <select id="hubMediaFontZH">
-      <option value="'Noto Sans SC', sans-serif" selected>Noto Sans SC</option>
-      <option value="'Noto Serif SC', serif">Noto Serif SC</option>
-      <option value="'Ma Shan Zheng', cursive">Ma Shan Zheng</option>
-      <option value="'ZCOOL XiaoWei', serif">ZCOOL XiaoWei</option>
-      <option value="'Long Cang', cursive">Long Cang</option>
-    </select>
+  <option value="'Noto Sans SC', sans-serif" style="font-family: 'Noto Sans SC', sans-serif;" selected>Noto Sans SC</option>
+  <option value="'Noto Serif SC', serif" style="font-family: 'Noto Serif SC', serif;">Noto Serif SC</option>
+  <option value="'Ma Shan Zheng', cursive" style="font-family: 'Ma Shan Zheng', cursive;">Ma Shan Zheng</option>
+  <option value="'ZCOOL XiaoWei', serif" style="font-family: 'ZCOOL XiaoWei', serif;">ZCOOL XiaoWei</option>
+  <option value="'Long Cang', cursive" style="font-family: 'Long Cang', cursive;">Long Cang</option>
+</select>
     
     <label>Chinese Size:</label>
     <select id="hubMediaSizeZH">
