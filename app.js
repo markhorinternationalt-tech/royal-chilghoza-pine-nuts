@@ -2311,12 +2311,12 @@ function editHubMediaItem(type, index, mediaIndex) {
     
     <label>English Font:</label>
     <select id="editHubMediaFontEN">
-      <option value="'Playfair Display', serif" ${fontEN.includes("Playfair") ? "selected" : ""}>Playfair Display</option>
-      <option value="'Cormorant Garamond', serif" ${fontEN.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond</option>
-      <option value="'Cinzel', serif" ${fontEN.includes("Cinzel") ? "selected" : ""}>Cinzel</option>
-      <option value="'Montserrat', sans-serif" ${fontEN.includes("Montserrat") ? "selected" : ""}>Montserrat</option>
-      <option value="'Oswald', sans-serif" ${fontEN.includes("Oswald") ? "selected" : ""}>Oswald</option>
-    </select>
+  <option value="'Playfair Display', serif" style="font-family: 'Playfair Display', serif;" ${fontEN.includes("Playfair") ? "selected" : ""}>Playfair Display</option>
+  <option value="'Cormorant Garamond', serif" style="font-family: 'Cormorant Garamond', serif;" ${fontEN.includes("Cormorant") ? "selected" : ""}>Cormorant Garamond</option>
+  <option value="'Cinzel', serif" style="font-family: 'Cinzel', serif;" ${fontEN.includes("Cinzel") ? "selected" : ""}>Cinzel</option>
+  <option value="'Montserrat', sans-serif" style="font-family: 'Montserrat', sans-serif;" ${fontEN.includes("Montserrat") ? "selected" : ""}>Montserrat</option>
+  <option value="'Oswald', sans-serif" style="font-family: 'Oswald', sans-serif;" ${fontEN.includes("Oswald") ? "selected" : ""}>Oswald</option>
+</select>
     
     <label>English Size:</label>
     <select id="editHubMediaSizeEN">
