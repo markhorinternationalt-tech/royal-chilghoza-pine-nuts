@@ -479,7 +479,7 @@ body.lightbox-open { overflow: hidden; }
 .gallery-item {
   margin: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
   background: transparent;
