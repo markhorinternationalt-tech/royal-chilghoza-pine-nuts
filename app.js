@@ -3334,6 +3334,14 @@ async function loadAllKVContent() {
     }
   } catch (e) { /* silent */ }
 
+  // Gateway Profile Data Load
+const gwProfImg = await getFromKV("gateway_profile_img");
+const gwProfName = await getFromKV("gateway_profile_name");
+const gwProfRole = await getFromKV("gateway_profile_role");
+
+if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
+if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
+if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
   const heroVal = await getFromKV("hero_image");
   if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
 
