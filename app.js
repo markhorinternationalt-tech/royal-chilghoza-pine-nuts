@@ -1594,14 +1594,17 @@ function editGatewayProfile() {
    GATEWAY / HUB NAVIGATION
 ========================================================= */
 
-function openGateway(type) {
+async function openGateway(type) {
   document.body.classList.add("subview");
   state.gateway = type;
   state.hub = null;
   document.getElementById("mainPage").hidden = true;
   document.getElementById("hubView").classList.remove("open");
   document.getElementById("gatewayView").classList.add("open");
-  renderGateway(type);
+  
+  // ✅ await لگا دیں تاکہ ڈیٹا لوڈ ہونے کا انتظار کرے
+  await renderGateway(type); 
+  
   window.scrollTo(0, 0);
 
   // ✅ URL تبدیل کریں
@@ -1611,7 +1614,7 @@ function openGateway(type) {
   }
 }
 
-function renderGateway(type) {
+async function renderGateway(type) {
   const allGateways = getGateways();
   const gw = allGateways.find(g => g.id === type);
   const gwTitle = gw ? getGatewayTitle(gw) : "Gateway";
@@ -1628,6 +1631,27 @@ function renderGateway(type) {
   document.getElementById("gatewayEyebrow").textContent = gwLabels[state.lang] || gwLabels.en;
   document.getElementById("gatewayTitleText").textContent = gwTitle;
   document.getElementById("gatewayDescription").textContent = gwText;
+
+  // ✅ نیا کوڈ: جب بھی گیٹ وے کھلے یا ریفریش ہو، پروفائل کا تازہ ڈیٹا سرور سے لائے
+  try {
+    const gwProfImg = await getFromKV(`gw_profile_${type}_img`);
+    const gwProfName = await getFromKV(`gw_profile_${type}_name`);
+    const gwProfRole = await getFromKV(`gw_profile_${type}_role`);
+    const gwProfDesc = await getFromKV(`gw_profile_${type}_desc`);
+    
+    if (document.getElementById("gatewayProfileImage")) {
+      document.getElementById("gatewayProfileImage").src = gwProfImg || "royal-profile-pic.jpg";
+    }
+    if (document.getElementById("gatewayProfileName")) {
+      document.getElementById("gatewayProfileName").textContent = gwProfName || "Syed Azeem Shah";
+    }
+    if (document.getElementById("gatewayProfileRole")) {
+      document.getElementById("gatewayProfileRole").textContent = gwProfRole || "Founder & CEO";
+    }
+    if (document.getElementById("gatewayProfileDesc")) {
+      document.getElementById("gatewayProfileDesc").textContent = gwProfDesc || "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
+    }
+  } catch (e) { /* silent */ }
 
   const list = hubs(type);
   const container = document.getElementById("hubGridPage");
