@@ -3349,103 +3349,62 @@ function editGalleryItem(index) {
 }
 
  /* =========================================================
-   LOAD ALL KV CONTENT
+   LOAD ALL KV CONTENT (Optimized for Speed)
 ========================================================= */
 
 async function loadAllKVContent() {
-  // ✅ GLOBAL THEME — Load first for ALL users (admin-controlled)
+  // ✅ ایک ساتھ تمام ڈیٹا لوڈ کریں (Parallel Loading)
   try {
     const localTheme = localStorage.getItem("royalGlobalTheme");
-    if (localTheme) {
-      applyFullTheme(JSON.parse(localTheme));
-    }
+    if (localTheme) applyFullTheme(JSON.parse(localTheme));
     
-    const siteTheme = await loadThemeGlobal();
+    const [siteTheme, heroVal, profileVal, gal, off, customHubs, gwData, gt, gx, rt, rx] = await Promise.all([
+      loadThemeGlobal(),
+      getFromKV("hero_image"),
+      getFromKV("profile_image"),
+      getFromKV("gallery_data"),
+      getFromKV("offices"),
+      getFromKV("hubs_data"),
+      getFromKV("gateways_data"),
+      getFromKV("gateway_trade_title"),
+      getFromKV("gateway_trade_text"),
+      getFromKV("gateway_research_title"),
+      getFromKV("gateway_research_text")
+    ]);
+
+    // تھیم اپلائی کریں
     if (siteTheme) {
       applyFullTheme(siteTheme);
       localStorage.setItem("royalGlobalTheme", JSON.stringify(siteTheme));
       localStorage.setItem(THEME_KEY, JSON.stringify(siteTheme));
     }
+    
+    // باقی ڈیٹا اپلائی کریں
+    if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
+    if (profileVal) { profileImageUrl = profileVal; applyProfileImage(); }
+    if (gal && Array.isArray(gal) && gal.length > 0) { galleryItems = gal; renderGallery(); }
+    
+    if (off && Array.isArray(off) && off.length === 4) {
+      offices = off; renderOffices();
+    } else if (state.admin && state.token) {
+      await saveToKV("offices", DEFAULT_OFFICES);
+    }
+    
+    if (customHubs && typeof customHubs === "object" && !Array.isArray(customHubs)) { customHubData = customHubs; }
+    if (gwData && Array.isArray(gwData) && gwData.length >= 2) { gateways = gwData; }
+
+    if (gt) gatewayTradeData.title = gt;
+    if (gx) gatewayTradeData.text = gx;
+    if (rt) gatewayResearchData.title = rt;
+    if (rx) gatewayResearchData.text = rx;
+
+    applyGatewayContent();
+    renderGateways();
+
   } catch (e) { /* silent */ }
 
-  // ✅ Gateway Profile Data Load (Error-Free & Dynamic per Gateway)
-  try {
-    const currentGateway = state.gateway || "global";
-    
-    const gwProfImg = await getFromKV(`gw_profile_${currentGateway}_img`);
-    const gwProfName = await getFromKV(`gw_profile_${currentGateway}_name`);
-    const gwProfRole = await getFromKV(`gw_profile_${currentGateway}_role`);
-    const gwProfDesc = await getFromKV(`gw_profile_${currentGateway}_desc`);
-    
-    // Safety Check: تصویر، نام، عہدہ اور ڈسکرپشن صرف اس وقت اپڈیٹ کریں جب وہ صفحہ پر موجود ہوں
-    const profileImageEl = document.getElementById("gatewayProfileImage");
-    const profileNameEl = document.getElementById("gatewayProfileName");
-    const profileRoleEl = document.getElementById("gatewayProfileRole");
-    const profileDescEl = document.getElementById("gatewayProfileDesc");
-
-    if (profileImageEl) {
-      profileImageEl.src = gwProfImg || "royal-profile-pic.jpg";
-    }
-    
-    if (profileNameEl) {
-      profileNameEl.textContent = gwProfName || "Syed Azeem Shah";
-    }
-    
-    if (profileRoleEl) {
-      profileRoleEl.textContent = gwProfRole || "Founder & CEO";
-    }
-    
-    if (profileDescEl) {
-      profileDescEl.textContent = gwProfDesc || "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
-    }
-  } catch (e) { /* silent */ }
-
-  const heroVal = await getFromKV("hero_image");
-  if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
-
-  const profileVal = await getFromKV("profile_image");
-  if (profileVal) { profileImageUrl = profileVal; applyProfileImage(); }
-
-  const gt = await getFromKV("gateway_trade_title");
-  const gx = await getFromKV("gateway_trade_text");
-  if (gt) gatewayTradeData.title = gt;
-  if (gx) gatewayTradeData.text = gx;
-
-  const rt = await getFromKV("gateway_research_title");
-  const rx = await getFromKV("gateway_research_text");
-  if (rt) gatewayResearchData.title = rt;
-  if (rx) gatewayResearchData.text = rx;
-
-  applyGatewayContent();
-
-  const gal = await getFromKV("gallery_data");
-  if (gal && Array.isArray(gal) && gal.length > 0) {
-    galleryItems = gal;
-    renderGallery();
-  }
-
-  const off = await getFromKV("offices");
-  if (off && Array.isArray(off) && off.length === 4) {
-    offices = off;
-    renderOffices();
-  } else if (state.admin && state.token) {
-    await saveToKV("offices", DEFAULT_OFFICES);
-  }
-
-  const customHubs = await getFromKV("hubs_data");
-  if (customHubs && typeof customHubs === "object" && !Array.isArray(customHubs)) {
-    customHubData = customHubs;
-  }
-
-  const gwData = await getFromKV("gateways_data");
-  if (gwData && Array.isArray(gwData) && gwData.length >= 2) {
-    gateways = gwData;
-  }
-
-  renderGateways();
-
-  // ✅ ریفریش پر URL کے مطابق صفحہ کھولیں
-  setTimeout(handleRoute, 300);
+  // ✅ ریفریش پر URL کے مطابق صفحہ کھولیں (تاخیر کم کر دی)
+  setTimeout(handleRoute, 100);
 }
 
 /* =========================================================
