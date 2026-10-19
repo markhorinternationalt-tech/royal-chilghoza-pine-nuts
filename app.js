@@ -3344,14 +3344,28 @@ async function loadAllKVContent() {
     }
   } catch (e) { /* silent */ }
 
-  // Gateway Profile Data Load
-const gwProfImg = await getFromKV("gateway_profile_img");
-const gwProfName = await getFromKV("gateway_profile_name");
-const gwProfRole = await getFromKV("gateway_profile_role");
+  // ✅ Gateway Profile Data Load (Dynamic per Gateway)
+  const currentGateway = state.gateway || "global";
+  
+  const gwProfImg = await getFromKV(`gw_profile_${currentGateway}_img`);
+  const gwProfName = await getFromKV(`gw_profile_${currentGateway}_name`);
+  const gwProfRole = await getFromKV(`gw_profile_${currentGateway}_role`);
+  const gwProfDesc = await getFromKV(`gw_profile_${currentGateway}_desc`);
+  
+  if (gwProfImg) {
+    document.getElementById("gatewayProfileImage").src = gwProfImg;
+  } else {
+    document.getElementById("gatewayProfileImage").src = "royal-profile-pic.jpg"; 
+  }
+  
+  if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
+  if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
+  if (gwProfDesc) {
+    document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
+  } else {
+    document.getElementById("gatewayProfileDesc").textContent = "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
+  }
 
-if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
-if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
-if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
   const heroVal = await getFromKV("hero_image");
   if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
 
