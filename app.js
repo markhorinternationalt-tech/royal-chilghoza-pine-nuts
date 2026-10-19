@@ -3440,6 +3440,9 @@ if (currentPath !== "/" && currentPath !== "") {
   const editHeroBtn = document.getElementById("editHeroBtn");
   if (editHeroBtn) editHeroBtn.onclick = editHeroImage;
 
+  const editGwProfileBtn = document.getElementById("editGatewayProfileBtn");
+if (editGwProfileBtn) editGwProfileBtn.onclick = editGatewayProfile;
+
   const editProfileBtn = document.getElementById("editProfileBtn");
   if (editProfileBtn) editProfileBtn.onclick = editProfileImage;
 
