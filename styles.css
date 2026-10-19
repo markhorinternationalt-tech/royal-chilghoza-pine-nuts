@@ -2692,7 +2692,7 @@ body.admin-mode .gallery-item-actions {
 }
 
 /* =========================================================
-   FINAL MASTER PLAN FIXES (Crown, Profile, Gateway, Hub)
+   FINAL MASTER PLAN FIXES (Crown, Profile, Gateway, Hub, Edge-to-Edge)
 ========================================================= */
 
 /* 1. ہیرو سیکشن میں تاج کی اینیمیشن اور ڈیزائن */
@@ -2704,10 +2704,16 @@ body.admin-mode .gallery-item-actions {
   animation: float 3s ease-in-out infinite;
 }
 
-/* 2. پروفائل خانہ (Box) چھوٹا کریں — تصویر کو چھیڑے بغیر صرف پڈنگ کم کی ہے */
+/* 2. پروفائل خانہ واپس اپنی بڑی اور خوبصورت حالت میں */
 .royal-profile-shell {
-  padding: 30px 20px !important; 
-  gap: 20px !important;
+  padding: 48px 36px !important; 
+  gap: 32px !important;
+}
+@media (max-width: 620px) {
+  .royal-profile-shell {
+    padding: 36px 22px !important;
+    gap: 24px !important;
+  }
 }
 
 /* 3. گیٹ وے کے بٹن (Open Gateway) کو چھوٹا اور خوبصورت کریں */
@@ -2736,4 +2742,22 @@ body.admin-mode .gallery-item-actions {
 }
 .hub-section-footer {
   justify-content: center !important; /* واٹس ایپ بٹن سینٹر میں */
+}
+
+/* 5. گیلری اور ہب کی تصاویر کو مکمل ایج ٹو ایج کریں (کالا باڈر ختم) */
+html, body {
+  overflow-x: hidden !important; 
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+.gallery-grid, 
+.hub-sections-page, 
+.hub-section-media {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  border: none !important;
+  border-radius: 0 !important;
 }
