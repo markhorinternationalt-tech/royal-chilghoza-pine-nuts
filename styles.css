@@ -1922,7 +1922,6 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 
 /* =========================================================
    HUB SECTIONS PAGE
-   [FIX-INTEGRATED 3] 3D + 👑 crown + smaller size
    ========================================================= */
 .hub-sections-page {
   width: min(1100px, calc(100% - 40px));
@@ -1935,7 +1934,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
 .hub-section {
   position: relative;
   padding: 0;
-  border-radius: 18px;
+  border-radius: 0; /* ✅ گولائی ختم کی */
   background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.06) 0%, transparent 55%),
     linear-gradient(160deg, #0d3a26 0%, #0a2f1e 35%, #062015 75%, #03140a 100%);
   border: 0;
@@ -1987,13 +1986,14 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   margin-bottom: 0;
   padding: 64px 28px 16px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+  text-align: center; /* ✅ ٹیکسٹ سینٹر کیا */
 }
-/* [FIX 3] 👑 crown icon above the number badge */
 .hub-section-header::before {
   content: "👑";
   position: absolute;
   top: 20px;
-  left: 28px;
+  left: 50%; /* ✅ تاج سینٹر کیا */
+  transform: translateX(-50%); /* ✅ تاج سینٹر کیا */
   font-size: 28px;
   line-height: 1;
   filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.5))
@@ -2003,7 +2003,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   z-index: 3;
 }
 .hub-section:hover .hub-section-header::before {
-  transform: translateY(-3px) scale(1.12);
+  transform: translateX(-50%) translateY(-3px) scale(1.12);
 }
 .hub-section-number {
   display: inline-block;
@@ -2036,18 +2036,17 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.7;
-  margin: 0;
+  margin: 0 auto; /* ✅ سینٹر کیا */
   max-width: 820px;
 }
 .hub-section-media {
   position: relative;
   z-index: 2;
-   /* [FINAL FIX] Break out from .hub-section-header padding — edge-to-edge media */
-  margin: 0 -28px;
+  margin: 0; /* ✅ مارجن ختم کیا */
   padding: 0;
   border: none;
   background: transparent;
-  width: calc(100% + 56px);
+  width: 100%; /* ✅ چوڑائی 100% کی */
   transition: background 0.3s ease;
 }
 .hub-section-media .hubMediaUploadBtn { width: 100%; margin-bottom: 18px; }
@@ -2061,7 +2060,7 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   position: relative;
   z-index: 2;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center; /* ✅ واٹس ایپ بٹن سینٹر کیا */
   padding: 0 28px 24px;
 }
 
