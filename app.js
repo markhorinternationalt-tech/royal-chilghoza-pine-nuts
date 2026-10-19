@@ -1531,6 +1531,7 @@ function editOffice(index) {
 function editGatewayProfile() {
   const currentName = document.getElementById("gatewayProfileName").textContent;
   const currentRole = document.getElementById("gatewayProfileRole").textContent;
+  const currentDesc = document.getElementById("gatewayProfileDesc").textContent;
   
   openEditModal(
     "👤 Edit Gateway Profile",
@@ -1549,12 +1550,16 @@ function editGatewayProfile() {
     
     <label>Role / Designation:</label>
     <input type="text" id="editGatewayProfileRole" value="${escapeHtml(currentRole)}">
+    
+    <label>Profile Description:</label>
+    <textarea id="editGatewayProfileDesc" rows="4" style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:rgba(3,20,10,0.7); color:var(--text); font-family:var(--body-font); font-size:0.9rem; resize:vertical;">${escapeHtml(currentDesc)}</textarea>
     `,
     async () => {
       const fileInput = document.getElementById("editGatewayProfileFile");
       const urlInput = document.getElementById("editGatewayProfileUrl");
       const nameInput = document.getElementById("editGatewayProfileName");
       const roleInput = document.getElementById("editGatewayProfileRole");
+      const descInput = document.getElementById("editGatewayProfileDesc");
 
       let newImgUrl = urlInput.value.trim();
 
@@ -1566,13 +1571,18 @@ function editGatewayProfile() {
       }
 
       setEditStatus("Saving...", "");
-      await saveToKV("gateway_profile_img", newImgUrl);
-      await saveToKV("gateway_profile_name", nameInput.value.trim());
-      await saveToKV("gateway_profile_role", roleInput.value.trim());
+      
+      // ✅ ہر گیٹ وے کا الگ ڈیٹا سیو کرنے کے لیے
+      const gwId = state.gateway || "global"; 
+      await saveToKV(`gw_profile_${gwId}_img`, newImgUrl);
+      await saveToKV(`gw_profile_${gwId}_name`, nameInput.value.trim());
+      await saveToKV(`gw_profile_${gwId}_role`, roleInput.value.trim());
+      await saveToKV(`gw_profile_${gwId}_desc`, descInput.value.trim());
 
       document.getElementById("gatewayProfileImage").src = newImgUrl;
       document.getElementById("gatewayProfileName").textContent = nameInput.value.trim();
       document.getElementById("gatewayProfileRole").textContent = roleInput.value.trim();
+      document.getElementById("gatewayProfileDesc").textContent = descInput.value.trim();
       
       setEditStatus("✅ Profile updated!", "success");
       setTimeout(closeEditModal, 1000);
