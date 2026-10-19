@@ -3328,43 +3328,50 @@ function editGalleryItem(index) {
 async function loadAllKVContent() {
   // ✅ GLOBAL THEME — Load first for ALL users (admin-controlled)
   try {
-    // 1. پہلے براؤزر (localStorage) سے تھیم لوڈ کریں تاکہ صفحہ فوراً رنگ بدل لے اور کوئی جھٹکا نہ لگے
     const localTheme = localStorage.getItem("royalGlobalTheme");
     if (localTheme) {
       applyFullTheme(JSON.parse(localTheme));
     }
     
-    // 2. پھر سرور (KV) سے لائیو تھیم لائیں اور اسے حتمی (Final) مانیں
     const siteTheme = await loadThemeGlobal();
     if (siteTheme) {
       applyFullTheme(siteTheme);
-      // براؤزر میں بھی اپڈیٹ کر دیں تاکہ اگلی بار فوراً کھلے
       localStorage.setItem("royalGlobalTheme", JSON.stringify(siteTheme));
       localStorage.setItem(THEME_KEY, JSON.stringify(siteTheme));
     }
   } catch (e) { /* silent */ }
 
-  // ✅ Gateway Profile Data Load (Dynamic per Gateway)
-  const currentGateway = state.gateway || "global";
-  
-  const gwProfImg = await getFromKV(`gw_profile_${currentGateway}_img`);
-  const gwProfName = await getFromKV(`gw_profile_${currentGateway}_name`);
-  const gwProfRole = await getFromKV(`gw_profile_${currentGateway}_role`);
-  const gwProfDesc = await getFromKV(`gw_profile_${currentGateway}_desc`);
-  
-  if (gwProfImg) {
-    document.getElementById("gatewayProfileImage").src = gwProfImg;
-  } else {
-    document.getElementById("gatewayProfileImage").src = "royal-profile-pic.jpg"; 
-  }
-  
-  if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
-  if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
-  if (gwProfDesc) {
-    document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
-  } else {
-    document.getElementById("gatewayProfileDesc").textContent = "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
-  }
+  // ✅ Gateway Profile Data Load (Error-Free & Dynamic per Gateway)
+  try {
+    const currentGateway = state.gateway || "global";
+    
+    const gwProfImg = await getFromKV(`gw_profile_${currentGateway}_img`);
+    const gwProfName = await getFromKV(`gw_profile_${currentGateway}_name`);
+    const gwProfRole = await getFromKV(`gw_profile_${currentGateway}_role`);
+    const gwProfDesc = await getFromKV(`gw_profile_${currentGateway}_desc`);
+    
+    // Safety Check: تصویر، نام، عہدہ اور ڈسکرپشن صرف اس وقت اپڈیٹ کریں جب وہ صفحہ پر موجود ہوں
+    const profileImageEl = document.getElementById("gatewayProfileImage");
+    const profileNameEl = document.getElementById("gatewayProfileName");
+    const profileRoleEl = document.getElementById("gatewayProfileRole");
+    const profileDescEl = document.getElementById("gatewayProfileDesc");
+
+    if (profileImageEl) {
+      profileImageEl.src = gwProfImg || "royal-profile-pic.jpg";
+    }
+    
+    if (profileNameEl) {
+      profileNameEl.textContent = gwProfName || "Syed Azeem Shah";
+    }
+    
+    if (profileRoleEl) {
+      profileRoleEl.textContent = gwProfRole || "Founder & CEO";
+    }
+    
+    if (profileDescEl) {
+      profileDescEl.textContent = gwProfDesc || "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
+    }
+  } catch (e) { /* silent */ }
 
   const heroVal = await getFromKV("hero_image");
   if (heroVal) { heroImageUrl = heroVal; applyHeroImage(); }
