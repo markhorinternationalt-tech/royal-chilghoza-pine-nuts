@@ -2699,46 +2699,36 @@ body.admin-mode .gallery-item-actions {
   .gateway-profile-content h2 { font-size: 1.8rem; }
 }
 
-/* =========================================================
-   📱 موبائل کے لیے ایج ٹو ایج میڈیا فکس (بغیر !important کے)
-========================================================= */
 @media (max-width: 620px) {
-  
-  /* 1. مرکزی کنٹینر کو پوری سکرین کریں */
   .hub-sections-page {
     width: 100%;
     padding: 0; 
     margin: 0;
-    gap: 24px; /* کارڈز کے درمیان فاصلہ */
+    gap: 24px;
   }
 
-  /* 2. کارڈ کو پوری سکرین کریں تاکہ تصویر کناروں تک جائے */
   .hub-section {
     width: 100%;
     margin: 0;
-    border-radius: 0; /* موبائل پر گولائی کی ضرورت نہیں */
-    box-shadow: none; /* شیڈو ہٹا دیں تاکہ فل سکرین لگے */
-    overflow: visible; /* تصویر کو باہر نکلنے دیں (اگر ضرورت ہو) */
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
   }
 
-  /* 3. ٹیکسٹ اور تاج کو سائیڈ سے پیڈنگ دیں (تاکہ کنارے سے نہ چپکیں) */
   .hub-section-header {
     padding: 54px 16px 12px; 
   }
 
-  /* 4. واٹس ایپ بٹن کو سائیڈ سے پیڈنگ دیں */
   .hub-section-footer {
     padding: 0 16px 20px;
   }
 
-  /* 5. تصویر کا کنٹینر پوری چوڑائی لے */
   .hub-section-media {
     width: 100%;
     margin: 0;
     padding: 0;
   }
 
-  /* 6. تصویر اور ویڈیو کو مکمل چوڑائی دیں */
   .hub-media-grid,
   .hub-media-item,
   .hub-media-item img,
