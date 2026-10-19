@@ -1528,6 +1528,58 @@ function editOffice(index) {
   );
 }
 
+function editGatewayProfile() {
+  const currentName = document.getElementById("gatewayProfileName").textContent;
+  const currentRole = document.getElementById("gatewayProfileRole").textContent;
+  
+  openEditModal(
+    "👤 Edit Gateway Profile",
+    `
+    <label>Current Profile Picture:</label>
+    <img id="gatewayProfileImagePreview" src="${document.getElementById('gatewayProfileImage').src}" class="edit-modal-preview" style="border-radius:50%;width:120px;height:120px;margin:10px auto;display:block;">
+    
+    <label>Upload New Picture:</label>
+    <input type="file" id="editGatewayProfileFile" accept="image/*">
+    
+    <label>OR Paste Image URL:</label>
+    <input type="text" id="editGatewayProfileUrl" placeholder="https://..." value="${document.getElementById('gatewayProfileImage').src}">
+    
+    <label>Full Name:</label>
+    <input type="text" id="editGatewayProfileName" value="${escapeHtml(currentName)}">
+    
+    <label>Role / Designation:</label>
+    <input type="text" id="editGatewayProfileRole" value="${escapeHtml(currentRole)}">
+    `,
+    async () => {
+      const fileInput = document.getElementById("editGatewayProfileFile");
+      const urlInput = document.getElementById("editGatewayProfileUrl");
+      const nameInput = document.getElementById("editGatewayProfileName");
+      const roleInput = document.getElementById("editGatewayProfileRole");
+
+      let newImgUrl = urlInput.value.trim();
+
+      if (fileInput.files[0]) {
+        setEditStatus("Uploading...", "");
+        const uploadedUrl = await uploadToCloudinary(fileInput.files[0], "profile");
+        if (uploadedUrl) newImgUrl = uploadedUrl;
+        else { setEditStatus("❌ Upload failed", "error"); return; }
+      }
+
+      setEditStatus("Saving...", "");
+      await saveToKV("gateway_profile_img", newImgUrl);
+      await saveToKV("gateway_profile_name", nameInput.value.trim());
+      await saveToKV("gateway_profile_role", roleInput.value.trim());
+
+      document.getElementById("gatewayProfileImage").src = newImgUrl;
+      document.getElementById("gatewayProfileName").textContent = nameInput.value.trim();
+      document.getElementById("gatewayProfileRole").textContent = roleInput.value.trim();
+      
+      setEditStatus("✅ Profile updated!", "success");
+      setTimeout(closeEditModal, 1000);
+    }
+  );
+}
+
 /* =========================================================
    GATEWAY / HUB NAVIGATION
 ========================================================= */
