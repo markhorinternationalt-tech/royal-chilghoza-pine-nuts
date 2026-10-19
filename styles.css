@@ -2690,3 +2690,50 @@ body.admin-mode .gallery-item-actions {
     padding: 10px 14px;
   }
 }
+
+/* =========================================================
+   FINAL MASTER PLAN FIXES (Crown, Profile, Gateway, Hub)
+========================================================= */
+
+/* 1. ہیرو سیکشن میں تاج کی اینیمیشن اور ڈیزائن */
+.hero-new-crown {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  text-align: center;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 2. پروفائل خانہ (Box) چھوٹا کریں — تصویر کو چھیڑے بغیر صرف پڈنگ کم کی ہے */
+.royal-profile-shell {
+  padding: 30px 20px !important; 
+  gap: 20px !important;
+}
+
+/* 3. گیٹ وے کے بٹن (Open Gateway) کو چھوٹا اور خوبصورت کریں */
+.gateway-card .btn-gold {
+  padding: 10px 24px !important;
+  font-size: 0.85rem !important;
+  width: auto !important; 
+  display: inline-block !important;
+}
+
+/* 4. ہب سیکشن (Hub) کو سینٹر کریں (آپ کی کھینچی ہوئی سرخ لکیروں کے مطابق) */
+.hub-section-header {
+  text-align: center !important;
+}
+.hub-section-header::before {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+.hub-section-number {
+  display: inline-block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.hub-section-title, .hub-section-desc {
+  text-align: center !important; /* ٹیکسٹ بھی سینٹر میں */
+}
+.hub-section-footer {
+  justify-content: center !important; /* واٹس ایپ بٹن سینٹر میں */
+}
