@@ -2699,45 +2699,51 @@ body.admin-mode .gallery-item-actions {
   .gateway-profile-content h2 { font-size: 1.8rem; }
 }
 
+/* ========================================================= */
+/* START: MOBILE HUB MEDIA EDGE-TO-EDGE FIX (FULL BLEED)     */
+/* ========================================================= */
 @media (max-width: 620px) {
-  .hub-sections-page {
-    width: 100%;
-    padding: 0; 
-    margin: 0;
-    gap: 24px;
-  }
-
+  
+  /* کارڈ کو اجازت دیں کہ وہ تصویر کو باہر نکلنے دے */
   .hub-section {
-    width: 100%;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
+    overflow: visible !important; 
   }
 
-  .hub-section-header {
-    padding: 54px 16px 12px; 
-  }
-
-  .hub-section-footer {
-    padding: 0 16px 20px;
-  }
-
+  /* تصویر کو زبردستی موبائل سکرین کے کناروں تک کھینچیں */
   .hub-section-media {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    border-radius: 0 !important;
   }
 
+  /* تصویر، ویڈیو اور پی ڈی ایف کے اندرونی کنٹینرز کو بھی پوری چوڑائی دیں */
   .hub-media-grid,
   .hub-media-item,
   .hub-media-item img,
   .hub-media-item video,
   .hub-media-pdf {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
   }
 }
+/* ========================================================= */
+/* END: MOBILE HUB MEDIA EDGE-TO-EDGE FIX                    */
+/* ========================================================= */
+
+/* ========================================================= */
+/* START: MOBILE CROWN POSITION FIX                          */
+/* ========================================================= */
+@media (max-width: 620px) {
+  .hub-section-header::before {
+    left: 40px; /* آپ اس نمبر (40px) کو کم یا زیادہ کر کے ریڈ ڈاٹ کے بالکل اوپر سیٹ کر سکتے ہیں */
+    transform: none; /* سینٹر سے ہٹانے کے لیے */
+  }
+}
+/* ========================================================= */
+/* END: MOBILE CROWN POSITION FIX                            */
+/* ========================================================= */
