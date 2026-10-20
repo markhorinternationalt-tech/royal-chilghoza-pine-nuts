@@ -218,6 +218,33 @@ body.lightbox-open { overflow: hidden; }
   align-items: center;
   border-bottom: 1px solid var(--line-soft);
 }
+/* ========================================================= */
+/* HERO CROWN ANIMATION (Large, Glowing & Floating)          */
+/* ========================================================= */
+.hero-new-crown {
+  font-size: 4.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.4));
+  animation: heroFloat 3s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% {
+    transform: translateY(0);
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.7)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.3));
+  }
+  50% {
+    transform: translateY(-10px);
+    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1)) drop-shadow(0 0 60px rgba(212, 175, 55, 0.6));
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-new-crown {
+    font-size: 3.5rem; 
+  }
+}
 .hero-bg {
   position: absolute;
   inset: 0;
