@@ -1572,7 +1572,6 @@ function editGatewayProfile() {
 
       setEditStatus("Saving...", "");
       
-      // ✅ ہر گیٹ وے کا الگ ڈیٹا سیو کرنے کے لیے
       const gwId = state.gateway || "global"; 
       await saveToKV(`gw_profile_${gwId}_img`, newImgUrl);
       await saveToKV(`gw_profile_${gwId}_name`, nameInput.value.trim());
@@ -1584,7 +1583,6 @@ function editGatewayProfile() {
       document.getElementById("gatewayProfileRole").textContent = roleInput.value.trim();
       document.getElementById("gatewayProfileDesc").textContent = descInput.value.trim();
 
-      const gwId = state.gateway || "global";
 localStorage.setItem(`gw_profile_${gwId}_img`, newImgUrl);
 localStorage.setItem(`gw_profile_${gwId}_name`, nameInput.value.trim());
 localStorage.setItem(`gw_profile_${gwId}_role`, roleInput.value.trim());
