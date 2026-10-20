@@ -2700,6 +2700,34 @@ body.admin-mode .gallery-item-actions {
 }
 
 /* ========================================================= */
+/* GATEWAY PROFILE SKELETON SLIDER (Dark Green Shimmer)      */
+/* ========================================================= */
+.gateway-profile-card {
+  position: relative; 
+  overflow: hidden;
+}
+
+.gateway-profile-card.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(10, 47, 30, 0.8) 50%,
+    transparent 100%
+  );
+  animation: topToBottomShimmer 1.5s infinite linear;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes topToBottomShimmer {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* ========================================================= */
 /* START: MOBILE HUB MEDIA EDGE-TO-EDGE FIX (FULL BLEED)     */
 /* ========================================================= */
 @media (max-width: 620px) {
