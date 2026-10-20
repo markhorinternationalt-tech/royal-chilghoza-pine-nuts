@@ -2063,9 +2063,16 @@ body.admin-mode .hub-media-item-actions { display: flex; }
   width: calc(100% + 56px); 
 }
 
-.hub-section-media .hubMediaUploadBtn { 
-  width: calc(100% - 56px); 
-  margin: 0 auto 18px; 
+.hub-section-media .hubMediaUploadBtn {
+  width: auto;
+  margin: 0 28px 18px 28px; /* ڈیسک ٹاپ پر 28px کا مارجن تاکہ کنارے سے ملے */
+  display: block;
+}
+
+@media (max-width: 620px) {
+  .hub-section-media .hubMediaUploadBtn {
+    margin: 0 16px 18px 16px; /* موبائل پر 16px کا مارجن بالکل ٹیکسٹ کی طرح */
+  }
 }
 
 .hub-media-loading {
