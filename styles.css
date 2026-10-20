@@ -2728,6 +2728,21 @@ body.admin-mode .gallery-item-actions {
 }
 
 /* ========================================================= */
+/* CROWN CENTER FIX (All Devices)                            */
+/* ========================================================= */
+.hub-section-header::before {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 620px) {
+  .hub-section-header::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ========================================================= */
 /* START: MOBILE HUB MEDIA EDGE-TO-EDGE FIX (FULL BLEED)     */
 /* ========================================================= */
 @media (max-width: 620px) {
