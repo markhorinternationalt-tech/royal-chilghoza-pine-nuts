@@ -2727,7 +2727,7 @@ body.admin-mode .gallery-item-actions {
 }
 
 /* ========================================================= */
-/* GATEWAY PROFILE SKELETON SLIDER (Dark Green Shimmer)      */
+/* GATEWAY PROFILE CURTAIN REVEAL (Premium Effect)           */
 /* ========================================================= */
 .gateway-profile-card {
   position: relative; 
@@ -2738,20 +2738,27 @@ body.admin-mode .gallery-item-actions {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(
+  background-color: #062015;
+  background-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(10, 47, 30, 0.8) 50%,
+    rgba(212, 175, 55, 0.15) 50%, 
     transparent 100%
   );
+  background-size: 100% 200%;
   animation: topToBottomShimmer 1.5s infinite linear;
   z-index: 10;
   pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.gateway-profile-card.is-revealing::after {
+  transform: translateY(100%);
 }
 
 @keyframes topToBottomShimmer {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
 /* ========================================================= */
@@ -2768,7 +2775,6 @@ body.admin-mode .gallery-item-actions {
     transform: translateX(-50%);
   }
 }
-
 /* ========================================================= */
 /* START: MOBILE HUB MEDIA EDGE-TO-EDGE FIX (FULL BLEED)     */
 /* ========================================================= */
