@@ -1632,30 +1632,31 @@ async function renderGateway(type) {
   document.getElementById("gatewayTitleText").textContent = gwTitle;
   document.getElementById("gatewayDescription").textContent = gwText;
 
-  // ✅ نیا کوڈ: جب بھی گیٹ وے کھلے یا ریفریش ہو، پروفائل کا تازہ ڈیٹا سرور سے لائے
+  // ✅ 1. سلائیڈر آن کریں
+  const profileCard = document.querySelector('.gateway-profile-card');
+  if (profileCard) profileCard.classList.add('is-loading');
+
+  // 2. KV سے ڈیٹا لائیں
   try {
-  const gwProfImg = await getFromKV(`gw_profile_${type}_img`);
-  const gwProfName = await getFromKV(`gw_profile_${type}_name`);
-  const gwProfRole = await getFromKV(`gw_profile_${type}_role`);
-  const gwProfDesc = await getFromKV(`gw_profile_${type}_desc`);
-  
-  if (document.getElementById("gatewayProfileImage")) {
-    document.getElementById("gatewayProfileImage").src = gwProfImg || "royal-profile-pic.jpg";
-    document.getElementById("gatewayProfileImage").style.opacity = "1";
+    const [gwProfImg, gwProfName, gwProfRole, gwProfDesc] = await Promise.all([
+      getFromKV(`gw_profile_${type}_img`).catch(() => null),
+      getFromKV(`gw_profile_${type}_name`).catch(() => null),
+      getFromKV(`gw_profile_${type}_role`).catch(() => null),
+      getFromKV(`gw_profile_${type}_desc`).catch(() => null)
+    ]);
+    
+    if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
+    if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
+    if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
+    if (gwProfDesc) document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
+
+    // ✅ ڈیٹا آ جانے کے بعد سلائیڈر آف کریں
+    if (profileCard) profileCard.classList.remove('is-loading');
+
+  } catch (e) {
+    if (profileCard) profileCard.classList.remove('is-loading');
   }
-  if (document.getElementById("gatewayProfileName")) {
-    document.getElementById("gatewayProfileName").textContent = gwProfName || "Syed Azeem Shah";
-    document.getElementById("gatewayProfileName").style.opacity = "1";
-  }
-  if (document.getElementById("gatewayProfileRole")) {
-    document.getElementById("gatewayProfileRole").textContent = gwProfRole || "Founder & CEO";
-    document.getElementById("gatewayProfileRole").style.opacity = "1";
-  }
-  if (document.getElementById("gatewayProfileDesc")) {
-    document.getElementById("gatewayProfileDesc").textContent = gwProfDesc || "From the mountains and forests of Pakistan to the world — building a trusted connection between authentic origin, premium quality, global trade and knowledge.";
-    document.getElementById("gatewayProfileDesc").style.opacity = "1";
-  }
-} catch (e) { /* silent */ }
+
   const list = hubs(type);
   const container = document.getElementById("hubGridPage");
   if (!container) return;
