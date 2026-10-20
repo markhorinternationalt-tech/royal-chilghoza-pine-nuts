@@ -1636,30 +1636,40 @@ async function renderGateway(type) {
   document.getElementById("gatewayTitleText").textContent = gwTitle;
   document.getElementById("gatewayDescription").textContent = gwText;
 
-  // ✅ 1. سلائیڈر آن کریں
   const profileCard = document.querySelector('.gateway-profile-card');
-  if (profileCard) profileCard.classList.add('is-loading');
+if (profileCard) {
+  profileCard.classList.remove('is-revealing');
+  profileCard.classList.add('is-loading');
+}
 
-  // 2. KV سے ڈیٹا لائیں
-  try {
-    const [gwProfImg, gwProfName, gwProfRole, gwProfDesc] = await Promise.all([
-      getFromKV(`gw_profile_${type}_img`).catch(() => null),
-      getFromKV(`gw_profile_${type}_name`).catch(() => null),
-      getFromKV(`gw_profile_${type}_role`).catch(() => null),
-      getFromKV(`gw_profile_${type}_desc`).catch(() => null)
-    ]);
-    
-    if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
-    if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
-    if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
-    if (gwProfDesc) document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
+try {
+  const [gwProfImg, gwProfName, gwProfRole, gwProfDesc] = await Promise.all([
+    getFromKV(`gw_profile_${type}_img`).catch(() => null),
+    getFromKV(`gw_profile_${type}_name`).catch(() => null),
+    getFromKV(`gw_profile_${type}_role`).catch(() => null),
+    getFromKV(`gw_profile_${type}_desc`).catch(() => null)
+  ]);
+  
+  if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
+  if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
+  if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
+  if (gwProfDesc) document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
 
-    // ✅ ڈیٹا آ جانے کے بعد سلائیڈر آف کریں
-    if (profileCard) profileCard.classList.remove('is-loading');
-
-  } catch (e) {
-    if (profileCard) profileCard.classList.remove('is-loading');
+  if (profileCard) {
+    profileCard.classList.add('is-revealing');
+    setTimeout(() => {
+      profileCard.classList.remove('is-loading', 'is-revealing');
+    }, 800); 
   }
+
+} catch (e) {
+  if (profileCard) {
+    profileCard.classList.add('is-revealing');
+    setTimeout(() => {
+      profileCard.classList.remove('is-loading', 'is-revealing');
+    }, 800);
+  }
+}
 
   const list = hubs(type);
   const container = document.getElementById("hubGridPage");
