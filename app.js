@@ -1650,16 +1650,35 @@ try {
     getFromKV(`gw_profile_${type}_desc`).catch(() => null)
   ]);
   
-  if (gwProfImg) document.getElementById("gatewayProfileImage").src = gwProfImg;
   if (gwProfName) document.getElementById("gatewayProfileName").textContent = gwProfName;
   if (gwProfRole) document.getElementById("gatewayProfileRole").textContent = gwProfRole;
   if (gwProfDesc) document.getElementById("gatewayProfileDesc").textContent = gwProfDesc;
 
+  if (gwProfImg) {
+    const imgEl = document.getElementById("gatewayProfileImage");
+    if (imgEl.src !== gwProfImg) {
+      await new Promise((resolve) => {
+        const tempImg = new Image();
+        tempImg.onload = () => {
+          imgEl.src = gwProfImg;
+          resolve();
+        };
+        tempImg.onerror = () => {
+          imgEl.src = gwProfImg;
+          resolve();
+        };
+        tempImg.src = gwProfImg;
+      });
+    }
+  }
+
   if (profileCard) {
-    profileCard.classList.add('is-revealing');
     setTimeout(() => {
-      profileCard.classList.remove('is-loading', 'is-revealing');
-    }, 800); 
+      profileCard.classList.add('is-revealing');
+      setTimeout(() => {
+        profileCard.classList.remove('is-loading', 'is-revealing');
+      }, 800); 
+    }, 50);
   }
 
 } catch (e) {
