@@ -5,6 +5,7 @@
    ========================================================= */
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&family=Tajawal:wght@400;500&family=Almarai:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;600&family=Gulzar&family=Lateef&family=Montserrat:wght@400;600&family=Oswald:wght@400;500&family=Lora:ital,wght@0,400;1,400&family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap');
 
 :root {
   --card-accent: #0a2618;
