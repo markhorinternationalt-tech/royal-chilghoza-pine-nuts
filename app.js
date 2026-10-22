@@ -1636,6 +1636,7 @@ localStorage.setItem(`gw_profile_${gwId}_desc`, descInput.value.trim());
 ========================================================= */
 
 async function openGateway(type) {
+    pauseAllVideos();
   document.body.classList.add("subview");
   state.gateway = type;
   state.hub = null;
