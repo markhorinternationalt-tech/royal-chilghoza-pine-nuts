@@ -1838,7 +1838,8 @@ function renderHub(type, index) {
   renderHubMedia(type, index);
 }
 
-function closeGateway() {
+function closeGateway() { 
+    pauseAllVideos();
   document.body.classList.remove("subview");
   state.gateway = null;
   state.hub = null;
