@@ -2831,11 +2831,18 @@ body.admin-mode .gallery-item-actions {
 /* ========================================================= */
 /* END: MOBILE CROWN POSITION FIX                            */
 /* ========================================================= */
-
-/* Facebook Style See More */
+/* ========================================================= */
+/* START: See More Caption Feature (Facebook Style)          */
+/* ========================================================= */
 .fb-caption-wrapper {
+    display: block;
     width: 100%;
-    margin-top: 8px;
+    margin-top: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    color: inherit;
+    line-height: inherit;
 }
 
 .fb-clamped-text {
@@ -2844,29 +2851,36 @@ body.admin-mode .gallery-item-actions {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 1.6;
+    white-space: pre-line; /* لائن بریک کو صحیح کرنے کے لیے */
 }
 
 .fb-expanded-text {
     display: block;
     -webkit-line-clamp: unset;
     overflow: visible;
+    white-space: pre-line;
 }
 
 .fb-see-more-btn {
-    color: var(--gold); /* آپ کی ویب سائٹ کا گولڈ کلر */
+    color: var(--gold);
     cursor: pointer;
     font-weight: 600;
+    font-style: normal; /* اٹالک ہونے سے روکنے کے لیے */
     background: none;
     border: none;
     padding: 0;
-    margin-top: 4px;
-    font-size: 0.9rem;
+    margin-top: 6px;
+    font-size: 0.9em;
     text-decoration: underline;
     display: inline-block;
+    position: relative;
+    z-index: 10; /* تاکہ لائٹ باکس کے نیچے نہ دبے */
+    pointer-events: auto;
 }
 
 .fb-see-more-btn:hover {
     color: #fff;
 }
+/* ========================================================= */
+/* END: See More Caption Feature                             */
+/* ========================================================= */
