@@ -2261,7 +2261,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   /* [FIX] سائیڈ padding تاکہ edge-to-edge پر متن کنارے سے نہ چپکے */
   padding: 20px 28px;
   margin-top: 0;
-  font-family: var(--heading-font);
+  font-family: var(--caption-font-family);
   font-size: var(--caption-font-size);
   font-weight: var(--caption-font-weight);
   font-style: italic;
