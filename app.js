@@ -979,7 +979,7 @@ if (type === "video") {
   ${adminBtns}
   <div class="gallery-item-media">${mediaHtml}</div>
   ${headlineHtml}
-  <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${escapeHtml(cap).replace(/\n/g, '<br>')}</figcaption>
+  <figcaption><span>${String(i + 1).padStart(2, "0")}</span>${renderCaptionWithSeeMore(cap)}</figcaption>
 </figure>`;
   }).join("");
 
