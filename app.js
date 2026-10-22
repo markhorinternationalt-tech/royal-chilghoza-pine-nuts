@@ -2064,7 +2064,7 @@ async function renderHubMedia(type, index) {
       if (m.type === "image") {
         preview = `<img src="${cloudinaryOptimize(m.url, 1200, 800)}" alt="${escapeHtml(caption)}" loading="lazy">`;
       } else if (m.type === "video") {
-        preview = `<video src="${cloudinaryOptimize(m.url, 1200, 800)}" controls controlsList="nodownload" oncontextmenu="return false;" preload="metadata"></video>`;
+        preview = `<video src="${cloudinaryOptimize(m.url, 1200, 800)}" controls controlsList="nodownload" oncontextmenu="return false;" disablePictureInPicture preload="metadata"></video>`;
       } else {
         preview = `<div class="hub-media-pdf"><span>📄</span><b>${escapeHtml(caption)}</b></div>`;
       }
