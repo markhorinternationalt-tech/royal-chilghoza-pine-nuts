@@ -2069,7 +2069,7 @@ async function renderHubMedia(type, index) {
         </div>
       ` : "";
 
-      const captionHtml = caption ? `<div class="hub-media-caption">${escapeHtml(caption).replace(/\n/g, '<br>')}</div>` : "";
+      const captionHtml = caption ? `<div class="hub-media-caption">${renderCaptionWithSeeMore(caption)}</div>` : "";
 
       return `
         <div class="hub-media-item" 
@@ -2186,7 +2186,7 @@ async function renderHubSectionMedia(type, index) {
         </div>
       ` : "";
 
-      const captionHtml = caption ? `<div class="hub-media-caption">${escapeHtml(caption).replace(/\n/g, '<br>')}</div>` : "";
+      const captionHtml = caption ? `<div class="hub-media-caption">${renderCaptionWithSeeMore(caption)}</div>` : "";
 
       return `
         <div class="hub-media-item" 
