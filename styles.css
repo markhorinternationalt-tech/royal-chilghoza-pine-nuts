@@ -2890,3 +2890,13 @@ body.admin-mode .gallery-item-actions {
 /* ========================================================= */
 /* END: See More Caption Feature                             */
 /* ========================================================= */
+
+/* ========================================================= */
+/* Mobile Video Protection (Prevent Long-Press Menu)         */
+/* ========================================================= */
+video {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  user-select: none !important;
+}
