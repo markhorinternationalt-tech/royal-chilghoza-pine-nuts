@@ -2869,6 +2869,10 @@ function applyFullTheme(theme) {
   if (theme.captionFontWeight) root.style.setProperty("--caption-font-weight", theme.captionFontWeight);
   if (theme.captionText) root.style.setProperty("--caption-text-color", theme.captionText);
   if (theme.captionBg) root.style.setProperty("--caption-bg-color", theme.captionBg);
+    if (theme.captionFontEN) root.style.setProperty("--caption-font-en", theme.captionFontEN);
+if (theme.captionFontZH) root.style.setProperty("--caption-font-zh", theme.captionFontZH);
+if (theme.captionFontAR) root.style.setProperty("--caption-font-ar", theme.captionFontAR);
+if (theme.captionFontUR) root.style.setProperty("--caption-font-ur", theme.captionFontUR);
   if (theme.mediaBox) root.style.setProperty("--media-box-bg", theme.mediaBox);
 
   if (document.getElementById("hexBg") && theme.bg) document.getElementById("hexBg").textContent = theme.bg.toUpperCase();
