@@ -2113,7 +2113,8 @@ async function renderHubMedia(type, index) {
         editHubMediaItem(t, +idx, +mi);
       };
     });
-  }
+  } 
+observeVideos();
 }
 
 async function renderHubSectionMedia(type, index) {
