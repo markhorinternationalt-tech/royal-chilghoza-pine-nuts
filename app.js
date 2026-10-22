@@ -3584,7 +3584,8 @@ if (editGwProfileBtn) editGwProfileBtn.onclick = editGatewayProfile;
 
   const hubBackEl = document.getElementById("hubBack");
   if (hubBackEl) {
-    hubBackEl.onclick = () => {
+    hubBackEl.onclick = () => { 
+        pauseAllVideos();
       state.hub = null;
       document.getElementById("hubView").classList.remove("open");
       document.getElementById("gatewayView").classList.add("open");
