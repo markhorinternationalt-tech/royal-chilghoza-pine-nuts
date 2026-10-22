@@ -5,21 +5,24 @@ function renderCaptionWithSeeMore(text) {
     if (!text) return "";
     const isRTL = (state.lang === 'ar' || state.lang === 'ur');
     const dir = isRTL ? 'rtl' : 'ltr';
-    if (String(text).length < 100) {
-        return `<span>${escapeHtml(text).replace(/\n/g, '<br>')}</span>`;
-    }
+    
     return `
         <div class="fb-caption-wrapper" dir="${dir}">
-            <span class="fb-clamped-text">${escapeHtml(text).replace(/\n/g, '<br>')}</span>
-            <a href="javascript:void(0)" class="fb-see-more-btn" onclick="toggleFBCaption(this)">See more...</a>
+            <span class="fb-clamped-text">${escapeHtml(text)}</span>
+            <span class="fb-see-more-btn" onclick="toggleFBCaption(this, event)">See more...</span>
         </div>
     `;
 }
 
 // ===== See More اور See Less کا ٹوگل فنکشن =====
-window.toggleFBCaption = function(btn) {
+window.toggleFBCaption = function(btn, event) {
+    if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+    
     const wrapper = btn.closest('.fb-caption-wrapper');
-    const textEl = wrapper.querySelector('.fb-clamped-text');
+    const textEl = wrapper.querySelector('.fb-clamped-text, .fb-expanded-text');
     const isExpanded = textEl.classList.contains('fb-expanded-text');
     
     if (isExpanded) {
