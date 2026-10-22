@@ -103,7 +103,7 @@ export default {
       }
     }
 
-    // ---- AI Assistant ----
+        // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
       try {
         const { message = "", mode = "visitor", language = "en" } = await request.json();
@@ -119,12 +119,44 @@ export default {
           }, cors);
         }
 
-        const system = mode === "admin"
-          ? 'You are the Royal Chilghoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilghoza Pine Nuts".'
-          : 'You are the Royal Chilghoza Pine Nuts Visitor Assistant. Help visitors with general information about Chilghoza Pine Nuts, trade, quality, forests, research and the website. Do not claim private admin access. Always use the exact term "Chilghoza Pine Nuts".';
+        // ===== 1. ویب سائٹ کا ڈیٹا لوڈ کریں (KV سے) =====
+        let websiteData = "No specific data uploaded yet.";
+        try {
+          const [hubs, gallery, gateways] = await Promise.all([
+            env.ROYAL_KV.get("hubs_data", "json"),
+            env.ROYAL_KV.get("gallery_data", "json"),
+            env.ROYAL_KV.get("gateways_data", "json")
+          ]);
+          
+          websiteData = `
+          --- WEBSITE DATA START ---
+          Gateways: ${JSON.stringify(gateways || {})}
+          Hubs & Markets: ${JSON.stringify(hubs || {})}
+          Gallery & Captions: ${JSON.stringify(gallery || {})}
+          --- WEBSITE DATA END ---
+          `;
+        } catch (e) {
+          console.error("KV Fetch Error:", e);
+        }
+
+        // ===== 2. اے آئی کی ہدایات (System Prompt) =====
+        const systemBase = mode === "admin"
+          ? 'You are the Royal Chilgoza Pine Nuts Admin Assistant. Help the authenticated administrator manage hubs, content, translations, media, Cloudinary, SEO, website structure and troubleshooting. Never expose secrets. Always use the exact term "Chilgoza Pine Nuts".'
+          : `You are the official Royal AI Global Sales & Trade Manager for "Royal Chilgoza Pine Nuts". You are talking to B2B buyers and online customers. Your goal is to close the deal and provide excellent customer service.
+
+CRITICAL RULES:
+1. You must answer ONLY based on the "WEBSITE DATA" provided below. Do NOT use outside knowledge. Do NOT make up facts.
+2. If the user asks something that is NOT in the website data, politely say: "I don't have that specific information right now, but our trade desk can help you instantly." Then provide our contact details.
+3. If a user asks to buy, purchase, asks for prices, or asks for references, you MUST immediately provide all our contact details: WhatsApp: +92 333 6665688, WeChat: MG-Pine-Nuts, Facebook: facebook.com/Royal.Chilgoza.PineNuts, Website: https://www.ChilgozaPineNuts.com.
+4. We supply premium wild Chilgoza Pine Nuts globally from Gilgit-Baltistan (Pakistan) and Afghanistan.
+5. For USA buyers, mention secure DHL shipping and our Dubai route. For Chinese buyers, mention strong direct trade links.
+6. Always write "Chilgoza Pine Nuts" in full.
+7. Maintain a highly professional, luxurious, and sales-focused tone. Always reply in the language the user writes in.`;
+
+        const system = `${systemBase}\n\n${websiteData}`;
 
         const messages = [
-          { role: "system", content: `${system} IMPORTANT: Reply in the SAME language the user writes in. If unclear, use: ${language}.` },
+          { role: "system", content: system },
           { role: "user", content: message }
         ];
 
