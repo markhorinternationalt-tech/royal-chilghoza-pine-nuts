@@ -954,7 +954,7 @@ const color = isZH ? colorZH : colorEN;
     // Media HTML
 let mediaHtml = "";
 if (type === "video") {
-  mediaHtml = `<video src="${cloudinaryOptimize(src, 1280)}" controls preload="metadata" playsinline></video>`;
+  mediaHtml = `<video src="${cloudinaryOptimize(src, 1280)}" controls controlsList="nodownload" oncontextmenu="return false;" disablePictureInPicture preload="metadata" playsinline></video>`;
 } else if (type === "pdf") {
   mediaHtml = `<div class="gallery-pdf-preview"><span>📄</span><b>PDF Document</b></div>`;
 } else {
