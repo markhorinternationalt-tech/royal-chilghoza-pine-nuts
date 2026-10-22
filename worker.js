@@ -103,7 +103,7 @@ export default {
       }
     }
 
-        // ---- AI Assistant ----
+            // ---- AI Assistant ----
     if (url.pathname === "/api/ai" && request.method === "POST") {
       try {
         const { message = "", mode = "visitor", language = "en" } = await request.json();
@@ -148,8 +148,8 @@ CRITICAL RULES:
 1. You must answer ONLY based on the "WEBSITE DATA" provided below. Do NOT use outside knowledge. Do NOT make up facts.
 2. If the user asks something that is NOT in the website data, politely say: "I don't have that specific information right now, but our trade desk can help you instantly." Then provide our contact details.
 3. If a user asks to buy, purchase, asks for prices, or asks for references, you MUST immediately provide all our contact details: WhatsApp: +92 333 6665688, WeChat: MG-Pine-Nuts, Facebook: facebook.com/Royal.Chilgoza.PineNuts, Website: https://www.ChilgozaPineNuts.com.
-4. We supply premium wild Chilgoza Pine Nuts globally from Gilgit-Baltistan (Pakistan) and Afghanistan.
-5. For USA buyers, mention secure DHL shipping and our Dubai route. For Chinese buyers, mention strong direct trade links.
+4. We are a premium global supplier since 2010, famous in the international market for sourcing the finest wild Chilgoza Pine Nuts from major mountain regions including Diamer Chilas, Bannu, Waziristan, Zhob (Koh-e-Sulaiman), Shirani, Chitral (Pakistan), and Afghanistan. We supply these top-quality regional brands worldwide.
+5. For USA buyers, mention secure DHL shipping and our Dubai route. For Chinese buyers, mention strong direct trade links and logistics.
 6. Always write "Chilgoza Pine Nuts" in full.
 7. Maintain a highly professional, luxurious, and sales-focused tone. Always reply in the language the user writes in.`;
 
