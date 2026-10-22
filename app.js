@@ -2801,6 +2801,10 @@ function readThemeFromUI() {
     captionFontWeight: document.getElementById("captionFontWeight")?.value || "500",
     captionText: pickers.captionText ? pickers.captionText.color.hexString : "#F5F1E8",
     captionBg: pickers.captionBg ? pickers.captionBg.color.hexString : "#0A2F1E",
+    captionFontEN: document.getElementById("captionFontEN")?.value || "'Playfair Display', serif",
+    captionFontZH: document.getElementById("captionFontZH")?.value || "'Noto Sans SC', sans-serif",
+    captionFontAR: document.getElementById("captionFontAR")?.value || "'Cairo', sans-serif",
+    captionFontUR: document.getElementById("captionFontUR")?.value || "'Noto Nastaliq Urdu', serif",
     mediaBox: pickers.mediaBox ? pickers.mediaBox.color.hexString : "#0A2F1E"
   };
 }
