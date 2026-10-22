@@ -32,6 +32,11 @@
   --caption-font-weight: 500;
   --caption-text-color: #f5f1e8;
   --caption-bg-color: transparent;
+   --caption-font-en: "Playfair Display", serif;
+--caption-font-zh: "Noto Sans SC", sans-serif;
+--caption-font-ar: "Cairo", sans-serif;
+--caption-font-ur: "Noto Nastaliq Urdu", serif;
+--caption-font-family: var(--caption-font-en);
   --media-box-bg: #0a2f1e;
 }
 
