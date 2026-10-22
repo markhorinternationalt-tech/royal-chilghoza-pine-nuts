@@ -557,7 +557,7 @@ body.lightbox-open { overflow: hidden; }
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transition: color 0.3s ease, background 0.3s ease, font-size 0.2s ease;
 }
-.gallery-item figcaption span {
+.gallery-item figcaption > span:first-child {
   display: block;
   color: var(--gold);
   font-size: 0.66rem;
