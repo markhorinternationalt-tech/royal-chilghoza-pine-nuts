@@ -2928,6 +2928,16 @@ function initThemeControls() {
     document.documentElement.style.setProperty("--caption-font-weight", captionFontWeight.value);
     autoSaveTheme();
   });
+// ===== Caption Fonts Listeners (لائیو اپڈیٹ کے لیے) =====
+const cFontEN = document.getElementById("captionFontEN");
+const cFontZH = document.getElementById("captionFontZH");
+const cFontAR = document.getElementById("captionFontAR");
+const cFontUR = document.getElementById("captionFontUR");
+
+if (cFontEN) cFontEN.addEventListener("change", () => { document.documentElement.style.setProperty("--caption-font-en", cFontEN.value); autoSaveTheme(); });
+if (cFontZH) cFontZH.addEventListener("change", () => { document.documentElement.style.setProperty("--caption-font-zh", cFontZH.value); autoSaveTheme(); });
+if (cFontAR) cFontAR.addEventListener("change", () => { document.documentElement.style.setProperty("--caption-font-ar", cFontAR.value); autoSaveTheme(); });
+if (cFontUR) cFontUR.addEventListener("change", () => { document.documentElement.style.setProperty("--caption-font-ur", cFontUR.value); autoSaveTheme(); });
 
   // ✅ نیا Save بٹن (کنفرمیشن الرٹ کے ساتھ)
   const saveBtn = document.getElementById("themeSave");
