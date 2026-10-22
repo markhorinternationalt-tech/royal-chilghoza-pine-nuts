@@ -3962,6 +3962,36 @@ function showWelcomePrompt() {
   });
 }  
 
+/* =========================================================
+   VIDEO MANAGEMENT SYSTEM (Auto-Pause on Scroll & Navigation)
+========================================================= */
+function pauseAllVideos() {
+  document.querySelectorAll('video').forEach(video => {
+    if (!video.paused) {
+      video.pause();
+    }
+  });
+}
+
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting && entry.target.tagName === 'VIDEO') {
+      if (!entry.target.paused) {
+        entry.target.pause();
+      }
+    }
+  });
+}, { threshold: 0.1 });
+
+function observeVideos() {
+  document.querySelectorAll('video').forEach(video => {
+    videoObserver.observe(video);
+    video.autoplay = false; 
+  });
+}
+/* ========================================================= */
+
+document.addEventListener("DOMContentLoaded", init);
 document.addEventListener("DOMContentLoaded", init);
 
 /* =========================================================
