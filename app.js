@@ -2233,7 +2233,8 @@ async function renderHubSectionMedia(type, index) {
         editHubMediaItem(t, +idx, +mi);
       };
     });
-  }
+  } 
+    observeVideos();
 }
 
 function uploadHubMedia(type, index) {
