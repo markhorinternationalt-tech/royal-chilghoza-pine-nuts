@@ -1004,6 +1004,7 @@ if (type === "video") {
 
   // Create button
   renderGalleryCreateButton();
+    observeVideos();
 }
 
 /* =========================================================
