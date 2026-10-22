@@ -1752,7 +1752,7 @@ try {
           <div class="hub-section-header">
             <div class="hub-section-number">HUB ${String(i + 1).padStart(2, "0")}</div>
             <h2 class="hub-section-title">${escapeHtml(title)}</h2>
-            <p class="hub-section-desc">${escapeHtml(desc)}</p>
+            <div class="hub-section-desc">${renderCaptionWithSeeMore(desc)}</div>
           </div>
           <div class="hub-section-media" id="hub-media-${hubKey}">
             <div class="hub-media-loading">Loading media...</div>
