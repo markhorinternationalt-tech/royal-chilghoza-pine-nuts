@@ -1,4 +1,38 @@
 const WHATSAPP_NUMBER = "923336665688";
+
+// ===== See More والا HTML بنانے کا فنکشن =====
+function renderCaptionWithSeeMore(text) {
+    if (!text) return "";
+    const isRTL = (state.lang === 'ar' || state.lang === 'ur');
+    const dir = isRTL ? 'rtl' : 'ltr';
+    if (String(text).length < 100) {
+        return `<span>${escapeHtml(text).replace(/\n/g, '<br>')}</span>`;
+    }
+    return `
+        <div class="fb-caption-wrapper" dir="${dir}">
+            <span class="fb-clamped-text">${escapeHtml(text).replace(/\n/g, '<br>')}</span>
+            <a href="javascript:void(0)" class="fb-see-more-btn" onclick="toggleFBCaption(this)">See more...</a>
+        </div>
+    `;
+}
+
+// ===== See More اور See Less کا ٹوگل فنکشن =====
+window.toggleFBCaption = function(btn) {
+    const wrapper = btn.closest('.fb-caption-wrapper');
+    const textEl = wrapper.querySelector('.fb-clamped-text');
+    const isExpanded = textEl.classList.contains('fb-expanded-text');
+    
+    if (isExpanded) {
+        textEl.classList.remove('fb-expanded-text');
+        textEl.classList.add('fb-clamped-text');
+        btn.innerText = 'See more...';
+    } else {
+        textEl.classList.remove('fb-clamped-text');
+        textEl.classList.add('fb-expanded-text');
+        btn.innerText = 'See less...';
+    }
+};
+
 const state = {
   lang: sessionStorage.getItem("royalLanguage") || "en",
   gateway: null,
