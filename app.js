@@ -4350,11 +4350,11 @@ if (hubIndex === -1) return false;
   // Update SEO tags
   updateSEOTags(gateway, hubTitle, hubDesc);
 
-  // Scroll to the specific hub after DOM renders
-setTimeout(() => {
+// Scroll to the specific hub after DOM renders (with retry logic for images)
+const scrollToHub = () => {
   const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
-  if (hubEl) {
-     const yOffset = -150; 
+  if (hubEl && hubEl.getBoundingClientRect().height > 0) {
+    const yOffset = -120; 
     const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
 
@@ -4362,8 +4362,20 @@ setTimeout(() => {
     hubEl.style.transition = "box-shadow 0.5s";
     hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
     setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
+    return true;
   }
-}, 1000);
+  return false;
+};
+
+if (!scrollToHub()) {
+  let attempts = 0;
+  const interval = setInterval(() => {
+    attempts++;
+    if (scrollToHub() || attempts > 10) {
+      clearInterval(interval);
+    }
+  }, 300);
+}
 
   return true;
 }
