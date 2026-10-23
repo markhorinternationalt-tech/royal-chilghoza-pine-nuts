@@ -4350,54 +4350,41 @@ if (hubIndex === -1) return false;
   // Update SEO tags
   updateSEOTags(gateway, hubTitle, hubDesc);
 
-// انتظار کریں کہ صفحہ مکمل لوڈ ہو جائے (تصاویر اور ویڈیوز سمیت)
-const waitForContent = () => {
-  return new Promise((resolve) => {
-    // تمام تصاویر تلاش کریں
-    const images = document.querySelectorAll('#gatewayView img');
-    let loadedCount = 0;
-    
-    if (images.length === 0) {
-      resolve();
-      return;
-    }
-
-    const checkAllLoaded = () => {
-      loadedCount++;
-      if (loadedCount === images.length) resolve();
-    };
-
-    images.forEach(img => {
-      if (img.complete) {
-        checkAllLoaded();
-      } else {
-        img.addEventListener('load', checkAllLoaded);
-        img.addEventListener('error', checkAllLoaded);
-      }
-    });
-
-    // اگر تصاویر لوڈ ہونے میں بہت زیادہ وقت لگے تو 2 سیکنڈ بعد سکرول کر دیں
-    setTimeout(resolve, 2000); 
-  });
-};
-
-// تصاویر کا انتظار کریں، پھر ایک بار سکرول کریں
-waitForContent().then(() => {
+  // 🟢 سمارٹ سکرولنگ سسٹم (صارف کی ٹچ کا احترام کرتے ہوئے)
   const targetId = `hub-${gateway}_${hubIndex}`;
-  const hubEl = document.getElementById(targetId);
-  if (hubEl) {
-    const yOffset = -120; // ہیڈر کے نیچے نہ چھپنے کے لیے
-    const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    
-    // صرف ایک بار سیدھا ہب پر سکرول کریں (کوئی ادھر ادھر نہیں)
-    window.scrollTo({ top: y, behavior: "smooth" });
+  let userTookOver = false;
 
-    // گولڈن ہائی لائٹ ایفیکٹ
-    hubEl.style.transition = "box-shadow 0.5s";
-    hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
-    setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
-  }
-});
+  // اگر صارف نے سکرین کو ٹچ کیا یا خود سکرول کیا، تو آٹو سکرول بند ہو جائے
+  const stopAutoScroll = () => { userTookOver = true; };
+  window.addEventListener('touchstart', stopAutoScroll, { once: true, passive: true });
+  window.addEventListener('wheel', stopAutoScroll, { once: true, passive: true });
+
+  const safeScroll = () => {
+    if (userTookOver) return; // اگر صارف نے ٹچ کر دیا تو کچھ نہ کریں
+    
+    const hubEl = document.getElementById(targetId);
+    if (hubEl) {
+      const yOffset = -120; 
+      const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      // سیدھا ہب پر سکرول کریں
+      window.scrollTo({ top: y, behavior: "smooth" });
+
+      // گولڈن ہائی لائٹ ایفیکٹ
+      hubEl.style.transition = "box-shadow 0.5s";
+      hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
+      setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
+    }
+  };
+
+  // 1. فوراً سکرول کریں (تاکہ صارف کو انتظار نہ لگے)
+  setTimeout(safeScroll, 100); 
+
+  // 2. تصاویر لوڈ ہونے کے بعد پوزیشن درست کریں
+  setTimeout(safeScroll, 1000);
+  
+  // 3. ویڈیوز لوڈ ہونے کے بعد آخری بار پوزیشن درست کریں
+  setTimeout(safeScroll, 2500);
 
   return true;
 }
