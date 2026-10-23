@@ -4323,7 +4323,7 @@ function updateSEOTags(gateway, hubTitle, hubDesc) {
   ogUrl.setAttribute("content", window.location.href);
 }
 
-function openHubFromURL() {
+async function openHubFromURL() {
   const path = window.location.pathname.replace(/^\/+|\/+$/g, "");
   const parts = path.split("/");
   if (parts.length !== 2) return false;
@@ -4339,7 +4339,7 @@ if (hubIndex === -1 && LEGACY_HUB_SLUGS[gateway]) {
 if (hubIndex === -1) return false;
 
   // Open the gateway
-  openGateway(gateway);
+  await openGateway(gateway);
 
   // Get hub data
   const list = hubs(gateway);
@@ -4351,16 +4351,19 @@ if (hubIndex === -1) return false;
   updateSEOTags(gateway, hubTitle, hubDesc);
 
   // Scroll to the specific hub after DOM renders
-  setTimeout(() => {
-    const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
-    if (hubEl) {
-      hubEl.scrollIntoView({ behavior: "smooth", block: "start" });
-      // Golden highlight effect
-      hubEl.style.transition = "box-shadow 0.5s";
-      hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
-      setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
-    }
-  }, 600);
+setTimeout(() => {
+  const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
+  if (hubEl) {
+    const yOffset = -80; 
+    const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+
+    // Golden highlight effect
+    hubEl.style.transition = "box-shadow 0.5s";
+    hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
+    setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
+  }
+}, 1000);
 
   return true;
 }
