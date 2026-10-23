@@ -526,7 +526,7 @@ if (true) {
 
   if (isGateway) {
   // ✅ صرف بوٹس کے لیے SSR
-  if (isBot(request)) {
+  if (true) {
     return new Response(await renderGatewaySSR(gateway, env), {
       status: 200,
       headers: {
