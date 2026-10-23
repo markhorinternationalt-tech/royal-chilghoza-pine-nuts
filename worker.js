@@ -494,12 +494,13 @@ if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
     } catch (e) { /* no media */ }
 
     // ✅ صرف بوٹس کے لیے SSR
-if (isBot(request)) {
+if (isBot(request) || url.searchParams.get("ssr") === "true") {
   return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
     status: 200,
     headers: {
       "Content-Type": "text/html;charset=UTF-8",
       "Cache-Control": "public, max-age=3600",
+      "Vary": "User-Agent"
     },
   });
 }
