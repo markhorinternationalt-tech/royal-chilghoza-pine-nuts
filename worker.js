@@ -494,7 +494,7 @@ if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
     } catch (e) { /* no media */ }
 
     // ✅ صرف بوٹس کے لیے SSR
-if (isBot(request)) {
+if (true) {
   return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
     status: 200,
     headers: {
