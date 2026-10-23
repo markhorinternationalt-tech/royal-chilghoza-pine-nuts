@@ -4350,31 +4350,54 @@ if (hubIndex === -1) return false;
   // Update SEO tags
   updateSEOTags(gateway, hubTitle, hubDesc);
 
-// Scroll to the specific hub after DOM renders (with retry logic for images)
-const scrollToHub = () => {
-  const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
-  if (hubEl && hubEl.getBoundingClientRect().height > 0) {
-    const yOffset = -120; 
+// انتظار کریں کہ صفحہ مکمل لوڈ ہو جائے (تصاویر اور ویڈیوز سمیت)
+const waitForContent = () => {
+  return new Promise((resolve) => {
+    // تمام تصاویر تلاش کریں
+    const images = document.querySelectorAll('#gatewayView img');
+    let loadedCount = 0;
+    
+    if (images.length === 0) {
+      resolve();
+      return;
+    }
+
+    const checkAllLoaded = () => {
+      loadedCount++;
+      if (loadedCount === images.length) resolve();
+    };
+
+    images.forEach(img => {
+      if (img.complete) {
+        checkAllLoaded();
+      } else {
+        img.addEventListener('load', checkAllLoaded);
+        img.addEventListener('error', checkAllLoaded);
+      }
+    });
+
+    // اگر تصاویر لوڈ ہونے میں بہت زیادہ وقت لگے تو 2 سیکنڈ بعد سکرول کر دیں
+    setTimeout(resolve, 2000); 
+  });
+};
+
+// تصاویر کا انتظار کریں، پھر ایک بار سکرول کریں
+waitForContent().then(() => {
+  const targetId = `hub-${gateway}_${hubIndex}`;
+  const hubEl = document.getElementById(targetId);
+  if (hubEl) {
+    const yOffset = -120; // ہیڈر کے نیچے نہ چھپنے کے لیے
     const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+    // صرف ایک بار سیدھا ہب پر سکرول کریں (کوئی ادھر ادھر نہیں)
     window.scrollTo({ top: y, behavior: "smooth" });
 
-    // Golden highlight effect
+    // گولڈن ہائی لائٹ ایفیکٹ
     hubEl.style.transition = "box-shadow 0.5s";
     hubEl.style.boxShadow = "0 0 0 3px var(--gold), 0 0 60px rgba(212,175,55,0.45)";
     setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
-    return true;
   }
-  return false;
-};
-
-if (!scrollToHub()) {
-  let attempts = 0;
-  const interval = setInterval(() => {
-    attempts++;
-    if (scrollToHub() || attempts > 10) {
-      clearInterval(interval);
-    }
-  }, 300);
+});
 }
 
   return true;
