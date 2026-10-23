@@ -527,15 +527,15 @@ if (isBot(request) || url.searchParams.get("ssr") === "true") {
 
   if (isGateway) {
   // ✅ صرف بوٹس کے لیے SSR
-  if (isBot(request)) {
-    return new Response(await renderGatewaySSR(gateway, env), {
-      status: 200,
-      headers: {
-        "Content-Type": "text/html;charset=UTF-8",
-        "Cache-Control": "public, max-age=3600",
-      },
-    });
-  }
+if (isBot(request)) {
+  return new Response(await renderGatewaySSR(gateway, env), {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html;charset=UTF-8",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
 }
 }
 
