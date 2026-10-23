@@ -985,7 +985,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   let jsonLdImages = [];
   if (Array.isArray(hubMedia) && hubMedia.length > 0) {
     const mediaItems = hubMedia.map(m => {
-      const caption = (m.name || "").replace(/"/g, "&quot;");
+      const caption = (m.name && typeof m.name === "object" ? `${m.name.en || ""} ${m.name.zh || ""}` : (m.name || "")).replace(/"/g, "&quot;");
       if (m.type === "image") {
         jsonLdImages.push(m.url);
         return `<figure class="hub-figure"><img src="${m.url}" alt="${caption}" loading="lazy"><figcaption>${caption}</figcaption></figure>`;
