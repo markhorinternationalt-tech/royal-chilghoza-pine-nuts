@@ -825,12 +825,13 @@ if (!staticExtTest.test(path) && !path.startsWith("/api/")) {
         const contentType = getContentType(path);
         const body = await response.arrayBuffer();
         return new Response(body, {
-          headers: {
-            ...cors,
-            "Content-Type": contentType,
-            "Cache-Control": "public, max-age=3600",
-          },
-        });
+  headers: {
+    ...cors,
+    "Content-Type": contentType,
+    "Cache-Control": "public, max-age=3600",
+    "Vary": "User-Agent"
+  },
+});
       } catch (err) {
         return new Response(`Error: ${err.message}`, { status: 500, headers: cors });
       }
