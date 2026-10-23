@@ -982,6 +982,7 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   const fullUrl = `https://chilgozapinenuts.com/${gateway}/${slug}`;
 
   let mediaHtml = "";
+  let fullHubContent = hubDesc || "";
   let jsonLdImages = [];
   if (Array.isArray(hubMedia) && hubMedia.length > 0) {
     const mediaItems = hubMedia.map(m => {
@@ -1188,7 +1189,7 @@ if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
     <p class="desc">${hubDesc}</p>
     <div class="content">
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Premium quality Chilghoza Pine Nuts from the native forests of Gilgit-Baltistan, Pakistan.</p>
-      <p>${hubDesc}</p>
+      <p>${fullHubContent}</p>
       <p>For trade inquiries, export documentation, bulk orders, and worldwide shipping, please contact our trade desk directly via WhatsApp.</p>
       <a href="https://wa.me/923336665688?text=${encodeURIComponent("Inquiry about " + hubTitle)}" class="cta">💬 WhatsApp Trade Inquiry</a>
     </div>
