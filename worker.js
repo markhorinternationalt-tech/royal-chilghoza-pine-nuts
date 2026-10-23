@@ -494,7 +494,7 @@ if (/^\/[a-z0-9_-]+\/[a-z0-9_-]+\/?$/i.test(url.pathname)) {
     } catch (e) { /* no media */ }
 
     // ✅ صرف بوٹس کے لیے SSR
-if (true) {
+if (isBot(request)) {
   return new Response(renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia), {
     status: 200,
     headers: {
@@ -526,7 +526,7 @@ if (true) {
 
   if (isGateway) {
   // ✅ صرف بوٹس کے لیے SSR
-  if (true) {
+  if (isBot(request)) {
     return new Response(await renderGatewaySSR(gateway, env), {
       status: 200,
       headers: {
