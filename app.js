@@ -4354,7 +4354,7 @@ if (hubIndex === -1) return false;
 setTimeout(() => {
   const hubEl = document.getElementById(`hub-${gateway}_${hubIndex}`);
   if (hubEl) {
-    const yOffset = -80; 
+     const yOffset = -150; 
     const y = hubEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
 
