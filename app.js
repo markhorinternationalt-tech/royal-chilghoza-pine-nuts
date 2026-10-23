@@ -4398,7 +4398,6 @@ waitForContent().then(() => {
     setTimeout(() => { hubEl.style.boxShadow = ""; }, 2800);
   }
 });
-}
 
   return true;
 }
