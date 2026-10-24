@@ -812,7 +812,7 @@ body.lightbox-open { overflow: hidden; }
   text-transform: uppercase;
   margin: 0 0 20px;
 }
-.gateway-hero h1 {
+.gateway-hero h2 {
   font-family: var(--heading-font);
   font-weight: 500;
   font-size: calc(clamp(2.8rem, 6.5vw, 5.5rem) * var(--heading-scale, 1));
@@ -910,7 +910,7 @@ body.lightbox-open { overflow: hidden; }
   text-transform: uppercase;
   margin: 0 0 18px;
 }
-.hub-page h1 {
+.hub-page h2 {
   font-family: var(--heading-font);
   font-weight: 500;
   font-size: calc(clamp(2.4rem, 5.5vw, 4.5rem) * var(--heading-scale, 1));
@@ -1415,7 +1415,7 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); }
   .hub-card { padding: 22px 22px; min-height: auto; border-radius: 16px; }
   .hub-card h2 { font-size: calc(1.1rem * var(--heading-scale, 1)); margin: 12px 0 8px; }
   .hub-page { padding: 60px 0; }
-  .hub-page h1 { font-size: calc(clamp(1.8rem, 8vw, 2.4rem) * var(--heading-scale, 1)); }
+  .hub-page h2 { font-size: calc(clamp(1.8rem, 8vw, 2.4rem) * var(--heading-scale, 1)); }
   .hub-content, .hub-media { padding: 24px; }
   .view-topbar { height: 68px; padding: 0 14px; gap: 10px; }
   .view-topbar button { font-size: 0.78rem; padding: 8px 12px; }
