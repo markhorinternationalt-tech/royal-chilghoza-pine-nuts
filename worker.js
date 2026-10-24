@@ -975,7 +975,7 @@ function getContentType(path) {
 function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
   const url = new URL(request.url);
-  return /DeepSeek|Baidu|Baiduspider|Sogou|360Spider|Googlebot|Google-Extended|GoogleOther|Google-CloudVertexBot|Bingbot|YandexBot|Applebot|DuckDuckBot|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|Claude-User|Claude-SearchBot|MistralAI-User|Amazonbot|YouBot|Copilot|PetalBot|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|xAI-SearchBot|GrokBot|xAI-Grok|Grok-DeepSearch|Grok/i.test(ua) || url.searchParams.has("lang");
+  return /Googlebot|Google-InspectionTool|Storebot-Google|Google-Extended|GoogleOther|Google-CloudVertexBot|Mediapartners-Google|AdsBot-Google|APIs-Google|FeedFetcher-Google|Bingbot|Slurp|YandexBot|YandexImages|Baiduspider|Sogou|360Spider|Haosou|ShenmaSpider|YisouSpider|Bytespider|ToutiaoSpider|DeepSeek|DeepSeekBot|Qwen|Tencent|ChatGPT|OAI|GPT|Claude|Anthropic|Perplexity|xAI|Grok|Mistral|Copilot|Amazonbot|Applebot|DuckDuckBot|facebookexternalhit|meta-externalagent|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Discordbot|PetalBot|Huawei|bot|crawler|spider/i.test(ua) || url.searchParams.has("lang");
 }
 
 // =========================================================
