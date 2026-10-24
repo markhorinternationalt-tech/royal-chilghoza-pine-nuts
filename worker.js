@@ -974,7 +974,8 @@ function getContentType(path) {
 // =========================================================
 function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
-  return /DeepSeek|Baidu|Baiduspider|Sogou|360Spider|Googlebot|Google-Extended|GoogleOther|Google-CloudVertexBot|Bingbot|YandexBot|Applebot|DuckDuckBot|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|Claude-User|Claude-SearchBot|MistralAI-User|Amazonbot|YouBot|Copilot|PetalBot|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|TelegramBot/i.test(ua);
+  const url = new URL(request.url);
+  return /DeepSeek|Baidu|Baiduspider|Sogou|360Spider|Googlebot|Google-Extended|GoogleOther|Google-CloudVertexBot|Bingbot|YandexBot|Applebot|DuckDuckBot|OAI-SearchBot|ChatGPT-User|PerplexityBot|Perplexity-User|Claude-User|Claude-SearchBot|MistralAI-User|Amazonbot|YouBot|Copilot|PetalBot|facebookexternalhit|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|xAI-SearchBot|GrokBot|xAI-Grok|Grok-DeepSearch|Grok/i.test(ua) || url.searchParams.has("lang");
 }
 
 // =========================================================
