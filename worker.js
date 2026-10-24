@@ -992,10 +992,11 @@ function renderHubSSR(gateway, slug, hubTitle, hubDesc, hubIndex, hubMedia) {
   if (Array.isArray(hubMedia) && hubMedia.length > 0) {
     const mediaItems = hubMedia.map(m => {
       const caption = (m.name && typeof m.name === "object" ? `${m.name.en || ""} ${m.name.zh || ""}` : (m.name || "")).replace(/"/g, "&quot;");
+      const shortCaption = caption.substring(0, 80) + "..."; 
       mediaTextContent += `<p style="margin-bottom: 15px; font-size: 1.1rem; line-height: 1.8; color: #e8e4d9;">${caption}</p>`;
       if (m.type === "image") {
         jsonLdImages.push(m.url);
-        return `<figure class="hub-figure"><img src="${m.url}" alt="${caption}" loading="lazy"><figcaption>${caption}</figcaption></figure>`;
+        return `<figure class="hub-figure"><img src="${m.url}" alt="${caption.substring(0, 80)}..." loading="lazy"><figcaption>${caption.substring(0, 80)}...</figcaption></figure>`;
       } else if (m.type === "video") {
         return `<div class="hub-video"><video src="${m.url}" controls preload="metadata"></video><p class="caption">${caption}</p></div>`;
       } else {
