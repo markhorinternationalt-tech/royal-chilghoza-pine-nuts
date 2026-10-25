@@ -1150,11 +1150,11 @@ if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${hubTitle} | Royal Chilghoza Pine Nuts</title>
+  <title>${hubTitle.length > 40 ? hubTitle : hubTitle + " | Royal Chilghoza"}</title>
   <meta name="description" content="${hubDesc} — Royal Chilghoza Pine Nuts, Pakistan. چلغوزہ Chilgoza.">
   <meta name="keywords" content="Chilghoza, Chilgoza, Pine Nuts, چلغوزہ, 松子, Royal Chilghoza, ${hubTitle}, Pakistan, Export">
   <link rel="canonical" href="${fullUrl}">
-  <meta property="og:title" content="${hubTitle} | Royal Chilghoza Pine Nuts">
+  <meta property="og:title" content="${hubTitle.length > 40 ? hubTitle : hubTitle + " | Royal Chilghoza"}">
   <meta property="og:description" content="${hubDesc}">
   <meta property="og:url" content="${fullUrl}">
   <meta property="og:type" content="article">
