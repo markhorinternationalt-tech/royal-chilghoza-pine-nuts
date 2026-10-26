@@ -2285,9 +2285,6 @@ body.admin-mode .hub-section-actions { display: flex; }
   margin-bottom: 8px;
   opacity: 0.7;
 }
-@media (hover: hover) and (pointer: fine) {
-  .hub-media-item:hover .hub-media-caption { color: var(--gold2); }
-}
 .hub-media-pdf + .hub-media-caption { border-top: none; }
 @media (max-width: 620px) {
   .hub-media-caption { padding: 16px 16px; }
