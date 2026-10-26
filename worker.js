@@ -1121,7 +1121,7 @@ const articleSchema = {
       "name": "What grades of Chilghoza Pine Nuts are available?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We offer Grade A (larger premium kernels for direct export), Grade B (medium premium), Grade C and Grade D (smaller kernels sent to shelling centres). All grades are 100% natural, organic, and chemical-free."
+        "text": "We offer Grade A (larger premium kernels for direct export), Grade B (medium premium), Grade C and Grade D (smaller kernels sent to shelling centres). All grades are 100% Natural & Wild-Harvested, and chemical-free."
       }
     },
     {
