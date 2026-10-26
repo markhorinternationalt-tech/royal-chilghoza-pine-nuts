@@ -1507,10 +1507,12 @@ if (url.pathname.startsWith("/trade/") || url.pathname.startsWith("/research/"))
   }
 }
 
+// اگر اوپر والا کوئی روٹ میچ نہ ہو تو ڈیفالٹ گلوبل اثاثے رینڈر کریں
 return env.ASSETS.fetch(request);
   }
 };
 
+// ---- ہیلپر فنکشنز (یہاں مین آبجیکٹ کے بند ہونے کے بعد آئیں گے) ----
 function json(data, cors, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -1529,4 +1531,5 @@ async function checkAuth(request, env, cors) {
   }
   return null;
 }
+
 
