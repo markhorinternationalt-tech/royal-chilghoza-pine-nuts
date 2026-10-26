@@ -1452,7 +1452,7 @@ const localBusinessSchema = {
     <p class="eyebrow">PRIMARY GATEWAY</p>
     <h1>${gatewayName}</h1>
     <p class="desc">${description}</p>
-    <div class="hub-list">${hubsHtml}</div>
+    <div id="knowledge-hub-content" class="hub-list">${hubsHtml}</div>
     <footer>
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
       <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
@@ -1461,4 +1461,61 @@ const localBusinessSchema = {
   </div>
 </body>
 </html>`;
+}
+
+// ===== 🟢 یہاں سے نیا SSR اور SEO ہب روٹس کا کوڈ شروع ہوتا ہے =====
+if (url.pathname.startsWith("/trade/") || url.pathname.startsWith("/research/")) {
+  try {
+    // 1. کلاؤڈ فلیر کے سمارٹ اثاثوں سے بنیادی HTML لوڈ کریں
+    const baseResponse = await env.ASSETS.fetch(request);
+    if (!baseResponse.ok) return baseResponse;
+
+    // 2. یو آر ایل سے مخصوص ہب کا نام (Slug) نکالیں
+    const slug = url.pathname.split("/").pop();
+
+    // 3. آپ کے KV اسٹوریج سے ہب کا اپلوڈ کردہ ڈیٹا حاصل کریں
+    const hubsDataRaw = await env.ROYAL_KV.get("hubs_data");
+    const hubsData = hubsDataRaw ? JSON.parse(hubsDataRaw) : {};
+
+    // اس مخصوص صفحے کا ڈیٹا یا کیپشن حاصل کریں
+    const pageData = hubsData[slug] || null;
+
+    if (pageData) {
+      // چائنیز اور انگریزی کیپشنز تیار کریں
+      const contentEn = pageData.content_en || "Premium quality trade data and market records.";
+      const contentZh = pageData.content_zh || "优质贸易数据与市场记录。";
+      const titleText = pageData.title || "Royal Chilghoza Pine Nuts Hub";
+
+      // 4. HTMLRewriter کے ذریعے سرور لیول پر ہی HTML میں ڈیٹا انجیکٹ کریں
+      return new HTMLRewriter()
+        .on("title", {
+          element(el) { el.text(titleText); }
+        })
+        .on("#knowledge-hub-content", {
+          element(element) {
+            element.setInnerContent(`
+              <div class="hub-container">
+                <h1 class="hub-title">${titleText}</h1>
+                <div class="caption-block lang-en" style="direction: ltr; margin-bottom: 20px;">
+                  <p>${contentEn}</p>
+                </div>
+                <div class="caption-block lang-zh" style="direction: ltr;">
+                  <p>${contentZh}</p>
+                </div>
+              </div>
+            `, { html: true });
+          }
+        })
+        .on("#dynamic-media-section", {
+          element(element) {
+            element.setAttribute("data-has-media", "true");
+          }
+        })
+        .transform(baseResponse);
+    }
+
+    return baseResponse;
+  } catch (err) {
+    return env.ASSETS.fetch(request);
+  }
 }
