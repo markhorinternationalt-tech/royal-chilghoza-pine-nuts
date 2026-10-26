@@ -1134,7 +1134,7 @@ const articleSchema = {
     },
     {
       "@type": "Question",
-      "name": "Are Royal Chilghoza Pine Nuts organic and natural?",
+      "name": "Are Royal Chilghoza Pine Nuts natural and wild-harvested?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes. Our Chilghoza Pine Nuts are 100% Natural & Wild-Harvested, hand-harvested from wild Himalayan forests, sun-dried naturally in the open air without any chemicals or artificial processing, preserving the authentic buttery flavour and creamy texture."
