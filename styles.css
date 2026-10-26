@@ -552,7 +552,7 @@ body.lightbox-open { overflow: hidden; }
   padding: 26px 24px 28px;
   background: var(--caption-bg-color);
   font-family: var(--caption-font-family);
-  font-style: italic;
+  font-style: normal;
   font-size: var(--caption-font-size);
   font-weight: var(--caption-font-weight);
   color: var(--caption-text-color);
