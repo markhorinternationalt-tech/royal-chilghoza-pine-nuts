@@ -3850,7 +3850,8 @@ window.addEventListener("popstate", handleRoute);
       sessionStorage.setItem("royalPrompted", "1");
       return;
     }
-    
+      } catch (e) { /* silent */ }
+})();
 /* =========================================================
    NEW: Language Switch Animation (Replaces Welcome Prompt)
 ========================================================= */
