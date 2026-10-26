@@ -1452,7 +1452,7 @@ const localBusinessSchema = {
     <p class="eyebrow">PRIMARY GATEWAY</p>
     <h1>${gatewayName}</h1>
     <p class="desc">${description}</p>
-    <div id="knowledge-hub-content" class="hub-list">${hubsHtml}</div>
+    <div class="hub-list">${hubsHtml}</div>
     <footer>
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
       <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
@@ -1462,74 +1462,3 @@ const localBusinessSchema = {
 </body>
 </html>`;
 }
-
-// ===== 🟢 یہاں سے نیا SSR اور SEO ہب روٹس کا کوڈ شروع ہوتا ہے =====
-if (url.pathname.startsWith("/trade/") || url.pathname.startsWith("/research/")) {
-  try {
-    const baseResponse = await env.ASSETS.fetch(request);
-    if (!baseResponse.ok) return baseResponse;
-
-    const slug = url.pathname.split("/").pop();
-    const hubsDataRaw = await env.ROYAL_KV.get("hubs_data");
-    const hubsData = hubsDataRaw ? JSON.parse(hubsDataRaw) : {};
-    const pageData = hubsData[slug] || null;
-
-    if (pageData) {
-      const contentEn = pageData.content_en || "Premium quality trade data and market records.";
-      const contentZh = pageData.content_zh || "优质贸易数据与市场记录。";
-      const titleText = pageData.title || "Royal Chilghoza Pine Nuts Hub";
-
-      return new HTMLRewriter()
-        .on("title", {
-          element(el) { el.text(titleText); }
-        })
-        .on("#knowledge-hub-content", {
-          element(element) {
-            element.setInnerContent(
-              '<div class="hub-container">' +
-                '<h1 class="hub-title">' + titleText + '</h1>' +
-                '<div class="caption-block lang-en" style="direction: ltr; margin-bottom: 20px;">' +
-                  '<p>' + contentEn + '</p>' +
-                '</div>' +
-                '<div class="caption-block lang-zh" style="direction: ltr;">' +
-                  '<p>' + contentZh + '</p>' +
-                '</div>' +
-              '</div>',
-              { html: true }
-            );
-          }
-        })
-        .transform(baseResponse);
-    }
-    return baseResponse;
-  } catch (err) {
-    return env.ASSETS.fetch(request);
-  }
-}
-
-// اگر اوپر والا کوئی روٹ میچ نہ ہو تو ڈیفالٹ گلوبل اثاثے رینڈر کریں
-return env.ASSETS.fetch(request);
-  }
-};
-
-// ---- ہیلپر فنکشنز (یہاں مین آبجیکٹ کے بند ہونے کے بعد آئیں گے) ----
-function json(data, cors, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { ...cors, "Content-Type": "application/json" },
-  });
-}
-
-async function checkAuth(request, env, cors) {
-  const authHeader = request.headers.get("Authorization");
-  const token = await env.ROYAL_KV.get("ADMIN_TOKEN");
-  if (!authHeader || authHeader !== "Bearer " + token) {
-    return new Response(JSON.stringify({ ok: false, error: "Unauthorized access" }), {
-      status: 401,
-      headers: { ...cors, "Content-Type": "application/json" },
-    });
-  }
-  return null;
-}
-
-
