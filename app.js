@@ -3854,8 +3854,9 @@ setTimeout(initLanguageAnimations, 1000);
     }
       } catch (e) { /* silent */ }
 })();
+
 /* =========================================================
-   NEW: Language Switch Animation (Replaces Welcome Prompt)
+   NEW: Language Switch Animation (FIXED VERSION)
 ========================================================= */
 function initLanguageAnimations() {
     // 1. بوٹ ڈیٹیکشن (Google/AI bots ko animation nahi dikhegi)
@@ -3863,61 +3864,29 @@ function initLanguageAnimations() {
     const botPatterns = ["googlebot", "bingbot", "yandexbot", "baiduspider", "chatgpt", "gptbot", "claude", "anthropic", "deepseek", "perplexity", "grok", "xai", "curl", "wget", "headless", "bot", "crawler", "spider", "lighthouse"];
     if (botPatterns.some(pattern => ua.includes(pattern))) return;
 
-    // 2. Agar user pehle language select kar chuka hai, to animation band
-    if (document.cookie.includes("rlSaved=1")) return;
+    // 2. اگر پہلے سے اینیمیشن لگی ہے تو دوبارہ نہ لگائیں
+    if (document.getElementById("langRotatingBadge")) return;
 
     const langSelect = document.getElementById("languageSelect");
     if (!langSelect) return;
 
-    // 3. Switch par Golden Glow add karein
+    // 3. سوئچ پر گولڈن گلو لگائیں
     langSelect.classList.add("lang-glow-animation");
 
-    // 4. Switch ke upar Floating Badge banayein
+    // 4. گھومتا ہوا بیج بنائیں
     const badge = document.createElement("div");
     badge.id = "langRotatingBadge";
     let isEn = true;
     badge.innerHTML = `🇬🇧 EN`;
     
-    badge.style.cssText = `
-        position: absolute;
-        top: -35px;
-        right: 10px;
-        background: linear-gradient(135deg, #d4af37, #9e7919);
-        color: #03140a;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        font-family: var(--body-font, sans-serif);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-        z-index: 100;
-        white-space: nowrap;
-    `;
-
-    // CSS Inject karein (Glow ke liye)
-    const style = document.createElement("style");
-    style.innerHTML = `
-        .lang-glow-animation {
-            animation: goldGlow 1.5s infinite alternate !important;
-            border-color: #d4af37 !important;
-        }
-        @keyframes goldGlow {
-            from { box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
-            to { box-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 30px rgba(212, 175, 55, 0.5); }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Parent ko relative karein taake badge switch ke upar aaye
+    // 5. بیج کو ہیڈر کے اندر لگائیں
     const parent = langSelect.parentElement;
     if (parent) {
         parent.style.position = "relative";
         parent.appendChild(badge);
     }
 
-    // 5. Har 3 second baad badge ka text change karein
+    // 6. ہر 3 سیکنڈ بعد زبان بدلیں
     const flipInterval = setInterval(() => {
         isEn = !isEn;
         badge.style.opacity = '0';
@@ -3927,18 +3896,17 @@ function initLanguageAnimations() {
         }, 300);
     }, 3000);
 
-    // 6. Jab user switch par click kare, animation aur badge hata dein
+    // 7. کلک کرنے پر اینیمیشن ختم کریں
     function stopAnimations() {
         langSelect.classList.remove("lang-glow-animation");
         clearInterval(flipInterval);
         if (badge) badge.remove();
         
-        // Cookie save karein taake dobara na aaye
+        // کوکی سیو کریں (1 سال کے لیے)
         const exp = new Date();
         exp.setFullYear(exp.getFullYear() + 1);
         document.cookie = "rlSaved=1; expires=" + exp.toUTCString() + "; path=/";
         
-        // Remove event listeners
         langSelect.removeEventListener("click", stopAnimations);
         langSelect.removeEventListener("change", stopAnimations);
     }
@@ -3946,9 +3914,6 @@ function initLanguageAnimations() {
     langSelect.addEventListener("click", stopAnimations);
     langSelect.addEventListener("change", stopAnimations);
 }
-
-// Call the function when the page loads
-document.addEventListener("DOMContentLoaded", initLanguageAnimations);
 
 /* =========================================================
    VIDEO MANAGEMENT SYSTEM (Auto-Pause on Scroll & Navigation)
