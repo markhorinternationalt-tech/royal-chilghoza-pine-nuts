@@ -1485,22 +1485,18 @@ if (url.pathname.startsWith("/trade/") || url.pathname.startsWith("/research/"))
         })
         .on("#knowledge-hub-content", {
           element(element) {
-            element.setInnerContent(`
-              <div class="hub-container">
-                <h1 class="hub-title">${titleText}</h1>
-                <div class="caption-block lang-en" style="direction: ltr; margin-bottom: 20px;">
-                  <p>${contentEn}</p>
-                </div>
-                <div class="caption-block lang-zh" style="direction: ltr;">
-                  <p>${contentZh}</p>
-                </div>
-              </div>
-            `, { html: true });
-          }
-        })
-        .on("#dynamic-media-section", {
-          element(element) {
-            element.setAttribute("data-has-media", "true");
+            element.setInnerContent(
+              '<div class="hub-container">' +
+                '<h1 class="hub-title">' + titleText + '</h1>' +
+                '<div class="caption-block lang-en" style="direction: ltr; margin-bottom: 20px;">' +
+                  '<p>' + contentEn + '</p>' +
+                '</div>' +
+                '<div class="caption-block lang-zh" style="direction: ltr;">' +
+                  '<p>' + contentZh + '</p>' +
+                '</div>' +
+              '</div>',
+              { html: true }
+            );
           }
         })
         .transform(baseResponse);
@@ -1511,12 +1507,10 @@ if (url.pathname.startsWith("/trade/") || url.pathname.startsWith("/research/"))
   }
 }
 
-// اگر اوپر والا کوئی روٹ میچ نہ ہو تو ڈیفالٹ گلوبل اثاثے رینڈر کریں
 return env.ASSETS.fetch(request);
   }
 };
 
-// ---- ہیلپر فنکشنز (بیک اینڈ سیکیورٹی اور فارمیٹنگ کے لیے) ----
 function json(data, cors, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -1527,7 +1521,7 @@ function json(data, cors, status = 200) {
 async function checkAuth(request, env, cors) {
   const authHeader = request.headers.get("Authorization");
   const token = await env.ROYAL_KV.get("ADMIN_TOKEN");
-  if (!authHeader || authHeader !== `Bearer ${token}`) {
+  if (!authHeader || authHeader !== "Bearer " + token) {
     return new Response(JSON.stringify({ ok: false, error: "Unauthorized access" }), {
       status: 401,
       headers: { ...cors, "Content-Type": "application/json" },
@@ -1535,3 +1529,4 @@ async function checkAuth(request, env, cors) {
   }
   return null;
 }
+
