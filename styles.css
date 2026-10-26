@@ -2264,7 +2264,7 @@ body.admin-mode .hub-section-actions { display: flex; }
   font-family: var(--caption-font-family);
   font-size: var(--caption-font-size);
   font-weight: var(--caption-font-weight);
-  font-style: italic;
+  font-style: normal;
   line-height: 1.6;
   letter-spacing: 0.02em;
   color: var(--caption-text-color);
