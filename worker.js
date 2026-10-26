@@ -499,7 +499,7 @@ if (isBot(request) || url.searchParams.get("ssr") === "true") {
     status: 200,
     headers: {
       "Content-Type": "text/html;charset=UTF-8",
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
       "Vary": "User-Agent"
     },
   });
@@ -532,7 +532,7 @@ if (isBot(request) || url.searchParams.get("ssr") === "true") {
     status: 200,
     headers: {
       "Content-Type": "text/html;charset=UTF-8",
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
       "Vary": "User-Agent"
     },
   });
