@@ -3810,6 +3810,8 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
   applyLanguage();
 
 window.addEventListener("popstate", handleRoute);
+    // ✅ نیا کوڈ: اینیمیشن کو صحیح وقت پر کال کریں
+setTimeout(initLanguageAnimations, 1000);
 }
 
 /* =========================================================
