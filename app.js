@@ -3978,7 +3978,6 @@ function observeVideos() {
 /* ========================================================= */
 
 document.addEventListener("DOMContentLoaded", init);
-document.addEventListener("DOMContentLoaded", init);
 
 /* =========================================================
    GALLERY LIGHTBOX — Zoom, Pan, Drag
