@@ -3850,123 +3850,102 @@ window.addEventListener("popstate", handleRoute);
       sessionStorage.setItem("royalPrompted", "1");
       return;
     }
-
-    // ✅ 4. Prompt دکھائیں
-    window.addEventListener("load", () => {
-      setTimeout(() => showWelcomePrompt(), 800);
-    });
-  } catch (e) { /* silent */ }
-})();
     
 /* =========================================================
-   WELCOME PROMPT — 2 Languages + Remember Option
+   NEW: Language Switch Animation (Replaces Welcome Prompt)
 ========================================================= */
-function showWelcomePrompt() {
-  if (document.getElementById("welcomeLanguagePrompt")) return;
-  if (document.body.classList.contains("admin-mode")) return;
+function initLanguageAnimations() {
+    // 1. بوٹ ڈیٹیکشن (Google/AI bots ko animation nahi dikhegi)
+    const ua = navigator.userAgent.toLowerCase();
+    const botPatterns = ["googlebot", "bingbot", "yandexbot", "baiduspider", "chatgpt", "gptbot", "claude", "anthropic", "deepseek", "perplexity", "grok", "xai", "curl", "wget", "headless", "bot", "crawler", "spider", "lighthouse"];
+    if (botPatterns.some(pattern => ua.includes(pattern))) return;
 
-  const prompt = document.createElement("div");
-  prompt.id = "welcomeLanguagePrompt";
-  prompt.style.cssText = `
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(0, 0, 0, 0.9) !important;
-    z-index: 999999 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-  `;
-  prompt.innerHTML = `
-    <div style="
-      background: linear-gradient(160deg, #0a2f1e 0%, #062015 50%, #03140a 100%);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      border-radius: 20px;
-      padding: 40px 32px;
-      max-width: 440px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
-      box-sizing: border-box;
-    ">
-      <div style="font-size:3rem;color:#d4af37;margin-bottom:16px;">👑</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#f5f1e8;margin:0 0 12px;font-weight:500;">Royal Chilgoza Pine Nuts</h2>
-      <p style="color:#d4af37;font-size:0.95rem;font-weight:500;margin:0 0 28px;line-height:1.5;">Please choose your language<br>请选择您的语言</p>
-      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:20px;">
-        <button data-welcome-lang="en" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
-          <span style="font-size:2rem;line-height:1;">🇬🇧</span>
-          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">English</b>
-        </button>
-        <button data-welcome-lang="zh" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px;border:2px solid rgba(212,175,55,0.3);border-radius:14px;background:rgba(212,175,55,0.05);color:#f5f1e8;cursor:pointer;font-family:inherit;">
-          <span style="font-size:2rem;line-height:1;">🇨🇳</span>
-          <b style="font-size:1rem;font-weight:600;color:#f5f1e8;">中文</b>
-        </button>
-      </div>
-      <label style="
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:10px;
-        margin:0 0 14px;
-        padding:12px 16px;
-        background:rgba(212,175,55,0.06);
-        border:1px solid rgba(212,175,55,0.2);
-        border-radius:10px;
-        cursor:pointer;
-        user-select:none;
-      ">
-        <input type="checkbox" id="welcomeRememberChoice" style="width:18px;height:18px;accent-color:#d4af37;cursor:pointer;flex-shrink:0;">
-        <span style="color:#f5f1e8;font-size:0.85rem;line-height:1.4;text-align:left;">
-          Remember my choice<br>
-          <span style="color:#8fa89a;font-size:0.78rem;">میرا انتخاب یاد رکھو · 记住我的选择</span>
-        </span>
-      </label>
-      <p style="color:#8fa89a;font-size:0.75rem;margin:0;line-height:1.4;">You can change language anytime from the top menu.</p>
-    </div>
-  `;
+    // 2. Agar user pehle language select kar chuka hai, to animation band
+    if (document.cookie.includes("rlSaved=1")) return;
 
-  document.body.appendChild(prompt);
+    const langSelect = document.getElementById("languageSelect");
+    if (!langSelect) return;
 
-  prompt.querySelectorAll("[data-welcome-lang]").forEach((btn) => {
-    btn.onclick = () => {
-      const lang = btn.dataset.welcomeLang;
-      const remember = document.getElementById("welcomeRememberChoice")?.checked;
+    // 3. Switch par Golden Glow add karein
+    langSelect.classList.add("lang-glow-animation");
 
-      sessionStorage.setItem("royalLanguage", lang);
-      sessionStorage.setItem("royalPrompted", "1");
+    // 4. Switch ke upar Floating Badge banayein
+    const badge = document.createElement("div");
+    badge.id = "langRotatingBadge";
+    let isEn = true;
+    badge.innerHTML = `🇬🇧 EN`;
+    
+    badge.style.cssText = `
+        position: absolute;
+        top: -35px;
+        right: 10px;
+        background: linear-gradient(135deg, #d4af37, #9e7919);
+        color: #03140a;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        font-family: var(--body-font, sans-serif);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 100;
+        white-space: nowrap;
+    `;
 
-      if (remember) {
-        const exp = new Date();
-        exp.setFullYear(exp.getFullYear() + 10);
-        const expStr = exp.toUTCString();
-        document.cookie = "rlSaved=1; expires=" + expStr + "; path=/";
-        document.cookie = "rlLang=" + lang + "; expires=" + expStr + "; path=/";
-      } else {
-        document.cookie = "rlSaved=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-        document.cookie = "rlLang=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-      }
-
-      prompt.style.transition = "opacity 0.4s ease";
-      prompt.style.opacity = "0";
-
-      setTimeout(() => {
-        prompt.remove();
-        if (typeof setLanguage === "function") {
-          setLanguage(lang);
-        } else if (typeof state !== "undefined") {
-          state.lang = lang;
-          if (typeof applyLanguage === "function") applyLanguage();
+    // CSS Inject karein (Glow ke liye)
+    const style = document.createElement("style");
+    style.innerHTML = `
+        .lang-glow-animation {
+            animation: goldGlow 1.5s infinite alternate !important;
+            border-color: #d4af37 !important;
         }
-      }, 400);
-    };
-  });
-}  
+        @keyframes goldGlow {
+            from { box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+            to { box-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 30px rgba(212, 175, 55, 0.5); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Parent ko relative karein taake badge switch ke upar aaye
+    const parent = langSelect.parentElement;
+    if (parent) {
+        parent.style.position = "relative";
+        parent.appendChild(badge);
+    }
+
+    // 5. Har 3 second baad badge ka text change karein
+    const flipInterval = setInterval(() => {
+        isEn = !isEn;
+        badge.style.opacity = '0';
+        setTimeout(() => {
+            badge.innerHTML = isEn ? "🇬🇧 EN" : "🇨🇳 中文";
+            badge.style.opacity = '1';
+        }, 300);
+    }, 3000);
+
+    // 6. Jab user switch par click kare, animation aur badge hata dein
+    function stopAnimations() {
+        langSelect.classList.remove("lang-glow-animation");
+        clearInterval(flipInterval);
+        if (badge) badge.remove();
+        
+        // Cookie save karein taake dobara na aaye
+        const exp = new Date();
+        exp.setFullYear(exp.getFullYear() + 1);
+        document.cookie = "rlSaved=1; expires=" + exp.toUTCString() + "; path=/";
+        
+        // Remove event listeners
+        langSelect.removeEventListener("click", stopAnimations);
+        langSelect.removeEventListener("change", stopAnimations);
+    }
+
+    langSelect.addEventListener("click", stopAnimations);
+    langSelect.addEventListener("change", stopAnimations);
+}
+
+// Call the function when the page loads
+document.addEventListener("DOMContentLoaded", initLanguageAnimations);
 
 /* =========================================================
    VIDEO MANAGEMENT SYSTEM (Auto-Pause on Scroll & Navigation)
