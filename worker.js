@@ -1280,7 +1280,7 @@ const fullUrl = `https://chilgozapinenuts.com/${gateway}`;
         "Product & Quality Standards for Chilghoza Pine Nuts",
         "Supply Chain & Traceability of Chilghoza Pine Nuts",
         "Geographical Indication (GI) of Chilghoza Pine Nuts",
-        "Organic Chemistry & Natural Quality of Chilghoza Pine Nuts",
+        "Natural Chemistry & Quality of Chilghoza Pine Nuts",
         "Processing, Packaging & Value Addition for Chilghoza Pine Nuts",
         "Sustainable & Ethical Trade of Chilghoza Pine Nuts"
       ];
