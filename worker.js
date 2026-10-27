@@ -1198,13 +1198,10 @@ if (jsonLdImages.length > 0) articleSchema.image = jsonLdImages;
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Premium quality Chilghoza Pine Nuts from the native forests of Gilgit-Baltistan, Pakistan.</p>
       <p>${fullHubContent}</p>
       ${mediaTextContent}
-      <p>For trade inquiries, export documentation, bulk orders, and worldwide shipping, please contact our trade desk directly via WhatsApp.</p>
-      <a href="https://wa.me/923336665688?text=${encodeURIComponent("Inquiry about " + hubTitle)}" class="cta">💬 WhatsApp Trade Inquiry</a>
     </div>
     ${mediaHtml}
     <footer>
       <p><strong>Royal Chilghoza Pine Nuts</strong> — Markhor Global SMC Pvt Ltd</p>
-      <p>Chilas, Gilgit-Baltistan, Pakistan · WhatsApp: +92 333 6665688</p>
       <p>© 2026 Royal Chilghoza Pine Nuts. All rights reserved.</p>
     </footer>
   </div>
