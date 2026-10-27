@@ -3856,7 +3856,7 @@ setTimeout(initLanguageAnimations, 1000);
 })();
 
 /* =========================================================
-   NEW: Language Switch Animation (FINAL FIXED VERSION)
+   NEW: Language Switch Animation (PERFECT OVERLAY VERSION)
 ========================================================= */
 function initLanguageAnimations() {
     // 1. بوٹ ڈیٹیکشن (Google/AI bots ko animation nahi dikhegi)
@@ -3864,61 +3864,70 @@ function initLanguageAnimations() {
     const botPatterns = ["googlebot", "bingbot", "yandexbot", "baiduspider", "chatgpt", "gptbot", "claude", "anthropic", "deepseek", "perplexity", "grok", "xai", "curl", "wget", "headless", "bot", "crawler", "spider", "lighthouse"];
     if (botPatterns.some(pattern => ua.includes(pattern))) return;
 
-    // 2. اگر پہلے سے بیج موجود ہے تو دوبارہ نہ بنائیں
-    if (document.getElementById("langRotatingBadge")) return;
-
     const langSelect = document.getElementById("languageSelect");
     if (!langSelect) return;
 
-    // 3. سوئچ پر گولڈن گلو لگائیں (یہ آپ کی سکرین شاٹ میں کام کر رہا ہے)
+    // اگر پہلے سے اوورلے موجود ہے تو دوبارہ نہ بنائیں
+    if (document.getElementById("langOverlayBadge")) return;
+
+    // 2. لینگویج سوئچ کے گرد گلو لگائیں
     langSelect.classList.add("lang-glow-animation");
 
-    // 4. گھومتا ہوا بیج بنائیں
+    // 3. گولڈن گلاس اوورلے بنائیں
     const badge = document.createElement("div");
-    badge.id = "langRotatingBadge";
+    badge.id = "langOverlayBadge";
     let isEn = true;
-    badge.innerHTML = `🇬🇧 EN`;
     
-    // 5. بیج کی پوزیشن سیدھا body کے حساب سے فکس کریں تاکہ کہیں چھپے نہیں
+    // 4. اوورلے کی ڈیزائن اور پوزیشننگ
     badge.style.cssText = `
         position: fixed;
         z-index: 999999;
-        background: linear-gradient(135deg, #d4af37, #9e7919);
+        background: rgba(212, 175, 55, 0.25); /* گولڈن شفاف بیک گراؤنڈ */
+        border: 2px solid #d4af37;
+        border-radius: 6px;
         color: #03140a;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        transition: opacity 0.3s ease;
-        pointer-events: none;
+        font-size: 0.85rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.5);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none; /* تاکہ صارف اصل لینگویج سوئچ پر کلک کر سکے */
         white-space: nowrap;
-        animation: badgeBounce 2s ease-in-out infinite;
+        backdrop-filter: blur(4px);
+        animation: goldPulse 2s infinite alternate;
     `;
     
+    badge.innerHTML = `🇬🇧 English / EN`;
     document.body.appendChild(badge);
 
-    // 6. بیج کی پوزیشن سوئچ کے بالکل اوپر سیٹ کریں
+    // 5. اوورلے کو بالکل لینگویج سوئچ کے خانے پر فٹ کریں
     const positionBadge = () => {
         const rect = langSelect.getBoundingClientRect();
-        badge.style.top = (rect.top - 35) + "px";
-        badge.style.left = (rect.left + (rect.width / 2) - 30) + "px";
+        badge.style.top = rect.top + "px";
+        badge.style.left = rect.left + "px";
+        badge.style.width = rect.width + "px";
+        badge.style.height = rect.height + "px";
     };
     
     positionBadge(); // فوراً پوزیشن سیٹ کریں
+    window.addEventListener("scroll", positionBadge); // سکرول کرنے پر پوزیشن اپڈیٹ کریں
     window.addEventListener("resize", positionBadge); // سکرین سائز بدلنے پر پوزیشن اپڈیٹ کریں
 
-    // 7. ہر 3 سیکنڈ بعد زبان بدلیں
+    // 6. ہر 3 سیکنڈ بعد الفاظ بدلیں (فلپ اینیمیشن)
     const flipInterval = setInterval(() => {
         isEn = !isEn;
         badge.style.opacity = '0';
+        badge.style.transform = 'scale(0.95)';
         setTimeout(() => {
-            badge.innerHTML = isEn ? "🇬🇧 EN" : "🇨🇳 中文";
+            badge.innerHTML = isEn ? "🇬🇧 English / EN" : "🇨🇳 中文 / ZH";
             badge.style.opacity = '1';
+            badge.style.transform = 'scale(1)';
         }, 300);
     }, 3000);
 
-    // 8. کلک کرنے پر اینیمیشن ختم کریں
+    // 7. کلک کرنے پر اینیمیشن ختم کریں
     function stopAnimations() {
         langSelect.classList.remove("lang-glow-animation");
         clearInterval(flipInterval);
@@ -3931,6 +3940,7 @@ function initLanguageAnimations() {
         
         langSelect.removeEventListener("click", stopAnimations);
         langSelect.removeEventListener("change", stopAnimations);
+        window.removeEventListener("scroll", positionBadge);
         window.removeEventListener("resize", positionBadge);
     }
 
