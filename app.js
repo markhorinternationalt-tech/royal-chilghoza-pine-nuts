@@ -22,18 +22,19 @@ window.toggleFBCaption = function(btn, event) {
     }
     
     const wrapper = btn.closest('.fb-caption-wrapper');
-    const textEl = wrapper.querySelector('.fb-clamped-text, .fb-expanded-text');
-    const isExpanded = textEl.classList.contains('fb-expanded-text');
-    
-    if (isExpanded) {
-        textEl.classList.remove('fb-expanded-text');
-        textEl.classList.add('fb-clamped-text');
-        btn.innerText = 'See more...';
-    } else {
-        textEl.classList.remove('fb-clamped-text');
-        textEl.classList.add('fb-expanded-text');
-        btn.innerText = 'See less...';
-    }
+// نیا کلاس نام یہاں استعمال کریں
+const textEl = wrapper.querySelector('.fb-clamped-text-fixed, .fb-expanded-text');
+const isExpanded = textEl.classList.contains('fb-expanded-text');
+
+if (isExpanded) {
+    textEl.classList.remove('fb-expanded-text');
+    textEl.classList.add('fb-clamped-text-fixed');
+    btn.innerText = 'See more...';
+} else {
+    textEl.classList.remove('fb-clamped-text-fixed');
+    textEl.classList.add('fb-expanded-text');
+    btn.innerText = 'See less...';
+}
 };
 
 const state = {
