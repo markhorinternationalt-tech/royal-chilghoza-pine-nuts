@@ -975,8 +975,8 @@ function getContentType(path) {
 function isBot(request) {
   const ua = request.headers.get("User-Agent") || "";
   const url = new URL(request.url);
-  return /Googlebot|Google-InspectionTool|Storebot-Google|Google-Extended|GoogleOther|Google-CloudVertexBot|Mediapartners-Google|AdsBot-Google|APIs-Google|FeedFetcher-Google|Bingbot|Slurp|YandexBot|YandexImages|Baiduspider|Sogou|360Spider|Haosou|ShenmaSpider|YisouSpider|Bytespider|ToutiaoSpider|DeepSeek|DeepSeekBot|Qwen|Tencent|ChatGPT|OAI|GPT|Claude|Anthropic|Perplexity|xAI|Grok|Mistral|Copilot|Amazonbot|Applebot|DuckDuckBot|facebookexternalhit|meta-externalagent|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Discordbot|PetalBot|Huawei|bot|crawler|spider/i.test(ua) || url.searchParams.has("lang");
-}
+  return /Googlebot|Google-InspectionTool|Storebot-Google|Google-Extended|GoogleOther|Google-CloudVertexBot|Mediapartners-Google|AdsBot-Google|APIs-Google|FeedFetcher-Google|Bingbot|Slurp|YandexBot|YandexImages|Baiduspider|Sogou|360Spider|Haosou|ShenmaSpider|YisouSpider|Bytespider|ToutiaoSpider|DeepSeek|DeepSeekBot|Qwen|Tencent|ChatGPT|OAI|GPT|Claude|Anthropic|Perplexity|xAI|Grok|Mistral|Copilot|Amazonbot|Applebot|DuckDuckBot|facebookexternalhit|meta-externalagent|Twitterbot|LinkedInBot|WhatsApp|TelegramBot|Discordbot|PetalBot|Huawei|Chrome-Lighthouse|HeadlessChrome|bot|crawler|spider|curl|wget|python|axios|node-fetch|headless|puppeteer|playwright/i.test(ua) || url.searchParams.has("lang") || url.searchParams.has("ssr");
+  }
 
 // =========================================================
 // SSR RENDERER — Hub
