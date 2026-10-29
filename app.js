@@ -8,7 +8,7 @@ function renderCaptionWithSeeMore(text) {
     
     return `
         <div class="fb-caption-wrapper" dir="${dir}">
-            <span class="fb-clamped-text">${escapeHtml(text)}</span>
+            <span class="fb-clamped-text-fixed">${escapeHtml(text)}</span>
             <span class="fb-see-more-btn" onclick="toggleFBCaption(this, event)">See more...</span>
         </div>
     `;
