@@ -2909,3 +2909,22 @@ video {
     from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
     to { box-shadow: 0 0 25px rgba(212, 175, 55, 1), 0 0 40px rgba(212, 175, 55, 0.6); }
 }
+
+/* Permanent Fix for See More Text Gaps - 2 Lines */
+.fb-clamped-text-fixed {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important; /* یہاں 2 کر دیا ہے تاکہ دو لائنیں دکھیں */
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important; 
+    word-break: break-word !important;
+}
+
+/* اس بات کو یقینی بنانے کے لیے کہ See more بٹن اپنی جگہ پر نظر آئے */
+.fb-see-more-btn {
+    display: inline-block !important;
+    margin-top: 5px !important;
+    color: var(--gold) !important;
+    cursor: pointer !important;
+}
