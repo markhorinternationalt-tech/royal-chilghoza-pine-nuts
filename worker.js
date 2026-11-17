@@ -363,7 +363,9 @@ if (url.pathname === "/api/media/upload" && request.method === "POST") {
 if (url.pathname === "/api/media/list" && request.method === "GET") {
   try {
     const folder = url.searchParams.get("folder") || "";
-    const prefix = folder ? `royal-chilghoza/${folder}` : "royal-chilghoza";
+    
+    // 🟢 نیا کوڈ: اگر General یا خالی فولڈر ہو تو ساری فائلیں لاؤ، ورنہ مخصوص فولڈر کی
+    const prefix = (folder && folder !== "General") ? `royal-chilghoza/${folder}` : "";
 
     const [imagesResp, videosResp, rawResp] = await Promise.all([
       cloudinaryAdminFetch("image", prefix, env),
