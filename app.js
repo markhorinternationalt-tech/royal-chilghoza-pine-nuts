@@ -2554,37 +2554,49 @@ function editHubMediaItem(type, index, mediaIndex) {
       let newType = item.type;
 
       // ✅ اگر نئی فائل اپلوڈ کی گئی ہے
-      if (fileInput.files[0]) {
-        setEditStatus("Uploading new media...", "");
-        const file = fileInput.files[0];
-        const ext = (file.name.split(".").pop() || "").toLowerCase();
-        if (["mp4","webm","mov","avi"].includes(ext)) newType = "video";
-        else if (["pdf","doc","docx"].includes(ext)) newType = "raw";
-        else newType = "image";
+if (fileInput.files[0]) {
+  const confirmReplace = confirm("⚠️ Kya aap waqai is media ko replace karna chahte hain?\n\nPurani file Cloudinary se permanently delete ho jayegi.");
+  if (!confirmReplace) return;
 
-        const fd = new FormData();
-        fd.append("file", file);
-        fd.append("folder", `hubs/${type}-${index}`);
+  setEditStatus("Uploading new media...", "");
+  const file = fileInput.files[0];
+  const ext = (file.name.split(".").pop() || "").toLowerCase();
+  if (["mp4","webm","mov","avi"].includes(ext)) newType = "video";
+  else if (["pdf","doc","docx"].includes(ext)) newType = "raw";
+  else newType = "image";
 
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("folder", `hubs/${type}-${index}`);
+
+  try {
+    const r = await fetch("/api/media/upload", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + state.token },
+      body: fd,
+    });
+    const d = await r.json();
+    if (d.ok) {
+      // ✅ نیا کوڈ: پرانی تصویر Cloudinary سے ڈیلیٹ کریں
+      if (item.public_id) {
         try {
-          const r = await fetch("/api/media/upload", {
-            method: "POST",
-            headers: { Authorization: "Bearer " + state.token },
-            body: fd,
+          await fetch("/api/media/" + encodeURIComponent(item.public_id) + "?type=" + item.type, {
+            method: "DELETE",
+            headers: { Authorization: "Bearer " + state.token }
           });
-          const d = await r.json();
-          if (d.ok) {
-            newUrl = d.url;
-            newPublicId = d.public_id || d.key;
-          } else {
-            setEditStatus("❌ Upload failed: " + (d.error || "unknown"), "error");
-            return;
-          }
-        } catch (e) {
-          setEditStatus("❌ Upload error: " + e.message, "error");
-          return;
-        }
+        } catch (e) { console.log("Old file delete failed", e); }
       }
+      newUrl = d.url;
+      newPublicId = d.public_id || d.key;
+    } else {
+      setEditStatus("❌ Upload failed: " + (d.error || "unknown"), "error");
+      return;
+    }
+  } catch (e) {
+    setEditStatus("❌ Upload error: " + e.message, "error");
+    return;
+  }
+}
 
       if (!newUrl) { setEditStatus("❌ URL or File required", "error"); return; }
 
