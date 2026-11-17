@@ -2389,18 +2389,20 @@ function uploadHubMedia(type, index) {
 }
 
 async function deleteHubMediaItem(type, index, mediaIndex) {
-  if (!confirm("🗑 Delete this media?\n\nThis will also remove it from Cloudinary.")) return;
+  if (!confirm("🗑 Delete this media?\n\nThis will also permanently remove it from Cloudinary.")) return;
 
   const arr = await loadHubMedia(type, index);
   const item = arr[mediaIndex];
   if (!item) return;
 
   try {
-    await fetch("/api/media/" + encodeURIComponent(item.public_id) + "?type=" + item.type, {
+    const r = await fetch("/api/media/" + encodeURIComponent(item.public_id) + "?type=" + item.type, {
       method: "DELETE",
       headers: { Authorization: "Bearer " + state.token }
     });
-  } catch (e) { /* ignore */ }
+    const d = await r.json();
+    if (!d.ok) console.warn("Cloudinary delete warning:", d.error);
+  } catch (e) { console.error("Cloudinary delete error:", e); }
 
   arr.splice(mediaIndex, 1);
   const ok = await saveHubMedia(type, index, arr);
@@ -2411,10 +2413,9 @@ async function deleteHubMediaItem(type, index, mediaIndex) {
       await renderHubMedia(type, index);
     }
   } else {
-    alert("❌ Delete failed.");
+    alert("❌ Delete failed to save in KV.");
   }
 }
-
 function editHubMediaItem(type, index, mediaIndex) {
   const arr = hubMediaCache[`hub_media_${type}_${index}`] || [];
   const item = arr[mediaIndex];
