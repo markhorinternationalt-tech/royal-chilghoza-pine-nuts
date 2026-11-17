@@ -268,6 +268,42 @@ CRITICAL RULES (YOU MUST FOLLOW THESE STRICTLY):
 // CLOUDINARY — Media Management
 // =========================================================
 
+    // ✅ نیا کوڈ: Cloudinary Usage (Storage) Check
+if (url.pathname === "/api/media/usage" && request.method === "GET") {
+  const reject = await checkAuth(request, env, cors);
+  if (reject) return reject;
+
+  try {
+    const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
+    const resp = await fetch(`https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/usage`, {
+      headers: { Authorization: `Basic ${auth}` }
+    });
+    const data = await resp.json();
+    
+    if (!resp.ok) {
+      return json({ ok: false, error: data.error?.message || "Failed to get usage" }, cors, 500);
+    }
+
+    const storageBytes = data.storage?.usage || 0;
+    const bandwidthBytes = data.bandwidth?.usage || 0;
+    
+    const storageMB = (storageBytes / (1024 * 1024)).toFixed(2);
+    const bandwidthMB = (bandwidthBytes / (1024 * 1024)).toFixed(2);
+    
+    const formatSize = (mb) => mb > 1024 ? (mb / 1024).toFixed(2) + " GB" : mb + " MB";
+
+    return json({
+      ok: true,
+      storage: formatSize(storageMB),
+      bandwidth: formatSize(bandwidthMB),
+      resources: data.resources || 0,
+      transformations: data.transformations?.usage || 0,
+      plan: data.plan || "Free"
+    }, cors);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, cors, 500);
+  }
+}
 if (url.pathname === "/api/media/upload" && request.method === "POST") {
   const reject = await checkAuth(request, env, cors);
   if (reject) return reject;
