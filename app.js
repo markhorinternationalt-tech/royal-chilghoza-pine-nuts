@@ -3978,6 +3978,51 @@ function observeVideos() {
 }
 /* ========================================================= */
 
+// ✅ نیا کوڈ: Cloudinary Usage Checker Logic
+async function loadCloudinaryUsage() {
+  const btn = document.getElementById("checkCloudinaryUsageBtn");
+  const box = document.getElementById("cloudinaryUsageBox");
+  if (!btn || !box) return;
+
+  btn.disabled = true;
+  btn.innerText = "⏳ Loading...";
+  box.style.display = "block";
+  box.innerHTML = `<p class="admin-note">Fetching data from Cloudinary...</p>`;
+
+  try {
+    const r = await fetch("/api/media/usage", {
+      headers: { Authorization: "Bearer " + state.token }
+    });
+    const data = await r.json();
+
+    if (data.ok) {
+      box.innerHTML = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+          <div style="background:rgba(212,175,55,0.1); padding:10px; border-radius:8px; border:1px solid rgba(212,175,55,0.3);">
+            <span style="color:var(--muted); font-size:0.8rem;">Storage Used</span>
+            <div style="font-size:1.2rem; font-weight:bold; color:var(--gold);">${data.storage}</div>
+          </div>
+          <div style="background:rgba(212,175,55,0.1); padding:10px; border-radius:8px; border:1px solid rgba(212,175,55,0.3);">
+            <span style="color:var(--muted); font-size:0.8rem;">Bandwidth Used</span>
+            <div style="font-size:1.2rem; font-weight:bold; color:var(--gold);">${data.bandwidth}</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; display:flex; justify-content:space-between; font-size:0.85rem; color:var(--text);">
+          <span>Total Files: <b>${data.resources}</b></span>
+          <span>Plan: <b>${data.plan}</b></span>
+        </div>
+      `;
+    } else {
+      box.innerHTML = `<p style="color:#ff6b6b; font-size:0.9rem;">❌ Error: ${data.error}</p>`;
+    }
+  } catch (e) {
+    box.innerHTML = `<p style="color:#ff6b6b; font-size:0.9rem;">❌ Connection Error</p>`;
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "📊 Check Cloudinary Storage";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", init);
 
 /* =========================================================
