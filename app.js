@@ -3813,6 +3813,9 @@ if (addReviewBtn) addReviewBtn.onclick = addNewReview;
 window.addEventListener("popstate", handleRoute);
     // ✅ نیا کوڈ: اینیمیشن کو صحیح وقت پر کال کریں
 setTimeout(initLanguageAnimations, 1000);
+    // Cloudinary Usage Button Listener
+const checkCldBtn = document.getElementById("checkCloudinaryUsageBtn");
+if (checkCldBtn) checkCldBtn.onclick = loadCloudinaryUsage;
 }
 
 /* =========================================================
