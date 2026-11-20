@@ -364,8 +364,8 @@ if (url.pathname === "/api/media/list" && request.method === "GET") {
   try {
     const folder = url.searchParams.get("folder") || "";
     
-    // 🟢 اصل حل: پریفکس ہمیشہ royal-chilghoza رہے گا
-    let prefix = "royal-chilghoza";
+    // 🟢 General سلیکٹ کرنے پر پریفکس خالی رکھو (تاکہ ساری فائلیں لاؤ)
+    let prefix = "";
     if (folder && folder !== "General" && folder !== "") {
       prefix = `royal-chilghoza/${folder}`;
     }
@@ -953,9 +953,22 @@ async function checkAuth(request, env, cors) {
 
 async function cloudinaryAdminFetch(resourceType, prefix, env) {
   const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
-  const url = `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?prefix=${encodeURIComponent(prefix)}&max_results=100`;
+  
+  // 🟢 max_results=500 کر دیا تاکہ ساری فائلیں ایک ساتھ آ جائیں
+  let url = `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUD_NAME}/resources/${resourceType}?max_results=500`;
+  
+  // 🟢 اصل حل: اگر پریفکس موجود ہے تو ہی لنک میں لگاؤ، ورنہ ساری فائلیں لاؤ
+  if (prefix) {
+    url += `&prefix=${encodeURIComponent(prefix)}`;
+  }
+
   const resp = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
-  if (!resp.ok) return { resources: [] };
+  
+  if (!resp.ok) {
+    const errText = await resp.text();
+    console.log("Cloudinary Error:", resp.status, errText); 
+    return { resources: [] };
+  }
   return await resp.json();
 }
 
