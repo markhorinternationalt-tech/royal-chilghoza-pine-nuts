@@ -211,33 +211,33 @@ const hubData = {
    ✅ SEO-safe — SSR اور worker.js محفوظ
 ========================================================= */
 function cloudinaryOptimize(url, width, height, crop = 'limit') {
-  if (!url) return url;
+  if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) return url;
   
-  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
-    // 1. اگر واٹر مارک پہلے سے لگا ہو تو دوبارہ نہ لگائیں
-    if (url.includes('l_text:Arial')) return url;
+  // 1. اگر واٹر مارک پہلے سے لگا ہو تو دوبارہ نہ لگائیں
+  if (url.includes('l_text:Arial')) return url;
 
-    // 2. پرانے سائز کو صاف کریں
-    let cleanUrl = url.replace(/\/upload\/w_\d+,h_\d+,c_[a-z]+\//, '/upload/');
-    cleanUrl = cleanUrl.replace(/\/upload\/w_\d+\//, '/upload/');
+  // 2. پرانے سائز کو صاف کریں
+  let cleanUrl = url.replace(/\/upload\/w_\d+,h_\d+,c_[a-z]+\//, '/upload/');
+  cleanUrl = cleanUrl.replace(/\/upload\/w_\d+\//, '/upload/');
 
-    // 3. واٹر مارک کی سیٹنگ — بڑا سائز (35px) تاکہ ہر سائز پر نظر آئے
-    const watermark = 'l_text:Arial_35:Royal%20Chilgoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_south_west,x_30,y_30,a_0';
+  // 3. واٹر مارک کی سیٹنگ
+  const watermark = 'l_text:Arial_35:Royal%20Chilghoza%20Pine%20Nuts,co_rgb:FFFFFF,o_35,g_south_west,x_30,y_30,a_0';
 
-    // 4. ✅ ویڈیو: اصل aspect ratio برقرار + واٹر مارک
-    if (url.includes('/video/upload/')) {
-      return cleanUrl.replace('/upload/', `/upload/w_${width},c_limit,q_auto/${watermark}/`);
-    }
-
-    // 5. اگر PDF یا کوئی اور raw فائل ہے تو اسے نہ چھیڑیں
-    if (url.includes('/raw/upload/')) {
-      return url;
-    }
-
-    // 6. ✅ تصویر: اصل aspect ratio برقرار + واٹر مارک
-    return cleanUrl.replace('/upload/', `/upload/w_${width},c_limit,q_auto,f_auto/${watermark}/`);
+  // 4. 🟢 ویڈیوز کے لیے آپٹیمائزیشن (q_auto, vc_auto, اور زیادہ سے زیادہ 720p)
+  if (url.includes('/video/upload/')) {
+    // ویڈیو کے لیے 720 کی لمٹ سیٹ کی ہے تاکہ سائز بہت کم ہو جائے
+    const vidWidth = width && width < 720 ? width : 720;
+    return cleanUrl.replace('/upload/', `/upload/w_${vidWidth},c_limit,q_auto,vc_auto/${watermark}/`);
   }
-  return url;
+
+  // 5. PDF یا raw فائلوں کو نہ چھیڑیں
+  if (url.includes('/raw/upload/')) {
+    return url;
+  }
+
+  // 6. 🟢 تصاویر کے لیے آپٹیمائزیشن (f_auto, q_auto:good, اور 1000px)
+  const imgWidth = width || 1000;
+  return cleanUrl.replace('/upload/', `/upload/w_${imgWidth},c_limit,q_auto:good,f_auto/${watermark}/`);
 }
 
 /* =========================================================
