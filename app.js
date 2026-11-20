@@ -3039,7 +3039,7 @@ function getMediaIcon(name) {
 }
 
 function renderMediaList(files) {
-  const container = document.getElementById("mediaListContainer");
+  const container = document.getElementById("mediaListContainer"); // اگر آپ کی آئی ڈی مختلف ہے تو اسے ویسے ہی رہنے دیں
   if (!container) return;
 
   if (!files || files.length === 0) {
@@ -3054,17 +3054,27 @@ function renderMediaList(files) {
       ? `<img class="media-thumb" src="${file.url}" alt="${file.name}" loading="lazy">`
       : `<div class="media-thumb">${icon}</div>`;
 
+    // 🟢 نیا کوڈ: لائیو اور غیر استعمال شدہ کا لیبل
+    const statusBadge = file.isLive 
+      ? `<span style="background:#28a745; color:white; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:5px; display:inline-block;">🟢 LIVE</span>` 
+      : `<span style="background:#dc3545; color:white; padding:2px 6px; border-radius:4px; font-size:10px; margin-left:5px; display:inline-block;">🔴 UNUSED</span>`;
+
     return `
-      <div class="media-item">
-        ${thumbHtml}
-        <div class="media-info">
-          <span class="media-name" title="${file.public_id}">${file.name}</span>
-          <span class="media-meta">${formatSize(file.size)} • ${file.resource_type}</span>
+      <div class="media-item" style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #333; padding:10px 0;">
+        <div class="media-info" style="display:flex; align-items:center; gap:10px;">
+          ${thumbHtml}
+          <div class="media-details">
+            <div class="media-name" style="display:flex; align-items:center;">
+              ${statusBadge}
+              <span style="margin-left:8px; word-break:break-all;">${file.name}</span>
+            </div>
+            <div class="media-meta" style="font-size:12px; color:#aaa; margin-top:5px;">
+              ${formatSize(file.size)} | ${file.resource_type}
+            </div>
+          </div>
         </div>
         <div class="media-actions">
-          <button class="media-btn" onclick="window.open('${file.url}', '_blank')">👁</button>
-          <button class="media-btn" onclick="copyMediaUrl('${file.url}')">📋</button>
-          <button class="media-btn danger" onclick="deleteMedia('${file.public_id.replace(/'/g, "\\'")}', '${file.resource_type}')">🗑</button>
+          <button onclick="deleteMedia('${file.public_id}', '${file.resource_type}')" class="btn-delete" style="background:#dc3545; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer;">🗑️</button>
         </div>
       </div>
     `;
