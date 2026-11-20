@@ -362,26 +362,28 @@ if (url.pathname === "/api/media/upload" && request.method === "POST") {
 
 if (url.pathname === "/api/media/list" && request.method === "GET") {
   try {
-    const folder = url.searchParams.get("folder") || "";
+    // 🟢 نیا کوڈ: folder کے بجائے type لو
+    const type = url.searchParams.get("type") || "image";
     
-    let prefix = "";
-    if (folder && folder !== "General" && folder !== "") {
-      prefix = `royal-chilghoza/${folder}`;
+    let images = [], videos = [], raws = [];
+
+    // 🟢 صرف وہی ٹائپ لاؤ جو ڈراپ ڈاؤن میں سلیکٹ ہو
+    if (type === "image" || type === "all") {
+      const res = await cloudinaryAdminFetch("image", "", env);
+      images = (res.resources || []).map(r => formatCloudResource(r, "image"));
+    }
+    if (type === "video" || type === "all") {
+      const res = await cloudinaryAdminFetch("video", "", env);
+      videos = (res.resources || []).map(r => formatCloudResource(r, "video"));
+    }
+    if (type === "raw" || type === "all") {
+      const res = await cloudinaryAdminFetch("raw", "", env);
+      raws = (res.resources || []).map(r => formatCloudResource(r, "raw"));
     }
 
-    // 1. Cloudinary سے ساری فائلیں لاؤ
-    const [imagesResp, videosResp, rawResp] = await Promise.all([
-      cloudinaryAdminFetch("image", prefix, env),
-      cloudinaryAdminFetch("video", prefix, env),
-      cloudinaryAdminFetch("raw", prefix, env),
-    ]);
-
-    const images = (imagesResp.resources || []).map(r => formatCloudResource(r, "image"));
-    const videos = (videosResp.resources || []).map(r => formatCloudResource(r, "video"));
-    const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
     let files = [...images, ...videos, ...raws];
 
-    // 2. KV سے لائیو ڈیٹا لاؤ تاکہ پتہ چلے کون سی فائل استعمال ہو رہی ہے
+    // 🟢 KV سے لائیو ڈیٹا لاؤ
     let liveUrls = new Set();
     try {
       const kvKeys = ["hubs_data", "gallery_data", "gateways_data", "hero_image", "profile_image", "offices"];
@@ -397,7 +399,7 @@ if (url.pathname === "/api/media/list" && request.method === "GET") {
       }
     } catch (e) { console.log("KV Read Error:", e); }
 
-    // 3. ہر فائل کو چیک کرو کہ وہ لائیو ہے یا نہیں
+    // 🟢 ہر فائل کو چیک کرو
     files = files.map(file => {
       const cleanFileUrl = file.url.split('?')[0].replace(/\/v\d+\//, '/');
       return {
