@@ -364,12 +364,12 @@ if (url.pathname === "/api/media/list" && request.method === "GET") {
   try {
     const folder = url.searchParams.get("folder") || "";
     
-    // 🟢 General سلیکٹ کرنے پر پریفکس خالی رکھو (تاکہ ساری فائلیں لاؤ)
     let prefix = "";
     if (folder && folder !== "General" && folder !== "") {
       prefix = `royal-chilghoza/${folder}`;
     }
 
+    // 1. Cloudinary سے ساری فائلیں لاؤ
     const [imagesResp, videosResp, rawResp] = await Promise.all([
       cloudinaryAdminFetch("image", prefix, env),
       cloudinaryAdminFetch("video", prefix, env),
@@ -379,8 +379,33 @@ if (url.pathname === "/api/media/list" && request.method === "GET") {
     const images = (imagesResp.resources || []).map(r => formatCloudResource(r, "image"));
     const videos = (videosResp.resources || []).map(r => formatCloudResource(r, "video"));
     const raws = (rawResp.resources || []).map(r => formatCloudResource(r, "raw"));
+    let files = [...images, ...videos, ...raws];
 
-    const files = [...images, ...videos, ...raws];
+    // 2. KV سے لائیو ڈیٹا لاؤ تاکہ پتہ چلے کون سی فائل استعمال ہو رہی ہے
+    let liveUrls = new Set();
+    try {
+      const kvKeys = ["hubs_data", "gallery_data", "gateways_data", "hero_image", "profile_image", "offices"];
+      for (const key of kvKeys) {
+        const val = await env.ROYAL_KV.get(key);
+        if (val) {
+          const urls = val.match(/https:\/\/res\.cloudinary\.com\/[^"'\s\\]+/g) || [];
+          urls.forEach(u => {
+            const cleanUrl = u.split('?')[0].replace(/\/v\d+\//, '/');
+            liveUrls.add(cleanUrl);
+          });
+        }
+      }
+    } catch (e) { console.log("KV Read Error:", e); }
+
+    // 3. ہر فائل کو چیک کرو کہ وہ لائیو ہے یا نہیں
+    files = files.map(file => {
+      const cleanFileUrl = file.url.split('?')[0].replace(/\/v\d+\//, '/');
+      return {
+        ...file,
+        isLive: liveUrls.has(cleanFileUrl) 
+      };
+    });
+
     return json({ ok: true, files }, cors);
 
   } catch (err) {
