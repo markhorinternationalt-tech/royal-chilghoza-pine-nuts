@@ -3088,9 +3088,13 @@ async function loadMediaList() {
   if (container) container.innerHTML = `<div class="media-empty">Loading...</div>`;
 
   try {
-    const folder = document.getElementById("mediaFolder")?.value || "";
-    const r = await fetch("/api/media/list?folder=" + encodeURIComponent(folder));
+    // 🟢 نیا کوڈ: ڈراپ ڈاؤن سے type (image, video, raw) لو
+    const type = document.getElementById("mediaFolder")?.value || "image";
+    
+    // 🟢 سرور کو type بھیجو
+    const r = await fetch("/api/media/list?type=" + encodeURIComponent(type));
     const data = await r.json();
+    
     if (data.ok) {
       renderMediaList(data.files);
       if (status) status.textContent = `✅ Found ${data.files.length} file(s).`;
