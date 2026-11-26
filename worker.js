@@ -360,61 +360,6 @@ if (url.pathname === "/api/media/upload" && request.method === "POST") {
   }
 }
 
-if (url.pathname === "/api/media/list" && request.method === "GET") {
-  try {
-    // 🟢 نیا کوڈ: folder کے بجائے type لو
-    const type = url.searchParams.get("type") || "image";
-    
-    let images = [], videos = [], raws = [];
-
-    // 🟢 صرف وہی ٹائپ لاؤ جو ڈراپ ڈاؤن میں سلیکٹ ہو
-    if (type === "image" || type === "all") {
-      const res = await cloudinaryAdminFetch("image", "", env);
-      images = (res.resources || []).map(r => formatCloudResource(r, "image"));
-    }
-    if (type === "video" || type === "all") {
-      const res = await cloudinaryAdminFetch("video", "", env);
-      videos = (res.resources || []).map(r => formatCloudResource(r, "video"));
-    }
-    if (type === "raw" || type === "all") {
-      const res = await cloudinaryAdminFetch("raw", "", env);
-      raws = (res.resources || []).map(r => formatCloudResource(r, "raw"));
-    }
-
-    let files = [...images, ...videos, ...raws];
-
-    // 🟢 KV سے لائیو ڈیٹا لاؤ
-    let liveUrls = new Set();
-    try {
-      const kvKeys = ["hubs_data", "gallery_data", "gateways_data", "hero_image", "profile_image", "offices"];
-      for (const key of kvKeys) {
-        const val = await env.ROYAL_KV.get(key);
-        if (val) {
-          const urls = val.match(/https:\/\/res\.cloudinary\.com\/[^"'\s\\]+/g) || [];
-          urls.forEach(u => {
-            const cleanUrl = u.split('?')[0].replace(/\/v\d+\//, '/');
-            liveUrls.add(cleanUrl);
-          });
-        }
-      }
-    } catch (e) { console.log("KV Read Error:", e); }
-
-    // 🟢 ہر فائل کو چیک کرو
-    files = files.map(file => {
-      const cleanFileUrl = file.url.split('?')[0].replace(/\/v\d+\//, '/');
-      return {
-        ...file,
-        isLive: liveUrls.has(cleanFileUrl) 
-      };
-    });
-
-    return json({ ok: true, files }, cors);
-
-  } catch (err) {
-    return json({ ok: false, error: err.message }, cors, 500);
-  }
-}
-
 if (url.pathname === "/api/media/folders" && request.method === "GET") {
   try {
     const auth = btoa(`${env.CLOUDINARY_API_KEY}:${env.CLOUDINARY_API_SECRET}`);
