@@ -3081,32 +3081,6 @@ function renderMediaList(files) {
   }).join("");
 }
 
-async function loadMediaList() {
-  const status = document.getElementById("mediaStatus");
-  const container = document.getElementById("mediaListContainer");
-  if (status) status.textContent = "Loading files...";
-  if (container) container.innerHTML = `<div class="media-empty">Loading...</div>`;
-
-  try {
-    // 🟢 نیا کوڈ: ڈراپ ڈاؤن سے type (image, video, raw) لو
-    const type = document.getElementById("mediaFolder")?.value || "image";
-    
-    // 🟢 سرور کو type بھیجو
-    const r = await fetch("/api/media/list?type=" + encodeURIComponent(type));
-    const data = await r.json();
-    
-    if (data.ok) {
-      renderMediaList(data.files);
-      if (status) status.textContent = `✅ Found ${data.files.length} file(s).`;
-    } else {
-      if (status) status.textContent = "Error: " + (data.error || "Failed");
-      if (container) container.innerHTML = `<div class="media-empty">Error.</div>`;
-    }
-  } catch (err) {
-    if (status) status.textContent = "Error: " + err.message;
-  }
-}
-
 async function deleteMedia(publicId, resourceType) {
   if (!confirm(`Delete "${publicId}"?`)) return;
   const status = document.getElementById("mediaStatus");
