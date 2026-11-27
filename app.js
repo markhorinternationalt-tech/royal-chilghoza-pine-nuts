@@ -3716,8 +3716,6 @@ if (adminLoginEl) {
     };
   }
 
-  const loadMediaBtn = document.getElementById("loadMediaBtn");
-  if (loadMediaBtn) loadMediaBtn.onclick = loadMediaList;
 
   const saveAddressesBtn = document.getElementById("saveAddresses");
   if (saveAddressesBtn) {
